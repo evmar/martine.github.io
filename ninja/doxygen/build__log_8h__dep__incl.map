@@ -1,8 +1,11 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$build_8cc.html" title="build.cc" alt="" coords="5,80,72,107"/>
-<area shape="rect" id="node5" href="$build__log_8cc.html" title="build_log.cc" alt="" coords="96,80,187,107"/>
-<area shape="rect" id="node7" href="$build__log__test_8cc.html" title="build_log_test.cc" alt="" coords="211,80,331,107"/>
-<area shape="rect" id="node9" href="$build__test_8cc.html" title="build_test.cc" alt="" coords="355,80,451,107"/>
-<area shape="rect" id="node11" href="$graph_8cc.html" title="graph.cc" alt="" coords="475,80,547,107"/>
-<area shape="rect" id="node13" href="$ninja_8cc.html" title="ninja.cc" alt="" coords="571,80,637,107"/>
+<area shape="rect" id="node3" href="$build_8cc.html" title="build.cc" alt="" coords="5,83,72,112"/>
+<area shape="rect" id="node5" href="$build__log_8cc.html" title="build_log.cc" alt="" coords="96,83,187,112"/>
+<area shape="rect" id="node7" href="$build__log__perftest_8cc.html" title="build_log_perftest.cc" alt="" coords="211,83,352,112"/>
+<area shape="rect" id="node9" href="$build__log__test_8cc.html" title="build_log_test.cc" alt="" coords="376,83,496,112"/>
+<area shape="rect" id="node11" href="$build__test_8cc.html" title="build_test.cc" alt="" coords="520,83,616,112"/>
+<area shape="rect" id="node13" href="$graph_8cc.html" title="graph.cc" alt="" coords="640,83,712,112"/>
+<area shape="rect" id="node15" href="$hash__collision__bench_8cc.html" title="hash_collision_bench.cc" alt="" coords="736,83,899,112"/>
+<area shape="rect" id="node17" href="$ninja_8cc.html" title="ninja.cc" alt="" coords="923,83,989,112"/>
+<area shape="rect" id="node19" href="$test_8cc.html" title="test.cc" alt="" coords="1013,83,1075,112"/>
 </map>

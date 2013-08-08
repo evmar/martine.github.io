@@ -1,3 +1,11 @@
 <map id="G" name="G">
-<area shape="rect" id="node7" href="$build_8h.html" title="build.h" alt="" coords="138,80,197,107"/>
+<area shape="rect" id="node7" href="$build_8h.html" title="build.h" alt="" coords="367,83,425,112"/>
+<area shape="rect" id="node21" href="$graph_8h.html" title="graph.h" alt="" coords="749,160,813,189"/>
+<area shape="rect" id="node37" href="$exit__status_8h.html" title="exit_status.h" alt="" coords="579,160,675,189"/>
+<area shape="rect" id="node39" href="$line__printer_8h.html" title="line_printer.h" alt="" coords="5,237,101,267"/>
+<area shape="rect" id="node42" href="$metrics_8h.html" title="metrics.h" alt="" coords="227,160,301,189"/>
+<area shape="rect" id="node46" href="$util_8h.html" title="util.h" alt="" coords="239,237,289,267"/>
+<area shape="rect" id="node25" href="$eval__env_8h.html" title="eval_env.h" alt="" coords="739,237,824,267"/>
+<area shape="rect" id="node35" href="$timestamp_8h.html" title="timestamp.h" alt="" coords="571,237,664,267"/>
+<area shape="rect" id="node30" href="$string__piece_8h.html" title="string_piece.h" alt="" coords="713,315,815,344"/>
 </map>

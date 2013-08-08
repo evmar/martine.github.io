@@ -1,0 +1,12 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$manifest__parser_8h.html" title="manifest_parser.h" alt="" coords="356,83,481,112"/>
+<area shape="rect" id="node17" href="$lexer_8cc.html" title="lexer.cc" alt="" coords="505,83,572,112"/>
+<area shape="rect" id="node19" href="$lexer_8in_8cc.html" title="lexer.in.cc" alt="" coords="596,83,679,112"/>
+<area shape="rect" id="node21" href="$lexer__test_8cc.html" title="lexer_test.cc" alt="" coords="703,83,799,112"/>
+<area shape="rect" id="node5" href="$build__log__perftest_8cc.html" title="build_log_perftest.cc" alt="" coords="5,160,147,189"/>
+<area shape="rect" id="node7" href="$graph_8cc.html" title="graph.cc" alt="" coords="171,160,243,189"/>
+<area shape="rect" id="node9" href="$manifest__parser_8cc.html" title="manifest_parser.cc" alt="" coords="267,160,400,189"/>
+<area shape="rect" id="node11" href="$manifest__parser__test_8cc.html" title="manifest_parser_test.cc" alt="" coords="424,160,587,189"/>
+<area shape="rect" id="node13" href="$ninja_8cc.html" title="ninja.cc" alt="" coords="611,160,677,189"/>
+<area shape="rect" id="node15" href="$test_8cc.html" title="test.cc" alt="" coords="701,160,763,189"/>
+</map>

@@ -1,3 +1,3 @@
 <map id="G" name="G">
-<area shape="rect" id="node1" href="$structSubprocessSet.html" title="SubprocessSet runs a poll() loop around a set of Subprocesses." alt="" coords="6,5,117,32"/>
+<area shape="rect" id="node1" href="$structLaconicPrinter.html" title="A test result printer that&#39;s less wordy than gtest&#39;s default." alt="" coords="7,5,111,35"/>
 </map>

@@ -1,15 +1,20 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$build_8cc.html" title="build.cc" alt="" coords="325,80,392,107"/>
-<area shape="rect" id="node5" href="$test_8h.html" title="test.h" alt="" coords="467,80,521,107"/>
-<area shape="rect" id="node13" href="$disk__interface__test_8cc.html" title="disk_interface_test.cc" alt="" coords="5,155,155,181"/>
-<area shape="rect" id="node23" href="$clean_8cc.html" title="clean.cc" alt="" coords="546,80,616,107"/>
-<area shape="rect" id="node25" href="$disk__interface_8cc.html" title="disk_interface.cc" alt="" coords="641,80,761,107"/>
-<area shape="rect" id="node28" href="$graph_8cc.html" title="graph.cc" alt="" coords="787,80,859,107"/>
-<area shape="rect" id="node7" href="$build__log__test_8cc.html" title="build_log_test.cc" alt="" coords="180,155,300,181"/>
-<area shape="rect" id="node9" href="$build__test_8cc.html" title="build_test.cc" alt="" coords="324,155,420,181"/>
-<area shape="rect" id="node11" href="$clean__test_8cc.html" title="clean_test.cc" alt="" coords="445,155,544,181"/>
-<area shape="rect" id="node15" href="$graph__test_8cc.html" title="graph_test.cc" alt="" coords="569,155,671,181"/>
-<area shape="rect" id="node17" href="$subprocess__test_8cc.html" title="subprocess_test.cc" alt="" coords="695,155,829,181"/>
-<area shape="rect" id="node19" href="$test_8cc.html" title="test.cc" alt="" coords="855,155,917,181"/>
-<area shape="rect" id="node21" href="$util__test_8cc.html" title="util_test.cc" alt="" coords="942,155,1028,181"/>
+<area shape="rect" id="node3" href="$build_8cc.html" title="build.cc" alt="" coords="615,83,681,112"/>
+<area shape="rect" id="node5" href="$test_8h.html" title="test.h" alt="" coords="756,83,809,112"/>
+<area shape="rect" id="node15" href="$disk__interface__test_8cc.html" title="disk_interface_test.cc" alt="" coords="5,160,155,189"/>
+<area shape="rect" id="node31" href="$clean_8cc.html" title="clean.cc" alt="" coords="833,83,903,112"/>
+<area shape="rect" id="node33" href="$disk__interface_8cc.html" title="disk_interface.cc" alt="" coords="927,83,1047,112"/>
+<area shape="rect" id="node36" href="$graph_8cc.html" title="graph.cc" alt="" coords="1071,83,1143,112"/>
+<area shape="rect" id="node38" href="$ninja_8cc.html" title="ninja.cc" alt="" coords="1167,83,1233,112"/>
+<area shape="rect" id="node7" href="$build__log__test_8cc.html" title="build_log_test.cc" alt="" coords="179,160,299,189"/>
+<area shape="rect" id="node9" href="$build__test_8cc.html" title="build_test.cc" alt="" coords="323,160,419,189"/>
+<area shape="rect" id="node11" href="$clean__test_8cc.html" title="clean_test.cc" alt="" coords="443,160,541,189"/>
+<area shape="rect" id="node13" href="$deps__log__test_8cc.html" title="deps_log_test.cc" alt="" coords="565,160,685,189"/>
+<area shape="rect" id="node17" href="$edit__distance__test_8cc.html" title="edit_distance_test.cc" alt="" coords="709,160,856,189"/>
+<area shape="rect" id="node19" href="$graph__test_8cc.html" title="graph_test.cc" alt="" coords="880,160,981,189"/>
+<area shape="rect" id="node21" href="$includes__normalize__test_8cc.html" title="includes_normalize_test.cc" alt="" coords="1005,160,1184,189"/>
+<area shape="rect" id="node23" href="$msvc__helper__test_8cc.html" title="msvc_helper_test.cc" alt="" coords="1208,160,1349,189"/>
+<area shape="rect" id="node25" href="$subprocess__test_8cc.html" title="subprocess_test.cc" alt="" coords="1373,160,1509,189"/>
+<area shape="rect" id="node27" href="$test_8cc.html" title="test.cc" alt="" coords="1533,160,1595,189"/>
+<area shape="rect" id="node29" href="$util__test_8cc.html" title="util_test.cc" alt="" coords="1619,160,1704,189"/>
 </map>

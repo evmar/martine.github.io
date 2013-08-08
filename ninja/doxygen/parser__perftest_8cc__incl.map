@@ -1,5 +1,6 @@
 <map id="G" name="G">
-<area shape="rect" id="node7" href="$parsers_8h.html" title="parsers.h" alt="" coords="186,80,261,107"/>
-<area shape="rect" id="node20" href="$util_8h.html" title="util.h" alt="" coords="332,80,383,107"/>
-<area shape="rect" id="node15" href="$string__piece_8h.html" title="string_piece.h" alt="" coords="83,155,185,181"/>
+<area shape="rect" id="node7" href="$depfile__parser_8h.html" title="depfile_parser.h" alt="" coords="179,83,293,112"/>
+<area shape="rect" id="node18" href="$util_8h.html" title="util.h" alt="" coords="404,160,455,189"/>
+<area shape="rect" id="node24" href="$metrics_8h.html" title="metrics.h" alt="" coords="317,83,392,112"/>
+<area shape="rect" id="node13" href="$string__piece_8h.html" title="string_piece.h" alt="" coords="76,160,177,189"/>
 </map>

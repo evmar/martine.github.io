@@ -1,8 +1,11 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$state_8h.html" title="state.h" alt="" coords="255,80,317,107"/>
-<area shape="rect" id="node28" href="$graph_8h.html" title="graph.h" alt="" coords="434,80,499,107"/>
-<area shape="rect" id="node33" href="$util_8h.html" title="util.h" alt="" coords="543,80,593,107"/>
-<area shape="rect" id="node11" href="$eval__env_8h.html" title="eval_env.h" alt="" coords="284,155,369,181"/>
-<area shape="rect" id="node16" href="$stat__cache_8h.html" title="stat_cache.h" alt="" coords="61,155,157,181"/>
-<area shape="rect" id="node19" href="$hash__map_8h.html" title="hash_map.h" alt="" coords="75,229,168,256"/>
+<area shape="rect" id="node3" href="$state_8h.html" title="state.h" alt="" coords="443,83,504,112"/>
+<area shape="rect" id="node33" href="$edit__distance_8h.html" title="edit_distance.h" alt="" coords="143,160,252,189"/>
+<area shape="rect" id="node36" href="$graph_8h.html" title="graph.h" alt="" coords="583,83,647,112"/>
+<area shape="rect" id="node43" href="$metrics_8h.html" title="metrics.h" alt="" coords="806,83,880,112"/>
+<area shape="rect" id="node47" href="$util_8h.html" title="util.h" alt="" coords="922,160,972,189"/>
+<area shape="rect" id="node13" href="$eval__env_8h.html" title="eval_env.h" alt="" coords="442,160,527,189"/>
+<area shape="rect" id="node23" href="$hash__map_8h.html" title="hash_map.h" alt="" coords="26,160,119,189"/>
+<area shape="rect" id="node18" href="$string__piece_8h.html" title="string_piece.h" alt="" coords="150,237,251,267"/>
+<area shape="rect" id="node41" href="$timestamp_8h.html" title="timestamp.h" alt="" coords="652,160,746,189"/>
 </map>

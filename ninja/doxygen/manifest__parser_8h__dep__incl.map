@@ -1,0 +1,8 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$build__log__perftest_8cc.html" title="build_log_perftest.cc" alt="" coords="5,83,147,112"/>
+<area shape="rect" id="node5" href="$graph_8cc.html" title="graph.cc" alt="" coords="171,83,243,112"/>
+<area shape="rect" id="node7" href="$manifest__parser_8cc.html" title="manifest_parser.cc" alt="" coords="267,83,400,112"/>
+<area shape="rect" id="node9" href="$manifest__parser__test_8cc.html" title="manifest_parser_test.cc" alt="" coords="424,83,587,112"/>
+<area shape="rect" id="node11" href="$ninja_8cc.html" title="ninja.cc" alt="" coords="611,83,677,112"/>
+<area shape="rect" id="node13" href="$test_8cc.html" title="test.cc" alt="" coords="701,83,763,112"/>
+</map>

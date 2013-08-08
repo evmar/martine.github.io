@@ -1,0 +1,4 @@
+<map id="G" name="G">
+<area shape="rect" id="node2" href="$structBuildTest.html" title="BuildTest" alt="" coords="55,83,132,112"/>
+<area shape="rect" id="node4" href="$structStateTestWithBuiltinRules.html" title="A base test fixture that includes a State object with a builtin &quot;cat&quot; rule." alt="" coords="5,5,181,35"/>
+</map>

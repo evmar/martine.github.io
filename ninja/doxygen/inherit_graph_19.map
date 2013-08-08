@@ -1,4 +1,5 @@
 <map id="G" name="G">
-<area shape="rect" id="node1" href="$structManifestParser_1_1FileReader.html" title="ManifestParser::FileReader" alt="" coords="5,5,187,32"/>
-<area shape="rect" id="node3" href="$structParserTest.html" title="ParserTest" alt="" coords="235,5,322,32"/>
+<area shape="rect" id="node1" href="$structDiskInterface.html" title="Interface for accessing the disk." alt="" coords="7,32,105,61"/>
+<area shape="rect" id="node3" href="$structRealDiskInterface.html" title="Implementation of DiskInterface that actually hits the disk." alt="" coords="156,5,281,35"/>
+<area shape="rect" id="node5" href="$structVirtualFileSystem.html" title="An implementation of DiskInterface that uses an in&#45;memory representation of disk state." alt="" coords="156,59,281,88"/>
 </map>

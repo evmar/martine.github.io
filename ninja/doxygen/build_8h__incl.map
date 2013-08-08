@@ -1,2 +1,10 @@
 <map id="G" name="G">
+<area shape="rect" id="node17" href="$graph_8h.html" title="graph.h" alt="" coords="337,83,401,112"/>
+<area shape="rect" id="node33" href="$exit__status_8h.html" title="exit_status.h" alt="" coords="1012,83,1108,112"/>
+<area shape="rect" id="node35" href="$line__printer_8h.html" title="line_printer.h" alt="" coords="765,160,861,189"/>
+<area shape="rect" id="node38" href="$metrics_8h.html" title="metrics.h" alt="" coords="575,83,649,112"/>
+<area shape="rect" id="node42" href="$util_8h.html" title="util.h" alt="" coords="676,160,727,189"/>
+<area shape="rect" id="node21" href="$eval__env_8h.html" title="eval_env.h" alt="" coords="196,160,281,189"/>
+<area shape="rect" id="node31" href="$timestamp_8h.html" title="timestamp.h" alt="" coords="407,160,500,189"/>
+<area shape="rect" id="node26" href="$string__piece_8h.html" title="string_piece.h" alt="" coords="205,237,307,267"/>
 </map>

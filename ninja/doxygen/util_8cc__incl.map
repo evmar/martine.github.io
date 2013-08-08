@@ -1,3 +1,6 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$util_8h.html" title="util.h" alt="" coords="53,80,104,107"/>
+<area shape="rect" id="node3" href="$util_8h.html" title="util.h" alt="" coords="110,160,161,189"/>
+<area shape="rect" id="node32" href="$edit__distance_8h.html" title="edit_distance.h" alt="" coords="1035,83,1145,112"/>
+<area shape="rect" id="node38" href="$metrics_8h.html" title="metrics.h" alt="" coords="35,83,110,112"/>
+<area shape="rect" id="node34" href="$string__piece_8h.html" title="string_piece.h" alt="" coords="1039,160,1141,189"/>
 </map>
