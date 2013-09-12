@@ -84,7 +84,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBuilder.html#a9e194d6607b036edb3f6e887e9b9cd49">Builder</a> (<a class="el" href="structState.html">State</a> *state, const <a class="el" href="structBuildConfig.html">BuildConfig</a> &amp;config, <a class="el" href="structBuildLog.html">BuildLog</a> *build_log, <a class="el" href="structDepsLog.html">DepsLog</a> *deps_log, <a class="el" href="structDiskInterface.html">DiskInterface</a> *disk_interface)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBuilder.html#a4dd6ad3b2ead85478be0cb9656a2ad8e">Cleanup</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Clean up after interrupted commands by deleting output files.  <a href="#a4dd6ad3b2ead85478be0cb9656a2ad8e"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBuilder.html#acac1119b055985c1444e918505f8c53d">FinishCommand</a> (<a class="el" href="structCommandRunner_1_1Result.html">CommandRunner::Result</a> *result)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBuilder.html#a2fde50693215210a556a5bd82b0231d0">FinishCommand</a> (<a class="el" href="structCommandRunner_1_1Result.html">CommandRunner::Result</a> *result, string *err)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Update status ninja logs following a command termination.  <a href="#a2fde50693215210a556a5bd82b0231d0"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBuilder.html#aea861ef68a2a1c72370ba9a8c0bf1c17">SetBuildLog</a> (<a class="el" href="structBuildLog.html">BuildLog</a> *log)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Used for tests.  <a href="#aea861ef68a2a1c72370ba9a8c0bf1c17"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBuilder.html#a66ff07bb0a3afc4651c8cd362a90831e">StartEdge</a> (<a class="el" href="structEdge.html">Edge</a> *edge, string *err)</td></tr>
@@ -154,9 +155,9 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="build_8cc_source.html#l00523">523</a> of file <a class="el" href="build_8cc_source.html">build.cc</a>.</p>
+<p>Definition at line <a class="el" href="build_8cc_source.html#l00518">518</a> of file <a class="el" href="build_8cc_source.html">build.cc</a>.</p>
 
-<p>References <a class="el" href="build_8h_source.html#l00177">status_</a>.</p>
+<p>References <a class="el" href="build_8h_source.html#l00180">status_</a>.</p>
 
 </div>
 </div>
@@ -174,9 +175,9 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="build_8cc_source.html#l00531">531</a> of file <a class="el" href="build_8cc_source.html">build.cc</a>.</p>
+<p>Definition at line <a class="el" href="build_8cc_source.html#l00526">526</a> of file <a class="el" href="build_8cc_source.html">build.cc</a>.</p>
 
-<p>References <a class="el" href="build_8cc_source.html#l00535">Cleanup()</a>.</p>
+<p>References <a class="el" href="build_8cc_source.html#l00530">Cleanup()</a>.</p>
 
 </div>
 </div>
@@ -223,11 +224,11 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="build_8cc_source.html#l00563">563</a> of file <a class="el" href="build_8cc_source.html">build.cc</a>.</p>
+<p>Definition at line <a class="el" href="build_8cc_source.html#l00558">558</a> of file <a class="el" href="build_8cc_source.html">build.cc</a>.</p>
 
-<p>References <a class="el" href="state_8cc_source.html#l00121">State::LookupNode()</a>, and <a class="el" href="build_8h_source.html#l00173">state_</a>.</p>
+<p>References <a class="el" href="state_8cc_source.html#l00121">State::LookupNode()</a>, and <a class="el" href="build_8h_source.html#l00176">state_</a>.</p>
 
-<p>Referenced by <a class="el" href="build__test_8cc_source.html#l01440">TEST_F()</a>.</p>
+<p>Referenced by <a class="el" href="build__test_8cc_source.html#l00462">BuildTest::RebuildTarget()</a>, and <a class="el" href="build__test_8cc_source.html#l01523">TEST_F()</a>.</p>
 
 </div>
 </div>
@@ -259,9 +260,9 @@ Private Attributes</h2></td></tr>
 <p>Add a target to the build, scanning dependencies. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>false on error. </dd></dl>
 
-<p>Definition at line <a class="el" href="build_8cc_source.html#l00574">574</a> of file <a class="el" href="build_8cc_source.html">build.cc</a>.</p>
+<p>Definition at line <a class="el" href="build_8cc_source.html#l00569">569</a> of file <a class="el" href="build_8cc_source.html">build.cc</a>.</p>
 
-<p>References <a class="el" href="build_8cc_source.html#l00255">Plan::AddTarget()</a>, <a class="el" href="build_8h_source.html#l00183">disk_interface_</a>, <a class="el" href="graph_8h_source.html#l00080">Node::in_edge()</a>, <a class="el" href="build_8h_source.html#l00175">plan_</a>, <a class="el" href="graph_8cc_source.html#l00060">DependencyScan::RecomputeDirty()</a>, <a class="el" href="build_8h_source.html#l00184">scan_</a>, and <a class="el" href="graph_8h_source.html#l00047">Node::StatIfNecessary()</a>.</p>
+<p>References <a class="el" href="build_8cc_source.html#l00256">Plan::AddTarget()</a>, <a class="el" href="build_8h_source.html#l00186">disk_interface_</a>, <a class="el" href="graph_8h_source.html#l00080">Node::in_edge()</a>, <a class="el" href="build_8h_source.html#l00178">plan_</a>, <a class="el" href="graph_8cc_source.html#l00060">DependencyScan::RecomputeDirty()</a>, <a class="el" href="build_8h_source.html#l00187">scan_</a>, and <a class="el" href="graph_8h_source.html#l00047">Node::StatIfNecessary()</a>.</p>
 
 </div>
 </div>
@@ -281,11 +282,11 @@ Private Attributes</h2></td></tr>
 
 <p>Returns true if the build targets are already up to date. </p>
 
-<p>Definition at line <a class="el" href="build_8cc_source.html#l00589">589</a> of file <a class="el" href="build_8cc_source.html">build.cc</a>.</p>
+<p>Definition at line <a class="el" href="build_8cc_source.html#l00584">584</a> of file <a class="el" href="build_8cc_source.html">build.cc</a>.</p>
 
-<p>References <a class="el" href="build_8h_source.html#l00054">Plan::more_to_do()</a>, and <a class="el" href="build_8h_source.html#l00175">plan_</a>.</p>
+<p>References <a class="el" href="build_8h_source.html#l00054">Plan::more_to_do()</a>, and <a class="el" href="build_8h_source.html#l00178">plan_</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00593">Build()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00588">Build()</a>, and <a class="el" href="build__test_8cc_source.html#l00462">BuildTest::RebuildTarget()</a>.</p>
 
 </div>
 </div>
@@ -307,11 +308,11 @@ Private Attributes</h2></td></tr>
 <p>Run the build. </p>
 <p>Returns false on error. It is an error to call this function when <a class="el" href="structBuilder.html#a608d1a92e0970bf3c18f0512bb8b5c62" title="Returns true if the build targets are already up to date.">AlreadyUpToDate()</a> is true. </p>
 
-<p>Definition at line <a class="el" href="build_8cc_source.html#l00593">593</a> of file <a class="el" href="build_8cc_source.html">build.cc</a>.</p>
+<p>Definition at line <a class="el" href="build_8cc_source.html#l00588">588</a> of file <a class="el" href="build_8cc_source.html">build.cc</a>.</p>
 
-<p>References <a class="el" href="build_8cc_source.html#l00589">AlreadyUpToDate()</a>, <a class="el" href="build_8cc_source.html#l00146">BuildStatus::BuildFinished()</a>, <a class="el" href="build_8h_source.html#l00067">Plan::command_edge_count()</a>, <a class="el" href="build_8h_source.html#l00176">command_runner_</a>, <a class="el" href="build_8h_source.html#l00174">config_</a>, <a class="el" href="build_8h_source.html#l00134">BuildConfig::dry_run</a>, <a class="el" href="build_8cc_source.html#l00362">Plan::EdgeFinished()</a>, <a class="el" href="exit__status_8h_source.html#l00021">ExitInterrupted</a>, <a class="el" href="build_8h_source.html#l00136">BuildConfig::failures_allowed</a>, <a class="el" href="build_8cc_source.html#l00331">Plan::FindWork()</a>, <a class="el" href="build_8cc_source.html#l00707">FinishCommand()</a>, <a class="el" href="graph_8cc_source.html#l00314">Edge::is_phony()</a>, <a class="el" href="build_8h_source.html#l00054">Plan::more_to_do()</a>, <a class="el" href="build_8h_source.html#l00175">plan_</a>, <a class="el" href="build_8cc_source.html#l00089">BuildStatus::PlanHasTotalEdges()</a>, <a class="el" href="build_8cc_source.html#l00674">StartEdge()</a>, <a class="el" href="build_8h_source.html#l00112">CommandRunner::Result::status</a>, <a class="el" href="build_8h_source.html#l00177">status_</a>, and <a class="el" href="build_8h_source.html#l00114">CommandRunner::Result::success()</a>.</p>
+<p>References <a class="el" href="build_8cc_source.html#l00584">AlreadyUpToDate()</a>, <a class="el" href="build_8cc_source.html#l00147">BuildStatus::BuildFinished()</a>, <a class="el" href="build_8h_source.html#l00067">Plan::command_edge_count()</a>, <a class="el" href="build_8h_source.html#l00179">command_runner_</a>, <a class="el" href="build_8h_source.html#l00177">config_</a>, <a class="el" href="build_8h_source.html#l00134">BuildConfig::dry_run</a>, <a class="el" href="build_8cc_source.html#l00363">Plan::EdgeFinished()</a>, <a class="el" href="exit__status_8h_source.html#l00021">ExitInterrupted</a>, <a class="el" href="build_8h_source.html#l00136">BuildConfig::failures_allowed</a>, <a class="el" href="build_8cc_source.html#l00332">Plan::FindWork()</a>, <a class="el" href="build_8cc_source.html#l00705">FinishCommand()</a>, <a class="el" href="graph_8cc_source.html#l00307">Edge::is_phony()</a>, <a class="el" href="build_8h_source.html#l00054">Plan::more_to_do()</a>, <a class="el" href="build_8h_source.html#l00178">plan_</a>, <a class="el" href="build_8cc_source.html#l00090">BuildStatus::PlanHasTotalEdges()</a>, <a class="el" href="build_8cc_source.html#l00672">StartEdge()</a>, <a class="el" href="build_8h_source.html#l00112">CommandRunner::Result::status</a>, <a class="el" href="build_8h_source.html#l00180">status_</a>, and <a class="el" href="build_8h_source.html#l00114">CommandRunner::Result::success()</a>.</p>
 
-<p>Referenced by <a class="el" href="build__test_8cc_source.html#l01440">TEST_F()</a>.</p>
+<p>Referenced by <a class="el" href="build__test_8cc_source.html#l00462">BuildTest::RebuildTarget()</a>, and <a class="el" href="build__test_8cc_source.html#l01523">TEST_F()</a>.</p>
 
 </div>
 </div>
@@ -331,11 +332,11 @@ Private Attributes</h2></td></tr>
 
 <p>Clean up after interrupted commands by deleting output files. </p>
 
-<p>Definition at line <a class="el" href="build_8cc_source.html#l00535">535</a> of file <a class="el" href="build_8cc_source.html">build.cc</a>.</p>
+<p>Definition at line <a class="el" href="build_8cc_source.html#l00530">530</a> of file <a class="el" href="build_8cc_source.html">build.cc</a>.</p>
 
-<p>References <a class="el" href="build_8h_source.html#l00176">command_runner_</a>, <a class="el" href="build_8h_source.html#l00183">disk_interface_</a>, <a class="el" href="structDiskInterface.html#ad7442b7e0b10e0737c56667d967e9f76">DiskInterface::RemoveFile()</a>, and <a class="el" href="structDiskInterface.html#ac99deecbc7f235272f0a8e308e7792d7">DiskInterface::Stat()</a>.</p>
+<p>References <a class="el" href="build_8h_source.html#l00179">command_runner_</a>, <a class="el" href="build_8h_source.html#l00186">disk_interface_</a>, <a class="el" href="structDiskInterface.html#ad7442b7e0b10e0737c56667d967e9f76">DiskInterface::RemoveFile()</a>, and <a class="el" href="structDiskInterface.html#ac99deecbc7f235272f0a8e308e7792d7">DiskInterface::Stat()</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00531">~Builder()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00526">~Builder()</a>.</p>
 
 </div>
 </div>
@@ -376,34 +377,47 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="build_8cc_source.html#l00799">799</a> of file <a class="el" href="build_8cc_source.html">build.cc</a>.</p>
+<p>Definition at line <a class="el" href="build_8cc_source.html#l00803">803</a> of file <a class="el" href="build_8cc_source.html">build.cc</a>.</p>
 
-<p>References <a class="el" href="util_8cc_source.html#l00087">CanonicalizePath()</a>, <a class="el" href="build_8h_source.html#l00183">disk_interface_</a>, <a class="el" href="build_8h_source.html#l00111">CommandRunner::Result::edge</a>, <a class="el" href="util_8cc_source.html#l00051">Fatal()</a>, <a class="el" href="graph_8cc_source.html#l00284">Edge::GetBinding()</a>, <a class="el" href="state_8cc_source.html#l00112">State::GetNode()</a>, <a class="el" href="msvc__helper_8h_source.html#l00046">CLParser::includes_</a>, <a class="el" href="depfile__parser_8h_source.html#l00032">DepfileParser::ins_</a>, <a class="el" href="build_8h_source.html#l00113">CommandRunner::Result::output</a>, <a class="el" href="depfile__parser_8cc_source.html#l00032">DepfileParser::Parse()</a>, <a class="el" href="msvc__helper-win32_8cc_source.html#l00084">CLParser::Parse()</a>, <a class="el" href="structDiskInterface.html#aed889f19b478039bd8d315fe965440ea">DiskInterface::ReadFile()</a>, <a class="el" href="structDiskInterface.html#ad7442b7e0b10e0737c56667d967e9f76">DiskInterface::RemoveFile()</a>, and <a class="el" href="build_8h_source.html#l00173">state_</a>.</p>
+<p>References <a class="el" href="util_8cc_source.html#l00087">CanonicalizePath()</a>, <a class="el" href="build_8h_source.html#l00186">disk_interface_</a>, <a class="el" href="build_8h_source.html#l00111">CommandRunner::Result::edge</a>, <a class="el" href="util_8cc_source.html#l00051">Fatal()</a>, <a class="el" href="graph_8cc_source.html#l00277">Edge::GetBinding()</a>, <a class="el" href="state_8cc_source.html#l00112">State::GetNode()</a>, <a class="el" href="msvc__helper_8h_source.html#l00046">CLParser::includes_</a>, <a class="el" href="depfile__parser_8h_source.html#l00032">DepfileParser::ins_</a>, <a class="el" href="build_8h_source.html#l00113">CommandRunner::Result::output</a>, <a class="el" href="depfile__parser_8cc_source.html#l00032">DepfileParser::Parse()</a>, <a class="el" href="msvc__helper-win32_8cc_source.html#l00084">CLParser::Parse()</a>, <a class="el" href="structDiskInterface.html#aed889f19b478039bd8d315fe965440ea">DiskInterface::ReadFile()</a>, <a class="el" href="structDiskInterface.html#ad7442b7e0b10e0737c56667d967e9f76">DiskInterface::RemoveFile()</a>, and <a class="el" href="build_8h_source.html#l00176">state_</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00707">FinishCommand()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00705">FinishCommand()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="acac1119b055985c1444e918505f8c53d"></a><!-- doxytag: member="Builder::FinishCommand" ref="acac1119b055985c1444e918505f8c53d" args="(CommandRunner::Result *result)" -->
+<a class="anchor" id="a2fde50693215210a556a5bd82b0231d0"></a><!-- doxytag: member="Builder::FinishCommand" ref="a2fde50693215210a556a5bd82b0231d0" args="(CommandRunner::Result *result, string *err)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="structBuilder.html#acac1119b055985c1444e918505f8c53d">Builder::FinishCommand</a> </td>
+          <td class="memname">bool <a class="el" href="structBuilder.html#a2fde50693215210a556a5bd82b0231d0">Builder::FinishCommand</a> </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structCommandRunner_1_1Result.html">CommandRunner::Result</a> *&#160;</td>
-          <td class="paramname"><em>result</em></td><td>)</td>
+          <td class="paramname"><em>result</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">string *&#160;</td>
+          <td class="paramname"><em>err</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="build_8cc_source.html#l00707">707</a> of file <a class="el" href="build_8cc_source.html">build.cc</a>.</p>
+<p>Update status ninja logs following a command termination. </p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>false if the build can not proceed further due to a fatal error. </dd></dl>
 
-<p>References <a class="el" href="graph_8h_source.html#l00249">DependencyScan::build_log()</a>, <a class="el" href="build_8cc_source.html#l00101">BuildStatus::BuildEdgeFinished()</a>, <a class="el" href="build_8cc_source.html#l00401">Plan::CleanNode()</a>, <a class="el" href="build_8h_source.html#l00067">Plan::command_edge_count()</a>, <a class="el" href="build_8h_source.html#l00174">config_</a>, <a class="el" href="graph_8h_source.html#l00256">DependencyScan::deps_log()</a>, <a class="el" href="build_8h_source.html#l00183">disk_interface_</a>, <a class="el" href="build_8h_source.html#l00134">BuildConfig::dry_run</a>, <a class="el" href="build_8h_source.html#l00111">CommandRunner::Result::edge</a>, <a class="el" href="build_8cc_source.html#l00362">Plan::EdgeFinished()</a>, <a class="el" href="exit__status_8h_source.html#l00020">ExitFailure</a>, <a class="el" href="build_8cc_source.html#l00799">ExtractDeps()</a>, <a class="el" href="graph_8cc_source.html#l00284">Edge::GetBinding()</a>, <a class="el" href="graph_8cc_source.html#l00289">Edge::GetBindingBool()</a>, <a class="el" href="graph_8h_source.html#l00156">Edge::inputs_</a>, <a class="el" href="metrics_8h_source.html#l00085">METRIC_RECORD</a>, <a class="el" href="graph_8h_source.html#l00175">Edge::order_only_deps_</a>, <a class="el" href="build_8h_source.html#l00113">CommandRunner::Result::output</a>, <a class="el" href="graph_8h_source.html#l00157">Edge::outputs_</a>, <a class="el" href="build_8h_source.html#l00175">plan_</a>, <a class="el" href="build_8cc_source.html#l00089">BuildStatus::PlanHasTotalEdges()</a>, <a class="el" href="build__log_8cc_source.html#l00139">BuildLog::RecordCommand()</a>, <a class="el" href="deps__log_8cc_source.html#l00077">DepsLog::RecordDeps()</a>, <a class="el" href="structDiskInterface.html#ad7442b7e0b10e0737c56667d967e9f76">DiskInterface::RemoveFile()</a>, <a class="el" href="build_8h_source.html#l00184">scan_</a>, <a class="el" href="structDiskInterface.html#ac99deecbc7f235272f0a8e308e7792d7">DiskInterface::Stat()</a>, <a class="el" href="build_8h_source.html#l00112">CommandRunner::Result::status</a>, <a class="el" href="build_8h_source.html#l00177">status_</a>, and <a class="el" href="build_8h_source.html#l00114">CommandRunner::Result::success()</a>.</p>
+<p>Definition at line <a class="el" href="build_8cc_source.html#l00705">705</a> of file <a class="el" href="build_8cc_source.html">build.cc</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00593">Build()</a>.</p>
+<p>References <a class="el" href="graph_8h_source.html#l00248">DependencyScan::build_log()</a>, <a class="el" href="build_8cc_source.html#l00102">BuildStatus::BuildEdgeFinished()</a>, <a class="el" href="build_8cc_source.html#l00402">Plan::CleanNode()</a>, <a class="el" href="build_8h_source.html#l00067">Plan::command_edge_count()</a>, <a class="el" href="build_8h_source.html#l00177">config_</a>, <a class="el" href="graph_8h_source.html#l00255">DependencyScan::deps_log()</a>, <a class="el" href="build_8h_source.html#l00186">disk_interface_</a>, <a class="el" href="build_8h_source.html#l00134">BuildConfig::dry_run</a>, <a class="el" href="build_8h_source.html#l00111">CommandRunner::Result::edge</a>, <a class="el" href="build_8cc_source.html#l00363">Plan::EdgeFinished()</a>, <a class="el" href="exit__status_8h_source.html#l00020">ExitFailure</a>, <a class="el" href="build_8cc_source.html#l00803">ExtractDeps()</a>, <a class="el" href="debug__flags_8cc_source.html#l00017">g_keep_rsp</a>, <a class="el" href="graph_8cc_source.html#l00277">Edge::GetBinding()</a>, <a class="el" href="graph_8cc_source.html#l00282">Edge::GetBindingBool()</a>, <a class="el" href="graph_8h_source.html#l00156">Edge::inputs_</a>, <a class="el" href="metrics_8h_source.html#l00085">METRIC_RECORD</a>, <a class="el" href="graph_8h_source.html#l00176">Edge::order_only_deps_</a>, <a class="el" href="build_8h_source.html#l00113">CommandRunner::Result::output</a>, <a class="el" href="graph_8h_source.html#l00157">Edge::outputs_</a>, <a class="el" href="build_8h_source.html#l00178">plan_</a>, <a class="el" href="build_8cc_source.html#l00090">BuildStatus::PlanHasTotalEdges()</a>, <a class="el" href="build__log_8cc_source.html#l00139">BuildLog::RecordCommand()</a>, <a class="el" href="deps__log_8cc_source.html#l00080">DepsLog::RecordDeps()</a>, <a class="el" href="structDiskInterface.html#ad7442b7e0b10e0737c56667d967e9f76">DiskInterface::RemoveFile()</a>, <a class="el" href="build_8h_source.html#l00187">scan_</a>, <a class="el" href="structDiskInterface.html#ac99deecbc7f235272f0a8e308e7792d7">DiskInterface::Stat()</a>, <a class="el" href="build_8h_source.html#l00112">CommandRunner::Result::status</a>, <a class="el" href="build_8h_source.html#l00180">status_</a>, and <a class="el" href="build_8h_source.html#l00114">CommandRunner::Result::success()</a>.</p>
+
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00588">Build()</a>.</p>
 
 </div>
 </div>
@@ -441,11 +455,11 @@ Private Attributes</h2></td></tr>
 
 <p>Used for tests. </p>
 
-<p>Definition at line <a class="el" href="build_8h_source.html#l00169">169</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
+<p>Definition at line <a class="el" href="build_8h_source.html#l00172">172</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
 
-<p>References <a class="el" href="build_8h_source.html#l00184">scan_</a>, and <a class="el" href="graph_8h_source.html#l00252">DependencyScan::set_build_log()</a>.</p>
+<p>References <a class="el" href="build_8h_source.html#l00187">scan_</a>, and <a class="el" href="graph_8h_source.html#l00251">DependencyScan::set_build_log()</a>.</p>
 
-<p>Referenced by <a class="el" href="build__test_8cc_source.html#l00961">BuildWithLogTest::BuildWithLogTest()</a>.</p>
+<p>Referenced by <a class="el" href="build__test_8cc_source.html#l01003">BuildWithLogTest::BuildWithLogTest()</a>.</p>
 
 </div>
 </div>
@@ -474,11 +488,11 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="build_8cc_source.html#l00674">674</a> of file <a class="el" href="build_8cc_source.html">build.cc</a>.</p>
+<p>Definition at line <a class="el" href="build_8cc_source.html#l00672">672</a> of file <a class="el" href="build_8cc_source.html">build.cc</a>.</p>
 
-<p>References <a class="el" href="build_8cc_source.html#l00093">BuildStatus::BuildEdgeStarted()</a>, <a class="el" href="build_8h_source.html#l00176">command_runner_</a>, <a class="el" href="build_8h_source.html#l00183">disk_interface_</a>, <a class="el" href="graph_8cc_source.html#l00274">Edge::EvaluateCommand()</a>, <a class="el" href="graph_8cc_source.html#l00284">Edge::GetBinding()</a>, <a class="el" href="graph_8cc_source.html#l00314">Edge::is_phony()</a>, <a class="el" href="disk__interface_8cc_source.html#l00059">DiskInterface::MakeDirs()</a>, <a class="el" href="metrics_8h_source.html#l00085">METRIC_RECORD</a>, <a class="el" href="graph_8h_source.html#l00157">Edge::outputs_</a>, <a class="el" href="build_8h_source.html#l00177">status_</a>, and <a class="el" href="structDiskInterface.html#afcfaed359bb8ba121bba9838c02c2483">DiskInterface::WriteFile()</a>.</p>
+<p>References <a class="el" href="build_8cc_source.html#l00094">BuildStatus::BuildEdgeStarted()</a>, <a class="el" href="build_8h_source.html#l00179">command_runner_</a>, <a class="el" href="build_8h_source.html#l00186">disk_interface_</a>, <a class="el" href="graph_8cc_source.html#l00267">Edge::EvaluateCommand()</a>, <a class="el" href="graph_8cc_source.html#l00277">Edge::GetBinding()</a>, <a class="el" href="graph_8cc_source.html#l00307">Edge::is_phony()</a>, <a class="el" href="disk__interface_8cc_source.html#l00059">DiskInterface::MakeDirs()</a>, <a class="el" href="metrics_8h_source.html#l00085">METRIC_RECORD</a>, <a class="el" href="graph_8h_source.html#l00157">Edge::outputs_</a>, <a class="el" href="build_8h_source.html#l00180">status_</a>, and <a class="el" href="structDiskInterface.html#afcfaed359bb8ba121bba9838c02c2483">DiskInterface::WriteFile()</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00593">Build()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00588">Build()</a>.</p>
 
 </div>
 </div>
@@ -494,9 +508,9 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="build_8h_source.html#l00176">176</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
+<p>Definition at line <a class="el" href="build_8h_source.html#l00179">179</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00593">Build()</a>, <a class="el" href="build_8cc_source.html#l00535">Cleanup()</a>, <a class="el" href="build__test_8cc_source.html#l00421">BuildTest::SetUp()</a>, <a class="el" href="build_8cc_source.html#l00674">StartEdge()</a>, <a class="el" href="build__test_8cc_source.html#l01440">TEST_F()</a>, and <a class="el" href="build__test_8cc_source.html#l00434">BuildTest::~BuildTest()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00588">Build()</a>, <a class="el" href="build_8cc_source.html#l00530">Cleanup()</a>, <a class="el" href="build__test_8cc_source.html#l00462">BuildTest::RebuildTarget()</a>, <a class="el" href="build__test_8cc_source.html#l00421">BuildTest::SetUp()</a>, <a class="el" href="build_8cc_source.html#l00672">StartEdge()</a>, <a class="el" href="build__test_8cc_source.html#l01523">TEST_F()</a>, and <a class="el" href="build__test_8cc_source.html#l00434">BuildTest::~BuildTest()</a>.</p>
 
 </div>
 </div>
@@ -511,9 +525,9 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="build_8h_source.html#l00174">174</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
+<p>Definition at line <a class="el" href="build_8h_source.html#l00177">177</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00593">Build()</a>, and <a class="el" href="build_8cc_source.html#l00707">FinishCommand()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00588">Build()</a>, and <a class="el" href="build_8cc_source.html#l00705">FinishCommand()</a>.</p>
 
 </div>
 </div>
@@ -528,9 +542,9 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="build_8h_source.html#l00183">183</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
+<p>Definition at line <a class="el" href="build_8h_source.html#l00186">186</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00574">AddTarget()</a>, <a class="el" href="build_8cc_source.html#l00535">Cleanup()</a>, <a class="el" href="build_8cc_source.html#l00799">ExtractDeps()</a>, <a class="el" href="build_8cc_source.html#l00707">FinishCommand()</a>, and <a class="el" href="build_8cc_source.html#l00674">StartEdge()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00569">AddTarget()</a>, <a class="el" href="build_8cc_source.html#l00530">Cleanup()</a>, <a class="el" href="build_8cc_source.html#l00803">ExtractDeps()</a>, <a class="el" href="build_8cc_source.html#l00705">FinishCommand()</a>, and <a class="el" href="build_8cc_source.html#l00672">StartEdge()</a>.</p>
 
 </div>
 </div>
@@ -545,9 +559,9 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="build_8h_source.html#l00175">175</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
+<p>Definition at line <a class="el" href="build_8h_source.html#l00178">178</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00574">AddTarget()</a>, <a class="el" href="build_8cc_source.html#l00589">AlreadyUpToDate()</a>, <a class="el" href="build_8cc_source.html#l00593">Build()</a>, and <a class="el" href="build_8cc_source.html#l00707">FinishCommand()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00569">AddTarget()</a>, <a class="el" href="build_8cc_source.html#l00584">AlreadyUpToDate()</a>, <a class="el" href="build_8cc_source.html#l00588">Build()</a>, and <a class="el" href="build_8cc_source.html#l00705">FinishCommand()</a>.</p>
 
 </div>
 </div>
@@ -562,9 +576,9 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="build_8h_source.html#l00184">184</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
+<p>Definition at line <a class="el" href="build_8h_source.html#l00187">187</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00574">AddTarget()</a>, <a class="el" href="build_8cc_source.html#l00707">FinishCommand()</a>, and <a class="el" href="build_8h_source.html#l00169">SetBuildLog()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00569">AddTarget()</a>, <a class="el" href="build_8cc_source.html#l00705">FinishCommand()</a>, and <a class="el" href="build_8h_source.html#l00172">SetBuildLog()</a>.</p>
 
 </div>
 </div>
@@ -579,9 +593,9 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="build_8h_source.html#l00173">173</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
+<p>Definition at line <a class="el" href="build_8h_source.html#l00176">176</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00563">AddTarget()</a>, and <a class="el" href="build_8cc_source.html#l00799">ExtractDeps()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00558">AddTarget()</a>, and <a class="el" href="build_8cc_source.html#l00803">ExtractDeps()</a>.</p>
 
 </div>
 </div>
@@ -596,9 +610,9 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="build_8h_source.html#l00177">177</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
+<p>Definition at line <a class="el" href="build_8h_source.html#l00180">180</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00593">Build()</a>, <a class="el" href="build_8cc_source.html#l00523">Builder()</a>, <a class="el" href="build_8cc_source.html#l00707">FinishCommand()</a>, and <a class="el" href="build_8cc_source.html#l00674">StartEdge()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00588">Build()</a>, <a class="el" href="build_8cc_source.html#l00518">Builder()</a>, <a class="el" href="build_8cc_source.html#l00705">FinishCommand()</a>, and <a class="el" href="build_8cc_source.html#l00672">StartEdge()</a>.</p>
 
 </div>
 </div>
@@ -610,7 +624,7 @@ Private Attributes</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Aug 8 2013 09:48:12 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Sep 12 2013 09:25:50 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

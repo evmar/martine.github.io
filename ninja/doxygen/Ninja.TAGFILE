@@ -36,6 +36,7 @@
     <filename>build_8cc</filename>
     <includes id="build_8h" name="build.h" local="yes" imported="no">build.h</includes>
     <includes id="build__log_8h" name="build_log.h" local="yes" imported="no">build_log.h</includes>
+    <includes id="debug__flags_8h" name="debug_flags.h" local="yes" imported="no">debug_flags.h</includes>
     <includes id="depfile__parser_8h" name="depfile_parser.h" local="yes" imported="no">depfile_parser.h</includes>
     <includes id="deps__log_8h" name="deps_log.h" local="yes" imported="no">deps_log.h</includes>
     <includes id="disk__interface_8h" name="disk_interface.h" local="yes" imported="no">disk_interface.h</includes>
@@ -375,6 +376,13 @@
       <type></type>
       <name>TEST_F</name>
       <anchorfile>build__test_8cc.html</anchorfile>
+      <anchor>a9e3ec8786022b67a4f84a2c72a43e051</anchor>
+      <arglist>(BuildWithLogTest, RestatSingleDependentOutputDirty)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>TEST_F</name>
+      <anchorfile>build__test_8cc.html</anchorfile>
       <anchor>a8ba78c5fb4d2fa76b36d0b6c433fe0ea</anchor>
       <arglist>(BuildWithLogTest, RestatMissingInput)</arglist>
     </member>
@@ -482,6 +490,20 @@
       <anchorfile>build__test_8cc.html</anchorfile>
       <anchor>a1b2529f00a46489a4fd16508b3e74650</anchor>
       <arglist>(BuildWithDepsLogTest, DepFileOKDepsLog)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>TEST_F</name>
+      <anchorfile>build__test_8cc.html</anchorfile>
+      <anchor>af59fb3f5ab94379f53c8e1f64899ccd0</anchor>
+      <arglist>(BuildTest, RestatMissingDepfile)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>TEST_F</name>
+      <anchorfile>build__test_8cc.html</anchorfile>
+      <anchor>a8d040593dff5c2ce4abda77ec51cd58e</anchor>
+      <arglist>(BuildWithDepsLogTest, RestatMissingDepfileDepslog)</arglist>
     </member>
   </compound>
   <compound kind="file">
@@ -630,6 +652,51 @@
     </member>
   </compound>
   <compound kind="file">
+    <name>debug_flags.cc</name>
+    <path>/home/evanm/projects/ninja/src/</path>
+    <filename>debug__flags_8cc</filename>
+    <member kind="variable">
+      <type>bool</type>
+      <name>g_explaining</name>
+      <anchorfile>debug__flags_8cc.html</anchorfile>
+      <anchor>aba5810fa2f3f3a9acec8c29dd5cf4dcc</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>g_keep_rsp</name>
+      <anchorfile>debug__flags_8cc.html</anchorfile>
+      <anchor>a5c5dbe2626f85f84cfc89f86f5c9e159</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="file">
+    <name>debug_flags.h</name>
+    <path>/home/evanm/projects/ninja/src/</path>
+    <filename>debug__flags_8h</filename>
+    <member kind="define">
+      <type>#define</type>
+      <name>EXPLAIN</name>
+      <anchorfile>debug__flags_8h.html</anchorfile>
+      <anchor>a334e8f1dd8a740e85baff782ec1012c6</anchor>
+      <arglist>(fmt,...)</arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>g_explaining</name>
+      <anchorfile>debug__flags_8h.html</anchorfile>
+      <anchor>aba5810fa2f3f3a9acec8c29dd5cf4dcc</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>g_keep_rsp</name>
+      <anchorfile>debug__flags_8h.html</anchorfile>
+      <anchor>a5c5dbe2626f85f84cfc89f86f5c9e159</anchor>
+      <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="file">
     <name>depfile_parser.cc</name>
     <path>/home/evanm/projects/ninja/src/</path>
     <filename>depfile__parser_8cc</filename>
@@ -742,10 +809,10 @@
       <arglist>[]</arglist>
     </member>
     <member kind="variable">
-      <type>const int</type>
-      <name>kMaxBufferSize</name>
+      <type>const unsigned</type>
+      <name>kMaxRecordSize</name>
       <anchorfile>deps__log_8cc.html</anchorfile>
-      <anchor>ad528d4d13536862a82c542bb4f870979</anchor>
+      <anchor>a14c5a973c5acd0659069ca9516d247a5</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -895,37 +962,6 @@
     </member>
   </compound>
   <compound kind="file">
-    <name>explain.cc</name>
-    <path>/home/evanm/projects/ninja/src/</path>
-    <filename>explain_8cc</filename>
-    <member kind="variable">
-      <type>bool</type>
-      <name>g_explaining</name>
-      <anchorfile>explain_8cc.html</anchorfile>
-      <anchor>aba5810fa2f3f3a9acec8c29dd5cf4dcc</anchor>
-      <arglist></arglist>
-    </member>
-  </compound>
-  <compound kind="file">
-    <name>explain.h</name>
-    <path>/home/evanm/projects/ninja/src/</path>
-    <filename>explain_8h</filename>
-    <member kind="define">
-      <type>#define</type>
-      <name>EXPLAIN</name>
-      <anchorfile>explain_8h.html</anchorfile>
-      <anchor>a334e8f1dd8a740e85baff782ec1012c6</anchor>
-      <arglist>(fmt,...)</arglist>
-    </member>
-    <member kind="variable">
-      <type>bool</type>
-      <name>g_explaining</name>
-      <anchorfile>explain_8h.html</anchorfile>
-      <anchor>aba5810fa2f3f3a9acec8c29dd5cf4dcc</anchor>
-      <arglist></arglist>
-    </member>
-  </compound>
-  <compound kind="file">
     <name>getopt.h</name>
     <path>/home/evanm/projects/ninja/src/</path>
     <filename>getopt_8h</filename>
@@ -1021,10 +1057,10 @@
     <filename>graph_8cc</filename>
     <includes id="graph_8h" name="graph.h" local="yes" imported="no">graph.h</includes>
     <includes id="build__log_8h" name="build_log.h" local="yes" imported="no">build_log.h</includes>
+    <includes id="debug__flags_8h" name="debug_flags.h" local="yes" imported="no">debug_flags.h</includes>
     <includes id="depfile__parser_8h" name="depfile_parser.h" local="yes" imported="no">depfile_parser.h</includes>
     <includes id="deps__log_8h" name="deps_log.h" local="yes" imported="no">deps_log.h</includes>
     <includes id="disk__interface_8h" name="disk_interface.h" local="yes" imported="no">disk_interface.h</includes>
-    <includes id="explain_8h" name="explain.h" local="yes" imported="no">explain.h</includes>
     <includes id="manifest__parser_8h" name="manifest_parser.h" local="yes" imported="no">manifest_parser.h</includes>
     <includes id="metrics_8h" name="metrics.h" local="yes" imported="no">metrics.h</includes>
     <includes id="state_8h" name="state.h" local="yes" imported="no">state.h</includes>
@@ -1048,6 +1084,7 @@
     <path>/home/evanm/projects/ninja/src/</path>
     <filename>graph__test_8cc</filename>
     <includes id="graph_8h" name="graph.h" local="yes" imported="no">graph.h</includes>
+    <includes id="build_8h" name="build.h" local="yes" imported="no">build.h</includes>
     <includes id="test_8h" name="test.h" local="yes" imported="no">test.h</includes>
     <class kind="struct">GraphTest</class>
     <member kind="function">
@@ -1133,6 +1170,13 @@
       <anchorfile>graph__test_8cc.html</anchorfile>
       <anchor>ad6f8f516a73429e6586689b2d7a7f29d</anchor>
       <arglist>(GraphTest, DepfileOverrideParent)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>TEST_F</name>
+      <anchorfile>graph__test_8cc.html</anchorfile>
+      <anchor>a7080698fad79bfd22c1f53563890336a</anchor>
+      <arglist>(GraphTest, NestedPhonyPrintsDone)</arglist>
     </member>
   </compound>
   <compound kind="file">
@@ -1846,8 +1890,8 @@
     <includes id="build__log_8h" name="build_log.h" local="yes" imported="no">build_log.h</includes>
     <includes id="deps__log_8h" name="deps_log.h" local="yes" imported="no">deps_log.h</includes>
     <includes id="clean_8h" name="clean.h" local="yes" imported="no">clean.h</includes>
+    <includes id="debug__flags_8h" name="debug_flags.h" local="yes" imported="no">debug_flags.h</includes>
     <includes id="disk__interface_8h" name="disk_interface.h" local="yes" imported="no">disk_interface.h</includes>
-    <includes id="explain_8h" name="explain.h" local="yes" imported="no">explain.h</includes>
     <includes id="graph_8h" name="graph.h" local="yes" imported="no">graph.h</includes>
     <includes id="graphviz_8h" name="graphviz.h" local="yes" imported="no">graphviz.h</includes>
     <includes id="manifest__parser_8h" name="manifest_parser.h" local="yes" imported="no">manifest_parser.h</includes>
@@ -2585,6 +2629,13 @@
       <anchor>a591bffbbff3975fb44ce22f16ae4427e</anchor>
       <arglist>()</arglist>
     </member>
+    <member kind="function">
+      <type>void</type>
+      <name>RebuildTarget</name>
+      <anchorfile>structBuildTest.html</anchorfile>
+      <anchor>ad27d56c5529e734f05ed58a9d2dd5e53</anchor>
+      <arglist>(const string &amp;target, const char *manifest, const char *log_path=NULL, const char *deps_path=NULL)</arglist>
+    </member>
     <member kind="function" virtualness="virtual">
       <type>virtual void</type>
       <name>SetUp</name>
@@ -2688,11 +2739,11 @@
       <arglist>()</arglist>
     </member>
     <member kind="function">
-      <type>void</type>
+      <type>bool</type>
       <name>FinishCommand</name>
       <anchorfile>structBuilder.html</anchorfile>
-      <anchor>acac1119b055985c1444e918505f8c53d</anchor>
-      <arglist>(CommandRunner::Result *result)</arglist>
+      <anchor>a2fde50693215210a556a5bd82b0231d0</anchor>
+      <arglist>(CommandRunner::Result *result, string *err)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -2847,17 +2898,17 @@
       <arglist>(const string &amp;path, string *err)</arglist>
     </member>
     <member kind="function">
-      <type>void</type>
+      <type>bool</type>
       <name>RecordCommand</name>
       <anchorfile>structBuildLog.html</anchorfile>
-      <anchor>a52516b9c36079c570a0144d0599f4fb1</anchor>
+      <anchor>a0f6053fff49c2044bbfb0b6293d31d9f</anchor>
       <arglist>(Edge *edge, int start_time, int end_time, TimeStamp restat_mtime=0)</arglist>
     </member>
     <member kind="function">
-      <type>void</type>
+      <type>bool</type>
       <name>WriteEntry</name>
       <anchorfile>structBuildLog.html</anchorfile>
-      <anchor>ac1f4853d1fc456d71a0d9940c04234a0</anchor>
+      <anchor>a9ecfb3911719e31c05331d4b142014ce</anchor>
       <arglist>(FILE *f, const LogEntry &amp;entry)</arglist>
     </member>
     <member kind="function">
@@ -3254,6 +3305,13 @@
       <anchor>a591bffbbff3975fb44ce22f16ae4427e</anchor>
       <arglist>()</arglist>
     </member>
+    <member kind="function">
+      <type>void</type>
+      <name>RebuildTarget</name>
+      <anchorfile>structBuildTest.html</anchorfile>
+      <anchor>ad27d56c5529e734f05ed58a9d2dd5e53</anchor>
+      <arglist>(const string &amp;target, const char *manifest, const char *log_path=NULL, const char *deps_path=NULL)</arglist>
+    </member>
     <member kind="function" virtualness="virtual">
       <type>virtual void</type>
       <name>SetUp</name>
@@ -3349,6 +3407,13 @@
       <anchorfile>structBuildTest.html</anchorfile>
       <anchor>a591bffbbff3975fb44ce22f16ae4427e</anchor>
       <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>RebuildTarget</name>
+      <anchorfile>structBuildTest.html</anchorfile>
+      <anchor>ad27d56c5529e734f05ed58a9d2dd5e53</anchor>
+      <arglist>(const string &amp;target, const char *manifest, const char *log_path=NULL, const char *deps_path=NULL)</arglist>
     </member>
     <member kind="function" virtualness="virtual">
       <type>virtual void</type>
@@ -3452,6 +3517,13 @@
       <anchorfile>structBuildTest.html</anchorfile>
       <anchor>a591bffbbff3975fb44ce22f16ae4427e</anchor>
       <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>RebuildTarget</name>
+      <anchorfile>structBuildTest.html</anchorfile>
+      <anchor>ad27d56c5529e734f05ed58a9d2dd5e53</anchor>
+      <arglist>(const string &amp;target, const char *manifest, const char *log_path=NULL, const char *deps_path=NULL)</arglist>
     </member>
     <member kind="function" virtualness="virtual">
       <type>virtual void</type>
@@ -3954,10 +4026,10 @@
     </member>
     <member kind="function">
       <type>bool</type>
-      <name>RecomputeOutputDirty</name>
+      <name>RecomputeOutputsDirty</name>
       <anchorfile>structDependencyScan.html</anchorfile>
-      <anchor>aef4b3d4a850f3233bb4290e9d6a63b6b</anchor>
-      <arglist>(Edge *edge, Node *most_recent_input, TimeStamp deps_mtime, const string &amp;command, Node *output)</arglist>
+      <anchor>a0b1ec300b10142efc8559a235c4f7555</anchor>
+      <arglist>(Edge *edge, Node *most_recent_input)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -3965,6 +4037,13 @@
       <anchorfile>structDependencyScan.html</anchorfile>
       <anchor>a23ecdbf0f9e1154605c34c67c6406110</anchor>
       <arglist>(BuildLog *log)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>bool</type>
+      <name>RecomputeOutputDirty</name>
+      <anchorfile>structDependencyScan.html</anchorfile>
+      <anchor>ad426b831c9123de9c94da728e3dab9ef</anchor>
+      <arglist>(Edge *edge, Node *most_recent_input, const string &amp;command, Node *output)</arglist>
     </member>
     <member kind="variable" protection="private">
       <type>BuildLog *</type>
@@ -4354,6 +4433,13 @@
       <anchorfile>structEdge.html</anchorfile>
       <anchor>ab08abe6de206325f0b1f472cbadaa755</anchor>
       <arglist>() const </arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>deps_missing_</name>
+      <anchorfile>structEdge.html</anchorfile>
+      <anchor>acccfa23f518b63f8663f61a738bf121b</anchor>
+      <arglist></arglist>
     </member>
     <member kind="variable">
       <type>BindingEnv *</type>
@@ -4760,8 +4846,8 @@
       <type>bool</type>
       <name>LoadDeps</name>
       <anchorfile>structImplicitDepLoader.html</anchorfile>
-      <anchor>afbd0eebed6ec987e04dfcc6082cc6752</anchor>
-      <arglist>(Edge *edge, TimeStamp *mtime, string *err)</arglist>
+      <anchor>a66cdcc2cfccfd7b86c851007bf3c1b13</anchor>
+      <arglist>(Edge *edge, string *err)</arglist>
     </member>
     <member kind="function" protection="private">
       <type>void</type>
@@ -4781,8 +4867,8 @@
       <type>bool</type>
       <name>LoadDepsFromLog</name>
       <anchorfile>structImplicitDepLoader.html</anchorfile>
-      <anchor>afb3242da7fa93293df0bdb9f3060b955</anchor>
-      <arglist>(Edge *edge, TimeStamp *mtime, string *err)</arglist>
+      <anchor>a03bcc22d47ef3dc927f93a2bff86f895</anchor>
+      <arglist>(Edge *edge, string *err)</arglist>
     </member>
     <member kind="function" protection="private">
       <type>vector&lt; Node * &gt;::iterator</type>

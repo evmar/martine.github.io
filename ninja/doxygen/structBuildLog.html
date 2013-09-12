@@ -91,9 +91,9 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBuildLog.html#a08a600782d1b1c8369b8437d9d9c4264">OpenForWrite</a> (const string &amp;path, string *err)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBuildLog.html#a864e5ac4b1d5239ae808b38ab3aeeb41">Recompact</a> (const string &amp;path, string *err)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Rewrite the known log entries, throwing away old data.  <a href="#a864e5ac4b1d5239ae808b38ab3aeeb41"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBuildLog.html#a52516b9c36079c570a0144d0599f4fb1">RecordCommand</a> (<a class="el" href="structEdge.html">Edge</a> *edge, int start_time, int end_time, <a class="el" href="timestamp_8h.html#a364f6f32873dd70e259c971fc2e28b73">TimeStamp</a> restat_mtime=0)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBuildLog.html#ac1f4853d1fc456d71a0d9940c04234a0">WriteEntry</a> (FILE *f, const <a class="el" href="structBuildLog_1_1LogEntry.html">LogEntry</a> &amp;entry)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize an entry into a log file.  <a href="#ac1f4853d1fc456d71a0d9940c04234a0"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBuildLog.html#a0f6053fff49c2044bbfb0b6293d31d9f">RecordCommand</a> (<a class="el" href="structEdge.html">Edge</a> *edge, int start_time, int end_time, <a class="el" href="timestamp_8h.html#a364f6f32873dd70e259c971fc2e28b73">TimeStamp</a> restat_mtime=0)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBuildLog.html#a9ecfb3911719e31c05331d4b142014ce">WriteEntry</a> (FILE *f, const <a class="el" href="structBuildLog_1_1LogEntry.html">LogEntry</a> &amp;entry)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Serialize an entry into a log file.  <a href="#a9ecfb3911719e31c05331d4b142014ce"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBuildLog.html#a2d5fc7e9bcbaf8900e2fb671e1ebea6c">~BuildLog</a> ()</td></tr>
 <tr><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -158,7 +158,7 @@ Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="build__log_8cc_source.html#l00107">107</a> of file <a class="el" href="build__log_8cc_source.html">build_log.cc</a>.</p>
 
-<p>References <a class="el" href="build__log_8cc_source.html#l00164">Close()</a>.</p>
+<p>References <a class="el" href="build__log_8cc_source.html#l00167">Close()</a>.</p>
 
 </div>
 </div>
@@ -177,11 +177,11 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="build__log_8cc_source.html#l00164">164</a> of file <a class="el" href="build__log_8cc_source.html">build_log.cc</a>.</p>
+<p>Definition at line <a class="el" href="build__log_8cc_source.html#l00167">167</a> of file <a class="el" href="build__log_8cc_source.html">build_log.cc</a>.</p>
 
 <p>References <a class="el" href="build__log_8h_source.html#l00082">log_file_</a>.</p>
 
-<p>Referenced by <a class="el" href="build__log_8cc_source.html#l00350">Recompact()</a>, and <a class="el" href="build__log_8cc_source.html#l00107">~BuildLog()</a>.</p>
+<p>Referenced by <a class="el" href="build__log_8cc_source.html#l00353">Recompact()</a>, and <a class="el" href="build__log_8cc_source.html#l00107">~BuildLog()</a>.</p>
 
 </div>
 </div>
@@ -230,11 +230,11 @@ Private Attributes</h2></td></tr>
 
 <p>Load the on-disk log. </p>
 
-<p>Definition at line <a class="el" href="build__log_8cc_source.html#l00221">221</a> of file <a class="el" href="build__log_8cc_source.html">build_log.cc</a>.</p>
+<p>Definition at line <a class="el" href="build__log_8cc_source.html#l00224">224</a> of file <a class="el" href="build__log_8cc_source.html">build_log.cc</a>.</p>
 
-<p>References <a class="el" href="build__log_8h_source.html#l00049">BuildLog::LogEntry::command_hash</a>, <a class="el" href="build__log_8h_source.html#l00051">BuildLog::LogEntry::end_time</a>, <a class="el" href="build__log_8h_source.html#l00081">entries_</a>, <a class="el" href="build__log_8cc_source.html#l00091">BuildLog::LogEntry::HashCommand()</a>, <a class="el" href="deps__log_8cc_source.html#l00033">kCurrentVersion</a>, <a class="el" href="deps__log_8cc_source.html#l00032">kFileSignature</a>, <a class="el" href="metrics_8h_source.html#l00085">METRIC_RECORD</a>, <a class="el" href="build__log_8h_source.html#l00083">needs_recompaction_</a>, <a class="el" href="build__log_8h_source.html#l00048">BuildLog::LogEntry::output</a>, <a class="el" href="build__log_8cc_source.html#l00180">LineReader::ReadLine()</a>, <a class="el" href="build__log_8h_source.html#l00052">BuildLog::LogEntry::restat_mtime</a>, and <a class="el" href="build__log_8h_source.html#l00050">BuildLog::LogEntry::start_time</a>.</p>
+<p>References <a class="el" href="build__log_8h_source.html#l00049">BuildLog::LogEntry::command_hash</a>, <a class="el" href="build__log_8h_source.html#l00051">BuildLog::LogEntry::end_time</a>, <a class="el" href="build__log_8h_source.html#l00081">entries_</a>, <a class="el" href="build__log_8cc_source.html#l00091">BuildLog::LogEntry::HashCommand()</a>, <a class="el" href="deps__log_8cc_source.html#l00033">kCurrentVersion</a>, <a class="el" href="deps__log_8cc_source.html#l00032">kFileSignature</a>, <a class="el" href="metrics_8h_source.html#l00085">METRIC_RECORD</a>, <a class="el" href="build__log_8h_source.html#l00083">needs_recompaction_</a>, <a class="el" href="build__log_8h_source.html#l00048">BuildLog::LogEntry::output</a>, <a class="el" href="build__log_8cc_source.html#l00183">LineReader::ReadLine()</a>, <a class="el" href="build__log_8h_source.html#l00052">BuildLog::LogEntry::restat_mtime</a>, and <a class="el" href="build__log_8h_source.html#l00050">BuildLog::LogEntry::start_time</a>.</p>
 
-<p>Referenced by <a class="el" href="build__log__perftest_8cc_source.html#l00096">main()</a>.</p>
+<p>Referenced by <a class="el" href="build__log__perftest_8cc_source.html#l00096">main()</a>, and <a class="el" href="build__test_8cc_source.html#l00462">BuildTest::RebuildTarget()</a>.</p>
 
 </div>
 </div>
@@ -255,11 +255,11 @@ Private Attributes</h2></td></tr>
 
 <p>Lookup a previously-run command by its output path. </p>
 
-<p>Definition at line <a class="el" href="build__log_8cc_source.html#l00337">337</a> of file <a class="el" href="build__log_8cc_source.html">build_log.cc</a>.</p>
+<p>Definition at line <a class="el" href="build__log_8cc_source.html#l00340">340</a> of file <a class="el" href="build__log_8cc_source.html">build_log.cc</a>.</p>
 
 <p>References <a class="el" href="build__log_8h_source.html#l00081">entries_</a>.</p>
 
-<p>Referenced by <a class="el" href="graph_8cc_source.html#l00144">DependencyScan::RecomputeOutputDirty()</a>.</p>
+<p>Referenced by <a class="el" href="graph_8cc_source.html#l00145">DependencyScan::RecomputeOutputDirty()</a>.</p>
 
 </div>
 </div>
@@ -290,9 +290,9 @@ Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="build__log_8cc_source.html#l00111">111</a> of file <a class="el" href="build__log_8cc_source.html">build_log.cc</a>.</p>
 
-<p>References <a class="el" href="deps__log_8cc_source.html#l00033">kCurrentVersion</a>, <a class="el" href="deps__log_8cc_source.html#l00032">kFileSignature</a>, <a class="el" href="build__log_8h_source.html#l00082">log_file_</a>, <a class="el" href="build__log_8h_source.html#l00083">needs_recompaction_</a>, <a class="el" href="build__log_8cc_source.html#l00350">Recompact()</a>, and <a class="el" href="util_8cc_source.html#l00200">SetCloseOnExec()</a>.</p>
+<p>References <a class="el" href="deps__log_8cc_source.html#l00033">kCurrentVersion</a>, <a class="el" href="deps__log_8cc_source.html#l00032">kFileSignature</a>, <a class="el" href="build__log_8h_source.html#l00082">log_file_</a>, <a class="el" href="build__log_8h_source.html#l00083">needs_recompaction_</a>, <a class="el" href="build__log_8cc_source.html#l00353">Recompact()</a>, and <a class="el" href="util_8cc_source.html#l00200">SetCloseOnExec()</a>.</p>
 
-<p>Referenced by <a class="el" href="build__log__perftest_8cc_source.html#l00031">WriteTestData()</a>.</p>
+<p>Referenced by <a class="el" href="build__test_8cc_source.html#l00462">BuildTest::RebuildTarget()</a>, and <a class="el" href="build__log__perftest_8cc_source.html#l00031">WriteTestData()</a>.</p>
 
 </div>
 </div>
@@ -323,20 +323,20 @@ Private Attributes</h2></td></tr>
 
 <p>Rewrite the known log entries, throwing away old data. </p>
 
-<p>Definition at line <a class="el" href="build__log_8cc_source.html#l00350">350</a> of file <a class="el" href="build__log_8cc_source.html">build_log.cc</a>.</p>
+<p>Definition at line <a class="el" href="build__log_8cc_source.html#l00353">353</a> of file <a class="el" href="build__log_8cc_source.html">build_log.cc</a>.</p>
 
-<p>References <a class="el" href="build__log_8cc_source.html#l00164">Close()</a>, <a class="el" href="build__log_8h_source.html#l00081">entries_</a>, <a class="el" href="deps__log_8cc_source.html#l00033">kCurrentVersion</a>, <a class="el" href="deps__log_8cc_source.html#l00032">kFileSignature</a>, <a class="el" href="metrics_8h_source.html#l00085">METRIC_RECORD</a>, and <a class="el" href="build__log_8cc_source.html#l00344">WriteEntry()</a>.</p>
+<p>References <a class="el" href="build__log_8cc_source.html#l00167">Close()</a>, <a class="el" href="build__log_8h_source.html#l00081">entries_</a>, <a class="el" href="deps__log_8cc_source.html#l00033">kCurrentVersion</a>, <a class="el" href="deps__log_8cc_source.html#l00032">kFileSignature</a>, <a class="el" href="metrics_8h_source.html#l00085">METRIC_RECORD</a>, and <a class="el" href="build__log_8cc_source.html#l00347">WriteEntry()</a>.</p>
 
 <p>Referenced by <a class="el" href="build__log_8cc_source.html#l00111">OpenForWrite()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a52516b9c36079c570a0144d0599f4fb1"></a><!-- doxytag: member="BuildLog::RecordCommand" ref="a52516b9c36079c570a0144d0599f4fb1" args="(Edge *edge, int start_time, int end_time, TimeStamp restat_mtime=0)" -->
+<a class="anchor" id="a0f6053fff49c2044bbfb0b6293d31d9f"></a><!-- doxytag: member="BuildLog::RecordCommand" ref="a0f6053fff49c2044bbfb0b6293d31d9f" args="(Edge *edge, int start_time, int end_time, TimeStamp restat_mtime=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="structBuildLog.html#a52516b9c36079c570a0144d0599f4fb1">BuildLog::RecordCommand</a> </td>
+          <td class="memname">bool <a class="el" href="structBuildLog.html#a0f6053fff49c2044bbfb0b6293d31d9f">BuildLog::RecordCommand</a> </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structEdge.html">Edge</a> *&#160;</td>
           <td class="paramname"><em>edge</em>, </td>
@@ -370,18 +370,18 @@ Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="build__log_8cc_source.html#l00139">139</a> of file <a class="el" href="build__log_8cc_source.html">build_log.cc</a>.</p>
 
-<p>References <a class="el" href="build__log_8h_source.html#l00049">BuildLog::LogEntry::command_hash</a>, <a class="el" href="build__log_8h_source.html#l00051">BuildLog::LogEntry::end_time</a>, <a class="el" href="build__log_8h_source.html#l00081">entries_</a>, <a class="el" href="graph_8cc_source.html#l00274">Edge::EvaluateCommand()</a>, <a class="el" href="build__log_8cc_source.html#l00091">BuildLog::LogEntry::HashCommand()</a>, <a class="el" href="build__log_8h_source.html#l00082">log_file_</a>, <a class="el" href="build__log_8h_source.html#l00048">BuildLog::LogEntry::output</a>, <a class="el" href="graph_8h_source.html#l00157">Edge::outputs_</a>, <a class="el" href="build__log_8h_source.html#l00052">BuildLog::LogEntry::restat_mtime</a>, <a class="el" href="build__log_8h_source.html#l00050">BuildLog::LogEntry::start_time</a>, and <a class="el" href="build__log_8cc_source.html#l00344">WriteEntry()</a>.</p>
+<p>References <a class="el" href="build__log_8h_source.html#l00049">BuildLog::LogEntry::command_hash</a>, <a class="el" href="build__log_8h_source.html#l00051">BuildLog::LogEntry::end_time</a>, <a class="el" href="build__log_8h_source.html#l00081">entries_</a>, <a class="el" href="graph_8cc_source.html#l00267">Edge::EvaluateCommand()</a>, <a class="el" href="build__log_8cc_source.html#l00091">BuildLog::LogEntry::HashCommand()</a>, <a class="el" href="build__log_8h_source.html#l00082">log_file_</a>, <a class="el" href="build__log_8h_source.html#l00048">BuildLog::LogEntry::output</a>, <a class="el" href="graph_8h_source.html#l00157">Edge::outputs_</a>, <a class="el" href="build__log_8h_source.html#l00052">BuildLog::LogEntry::restat_mtime</a>, <a class="el" href="build__log_8h_source.html#l00050">BuildLog::LogEntry::start_time</a>, and <a class="el" href="build__log_8cc_source.html#l00347">WriteEntry()</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00707">Builder::FinishCommand()</a>, and <a class="el" href="build__log__perftest_8cc_source.html#l00031">WriteTestData()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00705">Builder::FinishCommand()</a>, and <a class="el" href="build__log__perftest_8cc_source.html#l00031">WriteTestData()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ac1f4853d1fc456d71a0d9940c04234a0"></a><!-- doxytag: member="BuildLog::WriteEntry" ref="ac1f4853d1fc456d71a0d9940c04234a0" args="(FILE *f, const LogEntry &amp;entry)" -->
+<a class="anchor" id="a9ecfb3911719e31c05331d4b142014ce"></a><!-- doxytag: member="BuildLog::WriteEntry" ref="a9ecfb3911719e31c05331d4b142014ce" args="(FILE *f, const LogEntry &amp;entry)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="structBuildLog.html#ac1f4853d1fc456d71a0d9940c04234a0">BuildLog::WriteEntry</a> </td>
+          <td class="memname">bool <a class="el" href="structBuildLog.html#a9ecfb3911719e31c05331d4b142014ce">BuildLog::WriteEntry</a> </td>
           <td>(</td>
           <td class="paramtype">FILE *&#160;</td>
           <td class="paramname"><em>f</em>, </td>
@@ -403,11 +403,11 @@ Private Attributes</h2></td></tr>
 
 <p>Serialize an entry into a log file. </p>
 
-<p>Definition at line <a class="el" href="build__log_8cc_source.html#l00344">344</a> of file <a class="el" href="build__log_8cc_source.html">build_log.cc</a>.</p>
+<p>Definition at line <a class="el" href="build__log_8cc_source.html#l00347">347</a> of file <a class="el" href="build__log_8cc_source.html">build_log.cc</a>.</p>
 
 <p>References <a class="el" href="build__log_8h_source.html#l00049">BuildLog::LogEntry::command_hash</a>, <a class="el" href="build__log_8h_source.html#l00051">BuildLog::LogEntry::end_time</a>, <a class="el" href="build__log_8h_source.html#l00048">BuildLog::LogEntry::output</a>, <a class="el" href="win32port_8h_source.html#l00027">PRIx64</a>, <a class="el" href="build__log_8h_source.html#l00052">BuildLog::LogEntry::restat_mtime</a>, and <a class="el" href="build__log_8h_source.html#l00050">BuildLog::LogEntry::start_time</a>.</p>
 
-<p>Referenced by <a class="el" href="build__log_8cc_source.html#l00350">Recompact()</a>, and <a class="el" href="build__log_8cc_source.html#l00139">RecordCommand()</a>.</p>
+<p>Referenced by <a class="el" href="build__log_8cc_source.html#l00353">Recompact()</a>, and <a class="el" href="build__log_8cc_source.html#l00139">RecordCommand()</a>.</p>
 
 </div>
 </div>
@@ -425,7 +425,7 @@ Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="build__log_8h_source.html#l00081">81</a> of file <a class="el" href="build__log_8h_source.html">build_log.h</a>.</p>
 
-<p>Referenced by <a class="el" href="build__log_8cc_source.html#l00221">Load()</a>, <a class="el" href="build__log_8cc_source.html#l00337">LookupByOutput()</a>, <a class="el" href="build__log_8cc_source.html#l00350">Recompact()</a>, and <a class="el" href="build__log_8cc_source.html#l00139">RecordCommand()</a>.</p>
+<p>Referenced by <a class="el" href="build__log_8cc_source.html#l00224">Load()</a>, <a class="el" href="build__log_8cc_source.html#l00340">LookupByOutput()</a>, <a class="el" href="build__log_8cc_source.html#l00353">Recompact()</a>, and <a class="el" href="build__log_8cc_source.html#l00139">RecordCommand()</a>.</p>
 
 </div>
 </div>
@@ -442,7 +442,7 @@ Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="build__log_8h_source.html#l00082">82</a> of file <a class="el" href="build__log_8h_source.html">build_log.h</a>.</p>
 
-<p>Referenced by <a class="el" href="build__log_8cc_source.html#l00164">Close()</a>, <a class="el" href="build__log_8cc_source.html#l00111">OpenForWrite()</a>, and <a class="el" href="build__log_8cc_source.html#l00139">RecordCommand()</a>.</p>
+<p>Referenced by <a class="el" href="build__log_8cc_source.html#l00167">Close()</a>, <a class="el" href="build__log_8cc_source.html#l00111">OpenForWrite()</a>, and <a class="el" href="build__log_8cc_source.html#l00139">RecordCommand()</a>.</p>
 
 </div>
 </div>
@@ -459,7 +459,7 @@ Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="build__log_8h_source.html#l00083">83</a> of file <a class="el" href="build__log_8h_source.html">build_log.h</a>.</p>
 
-<p>Referenced by <a class="el" href="build__log_8cc_source.html#l00221">Load()</a>, and <a class="el" href="build__log_8cc_source.html#l00111">OpenForWrite()</a>.</p>
+<p>Referenced by <a class="el" href="build__log_8cc_source.html#l00224">Load()</a>, and <a class="el" href="build__log_8cc_source.html#l00111">OpenForWrite()</a>.</p>
 
 </div>
 </div>
@@ -471,7 +471,7 @@ Private Attributes</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Aug 8 2013 09:48:12 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Sep 12 2013 09:25:50 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

@@ -91,8 +91,8 @@
 <a name="l00032"></a>00032 <span class="preprocessor">#include &quot;<a class="code" href="build__log_8h.html">build_log.h</a>&quot;</span>
 <a name="l00033"></a>00033 <span class="preprocessor">#include &quot;<a class="code" href="deps__log_8h.html">deps_log.h</a>&quot;</span>
 <a name="l00034"></a>00034 <span class="preprocessor">#include &quot;<a class="code" href="clean_8h.html">clean.h</a>&quot;</span>
-<a name="l00035"></a>00035 <span class="preprocessor">#include &quot;<a class="code" href="disk__interface_8h.html">disk_interface.h</a>&quot;</span>
-<a name="l00036"></a>00036 <span class="preprocessor">#include &quot;<a class="code" href="explain_8h.html">explain.h</a>&quot;</span>
+<a name="l00035"></a>00035 <span class="preprocessor">#include &quot;<a class="code" href="debug__flags_8h.html">debug_flags.h</a>&quot;</span>
+<a name="l00036"></a>00036 <span class="preprocessor">#include &quot;<a class="code" href="disk__interface_8h.html">disk_interface.h</a>&quot;</span>
 <a name="l00037"></a>00037 <span class="preprocessor">#include &quot;<a class="code" href="graph_8h.html">graph.h</a>&quot;</span>
 <a name="l00038"></a>00038 <span class="preprocessor">#include &quot;<a class="code" href="graphviz_8h.html">graphviz.h</a>&quot;</span>
 <a name="l00039"></a>00039 <span class="preprocessor">#include &quot;<a class="code" href="manifest__parser_8h.html">manifest_parser.h</a>&quot;</span>
@@ -806,362 +806,367 @@
 <a name="l00747"></a>00747     printf(<span class="stringliteral">&quot;debugging modes:\n&quot;</span>
 <a name="l00748"></a>00748 <span class="stringliteral">&quot;  stats    print operation counts/timing info\n&quot;</span>
 <a name="l00749"></a>00749 <span class="stringliteral">&quot;  explain  explain what caused a command to execute\n&quot;</span>
-<a name="l00750"></a>00750 <span class="stringliteral">&quot;multiple modes can be enabled via -d FOO -d BAR\n&quot;</span>);
-<a name="l00751"></a>00751     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00752"></a>00752   } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (name == <span class="stringliteral">&quot;stats&quot;</span>) {
-<a name="l00753"></a>00753     <a class="code" href="metrics_8cc.html#a10cec6b1d988b109006369a7360e1add">g_metrics</a> = <span class="keyword">new</span> <a class="code" href="structMetrics.html" title="The singleton that stores metrics and prints the report.">Metrics</a>;
-<a name="l00754"></a>00754     <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00755"></a>00755   } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (name == <span class="stringliteral">&quot;explain&quot;</span>) {
-<a name="l00756"></a>00756     <a class="code" href="explain_8cc.html#aba5810fa2f3f3a9acec8c29dd5cf4dcc">g_explaining</a> = <span class="keyword">true</span>;
-<a name="l00757"></a>00757     <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00758"></a>00758   } <span class="keywordflow">else</span> {
-<a name="l00759"></a>00759     <span class="keyword">const</span> <span class="keywordtype">char</span>* suggestion =
-<a name="l00760"></a>00760         <a class="code" href="util_8cc.html#a3e5761332ec67e6554262cb0d9cae4d0" title="Like SpellcheckStringV, but takes a NULL-terminated list.">SpellcheckString</a>(name.c_str(), <span class="stringliteral">&quot;stats&quot;</span>, <span class="stringliteral">&quot;explain&quot;</span>, NULL);
-<a name="l00761"></a>00761     <span class="keywordflow">if</span> (suggestion) {
-<a name="l00762"></a>00762       <a class="code" href="util_8cc.html#a8d48223b92317abcaf5984a00a97efb4" title="Log an error message.">Error</a>(<span class="stringliteral">&quot;unknown debug setting &#39;%s&#39;, did you mean &#39;%s&#39;?&quot;</span>,
-<a name="l00763"></a>00763             name.c_str(), suggestion);
-<a name="l00764"></a>00764     } <span class="keywordflow">else</span> {
-<a name="l00765"></a>00765       <a class="code" href="util_8cc.html#a8d48223b92317abcaf5984a00a97efb4" title="Log an error message.">Error</a>(<span class="stringliteral">&quot;unknown debug setting &#39;%s&#39;&quot;</span>, name.c_str());
-<a name="l00766"></a>00766     }
-<a name="l00767"></a>00767     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00768"></a>00768   }
-<a name="l00769"></a>00769 }
-<a name="l00770"></a>00770 
-<a name="l00771"></a>00771 <span class="keywordtype">bool</span> NinjaMain::OpenBuildLog(<span class="keywordtype">bool</span> recompact_only) {
-<a name="l00772"></a>00772   <span class="keywordtype">string</span> log_path = <span class="stringliteral">&quot;.ninja_log&quot;</span>;
-<a name="l00773"></a>00773   <span class="keywordflow">if</span> (!build_dir_.empty())
-<a name="l00774"></a>00774     log_path = build_dir_ + <span class="stringliteral">&quot;/&quot;</span> + log_path;
-<a name="l00775"></a>00775 
-<a name="l00776"></a>00776   <span class="keywordtype">string</span> err;
-<a name="l00777"></a>00777   <span class="keywordflow">if</span> (!build_log_.Load(log_path, &amp;err)) {
-<a name="l00778"></a>00778     <a class="code" href="util_8cc.html#a8d48223b92317abcaf5984a00a97efb4" title="Log an error message.">Error</a>(<span class="stringliteral">&quot;loading build log %s: %s&quot;</span>, log_path.c_str(), err.c_str());
-<a name="l00779"></a>00779     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00780"></a>00780   }
-<a name="l00781"></a>00781   <span class="keywordflow">if</span> (!err.empty()) {
-<a name="l00782"></a>00782     <span class="comment">// Hack: Load() can return a warning via err by returning true.</span>
-<a name="l00783"></a>00783     <a class="code" href="util_8cc.html#aa92567b4012d3191db5d247c8db8e9d9" title="Log a warning message.">Warning</a>(<span class="stringliteral">&quot;%s&quot;</span>, err.c_str());
-<a name="l00784"></a>00784     err.clear();
-<a name="l00785"></a>00785   }
-<a name="l00786"></a>00786 
-<a name="l00787"></a>00787   <span class="keywordflow">if</span> (recompact_only) {
-<a name="l00788"></a>00788     <span class="keywordtype">bool</span> success = build_log_.Recompact(log_path, &amp;err);
-<a name="l00789"></a>00789     <span class="keywordflow">if</span> (!success)
-<a name="l00790"></a>00790       <a class="code" href="util_8cc.html#a8d48223b92317abcaf5984a00a97efb4" title="Log an error message.">Error</a>(<span class="stringliteral">&quot;failed recompaction: %s&quot;</span>, err.c_str());
-<a name="l00791"></a>00791     <span class="keywordflow">return</span> success;
-<a name="l00792"></a>00792   }
-<a name="l00793"></a>00793 
-<a name="l00794"></a>00794   <span class="keywordflow">if</span> (!config_.dry_run) {
-<a name="l00795"></a>00795     <span class="keywordflow">if</span> (!build_log_.OpenForWrite(log_path, &amp;err)) {
-<a name="l00796"></a>00796       <a class="code" href="util_8cc.html#a8d48223b92317abcaf5984a00a97efb4" title="Log an error message.">Error</a>(<span class="stringliteral">&quot;opening build log: %s&quot;</span>, err.c_str());
-<a name="l00797"></a>00797       <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00798"></a>00798     }
-<a name="l00799"></a>00799   }
-<a name="l00800"></a>00800 
-<a name="l00801"></a>00801   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00802"></a>00802 }
-<a name="l00803"></a>00803 <span class="comment"></span>
-<a name="l00804"></a>00804 <span class="comment">/// Open the deps log: load it, then open for writing.</span>
-<a name="l00805"></a>00805 <span class="comment">/// @return false on error.</span>
-<a name="l00806"></a>00806 <span class="comment"></span><span class="keywordtype">bool</span> NinjaMain::OpenDepsLog(<span class="keywordtype">bool</span> recompact_only) {
-<a name="l00807"></a>00807   <span class="keywordtype">string</span> path = <span class="stringliteral">&quot;.ninja_deps&quot;</span>;
-<a name="l00808"></a>00808   <span class="keywordflow">if</span> (!build_dir_.empty())
-<a name="l00809"></a>00809     path = build_dir_ + <span class="stringliteral">&quot;/&quot;</span> + path;
-<a name="l00810"></a>00810 
-<a name="l00811"></a>00811   <span class="keywordtype">string</span> err;
-<a name="l00812"></a>00812   <span class="keywordflow">if</span> (!deps_log_.Load(path, &amp;state_, &amp;err)) {
-<a name="l00813"></a>00813     <a class="code" href="util_8cc.html#a8d48223b92317abcaf5984a00a97efb4" title="Log an error message.">Error</a>(<span class="stringliteral">&quot;loading deps log %s: %s&quot;</span>, path.c_str(), err.c_str());
-<a name="l00814"></a>00814     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00815"></a>00815   }
-<a name="l00816"></a>00816   <span class="keywordflow">if</span> (!err.empty()) {
-<a name="l00817"></a>00817     <span class="comment">// Hack: Load() can return a warning via err by returning true.</span>
-<a name="l00818"></a>00818     <a class="code" href="util_8cc.html#aa92567b4012d3191db5d247c8db8e9d9" title="Log a warning message.">Warning</a>(<span class="stringliteral">&quot;%s&quot;</span>, err.c_str());
-<a name="l00819"></a>00819     err.clear();
-<a name="l00820"></a>00820   }
-<a name="l00821"></a>00821 
-<a name="l00822"></a>00822   <span class="keywordflow">if</span> (recompact_only) {
-<a name="l00823"></a>00823     <span class="keywordtype">bool</span> success = deps_log_.Recompact(path, &amp;err);
-<a name="l00824"></a>00824     <span class="keywordflow">if</span> (!success)
-<a name="l00825"></a>00825       <a class="code" href="util_8cc.html#a8d48223b92317abcaf5984a00a97efb4" title="Log an error message.">Error</a>(<span class="stringliteral">&quot;failed recompaction: %s&quot;</span>, err.c_str());
-<a name="l00826"></a>00826     <span class="keywordflow">return</span> success;
-<a name="l00827"></a>00827   }
-<a name="l00828"></a>00828 
-<a name="l00829"></a>00829   <span class="keywordflow">if</span> (!config_.dry_run) {
-<a name="l00830"></a>00830     <span class="keywordflow">if</span> (!deps_log_.OpenForWrite(path, &amp;err)) {
-<a name="l00831"></a>00831       <a class="code" href="util_8cc.html#a8d48223b92317abcaf5984a00a97efb4" title="Log an error message.">Error</a>(<span class="stringliteral">&quot;opening deps log: %s&quot;</span>, err.c_str());
-<a name="l00832"></a>00832       <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00833"></a>00833     }
-<a name="l00834"></a>00834   }
-<a name="l00835"></a>00835 
-<a name="l00836"></a>00836   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00837"></a>00837 }
-<a name="l00838"></a>00838 
-<a name="l00839"></a>00839 <span class="keywordtype">void</span> NinjaMain::DumpMetrics() {
-<a name="l00840"></a>00840   <a class="code" href="metrics_8cc.html#a10cec6b1d988b109006369a7360e1add">g_metrics</a>-&gt;<a class="code" href="structMetrics.html#af32f2c06d28ec9074cd42e30739f8f5f" title="Print a summary report to stdout.">Report</a>();
-<a name="l00841"></a>00841 
-<a name="l00842"></a>00842   printf(<span class="stringliteral">&quot;\n&quot;</span>);
-<a name="l00843"></a>00843   <span class="keywordtype">int</span> count = (int)state_.paths_.size();
-<a name="l00844"></a>00844   <span class="keywordtype">int</span> buckets = (int)state_.paths_.bucket_count();
-<a name="l00845"></a>00845   printf(<span class="stringliteral">&quot;path-&gt;node hash load %.2f (%d entries / %d buckets)\n&quot;</span>,
-<a name="l00846"></a>00846          count / (<span class="keywordtype">double</span>) buckets, count, buckets);
-<a name="l00847"></a>00847 }
-<a name="l00848"></a>00848 
-<a name="l00849"></a>00849 <span class="keywordtype">bool</span> NinjaMain::EnsureBuildDirExists() {
-<a name="l00850"></a>00850   build_dir_ = state_.bindings_.LookupVariable(<span class="stringliteral">&quot;builddir&quot;</span>);
-<a name="l00851"></a>00851   <span class="keywordflow">if</span> (!build_dir_.empty() &amp;&amp; !config_.dry_run) {
-<a name="l00852"></a>00852     <span class="keywordflow">if</span> (!disk_interface_.MakeDirs(build_dir_ + <span class="stringliteral">&quot;/.&quot;</span>) &amp;&amp; errno != EEXIST) {
-<a name="l00853"></a>00853       <a class="code" href="util_8cc.html#a8d48223b92317abcaf5984a00a97efb4" title="Log an error message.">Error</a>(<span class="stringliteral">&quot;creating build directory %s: %s&quot;</span>,
-<a name="l00854"></a>00854             build_dir_.c_str(), strerror(errno));
-<a name="l00855"></a>00855       <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00856"></a>00856     }
-<a name="l00857"></a>00857   }
-<a name="l00858"></a>00858   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00859"></a>00859 }
-<a name="l00860"></a>00860 
-<a name="l00861"></a>00861 <span class="keywordtype">int</span> NinjaMain::RunBuild(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>** argv) {
-<a name="l00862"></a>00862   <span class="keywordtype">string</span> err;
-<a name="l00863"></a>00863   vector&lt;Node*&gt; targets;
-<a name="l00864"></a>00864   <span class="keywordflow">if</span> (!CollectTargetsFromArgs(argc, argv, &amp;targets, &amp;err)) {
-<a name="l00865"></a>00865     <a class="code" href="util_8cc.html#a8d48223b92317abcaf5984a00a97efb4" title="Log an error message.">Error</a>(<span class="stringliteral">&quot;%s&quot;</span>, err.c_str());
-<a name="l00866"></a>00866     <span class="keywordflow">return</span> 1;
-<a name="l00867"></a>00867   }
-<a name="l00868"></a>00868 
-<a name="l00869"></a>00869   <a class="code" href="structBuilder.html" title="Builder wraps the build process: starting commands, updating status.">Builder</a> builder(&amp;state_, config_, &amp;build_log_, &amp;deps_log_, &amp;disk_interface_);
-<a name="l00870"></a>00870   <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; targets.size(); ++i) {
-<a name="l00871"></a>00871     <span class="keywordflow">if</span> (!builder.AddTarget(targets[i], &amp;err)) {
-<a name="l00872"></a>00872       <span class="keywordflow">if</span> (!err.empty()) {
-<a name="l00873"></a>00873         <a class="code" href="util_8cc.html#a8d48223b92317abcaf5984a00a97efb4" title="Log an error message.">Error</a>(<span class="stringliteral">&quot;%s&quot;</span>, err.c_str());
-<a name="l00874"></a>00874         <span class="keywordflow">return</span> 1;
-<a name="l00875"></a>00875       } <span class="keywordflow">else</span> {
-<a name="l00876"></a>00876         <span class="comment">// Added a target that is already up-to-date; not really</span>
-<a name="l00877"></a>00877         <span class="comment">// an error.</span>
-<a name="l00878"></a>00878       }
-<a name="l00879"></a>00879     }
-<a name="l00880"></a>00880   }
-<a name="l00881"></a>00881 
-<a name="l00882"></a>00882   <span class="keywordflow">if</span> (builder.AlreadyUpToDate()) {
-<a name="l00883"></a>00883     printf(<span class="stringliteral">&quot;ninja: no work to do.\n&quot;</span>);
-<a name="l00884"></a>00884     <span class="keywordflow">return</span> 0;
-<a name="l00885"></a>00885   }
-<a name="l00886"></a>00886 
-<a name="l00887"></a>00887   <span class="keywordflow">if</span> (!builder.Build(&amp;err)) {
-<a name="l00888"></a>00888     printf(<span class="stringliteral">&quot;ninja: build stopped: %s.\n&quot;</span>, err.c_str());
-<a name="l00889"></a>00889     <span class="keywordflow">if</span> (err.find(<span class="stringliteral">&quot;interrupted by user&quot;</span>) != string::npos) {
-<a name="l00890"></a>00890       <span class="keywordflow">return</span> 2;
-<a name="l00891"></a>00891     }
-<a name="l00892"></a>00892     <span class="keywordflow">return</span> 1;
-<a name="l00893"></a>00893   }
-<a name="l00894"></a>00894 
-<a name="l00895"></a>00895   <span class="keywordflow">return</span> 0;
-<a name="l00896"></a>00896 }
-<a name="l00897"></a>00897 
-<a name="l00898"></a>00898 <span class="preprocessor">#ifdef _MSC_VER</span>
-<a name="l00899"></a>00899 <span class="preprocessor"></span><span class="comment"></span>
-<a name="l00900"></a>00900 <span class="comment">/// This handler processes fatal crashes that you can&#39;t catch</span>
-<a name="l00901"></a>00901 <span class="comment">/// Test example: C++ exception in a stack-unwind-block</span>
-<a name="l00902"></a>00902 <span class="comment">/// Real-world example: ninja launched a compiler to process a tricky</span>
-<a name="l00903"></a>00903 <span class="comment">/// C++ input file. The compiler got itself into a state where it</span>
-<a name="l00904"></a>00904 <span class="comment">/// generated 3 GB of output and caused ninja to crash.</span>
-<a name="l00905"></a>00905 <span class="comment"></span><span class="keywordtype">void</span> TerminateHandler() {
-<a name="l00906"></a>00906   <a class="code" href="minidump-win32_8cc.html#ac24340735c50b90b9d623f9331a9bea5" title="Creates a windows minidump in temp folder.">CreateWin32MiniDump</a>(NULL);
-<a name="l00907"></a>00907   <a class="code" href="util_8cc.html#ad98ec6fb76f27b3d5a805cdad742df92" title="Log a fatal message and exit.">Fatal</a>(<span class="stringliteral">&quot;terminate handler called&quot;</span>);
-<a name="l00908"></a>00908 }
-<a name="l00909"></a>00909 <span class="comment"></span>
-<a name="l00910"></a>00910 <span class="comment">/// On Windows, we want to prevent error dialogs in case of exceptions.</span>
-<a name="l00911"></a>00911 <span class="comment">/// This function handles the exception, and writes a minidump.</span>
-<a name="l00912"></a>00912 <span class="comment"></span><span class="keywordtype">int</span> ExceptionFilter(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> code, <span class="keyword">struct</span> _EXCEPTION_POINTERS *ep) {
-<a name="l00913"></a>00913   <a class="code" href="util_8cc.html#a8d48223b92317abcaf5984a00a97efb4" title="Log an error message.">Error</a>(<span class="stringliteral">&quot;exception: 0x%X&quot;</span>, code);  <span class="comment">// e.g. EXCEPTION_ACCESS_VIOLATION</span>
-<a name="l00914"></a>00914   fflush(stderr);
-<a name="l00915"></a>00915   <a class="code" href="minidump-win32_8cc.html#ac24340735c50b90b9d623f9331a9bea5" title="Creates a windows minidump in temp folder.">CreateWin32MiniDump</a>(ep);
-<a name="l00916"></a>00916   <span class="keywordflow">return</span> EXCEPTION_EXECUTE_HANDLER;
-<a name="l00917"></a>00917 }
-<a name="l00918"></a>00918 
-<a name="l00919"></a>00919 <span class="preprocessor">#endif  // _MSC_VER</span>
-<a name="l00920"></a>00920 <span class="preprocessor"></span><span class="comment"></span>
-<a name="l00921"></a>00921 <span class="comment">/// Parse argv for command-line options.</span>
-<a name="l00922"></a>00922 <span class="comment">/// Returns an exit code, or -1 if Ninja should continue.</span>
-<a name="l00923"></a>00923 <span class="comment"></span><span class="keywordtype">int</span> ReadFlags(<span class="keywordtype">int</span>* argc, <span class="keywordtype">char</span>*** argv,
-<a name="l00924"></a>00924               Options* options, <a class="code" href="structBuildConfig.html" title="Options (e.g. verbosity, parallelism) passed to a build.">BuildConfig</a>* config) {
-<a name="l00925"></a>00925   config-&gt;<a class="code" href="structBuildConfig.html#aedc92d7f5d96f1c94c9cdfb2014ea2f0">parallelism</a> = GuessParallelism();
-<a name="l00926"></a>00926 
-<a name="l00927"></a>00927   <span class="keyword">enum</span> { OPT_VERSION = 1 };
-<a name="l00928"></a>00928   <span class="keyword">const</span> <a class="code" href="structGETOPT__LONG__OPTION__T.html">option</a> kLongOptions[] = {
-<a name="l00929"></a>00929     { <span class="stringliteral">&quot;help&quot;</span>, <a class="code" href="getopt_8h.html#a3bc1d5f667b5b4ca4b4abb685dc874ce">no_argument</a>, NULL, <span class="charliteral">&#39;h&#39;</span> },
-<a name="l00930"></a>00930     { <span class="stringliteral">&quot;version&quot;</span>, <a class="code" href="getopt_8h.html#a3bc1d5f667b5b4ca4b4abb685dc874ce">no_argument</a>, NULL, OPT_VERSION },
-<a name="l00931"></a>00931     { NULL, 0, NULL, 0 }
-<a name="l00932"></a>00932   };
-<a name="l00933"></a>00933 
-<a name="l00934"></a>00934   <span class="keywordtype">int</span> opt;
-<a name="l00935"></a>00935   <span class="keywordflow">while</span> (!options-&gt;tool &amp;&amp;
-<a name="l00936"></a>00936          (opt = <a class="code" href="getopt_8h.html#aaf169384ab46c9c47f3cc4d8a37a64fc">getopt_long</a>(*argc, *argv, <span class="stringliteral">&quot;d:f:j:k:l:nt:vC:h&quot;</span>, kLongOptions,
-<a name="l00937"></a>00937                             NULL)) != -1) {
-<a name="l00938"></a>00938     <span class="keywordflow">switch</span> (opt) {
-<a name="l00939"></a>00939       <span class="keywordflow">case</span> <span class="charliteral">&#39;d&#39;</span>:
-<a name="l00940"></a>00940         <span class="keywordflow">if</span> (!DebugEnable(optarg))
-<a name="l00941"></a>00941           <span class="keywordflow">return</span> 1;
-<a name="l00942"></a>00942         <span class="keywordflow">break</span>;
-<a name="l00943"></a>00943       <span class="keywordflow">case</span> <span class="charliteral">&#39;f&#39;</span>:
-<a name="l00944"></a>00944         options-&gt;input_file = <a class="code" href="getopt_8h.html#adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</a>;
-<a name="l00945"></a>00945         <span class="keywordflow">break</span>;
-<a name="l00946"></a>00946       <span class="keywordflow">case</span> <span class="charliteral">&#39;j&#39;</span>: {
-<a name="l00947"></a>00947         <span class="keywordtype">char</span>* end;
-<a name="l00948"></a>00948         <span class="keywordtype">int</span> value = strtol(optarg, &amp;end, 10);
-<a name="l00949"></a>00949         <span class="keywordflow">if</span> (*end != 0 || value &lt;= 0)
-<a name="l00950"></a>00950           <a class="code" href="util_8cc.html#ad98ec6fb76f27b3d5a805cdad742df92" title="Log a fatal message and exit.">Fatal</a>(<span class="stringliteral">&quot;invalid -j parameter&quot;</span>);
-<a name="l00951"></a>00951         config-&gt;<a class="code" href="structBuildConfig.html#aedc92d7f5d96f1c94c9cdfb2014ea2f0">parallelism</a> = value;
-<a name="l00952"></a>00952         <span class="keywordflow">break</span>;
-<a name="l00953"></a>00953       }
-<a name="l00954"></a>00954       <span class="keywordflow">case</span> <span class="charliteral">&#39;k&#39;</span>: {
-<a name="l00955"></a>00955         <span class="keywordtype">char</span>* end;
-<a name="l00956"></a>00956         <span class="keywordtype">int</span> value = strtol(optarg, &amp;end, 10);
-<a name="l00957"></a>00957         <span class="keywordflow">if</span> (*end != 0)
-<a name="l00958"></a>00958           <a class="code" href="util_8cc.html#ad98ec6fb76f27b3d5a805cdad742df92" title="Log a fatal message and exit.">Fatal</a>(<span class="stringliteral">&quot;-k parameter not numeric; did you mean -k 0?&quot;</span>);
-<a name="l00959"></a>00959 
-<a name="l00960"></a>00960         <span class="comment">// We want to go until N jobs fail, which means we should allow</span>
-<a name="l00961"></a>00961         <span class="comment">// N failures and then stop.  For N &lt;= 0, INT_MAX is close enough</span>
-<a name="l00962"></a>00962         <span class="comment">// to infinite for most sane builds.</span>
-<a name="l00963"></a>00963         config-&gt;<a class="code" href="structBuildConfig.html#a406984d40cde5afc338fe3b0cb9149c9">failures_allowed</a> = value &gt; 0 ? value : INT_MAX;
-<a name="l00964"></a>00964         <span class="keywordflow">break</span>;
-<a name="l00965"></a>00965       }
-<a name="l00966"></a>00966       <span class="keywordflow">case</span> <span class="charliteral">&#39;l&#39;</span>: {
-<a name="l00967"></a>00967         <span class="keywordtype">char</span>* end;
-<a name="l00968"></a>00968         <span class="keywordtype">double</span> value = strtod(optarg, &amp;end);
-<a name="l00969"></a>00969         <span class="keywordflow">if</span> (end == optarg)
-<a name="l00970"></a>00970           <a class="code" href="util_8cc.html#ad98ec6fb76f27b3d5a805cdad742df92" title="Log a fatal message and exit.">Fatal</a>(<span class="stringliteral">&quot;-l parameter not numeric: did you mean -l 0.0?&quot;</span>);
-<a name="l00971"></a>00971         config-&gt;<a class="code" href="structBuildConfig.html#a98a4cc988e1a82850fcfdbaab0a51570" title="The maximum load average we must not exceed.">max_load_average</a> = value;
-<a name="l00972"></a>00972         <span class="keywordflow">break</span>;
-<a name="l00973"></a>00973       }
-<a name="l00974"></a>00974       <span class="keywordflow">case</span> <span class="charliteral">&#39;n&#39;</span>:
-<a name="l00975"></a>00975         config-&gt;<a class="code" href="structBuildConfig.html#aa65c3f1fe7e0faa2b05b36ed1743da5d">dry_run</a> = <span class="keyword">true</span>;
+<a name="l00750"></a>00750 <span class="stringliteral">&quot;  keeprsp  don&#39;t delete @response files on success\n&quot;</span>
+<a name="l00751"></a>00751 <span class="stringliteral">&quot;multiple modes can be enabled via -d FOO -d BAR\n&quot;</span>);
+<a name="l00752"></a>00752     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00753"></a>00753   } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (name == <span class="stringliteral">&quot;stats&quot;</span>) {
+<a name="l00754"></a>00754     <a class="code" href="metrics_8cc.html#a10cec6b1d988b109006369a7360e1add">g_metrics</a> = <span class="keyword">new</span> <a class="code" href="structMetrics.html" title="The singleton that stores metrics and prints the report.">Metrics</a>;
+<a name="l00755"></a>00755     <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00756"></a>00756   } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (name == <span class="stringliteral">&quot;explain&quot;</span>) {
+<a name="l00757"></a>00757     <a class="code" href="debug__flags_8cc.html#aba5810fa2f3f3a9acec8c29dd5cf4dcc">g_explaining</a> = <span class="keyword">true</span>;
+<a name="l00758"></a>00758     <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00759"></a>00759   } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (name == <span class="stringliteral">&quot;keeprsp&quot;</span>) {
+<a name="l00760"></a>00760     <a class="code" href="debug__flags_8cc.html#a5c5dbe2626f85f84cfc89f86f5c9e159">g_keep_rsp</a> = <span class="keyword">true</span>;
+<a name="l00761"></a>00761     <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00762"></a>00762   } <span class="keywordflow">else</span> {
+<a name="l00763"></a>00763     <span class="keyword">const</span> <span class="keywordtype">char</span>* suggestion =
+<a name="l00764"></a>00764         <a class="code" href="util_8cc.html#a3e5761332ec67e6554262cb0d9cae4d0" title="Like SpellcheckStringV, but takes a NULL-terminated list.">SpellcheckString</a>(name.c_str(), <span class="stringliteral">&quot;stats&quot;</span>, <span class="stringliteral">&quot;explain&quot;</span>, NULL);
+<a name="l00765"></a>00765     <span class="keywordflow">if</span> (suggestion) {
+<a name="l00766"></a>00766       <a class="code" href="util_8cc.html#a8d48223b92317abcaf5984a00a97efb4" title="Log an error message.">Error</a>(<span class="stringliteral">&quot;unknown debug setting &#39;%s&#39;, did you mean &#39;%s&#39;?&quot;</span>,
+<a name="l00767"></a>00767             name.c_str(), suggestion);
+<a name="l00768"></a>00768     } <span class="keywordflow">else</span> {
+<a name="l00769"></a>00769       <a class="code" href="util_8cc.html#a8d48223b92317abcaf5984a00a97efb4" title="Log an error message.">Error</a>(<span class="stringliteral">&quot;unknown debug setting &#39;%s&#39;&quot;</span>, name.c_str());
+<a name="l00770"></a>00770     }
+<a name="l00771"></a>00771     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00772"></a>00772   }
+<a name="l00773"></a>00773 }
+<a name="l00774"></a>00774 
+<a name="l00775"></a>00775 <span class="keywordtype">bool</span> NinjaMain::OpenBuildLog(<span class="keywordtype">bool</span> recompact_only) {
+<a name="l00776"></a>00776   <span class="keywordtype">string</span> log_path = <span class="stringliteral">&quot;.ninja_log&quot;</span>;
+<a name="l00777"></a>00777   <span class="keywordflow">if</span> (!build_dir_.empty())
+<a name="l00778"></a>00778     log_path = build_dir_ + <span class="stringliteral">&quot;/&quot;</span> + log_path;
+<a name="l00779"></a>00779 
+<a name="l00780"></a>00780   <span class="keywordtype">string</span> err;
+<a name="l00781"></a>00781   <span class="keywordflow">if</span> (!build_log_.Load(log_path, &amp;err)) {
+<a name="l00782"></a>00782     <a class="code" href="util_8cc.html#a8d48223b92317abcaf5984a00a97efb4" title="Log an error message.">Error</a>(<span class="stringliteral">&quot;loading build log %s: %s&quot;</span>, log_path.c_str(), err.c_str());
+<a name="l00783"></a>00783     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00784"></a>00784   }
+<a name="l00785"></a>00785   <span class="keywordflow">if</span> (!err.empty()) {
+<a name="l00786"></a>00786     <span class="comment">// Hack: Load() can return a warning via err by returning true.</span>
+<a name="l00787"></a>00787     <a class="code" href="util_8cc.html#aa92567b4012d3191db5d247c8db8e9d9" title="Log a warning message.">Warning</a>(<span class="stringliteral">&quot;%s&quot;</span>, err.c_str());
+<a name="l00788"></a>00788     err.clear();
+<a name="l00789"></a>00789   }
+<a name="l00790"></a>00790 
+<a name="l00791"></a>00791   <span class="keywordflow">if</span> (recompact_only) {
+<a name="l00792"></a>00792     <span class="keywordtype">bool</span> success = build_log_.Recompact(log_path, &amp;err);
+<a name="l00793"></a>00793     <span class="keywordflow">if</span> (!success)
+<a name="l00794"></a>00794       <a class="code" href="util_8cc.html#a8d48223b92317abcaf5984a00a97efb4" title="Log an error message.">Error</a>(<span class="stringliteral">&quot;failed recompaction: %s&quot;</span>, err.c_str());
+<a name="l00795"></a>00795     <span class="keywordflow">return</span> success;
+<a name="l00796"></a>00796   }
+<a name="l00797"></a>00797 
+<a name="l00798"></a>00798   <span class="keywordflow">if</span> (!config_.dry_run) {
+<a name="l00799"></a>00799     <span class="keywordflow">if</span> (!build_log_.OpenForWrite(log_path, &amp;err)) {
+<a name="l00800"></a>00800       <a class="code" href="util_8cc.html#a8d48223b92317abcaf5984a00a97efb4" title="Log an error message.">Error</a>(<span class="stringliteral">&quot;opening build log: %s&quot;</span>, err.c_str());
+<a name="l00801"></a>00801       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00802"></a>00802     }
+<a name="l00803"></a>00803   }
+<a name="l00804"></a>00804 
+<a name="l00805"></a>00805   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00806"></a>00806 }
+<a name="l00807"></a>00807 <span class="comment"></span>
+<a name="l00808"></a>00808 <span class="comment">/// Open the deps log: load it, then open for writing.</span>
+<a name="l00809"></a>00809 <span class="comment">/// @return false on error.</span>
+<a name="l00810"></a>00810 <span class="comment"></span><span class="keywordtype">bool</span> NinjaMain::OpenDepsLog(<span class="keywordtype">bool</span> recompact_only) {
+<a name="l00811"></a>00811   <span class="keywordtype">string</span> path = <span class="stringliteral">&quot;.ninja_deps&quot;</span>;
+<a name="l00812"></a>00812   <span class="keywordflow">if</span> (!build_dir_.empty())
+<a name="l00813"></a>00813     path = build_dir_ + <span class="stringliteral">&quot;/&quot;</span> + path;
+<a name="l00814"></a>00814 
+<a name="l00815"></a>00815   <span class="keywordtype">string</span> err;
+<a name="l00816"></a>00816   <span class="keywordflow">if</span> (!deps_log_.Load(path, &amp;state_, &amp;err)) {
+<a name="l00817"></a>00817     <a class="code" href="util_8cc.html#a8d48223b92317abcaf5984a00a97efb4" title="Log an error message.">Error</a>(<span class="stringliteral">&quot;loading deps log %s: %s&quot;</span>, path.c_str(), err.c_str());
+<a name="l00818"></a>00818     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00819"></a>00819   }
+<a name="l00820"></a>00820   <span class="keywordflow">if</span> (!err.empty()) {
+<a name="l00821"></a>00821     <span class="comment">// Hack: Load() can return a warning via err by returning true.</span>
+<a name="l00822"></a>00822     <a class="code" href="util_8cc.html#aa92567b4012d3191db5d247c8db8e9d9" title="Log a warning message.">Warning</a>(<span class="stringliteral">&quot;%s&quot;</span>, err.c_str());
+<a name="l00823"></a>00823     err.clear();
+<a name="l00824"></a>00824   }
+<a name="l00825"></a>00825 
+<a name="l00826"></a>00826   <span class="keywordflow">if</span> (recompact_only) {
+<a name="l00827"></a>00827     <span class="keywordtype">bool</span> success = deps_log_.Recompact(path, &amp;err);
+<a name="l00828"></a>00828     <span class="keywordflow">if</span> (!success)
+<a name="l00829"></a>00829       <a class="code" href="util_8cc.html#a8d48223b92317abcaf5984a00a97efb4" title="Log an error message.">Error</a>(<span class="stringliteral">&quot;failed recompaction: %s&quot;</span>, err.c_str());
+<a name="l00830"></a>00830     <span class="keywordflow">return</span> success;
+<a name="l00831"></a>00831   }
+<a name="l00832"></a>00832 
+<a name="l00833"></a>00833   <span class="keywordflow">if</span> (!config_.dry_run) {
+<a name="l00834"></a>00834     <span class="keywordflow">if</span> (!deps_log_.OpenForWrite(path, &amp;err)) {
+<a name="l00835"></a>00835       <a class="code" href="util_8cc.html#a8d48223b92317abcaf5984a00a97efb4" title="Log an error message.">Error</a>(<span class="stringliteral">&quot;opening deps log: %s&quot;</span>, err.c_str());
+<a name="l00836"></a>00836       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00837"></a>00837     }
+<a name="l00838"></a>00838   }
+<a name="l00839"></a>00839 
+<a name="l00840"></a>00840   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00841"></a>00841 }
+<a name="l00842"></a>00842 
+<a name="l00843"></a>00843 <span class="keywordtype">void</span> NinjaMain::DumpMetrics() {
+<a name="l00844"></a>00844   <a class="code" href="metrics_8cc.html#a10cec6b1d988b109006369a7360e1add">g_metrics</a>-&gt;<a class="code" href="structMetrics.html#af32f2c06d28ec9074cd42e30739f8f5f" title="Print a summary report to stdout.">Report</a>();
+<a name="l00845"></a>00845 
+<a name="l00846"></a>00846   printf(<span class="stringliteral">&quot;\n&quot;</span>);
+<a name="l00847"></a>00847   <span class="keywordtype">int</span> count = (int)state_.paths_.size();
+<a name="l00848"></a>00848   <span class="keywordtype">int</span> buckets = (int)state_.paths_.bucket_count();
+<a name="l00849"></a>00849   printf(<span class="stringliteral">&quot;path-&gt;node hash load %.2f (%d entries / %d buckets)\n&quot;</span>,
+<a name="l00850"></a>00850          count / (<span class="keywordtype">double</span>) buckets, count, buckets);
+<a name="l00851"></a>00851 }
+<a name="l00852"></a>00852 
+<a name="l00853"></a>00853 <span class="keywordtype">bool</span> NinjaMain::EnsureBuildDirExists() {
+<a name="l00854"></a>00854   build_dir_ = state_.bindings_.LookupVariable(<span class="stringliteral">&quot;builddir&quot;</span>);
+<a name="l00855"></a>00855   <span class="keywordflow">if</span> (!build_dir_.empty() &amp;&amp; !config_.dry_run) {
+<a name="l00856"></a>00856     <span class="keywordflow">if</span> (!disk_interface_.MakeDirs(build_dir_ + <span class="stringliteral">&quot;/.&quot;</span>) &amp;&amp; errno != EEXIST) {
+<a name="l00857"></a>00857       <a class="code" href="util_8cc.html#a8d48223b92317abcaf5984a00a97efb4" title="Log an error message.">Error</a>(<span class="stringliteral">&quot;creating build directory %s: %s&quot;</span>,
+<a name="l00858"></a>00858             build_dir_.c_str(), strerror(errno));
+<a name="l00859"></a>00859       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00860"></a>00860     }
+<a name="l00861"></a>00861   }
+<a name="l00862"></a>00862   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00863"></a>00863 }
+<a name="l00864"></a>00864 
+<a name="l00865"></a>00865 <span class="keywordtype">int</span> NinjaMain::RunBuild(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>** argv) {
+<a name="l00866"></a>00866   <span class="keywordtype">string</span> err;
+<a name="l00867"></a>00867   vector&lt;Node*&gt; targets;
+<a name="l00868"></a>00868   <span class="keywordflow">if</span> (!CollectTargetsFromArgs(argc, argv, &amp;targets, &amp;err)) {
+<a name="l00869"></a>00869     <a class="code" href="util_8cc.html#a8d48223b92317abcaf5984a00a97efb4" title="Log an error message.">Error</a>(<span class="stringliteral">&quot;%s&quot;</span>, err.c_str());
+<a name="l00870"></a>00870     <span class="keywordflow">return</span> 1;
+<a name="l00871"></a>00871   }
+<a name="l00872"></a>00872 
+<a name="l00873"></a>00873   <a class="code" href="structBuilder.html" title="Builder wraps the build process: starting commands, updating status.">Builder</a> builder(&amp;state_, config_, &amp;build_log_, &amp;deps_log_, &amp;disk_interface_);
+<a name="l00874"></a>00874   <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; targets.size(); ++i) {
+<a name="l00875"></a>00875     <span class="keywordflow">if</span> (!builder.AddTarget(targets[i], &amp;err)) {
+<a name="l00876"></a>00876       <span class="keywordflow">if</span> (!err.empty()) {
+<a name="l00877"></a>00877         <a class="code" href="util_8cc.html#a8d48223b92317abcaf5984a00a97efb4" title="Log an error message.">Error</a>(<span class="stringliteral">&quot;%s&quot;</span>, err.c_str());
+<a name="l00878"></a>00878         <span class="keywordflow">return</span> 1;
+<a name="l00879"></a>00879       } <span class="keywordflow">else</span> {
+<a name="l00880"></a>00880         <span class="comment">// Added a target that is already up-to-date; not really</span>
+<a name="l00881"></a>00881         <span class="comment">// an error.</span>
+<a name="l00882"></a>00882       }
+<a name="l00883"></a>00883     }
+<a name="l00884"></a>00884   }
+<a name="l00885"></a>00885 
+<a name="l00886"></a>00886   <span class="keywordflow">if</span> (builder.AlreadyUpToDate()) {
+<a name="l00887"></a>00887     printf(<span class="stringliteral">&quot;ninja: no work to do.\n&quot;</span>);
+<a name="l00888"></a>00888     <span class="keywordflow">return</span> 0;
+<a name="l00889"></a>00889   }
+<a name="l00890"></a>00890 
+<a name="l00891"></a>00891   <span class="keywordflow">if</span> (!builder.Build(&amp;err)) {
+<a name="l00892"></a>00892     printf(<span class="stringliteral">&quot;ninja: build stopped: %s.\n&quot;</span>, err.c_str());
+<a name="l00893"></a>00893     <span class="keywordflow">if</span> (err.find(<span class="stringliteral">&quot;interrupted by user&quot;</span>) != string::npos) {
+<a name="l00894"></a>00894       <span class="keywordflow">return</span> 2;
+<a name="l00895"></a>00895     }
+<a name="l00896"></a>00896     <span class="keywordflow">return</span> 1;
+<a name="l00897"></a>00897   }
+<a name="l00898"></a>00898 
+<a name="l00899"></a>00899   <span class="keywordflow">return</span> 0;
+<a name="l00900"></a>00900 }
+<a name="l00901"></a>00901 
+<a name="l00902"></a>00902 <span class="preprocessor">#ifdef _MSC_VER</span>
+<a name="l00903"></a>00903 <span class="preprocessor"></span><span class="comment"></span>
+<a name="l00904"></a>00904 <span class="comment">/// This handler processes fatal crashes that you can&#39;t catch</span>
+<a name="l00905"></a>00905 <span class="comment">/// Test example: C++ exception in a stack-unwind-block</span>
+<a name="l00906"></a>00906 <span class="comment">/// Real-world example: ninja launched a compiler to process a tricky</span>
+<a name="l00907"></a>00907 <span class="comment">/// C++ input file. The compiler got itself into a state where it</span>
+<a name="l00908"></a>00908 <span class="comment">/// generated 3 GB of output and caused ninja to crash.</span>
+<a name="l00909"></a>00909 <span class="comment"></span><span class="keywordtype">void</span> TerminateHandler() {
+<a name="l00910"></a>00910   <a class="code" href="minidump-win32_8cc.html#ac24340735c50b90b9d623f9331a9bea5" title="Creates a windows minidump in temp folder.">CreateWin32MiniDump</a>(NULL);
+<a name="l00911"></a>00911   <a class="code" href="util_8cc.html#ad98ec6fb76f27b3d5a805cdad742df92" title="Log a fatal message and exit.">Fatal</a>(<span class="stringliteral">&quot;terminate handler called&quot;</span>);
+<a name="l00912"></a>00912 }
+<a name="l00913"></a>00913 <span class="comment"></span>
+<a name="l00914"></a>00914 <span class="comment">/// On Windows, we want to prevent error dialogs in case of exceptions.</span>
+<a name="l00915"></a>00915 <span class="comment">/// This function handles the exception, and writes a minidump.</span>
+<a name="l00916"></a>00916 <span class="comment"></span><span class="keywordtype">int</span> ExceptionFilter(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> code, <span class="keyword">struct</span> _EXCEPTION_POINTERS *ep) {
+<a name="l00917"></a>00917   <a class="code" href="util_8cc.html#a8d48223b92317abcaf5984a00a97efb4" title="Log an error message.">Error</a>(<span class="stringliteral">&quot;exception: 0x%X&quot;</span>, code);  <span class="comment">// e.g. EXCEPTION_ACCESS_VIOLATION</span>
+<a name="l00918"></a>00918   fflush(stderr);
+<a name="l00919"></a>00919   <a class="code" href="minidump-win32_8cc.html#ac24340735c50b90b9d623f9331a9bea5" title="Creates a windows minidump in temp folder.">CreateWin32MiniDump</a>(ep);
+<a name="l00920"></a>00920   <span class="keywordflow">return</span> EXCEPTION_EXECUTE_HANDLER;
+<a name="l00921"></a>00921 }
+<a name="l00922"></a>00922 
+<a name="l00923"></a>00923 <span class="preprocessor">#endif  // _MSC_VER</span>
+<a name="l00924"></a>00924 <span class="preprocessor"></span><span class="comment"></span>
+<a name="l00925"></a>00925 <span class="comment">/// Parse argv for command-line options.</span>
+<a name="l00926"></a>00926 <span class="comment">/// Returns an exit code, or -1 if Ninja should continue.</span>
+<a name="l00927"></a>00927 <span class="comment"></span><span class="keywordtype">int</span> ReadFlags(<span class="keywordtype">int</span>* argc, <span class="keywordtype">char</span>*** argv,
+<a name="l00928"></a>00928               Options* options, <a class="code" href="structBuildConfig.html" title="Options (e.g. verbosity, parallelism) passed to a build.">BuildConfig</a>* config) {
+<a name="l00929"></a>00929   config-&gt;<a class="code" href="structBuildConfig.html#aedc92d7f5d96f1c94c9cdfb2014ea2f0">parallelism</a> = GuessParallelism();
+<a name="l00930"></a>00930 
+<a name="l00931"></a>00931   <span class="keyword">enum</span> { OPT_VERSION = 1 };
+<a name="l00932"></a>00932   <span class="keyword">const</span> <a class="code" href="structGETOPT__LONG__OPTION__T.html">option</a> kLongOptions[] = {
+<a name="l00933"></a>00933     { <span class="stringliteral">&quot;help&quot;</span>, <a class="code" href="getopt_8h.html#a3bc1d5f667b5b4ca4b4abb685dc874ce">no_argument</a>, NULL, <span class="charliteral">&#39;h&#39;</span> },
+<a name="l00934"></a>00934     { <span class="stringliteral">&quot;version&quot;</span>, <a class="code" href="getopt_8h.html#a3bc1d5f667b5b4ca4b4abb685dc874ce">no_argument</a>, NULL, OPT_VERSION },
+<a name="l00935"></a>00935     { NULL, 0, NULL, 0 }
+<a name="l00936"></a>00936   };
+<a name="l00937"></a>00937 
+<a name="l00938"></a>00938   <span class="keywordtype">int</span> opt;
+<a name="l00939"></a>00939   <span class="keywordflow">while</span> (!options-&gt;tool &amp;&amp;
+<a name="l00940"></a>00940          (opt = <a class="code" href="getopt_8h.html#aaf169384ab46c9c47f3cc4d8a37a64fc">getopt_long</a>(*argc, *argv, <span class="stringliteral">&quot;d:f:j:k:l:nt:vC:h&quot;</span>, kLongOptions,
+<a name="l00941"></a>00941                             NULL)) != -1) {
+<a name="l00942"></a>00942     <span class="keywordflow">switch</span> (opt) {
+<a name="l00943"></a>00943       <span class="keywordflow">case</span> <span class="charliteral">&#39;d&#39;</span>:
+<a name="l00944"></a>00944         <span class="keywordflow">if</span> (!DebugEnable(optarg))
+<a name="l00945"></a>00945           <span class="keywordflow">return</span> 1;
+<a name="l00946"></a>00946         <span class="keywordflow">break</span>;
+<a name="l00947"></a>00947       <span class="keywordflow">case</span> <span class="charliteral">&#39;f&#39;</span>:
+<a name="l00948"></a>00948         options-&gt;input_file = <a class="code" href="getopt_8h.html#adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</a>;
+<a name="l00949"></a>00949         <span class="keywordflow">break</span>;
+<a name="l00950"></a>00950       <span class="keywordflow">case</span> <span class="charliteral">&#39;j&#39;</span>: {
+<a name="l00951"></a>00951         <span class="keywordtype">char</span>* end;
+<a name="l00952"></a>00952         <span class="keywordtype">int</span> value = strtol(optarg, &amp;end, 10);
+<a name="l00953"></a>00953         <span class="keywordflow">if</span> (*end != 0 || value &lt;= 0)
+<a name="l00954"></a>00954           <a class="code" href="util_8cc.html#ad98ec6fb76f27b3d5a805cdad742df92" title="Log a fatal message and exit.">Fatal</a>(<span class="stringliteral">&quot;invalid -j parameter&quot;</span>);
+<a name="l00955"></a>00955         config-&gt;<a class="code" href="structBuildConfig.html#aedc92d7f5d96f1c94c9cdfb2014ea2f0">parallelism</a> = value;
+<a name="l00956"></a>00956         <span class="keywordflow">break</span>;
+<a name="l00957"></a>00957       }
+<a name="l00958"></a>00958       <span class="keywordflow">case</span> <span class="charliteral">&#39;k&#39;</span>: {
+<a name="l00959"></a>00959         <span class="keywordtype">char</span>* end;
+<a name="l00960"></a>00960         <span class="keywordtype">int</span> value = strtol(optarg, &amp;end, 10);
+<a name="l00961"></a>00961         <span class="keywordflow">if</span> (*end != 0)
+<a name="l00962"></a>00962           <a class="code" href="util_8cc.html#ad98ec6fb76f27b3d5a805cdad742df92" title="Log a fatal message and exit.">Fatal</a>(<span class="stringliteral">&quot;-k parameter not numeric; did you mean -k 0?&quot;</span>);
+<a name="l00963"></a>00963 
+<a name="l00964"></a>00964         <span class="comment">// We want to go until N jobs fail, which means we should allow</span>
+<a name="l00965"></a>00965         <span class="comment">// N failures and then stop.  For N &lt;= 0, INT_MAX is close enough</span>
+<a name="l00966"></a>00966         <span class="comment">// to infinite for most sane builds.</span>
+<a name="l00967"></a>00967         config-&gt;<a class="code" href="structBuildConfig.html#a406984d40cde5afc338fe3b0cb9149c9">failures_allowed</a> = value &gt; 0 ? value : INT_MAX;
+<a name="l00968"></a>00968         <span class="keywordflow">break</span>;
+<a name="l00969"></a>00969       }
+<a name="l00970"></a>00970       <span class="keywordflow">case</span> <span class="charliteral">&#39;l&#39;</span>: {
+<a name="l00971"></a>00971         <span class="keywordtype">char</span>* end;
+<a name="l00972"></a>00972         <span class="keywordtype">double</span> value = strtod(optarg, &amp;end);
+<a name="l00973"></a>00973         <span class="keywordflow">if</span> (end == optarg)
+<a name="l00974"></a>00974           <a class="code" href="util_8cc.html#ad98ec6fb76f27b3d5a805cdad742df92" title="Log a fatal message and exit.">Fatal</a>(<span class="stringliteral">&quot;-l parameter not numeric: did you mean -l 0.0?&quot;</span>);
+<a name="l00975"></a>00975         config-&gt;<a class="code" href="structBuildConfig.html#a98a4cc988e1a82850fcfdbaab0a51570" title="The maximum load average we must not exceed.">max_load_average</a> = value;
 <a name="l00976"></a>00976         <span class="keywordflow">break</span>;
-<a name="l00977"></a>00977       <span class="keywordflow">case</span> <span class="charliteral">&#39;t&#39;</span>:
-<a name="l00978"></a>00978         options-&gt;tool = ChooseTool(optarg);
-<a name="l00979"></a>00979         <span class="keywordflow">if</span> (!options-&gt;tool)
-<a name="l00980"></a>00980           <span class="keywordflow">return</span> 0;
-<a name="l00981"></a>00981         <span class="keywordflow">break</span>;
-<a name="l00982"></a>00982       <span class="keywordflow">case</span> <span class="charliteral">&#39;v&#39;</span>:
-<a name="l00983"></a>00983         config-&gt;<a class="code" href="structBuildConfig.html#ae50beadfa54bab9ea78feb96f56431cf">verbosity</a> = <a class="code" href="structBuildConfig.html#a7a6581026821b221c12ccfc9203b4fffa44ec2c4f7fd9233c06f434e56faf1874">BuildConfig::VERBOSE</a>;
-<a name="l00984"></a>00984         <span class="keywordflow">break</span>;
-<a name="l00985"></a>00985       <span class="keywordflow">case</span> <span class="charliteral">&#39;C&#39;</span>:
-<a name="l00986"></a>00986         options-&gt;working_dir = <a class="code" href="getopt_8h.html#adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</a>;
-<a name="l00987"></a>00987         <span class="keywordflow">break</span>;
-<a name="l00988"></a>00988       <span class="keywordflow">case</span> OPT_VERSION:
-<a name="l00989"></a>00989         printf(<span class="stringliteral">&quot;%s\n&quot;</span>, <a class="code" href="version_8cc.html#a38550eefd4f7cf3cf562fdc142eb918c" title="The version number of the current Ninja release.">kNinjaVersion</a>);
-<a name="l00990"></a>00990         <span class="keywordflow">return</span> 0;
-<a name="l00991"></a>00991       <span class="keywordflow">case</span> <span class="charliteral">&#39;h&#39;</span>:
-<a name="l00992"></a>00992       <span class="keywordflow">default</span>:
-<a name="l00993"></a>00993         Usage(*config);
-<a name="l00994"></a>00994         <span class="keywordflow">return</span> 1;
-<a name="l00995"></a>00995     }
-<a name="l00996"></a>00996   }
-<a name="l00997"></a>00997   *argv += <a class="code" href="getopt_8h.html#ad5e1c16213bbee2d5e8cc363309f418c">optind</a>;
-<a name="l00998"></a>00998   *argc -= <a class="code" href="getopt_8h.html#ad5e1c16213bbee2d5e8cc363309f418c">optind</a>;
-<a name="l00999"></a>00999 
-<a name="l01000"></a>01000   <span class="keywordflow">return</span> -1;
-<a name="l01001"></a>01001 }
-<a name="l01002"></a>01002 
-<a name="l01003"></a>01003 <span class="keywordtype">int</span> real_main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>** argv) {
-<a name="l01004"></a>01004   <a class="code" href="structBuildConfig.html" title="Options (e.g. verbosity, parallelism) passed to a build.">BuildConfig</a> config;
-<a name="l01005"></a>01005   Options options = {};
-<a name="l01006"></a>01006   options.input_file = <span class="stringliteral">&quot;build.ninja&quot;</span>;
-<a name="l01007"></a>01007 
-<a name="l01008"></a>01008   setvbuf(stdout, NULL, _IOLBF, BUFSIZ);
-<a name="l01009"></a>01009 
-<a name="l01010"></a>01010   <span class="keywordtype">int</span> exit_code = ReadFlags(&amp;argc, &amp;argv, &amp;options, &amp;config);
-<a name="l01011"></a>01011   <span class="keywordflow">if</span> (exit_code &gt;= 0)
-<a name="l01012"></a>01012     <span class="keywordflow">return</span> exit_code;
-<a name="l01013"></a>01013 
-<a name="l01014"></a>01014   <span class="keywordflow">if</span> (options.tool &amp;&amp; options.tool-&gt;when == Tool::RUN_AFTER_FLAGS) {
-<a name="l01015"></a>01015     <span class="comment">// None of the RUN_AFTER_FLAGS actually use a NinjaMain, but it&#39;s needed</span>
-<a name="l01016"></a>01016     <span class="comment">// by other tools.</span>
-<a name="l01017"></a>01017     NinjaMain ninja(argv[0], config);
-<a name="l01018"></a>01018     <span class="keywordflow">return</span> (ninja.*options.tool-&gt;func)(argc, argv);
-<a name="l01019"></a>01019   }
-<a name="l01020"></a>01020 
-<a name="l01021"></a>01021   <span class="keywordflow">if</span> (options.working_dir) {
-<a name="l01022"></a>01022     <span class="comment">// The formatting of this string, complete with funny quotes, is</span>
-<a name="l01023"></a>01023     <span class="comment">// so Emacs can properly identify that the cwd has changed for</span>
-<a name="l01024"></a>01024     <span class="comment">// subsequent commands.</span>
-<a name="l01025"></a>01025     <span class="comment">// Don&#39;t print this if a tool is being used, so that tool output</span>
-<a name="l01026"></a>01026     <span class="comment">// can be piped into a file without this string showing up.</span>
-<a name="l01027"></a>01027     <span class="keywordflow">if</span> (!options.tool)
-<a name="l01028"></a>01028       printf(<span class="stringliteral">&quot;ninja: Entering directory `%s&#39;\n&quot;</span>, options.working_dir);
-<a name="l01029"></a>01029     <span class="keywordflow">if</span> (chdir(options.working_dir) &lt; 0) {
-<a name="l01030"></a>01030       <a class="code" href="util_8cc.html#ad98ec6fb76f27b3d5a805cdad742df92" title="Log a fatal message and exit.">Fatal</a>(<span class="stringliteral">&quot;chdir to &#39;%s&#39; - %s&quot;</span>, options.working_dir, strerror(errno));
-<a name="l01031"></a>01031     }
-<a name="l01032"></a>01032   }
-<a name="l01033"></a>01033 
-<a name="l01034"></a>01034   <span class="comment">// The build can take up to 2 passes: one to rebuild the manifest, then</span>
-<a name="l01035"></a>01035   <span class="comment">// another to build the desired target.</span>
-<a name="l01036"></a>01036   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> cycle = 0; cycle &lt; 2; ++cycle) {
-<a name="l01037"></a>01037     NinjaMain ninja(argv[0], config);
+<a name="l00977"></a>00977       }
+<a name="l00978"></a>00978       <span class="keywordflow">case</span> <span class="charliteral">&#39;n&#39;</span>:
+<a name="l00979"></a>00979         config-&gt;<a class="code" href="structBuildConfig.html#aa65c3f1fe7e0faa2b05b36ed1743da5d">dry_run</a> = <span class="keyword">true</span>;
+<a name="l00980"></a>00980         <span class="keywordflow">break</span>;
+<a name="l00981"></a>00981       <span class="keywordflow">case</span> <span class="charliteral">&#39;t&#39;</span>:
+<a name="l00982"></a>00982         options-&gt;tool = ChooseTool(optarg);
+<a name="l00983"></a>00983         <span class="keywordflow">if</span> (!options-&gt;tool)
+<a name="l00984"></a>00984           <span class="keywordflow">return</span> 0;
+<a name="l00985"></a>00985         <span class="keywordflow">break</span>;
+<a name="l00986"></a>00986       <span class="keywordflow">case</span> <span class="charliteral">&#39;v&#39;</span>:
+<a name="l00987"></a>00987         config-&gt;<a class="code" href="structBuildConfig.html#ae50beadfa54bab9ea78feb96f56431cf">verbosity</a> = <a class="code" href="structBuildConfig.html#a7a6581026821b221c12ccfc9203b4fffa44ec2c4f7fd9233c06f434e56faf1874">BuildConfig::VERBOSE</a>;
+<a name="l00988"></a>00988         <span class="keywordflow">break</span>;
+<a name="l00989"></a>00989       <span class="keywordflow">case</span> <span class="charliteral">&#39;C&#39;</span>:
+<a name="l00990"></a>00990         options-&gt;working_dir = <a class="code" href="getopt_8h.html#adb50a0eab9fed92fc3bfc7dfa4f2c410">optarg</a>;
+<a name="l00991"></a>00991         <span class="keywordflow">break</span>;
+<a name="l00992"></a>00992       <span class="keywordflow">case</span> OPT_VERSION:
+<a name="l00993"></a>00993         printf(<span class="stringliteral">&quot;%s\n&quot;</span>, <a class="code" href="version_8cc.html#a38550eefd4f7cf3cf562fdc142eb918c" title="The version number of the current Ninja release.">kNinjaVersion</a>);
+<a name="l00994"></a>00994         <span class="keywordflow">return</span> 0;
+<a name="l00995"></a>00995       <span class="keywordflow">case</span> <span class="charliteral">&#39;h&#39;</span>:
+<a name="l00996"></a>00996       <span class="keywordflow">default</span>:
+<a name="l00997"></a>00997         Usage(*config);
+<a name="l00998"></a>00998         <span class="keywordflow">return</span> 1;
+<a name="l00999"></a>00999     }
+<a name="l01000"></a>01000   }
+<a name="l01001"></a>01001   *argv += <a class="code" href="getopt_8h.html#ad5e1c16213bbee2d5e8cc363309f418c">optind</a>;
+<a name="l01002"></a>01002   *argc -= <a class="code" href="getopt_8h.html#ad5e1c16213bbee2d5e8cc363309f418c">optind</a>;
+<a name="l01003"></a>01003 
+<a name="l01004"></a>01004   <span class="keywordflow">return</span> -1;
+<a name="l01005"></a>01005 }
+<a name="l01006"></a>01006 
+<a name="l01007"></a>01007 <span class="keywordtype">int</span> real_main(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>** argv) {
+<a name="l01008"></a>01008   <a class="code" href="structBuildConfig.html" title="Options (e.g. verbosity, parallelism) passed to a build.">BuildConfig</a> config;
+<a name="l01009"></a>01009   Options options = {};
+<a name="l01010"></a>01010   options.input_file = <span class="stringliteral">&quot;build.ninja&quot;</span>;
+<a name="l01011"></a>01011 
+<a name="l01012"></a>01012   setvbuf(stdout, NULL, _IOLBF, BUFSIZ);
+<a name="l01013"></a>01013   <span class="keyword">const</span> <span class="keywordtype">char</span>* ninja_command = argv[0];
+<a name="l01014"></a>01014 
+<a name="l01015"></a>01015   <span class="keywordtype">int</span> exit_code = ReadFlags(&amp;argc, &amp;argv, &amp;options, &amp;config);
+<a name="l01016"></a>01016   <span class="keywordflow">if</span> (exit_code &gt;= 0)
+<a name="l01017"></a>01017     <span class="keywordflow">return</span> exit_code;
+<a name="l01018"></a>01018 
+<a name="l01019"></a>01019   <span class="keywordflow">if</span> (options.tool &amp;&amp; options.tool-&gt;when == Tool::RUN_AFTER_FLAGS) {
+<a name="l01020"></a>01020     <span class="comment">// None of the RUN_AFTER_FLAGS actually use a NinjaMain, but it&#39;s needed</span>
+<a name="l01021"></a>01021     <span class="comment">// by other tools.</span>
+<a name="l01022"></a>01022     NinjaMain ninja(ninja_command, config);
+<a name="l01023"></a>01023     <span class="keywordflow">return</span> (ninja.*options.tool-&gt;func)(argc, argv);
+<a name="l01024"></a>01024   }
+<a name="l01025"></a>01025 
+<a name="l01026"></a>01026   <span class="keywordflow">if</span> (options.working_dir) {
+<a name="l01027"></a>01027     <span class="comment">// The formatting of this string, complete with funny quotes, is</span>
+<a name="l01028"></a>01028     <span class="comment">// so Emacs can properly identify that the cwd has changed for</span>
+<a name="l01029"></a>01029     <span class="comment">// subsequent commands.</span>
+<a name="l01030"></a>01030     <span class="comment">// Don&#39;t print this if a tool is being used, so that tool output</span>
+<a name="l01031"></a>01031     <span class="comment">// can be piped into a file without this string showing up.</span>
+<a name="l01032"></a>01032     <span class="keywordflow">if</span> (!options.tool)
+<a name="l01033"></a>01033       printf(<span class="stringliteral">&quot;ninja: Entering directory `%s&#39;\n&quot;</span>, options.working_dir);
+<a name="l01034"></a>01034     <span class="keywordflow">if</span> (chdir(options.working_dir) &lt; 0) {
+<a name="l01035"></a>01035       <a class="code" href="util_8cc.html#ad98ec6fb76f27b3d5a805cdad742df92" title="Log a fatal message and exit.">Fatal</a>(<span class="stringliteral">&quot;chdir to &#39;%s&#39; - %s&quot;</span>, options.working_dir, strerror(errno));
+<a name="l01036"></a>01036     }
+<a name="l01037"></a>01037   }
 <a name="l01038"></a>01038 
-<a name="l01039"></a>01039     RealFileReader file_reader;
-<a name="l01040"></a>01040     <a class="code" href="structManifestParser.html" title="Parses .ninja files.">ManifestParser</a> parser(&amp;ninja.state_, &amp;file_reader);
-<a name="l01041"></a>01041     <span class="keywordtype">string</span> err;
-<a name="l01042"></a>01042     <span class="keywordflow">if</span> (!parser.Load(options.input_file, &amp;err)) {
-<a name="l01043"></a>01043       <a class="code" href="util_8cc.html#a8d48223b92317abcaf5984a00a97efb4" title="Log an error message.">Error</a>(<span class="stringliteral">&quot;%s&quot;</span>, err.c_str());
-<a name="l01044"></a>01044       <span class="keywordflow">return</span> 1;
-<a name="l01045"></a>01045     }
-<a name="l01046"></a>01046 
-<a name="l01047"></a>01047     <span class="keywordflow">if</span> (options.tool &amp;&amp; options.tool-&gt;when == Tool::RUN_AFTER_LOAD)
-<a name="l01048"></a>01048       <span class="keywordflow">return</span> (ninja.*options.tool-&gt;func)(argc, argv);
-<a name="l01049"></a>01049 
-<a name="l01050"></a>01050     <span class="keywordflow">if</span> (!ninja.EnsureBuildDirExists())
-<a name="l01051"></a>01051       <span class="keywordflow">return</span> 1;
-<a name="l01052"></a>01052 
-<a name="l01053"></a>01053     <span class="keywordflow">if</span> (!ninja.OpenBuildLog() || !ninja.OpenDepsLog())
-<a name="l01054"></a>01054       <span class="keywordflow">return</span> 1;
-<a name="l01055"></a>01055 
-<a name="l01056"></a>01056     <span class="keywordflow">if</span> (options.tool &amp;&amp; options.tool-&gt;when == Tool::RUN_AFTER_LOGS)
-<a name="l01057"></a>01057       <span class="keywordflow">return</span> (ninja.*options.tool-&gt;func)(argc, argv);
-<a name="l01058"></a>01058 
-<a name="l01059"></a>01059     <span class="comment">// The first time through, attempt to rebuild the manifest before</span>
-<a name="l01060"></a>01060     <span class="comment">// building anything else.</span>
-<a name="l01061"></a>01061     <span class="keywordflow">if</span> (cycle == 0) {
-<a name="l01062"></a>01062       <span class="keywordflow">if</span> (ninja.RebuildManifest(options.input_file, &amp;err)) {
-<a name="l01063"></a>01063         <span class="comment">// Start the build over with the new manifest.</span>
-<a name="l01064"></a>01064         <span class="keywordflow">continue</span>;
-<a name="l01065"></a>01065       } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!err.empty()) {
-<a name="l01066"></a>01066         <a class="code" href="util_8cc.html#a8d48223b92317abcaf5984a00a97efb4" title="Log an error message.">Error</a>(<span class="stringliteral">&quot;rebuilding &#39;%s&#39;: %s&quot;</span>, options.input_file, err.c_str());
-<a name="l01067"></a>01067         <span class="keywordflow">return</span> 1;
-<a name="l01068"></a>01068       }
-<a name="l01069"></a>01069     }
-<a name="l01070"></a>01070 
-<a name="l01071"></a>01071     <span class="keywordtype">int</span> result = ninja.RunBuild(argc, argv);
-<a name="l01072"></a>01072     <span class="keywordflow">if</span> (<a class="code" href="metrics_8cc.html#a10cec6b1d988b109006369a7360e1add">g_metrics</a>)
-<a name="l01073"></a>01073       ninja.DumpMetrics();
-<a name="l01074"></a>01074     <span class="keywordflow">return</span> result;
-<a name="l01075"></a>01075   }
-<a name="l01076"></a>01076 
-<a name="l01077"></a>01077   <span class="keywordflow">return</span> 1;  <span class="comment">// Shouldn&#39;t be reached.</span>
-<a name="l01078"></a>01078 }
-<a name="l01079"></a>01079 
-<a name="l01080"></a>01080 }  <span class="comment">// anonymous namespace</span>
+<a name="l01039"></a>01039   <span class="comment">// The build can take up to 2 passes: one to rebuild the manifest, then</span>
+<a name="l01040"></a>01040   <span class="comment">// another to build the desired target.</span>
+<a name="l01041"></a>01041   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> cycle = 0; cycle &lt; 2; ++cycle) {
+<a name="l01042"></a>01042     NinjaMain ninja(ninja_command, config);
+<a name="l01043"></a>01043 
+<a name="l01044"></a>01044     RealFileReader file_reader;
+<a name="l01045"></a>01045     <a class="code" href="structManifestParser.html" title="Parses .ninja files.">ManifestParser</a> parser(&amp;ninja.state_, &amp;file_reader);
+<a name="l01046"></a>01046     <span class="keywordtype">string</span> err;
+<a name="l01047"></a>01047     <span class="keywordflow">if</span> (!parser.Load(options.input_file, &amp;err)) {
+<a name="l01048"></a>01048       <a class="code" href="util_8cc.html#a8d48223b92317abcaf5984a00a97efb4" title="Log an error message.">Error</a>(<span class="stringliteral">&quot;%s&quot;</span>, err.c_str());
+<a name="l01049"></a>01049       <span class="keywordflow">return</span> 1;
+<a name="l01050"></a>01050     }
+<a name="l01051"></a>01051 
+<a name="l01052"></a>01052     <span class="keywordflow">if</span> (options.tool &amp;&amp; options.tool-&gt;when == Tool::RUN_AFTER_LOAD)
+<a name="l01053"></a>01053       <span class="keywordflow">return</span> (ninja.*options.tool-&gt;func)(argc, argv);
+<a name="l01054"></a>01054 
+<a name="l01055"></a>01055     <span class="keywordflow">if</span> (!ninja.EnsureBuildDirExists())
+<a name="l01056"></a>01056       <span class="keywordflow">return</span> 1;
+<a name="l01057"></a>01057 
+<a name="l01058"></a>01058     <span class="keywordflow">if</span> (!ninja.OpenBuildLog() || !ninja.OpenDepsLog())
+<a name="l01059"></a>01059       <span class="keywordflow">return</span> 1;
+<a name="l01060"></a>01060 
+<a name="l01061"></a>01061     <span class="keywordflow">if</span> (options.tool &amp;&amp; options.tool-&gt;when == Tool::RUN_AFTER_LOGS)
+<a name="l01062"></a>01062       <span class="keywordflow">return</span> (ninja.*options.tool-&gt;func)(argc, argv);
+<a name="l01063"></a>01063 
+<a name="l01064"></a>01064     <span class="comment">// The first time through, attempt to rebuild the manifest before</span>
+<a name="l01065"></a>01065     <span class="comment">// building anything else.</span>
+<a name="l01066"></a>01066     <span class="keywordflow">if</span> (cycle == 0) {
+<a name="l01067"></a>01067       <span class="keywordflow">if</span> (ninja.RebuildManifest(options.input_file, &amp;err)) {
+<a name="l01068"></a>01068         <span class="comment">// Start the build over with the new manifest.</span>
+<a name="l01069"></a>01069         <span class="keywordflow">continue</span>;
+<a name="l01070"></a>01070       } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!err.empty()) {
+<a name="l01071"></a>01071         <a class="code" href="util_8cc.html#a8d48223b92317abcaf5984a00a97efb4" title="Log an error message.">Error</a>(<span class="stringliteral">&quot;rebuilding &#39;%s&#39;: %s&quot;</span>, options.input_file, err.c_str());
+<a name="l01072"></a>01072         <span class="keywordflow">return</span> 1;
+<a name="l01073"></a>01073       }
+<a name="l01074"></a>01074     }
+<a name="l01075"></a>01075 
+<a name="l01076"></a>01076     <span class="keywordtype">int</span> result = ninja.RunBuild(argc, argv);
+<a name="l01077"></a>01077     <span class="keywordflow">if</span> (<a class="code" href="metrics_8cc.html#a10cec6b1d988b109006369a7360e1add">g_metrics</a>)
+<a name="l01078"></a>01078       ninja.DumpMetrics();
+<a name="l01079"></a>01079     <span class="keywordflow">return</span> result;
+<a name="l01080"></a>01080   }
 <a name="l01081"></a>01081 
-<a name="l01082"></a><a class="code" href="ninja_8cc.html#a3c04138a5bfe5d72780bb7e82a18e627">01082</a> <span class="keywordtype">int</span> <a class="code" href="build__log__perftest_8cc.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>** argv) {
-<a name="l01083"></a>01083 <span class="preprocessor">#if !defined(NINJA_BOOTSTRAP) &amp;&amp; defined(_MSC_VER)</span>
-<a name="l01084"></a>01084 <span class="preprocessor"></span>  <span class="comment">// Set a handler to catch crashes not caught by the __try..__except</span>
-<a name="l01085"></a>01085   <span class="comment">// block (e.g. an exception in a stack-unwind-block).</span>
-<a name="l01086"></a>01086   set_terminate(TerminateHandler);
-<a name="l01087"></a>01087   __try {
-<a name="l01088"></a>01088     <span class="comment">// Running inside __try ... __except suppresses any Windows error</span>
-<a name="l01089"></a>01089     <span class="comment">// dialogs for errors such as bad_alloc.</span>
-<a name="l01090"></a>01090     <span class="keywordflow">return</span> real_main(argc, argv);
-<a name="l01091"></a>01091   }
-<a name="l01092"></a>01092   __except(ExceptionFilter(GetExceptionCode(), GetExceptionInformation())) {
-<a name="l01093"></a>01093     <span class="comment">// Common error situations return exitCode=1. 2 was chosen to</span>
-<a name="l01094"></a>01094     <span class="comment">// indicate a more serious problem.</span>
-<a name="l01095"></a>01095     <span class="keywordflow">return</span> 2;
+<a name="l01082"></a>01082   <span class="keywordflow">return</span> 1;  <span class="comment">// Shouldn&#39;t be reached.</span>
+<a name="l01083"></a>01083 }
+<a name="l01084"></a>01084 
+<a name="l01085"></a>01085 }  <span class="comment">// anonymous namespace</span>
+<a name="l01086"></a>01086 
+<a name="l01087"></a><a class="code" href="ninja_8cc.html#a3c04138a5bfe5d72780bb7e82a18e627">01087</a> <span class="keywordtype">int</span> <a class="code" href="build__log__perftest_8cc.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span>** argv) {
+<a name="l01088"></a>01088 <span class="preprocessor">#if !defined(NINJA_BOOTSTRAP) &amp;&amp; defined(_MSC_VER)</span>
+<a name="l01089"></a>01089 <span class="preprocessor"></span>  <span class="comment">// Set a handler to catch crashes not caught by the __try..__except</span>
+<a name="l01090"></a>01090   <span class="comment">// block (e.g. an exception in a stack-unwind-block).</span>
+<a name="l01091"></a>01091   set_terminate(TerminateHandler);
+<a name="l01092"></a>01092   __try {
+<a name="l01093"></a>01093     <span class="comment">// Running inside __try ... __except suppresses any Windows error</span>
+<a name="l01094"></a>01094     <span class="comment">// dialogs for errors such as bad_alloc.</span>
+<a name="l01095"></a>01095     <span class="keywordflow">return</span> real_main(argc, argv);
 <a name="l01096"></a>01096   }
-<a name="l01097"></a>01097 <span class="preprocessor">#else</span>
-<a name="l01098"></a>01098 <span class="preprocessor"></span>  <span class="keywordflow">return</span> real_main(argc, argv);
-<a name="l01099"></a>01099 <span class="preprocessor">#endif</span>
-<a name="l01100"></a>01100 <span class="preprocessor"></span>}
+<a name="l01097"></a>01097   __except(ExceptionFilter(GetExceptionCode(), GetExceptionInformation())) {
+<a name="l01098"></a>01098     <span class="comment">// Common error situations return exitCode=1. 2 was chosen to</span>
+<a name="l01099"></a>01099     <span class="comment">// indicate a more serious problem.</span>
+<a name="l01100"></a>01100     <span class="keywordflow">return</span> 2;
+<a name="l01101"></a>01101   }
+<a name="l01102"></a>01102 <span class="preprocessor">#else</span>
+<a name="l01103"></a>01103 <span class="preprocessor"></span>  <span class="keywordflow">return</span> real_main(argc, argv);
+<a name="l01104"></a>01104 <span class="preprocessor">#endif</span>
+<a name="l01105"></a>01105 <span class="preprocessor"></span>}
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Aug 8 2013 09:48:12 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Sep 12 2013 09:25:49 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

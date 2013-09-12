@@ -180,7 +180,7 @@
 <a name="l00121"></a>00121 <span class="preprocessor"></span>}
 <a name="l00122"></a>00122 
 <a name="l00123"></a><a class="code" href="structRealDiskInterface.html#a0bd82c99c8838d65ae6ab1c0bbf94fe9">00123</a> <span class="keywordtype">bool</span> <a class="code" href="structRealDiskInterface.html#a0bd82c99c8838d65ae6ab1c0bbf94fe9" title="Create a file, with the specified name and contents Returns true on success, false on failure...">RealDiskInterface::WriteFile</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; contents) {
-<a name="l00124"></a>00124   FILE * fp = fopen(path.c_str(), <span class="stringliteral">&quot;w&quot;</span>);
+<a name="l00124"></a>00124   FILE* fp = fopen(path.c_str(), <span class="stringliteral">&quot;w&quot;</span>);
 <a name="l00125"></a>00125   <span class="keywordflow">if</span> (fp == NULL) {
 <a name="l00126"></a>00126     <a class="code" href="util_8cc.html#a8d48223b92317abcaf5984a00a97efb4" title="Log an error message.">Error</a>(<span class="stringliteral">&quot;WriteFile(%s): Unable to create file. %s&quot;</span>,
 <a name="l00127"></a>00127           path.c_str(), strerror(errno));
@@ -238,7 +238,7 @@
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Aug 8 2013 09:48:12 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Sep 12 2013 09:25:49 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

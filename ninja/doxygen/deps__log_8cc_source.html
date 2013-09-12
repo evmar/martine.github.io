@@ -89,314 +89,372 @@
 <a name="l00030"></a>00030 <span class="comment">// The version is stored as 4 bytes after the signature and also serves as a</span>
 <a name="l00031"></a>00031 <span class="comment">// byte order mark. Signature and version combined are 16 bytes long.</span>
 <a name="l00032"></a><a class="code" href="deps__log_8cc.html#af3689d396263e39675199367e0138314">00032</a> <span class="keyword">const</span> <span class="keywordtype">char</span> <a class="code" href="deps__log_8cc.html#af3689d396263e39675199367e0138314">kFileSignature</a>[] = <span class="stringliteral">&quot;# ninjadeps\n&quot;</span>;
-<a name="l00033"></a><a class="code" href="deps__log_8cc.html#a921b019a3680c6975e949208c2b08af8">00033</a> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="deps__log_8cc.html#a921b019a3680c6975e949208c2b08af8">kCurrentVersion</a> = 1;
+<a name="l00033"></a><a class="code" href="deps__log_8cc.html#a921b019a3680c6975e949208c2b08af8">00033</a> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="deps__log_8cc.html#a921b019a3680c6975e949208c2b08af8">kCurrentVersion</a> = 3;
 <a name="l00034"></a>00034 
-<a name="l00035"></a>00035 <span class="comment">// Since the size field is 2 bytes and the top bit marks deps entries, a single</span>
-<a name="l00036"></a>00036 <span class="comment">// record can be at most 32 kB. Set the buffer size to this and flush the file</span>
-<a name="l00037"></a>00037 <span class="comment">// buffer after every record to make sure records aren&#39;t written partially.</span>
-<a name="l00038"></a><a class="code" href="deps__log_8cc.html#ad528d4d13536862a82c542bb4f870979">00038</a> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="deps__log_8cc.html#ad528d4d13536862a82c542bb4f870979">kMaxBufferSize</a> = 1 &lt;&lt; 15;
-<a name="l00039"></a>00039 
-<a name="l00040"></a><a class="code" href="structDepsLog.html#a5d1a8f67e5a655323ae73d140376cd71">00040</a> <a class="code" href="structDepsLog.html#a5d1a8f67e5a655323ae73d140376cd71">DepsLog::~DepsLog</a>() {
-<a name="l00041"></a>00041   <a class="code" href="structDepsLog.html#a750f013ae662f96e7f2545d213c7f3a0">Close</a>();
-<a name="l00042"></a>00042 }
-<a name="l00043"></a>00043 
-<a name="l00044"></a><a class="code" href="structDepsLog.html#af49ad152c2917c7e86742ce335db0263">00044</a> <span class="keywordtype">bool</span> <a class="code" href="structDepsLog.html#af49ad152c2917c7e86742ce335db0263">DepsLog::OpenForWrite</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path, <span class="keywordtype">string</span>* err) {
-<a name="l00045"></a>00045   <span class="keywordflow">if</span> (<a class="code" href="structDepsLog.html#adee980c7d35e5c4b32b669733b4382c4">needs_recompaction_</a>) {
-<a name="l00046"></a>00046     <span class="keywordflow">if</span> (!<a class="code" href="structDepsLog.html#a09515578bf5a271a93919c7ff2036001" title="Rewrite the known log entries, throwing away old data.">Recompact</a>(path, err))
-<a name="l00047"></a>00047       <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00048"></a>00048   }
-<a name="l00049"></a>00049   
-<a name="l00050"></a>00050   <a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a> = fopen(path.c_str(), <span class="stringliteral">&quot;ab&quot;</span>);
-<a name="l00051"></a>00051   <span class="keywordflow">if</span> (!<a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a>) {
-<a name="l00052"></a>00052     *err = strerror(errno);
-<a name="l00053"></a>00053     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00054"></a>00054   }
-<a name="l00055"></a>00055   setvbuf(<a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a>, NULL, _IOFBF, <a class="code" href="deps__log_8cc.html#ad528d4d13536862a82c542bb4f870979">kMaxBufferSize</a>);
-<a name="l00056"></a>00056   <a class="code" href="util_8cc.html#a946927145681d8bb8318f5a7c4dc57ae" title="Mark a file descriptor to not be inherited on exec()s.">SetCloseOnExec</a>(fileno(<a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a>));
-<a name="l00057"></a>00057 
-<a name="l00058"></a>00058   <span class="comment">// Opening a file in append mode doesn&#39;t set the file pointer to the file&#39;s</span>
-<a name="l00059"></a>00059   <span class="comment">// end on Windows. Do that explicitly.</span>
-<a name="l00060"></a>00060   fseek(<a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a>, 0, SEEK_END);
-<a name="l00061"></a>00061 
-<a name="l00062"></a>00062   <span class="keywordflow">if</span> (ftell(<a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a>) == 0) {
-<a name="l00063"></a>00063     <span class="keywordflow">if</span> (fwrite(<a class="code" href="deps__log_8cc.html#af3689d396263e39675199367e0138314">kFileSignature</a>, <span class="keyword">sizeof</span>(<a class="code" href="deps__log_8cc.html#af3689d396263e39675199367e0138314">kFileSignature</a>) - 1, 1, <a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a>) &lt; 1) {
-<a name="l00064"></a>00064       *err = strerror(errno);
-<a name="l00065"></a>00065       <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00066"></a>00066     }
-<a name="l00067"></a>00067     <span class="keywordflow">if</span> (fwrite(&amp;<a class="code" href="deps__log_8cc.html#a921b019a3680c6975e949208c2b08af8">kCurrentVersion</a>, 4, 1, <a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a>) &lt; 1) {
-<a name="l00068"></a>00068       *err = strerror(errno);
-<a name="l00069"></a>00069       <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00070"></a>00070     }
-<a name="l00071"></a>00071   }
-<a name="l00072"></a>00072   fflush(<a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a>);
-<a name="l00073"></a>00073 
-<a name="l00074"></a>00074   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00075"></a>00075 }
-<a name="l00076"></a>00076 
-<a name="l00077"></a><a class="code" href="structDepsLog.html#a970cd6713ab54b3fff2f9de5255352fc">00077</a> <span class="keywordtype">bool</span> <a class="code" href="structDepsLog.html#a970cd6713ab54b3fff2f9de5255352fc">DepsLog::RecordDeps</a>(<a class="code" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>* node, <a class="code" href="timestamp_8h.html#a364f6f32873dd70e259c971fc2e28b73">TimeStamp</a> mtime,
-<a name="l00078"></a>00078                          <span class="keyword">const</span> vector&lt;Node*&gt;&amp; nodes) {
-<a name="l00079"></a>00079   <span class="keywordflow">return</span> <a class="code" href="structDepsLog.html#a970cd6713ab54b3fff2f9de5255352fc">RecordDeps</a>(node, mtime, nodes.size(),
-<a name="l00080"></a>00080                     nodes.empty() ? NULL : (<a class="code" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>**)&amp;nodes.front());
-<a name="l00081"></a>00081 }
-<a name="l00082"></a>00082 
-<a name="l00083"></a><a class="code" href="structDepsLog.html#a5f48df80478fb9af806aa7c56946ca81">00083</a> <span class="keywordtype">bool</span> <a class="code" href="structDepsLog.html#a970cd6713ab54b3fff2f9de5255352fc">DepsLog::RecordDeps</a>(<a class="code" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>* node, <a class="code" href="timestamp_8h.html#a364f6f32873dd70e259c971fc2e28b73">TimeStamp</a> mtime,
-<a name="l00084"></a>00084                          <span class="keywordtype">int</span> node_count, <a class="code" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>** nodes) {
-<a name="l00085"></a>00085   <span class="comment">// Track whether there&#39;s any new data to be recorded.</span>
-<a name="l00086"></a>00086   <span class="keywordtype">bool</span> made_change = <span class="keyword">false</span>;
-<a name="l00087"></a>00087 
-<a name="l00088"></a>00088   <span class="comment">// Assign ids to all nodes that are missing one.</span>
-<a name="l00089"></a>00089   <span class="keywordflow">if</span> (node-&gt;<a class="code" href="structNode.html#a703c4c528d8b5176ee7a85db7cdd4208">id</a>() &lt; 0) {
-<a name="l00090"></a>00090     <a class="code" href="structDepsLog.html#aa4cc04faa7d2d9256a372f1b067e61ef">RecordId</a>(node);
-<a name="l00091"></a>00091     made_change = <span class="keyword">true</span>;
-<a name="l00092"></a>00092   }
-<a name="l00093"></a>00093   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; node_count; ++i) {
-<a name="l00094"></a>00094     <span class="keywordflow">if</span> (nodes[i]-&gt;<span class="keywordtype">id</span>() &lt; 0) {
-<a name="l00095"></a>00095       <a class="code" href="structDepsLog.html#aa4cc04faa7d2d9256a372f1b067e61ef">RecordId</a>(nodes[i]);
-<a name="l00096"></a>00096       made_change = <span class="keyword">true</span>;
-<a name="l00097"></a>00097     }
-<a name="l00098"></a>00098   }
-<a name="l00099"></a>00099 
-<a name="l00100"></a>00100   <span class="comment">// See if the new data is different than the existing data, if any.</span>
-<a name="l00101"></a>00101   <span class="keywordflow">if</span> (!made_change) {
-<a name="l00102"></a>00102     <a class="code" href="structDepsLog_1_1Deps.html">Deps</a>* <a class="code" href="structDepsLog.html#a849f7a1be3a785babb0089e1466fe874">deps</a> = <a class="code" href="structDepsLog.html#a075043796f88d312004cf5ae74a53c4e">GetDeps</a>(node);
-<a name="l00103"></a>00103     <span class="keywordflow">if</span> (!deps ||
-<a name="l00104"></a>00104         deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#ae73ed4a9faede3332a47215b2a68a5dc">mtime</a> != mtime ||
-<a name="l00105"></a>00105         deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#af59c987b02350a4dfcd24a5406624fdb">node_count</a> != node_count) {
-<a name="l00106"></a>00106       made_change = <span class="keyword">true</span>;
-<a name="l00107"></a>00107     } <span class="keywordflow">else</span> {
-<a name="l00108"></a>00108       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; node_count; ++i) {
-<a name="l00109"></a>00109         <span class="keywordflow">if</span> (deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#ab60b40fc0217ea187cdc60fb59ea27e8">nodes</a>[i] != nodes[i]) {
-<a name="l00110"></a>00110           made_change = <span class="keyword">true</span>;
-<a name="l00111"></a>00111           <span class="keywordflow">break</span>;
-<a name="l00112"></a>00112         }
-<a name="l00113"></a>00113       }
-<a name="l00114"></a>00114     }
-<a name="l00115"></a>00115   }
-<a name="l00116"></a>00116 
-<a name="l00117"></a>00117   <span class="comment">// Don&#39;t write anything if there&#39;s no new info.</span>
-<a name="l00118"></a>00118   <span class="keywordflow">if</span> (!made_change)
-<a name="l00119"></a>00119     <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00120"></a>00120 
-<a name="l00121"></a>00121   <span class="comment">// Update on-disk representation.</span>
-<a name="l00122"></a>00122   <a class="code" href="win32port_8h.html#a273cf69d639a59973b6019625df33e30">uint16_t</a> size = 4 * (1 + 1 + (<a class="code" href="win32port_8h.html#a273cf69d639a59973b6019625df33e30">uint16_t</a>)node_count);
-<a name="l00123"></a>00123   size |= 0x8000;  <span class="comment">// Deps record: set high bit.</span>
-<a name="l00124"></a>00124   fwrite(&amp;size, 2, 1, <a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a>);
-<a name="l00125"></a>00125   <span class="keywordtype">int</span> <span class="keywordtype">id</span> = node-&gt;<a class="code" href="structNode.html#a703c4c528d8b5176ee7a85db7cdd4208">id</a>();
-<a name="l00126"></a>00126   fwrite(&amp;<span class="keywordtype">id</span>, 4, 1, <a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a>);
-<a name="l00127"></a>00127   <span class="keywordtype">int</span> timestamp = mtime;
-<a name="l00128"></a>00128   fwrite(&amp;timestamp, 4, 1, <a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a>);
-<a name="l00129"></a>00129   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; node_count; ++i) {
-<a name="l00130"></a>00130     <span class="keywordtype">id</span> = nodes[i]-&gt;<a class="code" href="structNode.html#a703c4c528d8b5176ee7a85db7cdd4208">id</a>();
-<a name="l00131"></a>00131     fwrite(&amp;<span class="keywordtype">id</span>, 4, 1, <a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a>);
-<a name="l00132"></a>00132   }
-<a name="l00133"></a>00133   fflush(<a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a>);
-<a name="l00134"></a>00134 
-<a name="l00135"></a>00135   <span class="comment">// Update in-memory representation.</span>
-<a name="l00136"></a>00136   <a class="code" href="structDepsLog_1_1Deps.html">Deps</a>* <a class="code" href="structDepsLog.html#a849f7a1be3a785babb0089e1466fe874">deps</a> = <span class="keyword">new</span> <a class="code" href="structDepsLog_1_1Deps.html">Deps</a>(mtime, node_count);
-<a name="l00137"></a>00137   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; node_count; ++i)
-<a name="l00138"></a>00138     deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#ab60b40fc0217ea187cdc60fb59ea27e8">nodes</a>[i] = nodes[i];
-<a name="l00139"></a>00139   <a class="code" href="structDepsLog.html#a35ce8189fffae2b7300d415ce115a0a3">UpdateDeps</a>(node-&gt;<a class="code" href="structNode.html#a703c4c528d8b5176ee7a85db7cdd4208">id</a>(), <a class="code" href="structDepsLog.html#a849f7a1be3a785babb0089e1466fe874">deps</a>);
-<a name="l00140"></a>00140 
-<a name="l00141"></a>00141   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00142"></a>00142 }
-<a name="l00143"></a>00143 
-<a name="l00144"></a><a class="code" href="structDepsLog.html#a750f013ae662f96e7f2545d213c7f3a0">00144</a> <span class="keywordtype">void</span> <a class="code" href="structDepsLog.html#a750f013ae662f96e7f2545d213c7f3a0">DepsLog::Close</a>() {
-<a name="l00145"></a>00145   <span class="keywordflow">if</span> (<a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a>)
-<a name="l00146"></a>00146     fclose(<a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a>);
-<a name="l00147"></a>00147   <a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a> = NULL;
-<a name="l00148"></a>00148 }
-<a name="l00149"></a>00149 
-<a name="l00150"></a><a class="code" href="structDepsLog.html#a698004cf8030703ddf6b19f8ab7bd50e">00150</a> <span class="keywordtype">bool</span> <a class="code" href="structDepsLog.html#a698004cf8030703ddf6b19f8ab7bd50e">DepsLog::Load</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path, <a class="code" href="structState.html" title="Global state (file status, loaded rules) for a single run.">State</a>* state, <span class="keywordtype">string</span>* err) {
-<a name="l00151"></a>00151   <a class="code" href="metrics_8h.html#a7c19242938163dd11cedf62fdabd4ab6" title="The primary interface to metrics.">METRIC_RECORD</a>(<span class="stringliteral">&quot;.ninja_deps load&quot;</span>);
-<a name="l00152"></a>00152   <span class="keywordtype">char</span> buf[32 &lt;&lt; 10];
-<a name="l00153"></a>00153   FILE* f = fopen(path.c_str(), <span class="stringliteral">&quot;rb&quot;</span>);
-<a name="l00154"></a>00154   <span class="keywordflow">if</span> (!f) {
-<a name="l00155"></a>00155     <span class="keywordflow">if</span> (errno == ENOENT)
-<a name="l00156"></a>00156       <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00157"></a>00157     *err = strerror(errno);
-<a name="l00158"></a>00158     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00159"></a>00159   }
-<a name="l00160"></a>00160 
-<a name="l00161"></a>00161   <span class="keywordtype">bool</span> valid_header = <span class="keyword">true</span>;
-<a name="l00162"></a>00162   <span class="keywordtype">int</span> version = 0;
-<a name="l00163"></a>00163   <span class="keywordflow">if</span> (!fgets(buf, <span class="keyword">sizeof</span>(buf), f) || fread(&amp;version, 4, 1, f) &lt; 1)
-<a name="l00164"></a>00164     valid_header = <span class="keyword">false</span>;
-<a name="l00165"></a>00165   <span class="keywordflow">if</span> (!valid_header || strcmp(buf, <a class="code" href="deps__log_8cc.html#af3689d396263e39675199367e0138314">kFileSignature</a>) != 0 ||
-<a name="l00166"></a>00166       version != <a class="code" href="deps__log_8cc.html#a921b019a3680c6975e949208c2b08af8">kCurrentVersion</a>) {
-<a name="l00167"></a>00167     *err = <span class="stringliteral">&quot;bad deps log signature or version; starting over&quot;</span>;
-<a name="l00168"></a>00168     fclose(f);
-<a name="l00169"></a>00169     unlink(path.c_str());
-<a name="l00170"></a>00170     <span class="comment">// Don&#39;t report this as a failure.  An empty deps log will cause</span>
-<a name="l00171"></a>00171     <span class="comment">// us to rebuild the outputs anyway.</span>
-<a name="l00172"></a>00172     <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00035"></a>00035 <span class="comment">// Record size is currently limited to less than the full 32 bit, due to</span>
+<a name="l00036"></a>00036 <span class="comment">// internal buffers having to have this size.</span>
+<a name="l00037"></a><a class="code" href="deps__log_8cc.html#a14c5a973c5acd0659069ca9516d247a5">00037</a> <span class="keyword">const</span> <span class="keywordtype">unsigned</span> <a class="code" href="deps__log_8cc.html#a14c5a973c5acd0659069ca9516d247a5">kMaxRecordSize</a> = (1 &lt;&lt; 19) - 1;
+<a name="l00038"></a>00038 
+<a name="l00039"></a><a class="code" href="structDepsLog.html#a5d1a8f67e5a655323ae73d140376cd71">00039</a> <a class="code" href="structDepsLog.html#a5d1a8f67e5a655323ae73d140376cd71">DepsLog::~DepsLog</a>() {
+<a name="l00040"></a>00040   <a class="code" href="structDepsLog.html#a750f013ae662f96e7f2545d213c7f3a0">Close</a>();
+<a name="l00041"></a>00041 }
+<a name="l00042"></a>00042 
+<a name="l00043"></a><a class="code" href="structDepsLog.html#af49ad152c2917c7e86742ce335db0263">00043</a> <span class="keywordtype">bool</span> <a class="code" href="structDepsLog.html#af49ad152c2917c7e86742ce335db0263">DepsLog::OpenForWrite</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path, <span class="keywordtype">string</span>* err) {
+<a name="l00044"></a>00044   <span class="keywordflow">if</span> (<a class="code" href="structDepsLog.html#adee980c7d35e5c4b32b669733b4382c4">needs_recompaction_</a>) {
+<a name="l00045"></a>00045     <span class="keywordflow">if</span> (!<a class="code" href="structDepsLog.html#a09515578bf5a271a93919c7ff2036001" title="Rewrite the known log entries, throwing away old data.">Recompact</a>(path, err))
+<a name="l00046"></a>00046       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00047"></a>00047   }
+<a name="l00048"></a>00048   
+<a name="l00049"></a>00049   <a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a> = fopen(path.c_str(), <span class="stringliteral">&quot;ab&quot;</span>);
+<a name="l00050"></a>00050   <span class="keywordflow">if</span> (!<a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a>) {
+<a name="l00051"></a>00051     *err = strerror(errno);
+<a name="l00052"></a>00052     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00053"></a>00053   }
+<a name="l00054"></a>00054   <span class="comment">// Set the buffer size to this and flush the file buffer after every record</span>
+<a name="l00055"></a>00055   <span class="comment">// to make sure records aren&#39;t written partially.</span>
+<a name="l00056"></a>00056   setvbuf(<a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a>, NULL, _IOFBF, <a class="code" href="deps__log_8cc.html#a14c5a973c5acd0659069ca9516d247a5">kMaxRecordSize</a> + 1);
+<a name="l00057"></a>00057   <a class="code" href="util_8cc.html#a946927145681d8bb8318f5a7c4dc57ae" title="Mark a file descriptor to not be inherited on exec()s.">SetCloseOnExec</a>(fileno(<a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a>));
+<a name="l00058"></a>00058 
+<a name="l00059"></a>00059   <span class="comment">// Opening a file in append mode doesn&#39;t set the file pointer to the file&#39;s</span>
+<a name="l00060"></a>00060   <span class="comment">// end on Windows. Do that explicitly.</span>
+<a name="l00061"></a>00061   fseek(<a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a>, 0, SEEK_END);
+<a name="l00062"></a>00062 
+<a name="l00063"></a>00063   <span class="keywordflow">if</span> (ftell(<a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a>) == 0) {
+<a name="l00064"></a>00064     <span class="keywordflow">if</span> (fwrite(<a class="code" href="deps__log_8cc.html#af3689d396263e39675199367e0138314">kFileSignature</a>, <span class="keyword">sizeof</span>(<a class="code" href="deps__log_8cc.html#af3689d396263e39675199367e0138314">kFileSignature</a>) - 1, 1, <a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a>) &lt; 1) {
+<a name="l00065"></a>00065       *err = strerror(errno);
+<a name="l00066"></a>00066       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00067"></a>00067     }
+<a name="l00068"></a>00068     <span class="keywordflow">if</span> (fwrite(&amp;<a class="code" href="deps__log_8cc.html#a921b019a3680c6975e949208c2b08af8">kCurrentVersion</a>, 4, 1, <a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a>) &lt; 1) {
+<a name="l00069"></a>00069       *err = strerror(errno);
+<a name="l00070"></a>00070       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00071"></a>00071     }
+<a name="l00072"></a>00072   }
+<a name="l00073"></a>00073   <span class="keywordflow">if</span> (fflush(<a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a>) != 0) {
+<a name="l00074"></a>00074     *err = strerror(errno);
+<a name="l00075"></a>00075     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00076"></a>00076   }
+<a name="l00077"></a>00077   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00078"></a>00078 }
+<a name="l00079"></a>00079 
+<a name="l00080"></a><a class="code" href="structDepsLog.html#a970cd6713ab54b3fff2f9de5255352fc">00080</a> <span class="keywordtype">bool</span> <a class="code" href="structDepsLog.html#a970cd6713ab54b3fff2f9de5255352fc">DepsLog::RecordDeps</a>(<a class="code" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>* node, <a class="code" href="timestamp_8h.html#a364f6f32873dd70e259c971fc2e28b73">TimeStamp</a> mtime,
+<a name="l00081"></a>00081                          <span class="keyword">const</span> vector&lt;Node*&gt;&amp; nodes) {
+<a name="l00082"></a>00082   <span class="keywordflow">return</span> <a class="code" href="structDepsLog.html#a970cd6713ab54b3fff2f9de5255352fc">RecordDeps</a>(node, mtime, nodes.size(),
+<a name="l00083"></a>00083                     nodes.empty() ? NULL : (<a class="code" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>**)&amp;nodes.front());
+<a name="l00084"></a>00084 }
+<a name="l00085"></a>00085 
+<a name="l00086"></a><a class="code" href="structDepsLog.html#a5f48df80478fb9af806aa7c56946ca81">00086</a> <span class="keywordtype">bool</span> <a class="code" href="structDepsLog.html#a970cd6713ab54b3fff2f9de5255352fc">DepsLog::RecordDeps</a>(<a class="code" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>* node, <a class="code" href="timestamp_8h.html#a364f6f32873dd70e259c971fc2e28b73">TimeStamp</a> mtime,
+<a name="l00087"></a>00087                          <span class="keywordtype">int</span> node_count, <a class="code" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>** nodes) {
+<a name="l00088"></a>00088   <span class="comment">// Track whether there&#39;s any new data to be recorded.</span>
+<a name="l00089"></a>00089   <span class="keywordtype">bool</span> made_change = <span class="keyword">false</span>;
+<a name="l00090"></a>00090 
+<a name="l00091"></a>00091   <span class="comment">// Assign ids to all nodes that are missing one.</span>
+<a name="l00092"></a>00092   <span class="keywordflow">if</span> (node-&gt;<a class="code" href="structNode.html#a703c4c528d8b5176ee7a85db7cdd4208">id</a>() &lt; 0) {
+<a name="l00093"></a>00093     <span class="keywordflow">if</span> (!<a class="code" href="structDepsLog.html#aa4cc04faa7d2d9256a372f1b067e61ef">RecordId</a>(node))
+<a name="l00094"></a>00094       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00095"></a>00095     made_change = <span class="keyword">true</span>;
+<a name="l00096"></a>00096   }
+<a name="l00097"></a>00097   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; node_count; ++i) {
+<a name="l00098"></a>00098     <span class="keywordflow">if</span> (nodes[i]-&gt;<span class="keywordtype">id</span>() &lt; 0) {
+<a name="l00099"></a>00099       <span class="keywordflow">if</span> (!<a class="code" href="structDepsLog.html#aa4cc04faa7d2d9256a372f1b067e61ef">RecordId</a>(nodes[i]))
+<a name="l00100"></a>00100         <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00101"></a>00101       made_change = <span class="keyword">true</span>;
+<a name="l00102"></a>00102     }
+<a name="l00103"></a>00103   }
+<a name="l00104"></a>00104 
+<a name="l00105"></a>00105   <span class="comment">// See if the new data is different than the existing data, if any.</span>
+<a name="l00106"></a>00106   <span class="keywordflow">if</span> (!made_change) {
+<a name="l00107"></a>00107     <a class="code" href="structDepsLog_1_1Deps.html">Deps</a>* <a class="code" href="structDepsLog.html#a849f7a1be3a785babb0089e1466fe874">deps</a> = <a class="code" href="structDepsLog.html#a075043796f88d312004cf5ae74a53c4e">GetDeps</a>(node);
+<a name="l00108"></a>00108     <span class="keywordflow">if</span> (!deps ||
+<a name="l00109"></a>00109         deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#ae73ed4a9faede3332a47215b2a68a5dc">mtime</a> != mtime ||
+<a name="l00110"></a>00110         deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#af59c987b02350a4dfcd24a5406624fdb">node_count</a> != node_count) {
+<a name="l00111"></a>00111       made_change = <span class="keyword">true</span>;
+<a name="l00112"></a>00112     } <span class="keywordflow">else</span> {
+<a name="l00113"></a>00113       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; node_count; ++i) {
+<a name="l00114"></a>00114         <span class="keywordflow">if</span> (deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#ab60b40fc0217ea187cdc60fb59ea27e8">nodes</a>[i] != nodes[i]) {
+<a name="l00115"></a>00115           made_change = <span class="keyword">true</span>;
+<a name="l00116"></a>00116           <span class="keywordflow">break</span>;
+<a name="l00117"></a>00117         }
+<a name="l00118"></a>00118       }
+<a name="l00119"></a>00119     }
+<a name="l00120"></a>00120   }
+<a name="l00121"></a>00121 
+<a name="l00122"></a>00122   <span class="comment">// Don&#39;t write anything if there&#39;s no new info.</span>
+<a name="l00123"></a>00123   <span class="keywordflow">if</span> (!made_change)
+<a name="l00124"></a>00124     <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00125"></a>00125 
+<a name="l00126"></a>00126   <span class="comment">// Update on-disk representation.</span>
+<a name="l00127"></a>00127   <span class="keywordtype">unsigned</span> size = 4 * (1 + 1 + node_count);
+<a name="l00128"></a>00128   <span class="keywordflow">if</span> (size &gt; <a class="code" href="deps__log_8cc.html#a14c5a973c5acd0659069ca9516d247a5">kMaxRecordSize</a>) {
+<a name="l00129"></a>00129     errno = ERANGE;
+<a name="l00130"></a>00130     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00131"></a>00131   }
+<a name="l00132"></a>00132   size |= 0x80000000;  <span class="comment">// Deps record: set high bit.</span>
+<a name="l00133"></a>00133   <span class="keywordflow">if</span> (fwrite(&amp;size, 4, 1, <a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a>) &lt; 1)
+<a name="l00134"></a>00134     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00135"></a>00135   <span class="keywordtype">int</span> <span class="keywordtype">id</span> = node-&gt;<a class="code" href="structNode.html#a703c4c528d8b5176ee7a85db7cdd4208">id</a>();
+<a name="l00136"></a>00136   <span class="keywordflow">if</span> (fwrite(&amp;<span class="keywordtype">id</span>, 4, 1, <a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a>) &lt; 1)
+<a name="l00137"></a>00137     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00138"></a>00138   <span class="keywordtype">int</span> timestamp = mtime;
+<a name="l00139"></a>00139   <span class="keywordflow">if</span> (fwrite(&amp;timestamp, 4, 1, <a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a>) &lt; 1)
+<a name="l00140"></a>00140     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00141"></a>00141   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; node_count; ++i) {
+<a name="l00142"></a>00142     <span class="keywordtype">id</span> = nodes[i]-&gt;<a class="code" href="structNode.html#a703c4c528d8b5176ee7a85db7cdd4208">id</a>();
+<a name="l00143"></a>00143     <span class="keywordflow">if</span> (fwrite(&amp;<span class="keywordtype">id</span>, 4, 1, <a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a>) &lt; 1)
+<a name="l00144"></a>00144       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00145"></a>00145   }
+<a name="l00146"></a>00146   <span class="keywordflow">if</span> (fflush(<a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a>) != 0)
+<a name="l00147"></a>00147     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00148"></a>00148 
+<a name="l00149"></a>00149   <span class="comment">// Update in-memory representation.</span>
+<a name="l00150"></a>00150   <a class="code" href="structDepsLog_1_1Deps.html">Deps</a>* <a class="code" href="structDepsLog.html#a849f7a1be3a785babb0089e1466fe874">deps</a> = <span class="keyword">new</span> <a class="code" href="structDepsLog_1_1Deps.html">Deps</a>(mtime, node_count);
+<a name="l00151"></a>00151   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; node_count; ++i)
+<a name="l00152"></a>00152     deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#ab60b40fc0217ea187cdc60fb59ea27e8">nodes</a>[i] = nodes[i];
+<a name="l00153"></a>00153   <a class="code" href="structDepsLog.html#a35ce8189fffae2b7300d415ce115a0a3">UpdateDeps</a>(node-&gt;<a class="code" href="structNode.html#a703c4c528d8b5176ee7a85db7cdd4208">id</a>(), <a class="code" href="structDepsLog.html#a849f7a1be3a785babb0089e1466fe874">deps</a>);
+<a name="l00154"></a>00154 
+<a name="l00155"></a>00155   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00156"></a>00156 }
+<a name="l00157"></a>00157 
+<a name="l00158"></a><a class="code" href="structDepsLog.html#a750f013ae662f96e7f2545d213c7f3a0">00158</a> <span class="keywordtype">void</span> <a class="code" href="structDepsLog.html#a750f013ae662f96e7f2545d213c7f3a0">DepsLog::Close</a>() {
+<a name="l00159"></a>00159   <span class="keywordflow">if</span> (<a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a>)
+<a name="l00160"></a>00160     fclose(<a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a>);
+<a name="l00161"></a>00161   <a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a> = NULL;
+<a name="l00162"></a>00162 }
+<a name="l00163"></a>00163 
+<a name="l00164"></a><a class="code" href="structDepsLog.html#a698004cf8030703ddf6b19f8ab7bd50e">00164</a> <span class="keywordtype">bool</span> <a class="code" href="structDepsLog.html#a698004cf8030703ddf6b19f8ab7bd50e">DepsLog::Load</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path, <a class="code" href="structState.html" title="Global state (file status, loaded rules) for a single run.">State</a>* state, <span class="keywordtype">string</span>* err) {
+<a name="l00165"></a>00165   <a class="code" href="metrics_8h.html#a7c19242938163dd11cedf62fdabd4ab6" title="The primary interface to metrics.">METRIC_RECORD</a>(<span class="stringliteral">&quot;.ninja_deps load&quot;</span>);
+<a name="l00166"></a>00166   <span class="keywordtype">char</span> buf[<a class="code" href="deps__log_8cc.html#a14c5a973c5acd0659069ca9516d247a5">kMaxRecordSize</a> + 1];
+<a name="l00167"></a>00167   FILE* f = fopen(path.c_str(), <span class="stringliteral">&quot;rb&quot;</span>);
+<a name="l00168"></a>00168   <span class="keywordflow">if</span> (!f) {
+<a name="l00169"></a>00169     <span class="keywordflow">if</span> (errno == ENOENT)
+<a name="l00170"></a>00170       <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00171"></a>00171     *err = strerror(errno);
+<a name="l00172"></a>00172     <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00173"></a>00173   }
 <a name="l00174"></a>00174 
-<a name="l00175"></a>00175   <span class="keywordtype">long</span> offset;
-<a name="l00176"></a>00176   <span class="keywordtype">bool</span> read_failed = <span class="keyword">false</span>;
-<a name="l00177"></a>00177   <span class="keywordtype">int</span> unique_dep_record_count = 0;
-<a name="l00178"></a>00178   <span class="keywordtype">int</span> total_dep_record_count = 0;
-<a name="l00179"></a>00179   <span class="keywordflow">for</span> (;;) {
-<a name="l00180"></a>00180     offset = ftell(f);
-<a name="l00181"></a>00181 
-<a name="l00182"></a>00182     <a class="code" href="win32port_8h.html#a273cf69d639a59973b6019625df33e30">uint16_t</a> size;
-<a name="l00183"></a>00183     <span class="keywordflow">if</span> (fread(&amp;size, 2, 1, f) &lt; 1) {
-<a name="l00184"></a>00184       <span class="keywordflow">if</span> (!feof(f))
-<a name="l00185"></a>00185         read_failed = <span class="keyword">true</span>;
-<a name="l00186"></a>00186       <span class="keywordflow">break</span>;
-<a name="l00187"></a>00187     }
-<a name="l00188"></a>00188     <span class="keywordtype">bool</span> is_deps = (size &gt;&gt; 15) != 0;
-<a name="l00189"></a>00189     size = size &amp; 0x7FFF;
-<a name="l00190"></a>00190 
-<a name="l00191"></a>00191     <span class="keywordflow">if</span> (fread(buf, size, 1, f) &lt; 1) {
-<a name="l00192"></a>00192       read_failed = <span class="keyword">true</span>;
-<a name="l00193"></a>00193       <span class="keywordflow">break</span>;
-<a name="l00194"></a>00194     }
+<a name="l00175"></a>00175   <span class="keywordtype">bool</span> valid_header = <span class="keyword">true</span>;
+<a name="l00176"></a>00176   <span class="keywordtype">int</span> version = 0;
+<a name="l00177"></a>00177   <span class="keywordflow">if</span> (!fgets(buf, <span class="keyword">sizeof</span>(buf), f) || fread(&amp;version, 4, 1, f) &lt; 1)
+<a name="l00178"></a>00178     valid_header = <span class="keyword">false</span>;
+<a name="l00179"></a>00179   <span class="comment">// Note: For version differences, this should migrate to the new format.</span>
+<a name="l00180"></a>00180   <span class="comment">// But the v1 format could sometimes (rarely) end up with invalid data, so</span>
+<a name="l00181"></a>00181   <span class="comment">// don&#39;t migrate v1 to v3 to force a rebuild. (v2 only existed for a few days,</span>
+<a name="l00182"></a>00182   <span class="comment">// and there was no release with it, so pretend that it never happened.)</span>
+<a name="l00183"></a>00183   <span class="keywordflow">if</span> (!valid_header || strcmp(buf, <a class="code" href="deps__log_8cc.html#af3689d396263e39675199367e0138314">kFileSignature</a>) != 0 ||
+<a name="l00184"></a>00184       version != <a class="code" href="deps__log_8cc.html#a921b019a3680c6975e949208c2b08af8">kCurrentVersion</a>) {
+<a name="l00185"></a>00185     <span class="keywordflow">if</span> (version == 1)
+<a name="l00186"></a>00186       *err = <span class="stringliteral">&quot;deps log version change; rebuilding&quot;</span>;
+<a name="l00187"></a>00187     <span class="keywordflow">else</span>
+<a name="l00188"></a>00188       *err = <span class="stringliteral">&quot;bad deps log signature or version; starting over&quot;</span>;
+<a name="l00189"></a>00189     fclose(f);
+<a name="l00190"></a>00190     unlink(path.c_str());
+<a name="l00191"></a>00191     <span class="comment">// Don&#39;t report this as a failure.  An empty deps log will cause</span>
+<a name="l00192"></a>00192     <span class="comment">// us to rebuild the outputs anyway.</span>
+<a name="l00193"></a>00193     <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00194"></a>00194   }
 <a name="l00195"></a>00195 
-<a name="l00196"></a>00196     <span class="keywordflow">if</span> (is_deps) {
-<a name="l00197"></a>00197       assert(size % 4 == 0);
-<a name="l00198"></a>00198       <span class="keywordtype">int</span>* deps_data = <span class="keyword">reinterpret_cast&lt;</span><span class="keywordtype">int</span>*<span class="keyword">&gt;</span>(buf);
-<a name="l00199"></a>00199       <span class="keywordtype">int</span> out_id = deps_data[0];
-<a name="l00200"></a>00200       <span class="keywordtype">int</span> mtime = deps_data[1];
-<a name="l00201"></a>00201       deps_data += 2;
-<a name="l00202"></a>00202       <span class="keywordtype">int</span> deps_count = (size / 4) - 2;
-<a name="l00203"></a>00203 
-<a name="l00204"></a>00204       <a class="code" href="structDepsLog_1_1Deps.html">Deps</a>* <a class="code" href="structDepsLog.html#a849f7a1be3a785babb0089e1466fe874">deps</a> = <span class="keyword">new</span> <a class="code" href="structDepsLog_1_1Deps.html">Deps</a>(mtime, deps_count);
-<a name="l00205"></a>00205       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; deps_count; ++i) {
-<a name="l00206"></a>00206         assert(deps_data[i] &lt; (<span class="keywordtype">int</span>)<a class="code" href="structDepsLog.html#a6808f42a3e9b5e1a4f0a0664dcebaae3" title="Maps id -&gt; Node.">nodes_</a>.size());
-<a name="l00207"></a>00207         assert(<a class="code" href="structDepsLog.html#a6808f42a3e9b5e1a4f0a0664dcebaae3" title="Maps id -&gt; Node.">nodes_</a>[deps_data[i]]);
-<a name="l00208"></a>00208         deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#ab60b40fc0217ea187cdc60fb59ea27e8">nodes</a>[i] = <a class="code" href="structDepsLog.html#a6808f42a3e9b5e1a4f0a0664dcebaae3" title="Maps id -&gt; Node.">nodes_</a>[deps_data[i]];
-<a name="l00209"></a>00209       }
-<a name="l00210"></a>00210 
-<a name="l00211"></a>00211       total_dep_record_count++;
-<a name="l00212"></a>00212       <span class="keywordflow">if</span> (!<a class="code" href="structDepsLog.html#a35ce8189fffae2b7300d415ce115a0a3">UpdateDeps</a>(out_id, deps))
-<a name="l00213"></a>00213         ++unique_dep_record_count;
-<a name="l00214"></a>00214     } <span class="keywordflow">else</span> {
-<a name="l00215"></a>00215       <a class="code" href="structStringPiece.html" title="StringPiece represents a slice of a string whose memory is managed externally.">StringPiece</a> path(buf, size);
-<a name="l00216"></a>00216       <a class="code" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>* node = state-&gt;<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(path);
-<a name="l00217"></a>00217       assert(node-&gt;<a class="code" href="structNode.html#a703c4c528d8b5176ee7a85db7cdd4208">id</a>() &lt; 0);
-<a name="l00218"></a>00218       node-&gt;<a class="code" href="structNode.html#a1eba2a5f320852762c2f92c18560c809">set_id</a>(<a class="code" href="structDepsLog.html#a6808f42a3e9b5e1a4f0a0664dcebaae3" title="Maps id -&gt; Node.">nodes_</a>.size());
-<a name="l00219"></a>00219       <a class="code" href="structDepsLog.html#a6808f42a3e9b5e1a4f0a0664dcebaae3" title="Maps id -&gt; Node.">nodes_</a>.push_back(node);
-<a name="l00220"></a>00220     }
-<a name="l00221"></a>00221   }
-<a name="l00222"></a>00222 
-<a name="l00223"></a>00223   <span class="keywordflow">if</span> (read_failed) {
-<a name="l00224"></a>00224     <span class="comment">// An error occurred while loading; try to recover by truncating the</span>
-<a name="l00225"></a>00225     <span class="comment">// file to the last fully-read record.</span>
-<a name="l00226"></a>00226     <span class="keywordflow">if</span> (ferror(f)) {
-<a name="l00227"></a>00227       *err = strerror(ferror(f));
-<a name="l00228"></a>00228     } <span class="keywordflow">else</span> {
-<a name="l00229"></a>00229       *err = <span class="stringliteral">&quot;premature end of file&quot;</span>;
-<a name="l00230"></a>00230     }
-<a name="l00231"></a>00231     fclose(f);
-<a name="l00232"></a>00232 
-<a name="l00233"></a>00233     <span class="keywordflow">if</span> (!<a class="code" href="util_8cc.html#a59c00d43a10517c5124b75ef540f270a" title="Truncates a file to the given size.">Truncate</a>(path.c_str(), offset, err))
-<a name="l00234"></a>00234       <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00235"></a>00235 
-<a name="l00236"></a>00236     <span class="comment">// The truncate succeeded; we&#39;ll just report the load error as a</span>
-<a name="l00237"></a>00237     <span class="comment">// warning because the build can proceed.</span>
-<a name="l00238"></a>00238     *err += <span class="stringliteral">&quot;; recovering&quot;</span>;
-<a name="l00239"></a>00239     <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00240"></a>00240   }
-<a name="l00241"></a>00241 
-<a name="l00242"></a>00242   fclose(f);
-<a name="l00243"></a>00243 
-<a name="l00244"></a>00244   <span class="comment">// Rebuild the log if there are too many dead records.</span>
-<a name="l00245"></a>00245   <span class="keywordtype">int</span> kMinCompactionEntryCount = 1000;
-<a name="l00246"></a>00246   <span class="keywordtype">int</span> kCompactionRatio = 3;
-<a name="l00247"></a>00247   <span class="keywordflow">if</span> (total_dep_record_count &gt; kMinCompactionEntryCount &amp;&amp;
-<a name="l00248"></a>00248       total_dep_record_count &gt; unique_dep_record_count * kCompactionRatio) {
-<a name="l00249"></a>00249     <a class="code" href="structDepsLog.html#adee980c7d35e5c4b32b669733b4382c4">needs_recompaction_</a> = <span class="keyword">true</span>;
-<a name="l00250"></a>00250   }
-<a name="l00251"></a>00251 
-<a name="l00252"></a>00252   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00253"></a>00253 }
-<a name="l00254"></a>00254 
-<a name="l00255"></a><a class="code" href="structDepsLog.html#a075043796f88d312004cf5ae74a53c4e">00255</a> <a class="code" href="structDepsLog_1_1Deps.html">DepsLog::Deps</a>* <a class="code" href="structDepsLog.html#a075043796f88d312004cf5ae74a53c4e">DepsLog::GetDeps</a>(<a class="code" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>* node) {
-<a name="l00256"></a>00256   <span class="comment">// Abort if the node has no id (never referenced in the deps) or if</span>
-<a name="l00257"></a>00257   <span class="comment">// there&#39;s no deps recorded for the node.</span>
-<a name="l00258"></a>00258   <span class="keywordflow">if</span> (node-&gt;<a class="code" href="structNode.html#a703c4c528d8b5176ee7a85db7cdd4208">id</a>() &lt; 0 || node-&gt;<a class="code" href="structNode.html#a703c4c528d8b5176ee7a85db7cdd4208">id</a>() &gt;= (int)<a class="code" href="structDepsLog.html#af599cdffb987059f53caf7ebc63e41dd" title="Maps id -&gt; deps of that id.">deps_</a>.size())
-<a name="l00259"></a>00259     <span class="keywordflow">return</span> NULL;
-<a name="l00260"></a>00260   <span class="keywordflow">return</span> <a class="code" href="structDepsLog.html#af599cdffb987059f53caf7ebc63e41dd" title="Maps id -&gt; deps of that id.">deps_</a>[node-&gt;<a class="code" href="structNode.html#a703c4c528d8b5176ee7a85db7cdd4208">id</a>()];
-<a name="l00261"></a>00261 }
+<a name="l00196"></a>00196   <span class="keywordtype">long</span> offset;
+<a name="l00197"></a>00197   <span class="keywordtype">bool</span> read_failed = <span class="keyword">false</span>;
+<a name="l00198"></a>00198   <span class="keywordtype">int</span> unique_dep_record_count = 0;
+<a name="l00199"></a>00199   <span class="keywordtype">int</span> total_dep_record_count = 0;
+<a name="l00200"></a>00200   <span class="keywordflow">for</span> (;;) {
+<a name="l00201"></a>00201     offset = ftell(f);
+<a name="l00202"></a>00202 
+<a name="l00203"></a>00203     <span class="keywordtype">unsigned</span> size;
+<a name="l00204"></a>00204     <span class="keywordflow">if</span> (fread(&amp;size, 4, 1, f) &lt; 1) {
+<a name="l00205"></a>00205       <span class="keywordflow">if</span> (!feof(f))
+<a name="l00206"></a>00206         read_failed = <span class="keyword">true</span>;
+<a name="l00207"></a>00207       <span class="keywordflow">break</span>;
+<a name="l00208"></a>00208     }
+<a name="l00209"></a>00209     <span class="keywordtype">bool</span> is_deps = (size &gt;&gt; 31) != 0;
+<a name="l00210"></a>00210     size = size &amp; 0x7FFFFFFF;
+<a name="l00211"></a>00211 
+<a name="l00212"></a>00212     <span class="keywordflow">if</span> (fread(buf, size, 1, f) &lt; 1 || size &gt; <a class="code" href="deps__log_8cc.html#a14c5a973c5acd0659069ca9516d247a5">kMaxRecordSize</a>) {
+<a name="l00213"></a>00213       read_failed = <span class="keyword">true</span>;
+<a name="l00214"></a>00214       <span class="keywordflow">break</span>;
+<a name="l00215"></a>00215     }
+<a name="l00216"></a>00216 
+<a name="l00217"></a>00217     <span class="keywordflow">if</span> (is_deps) {
+<a name="l00218"></a>00218       assert(size % 4 == 0);
+<a name="l00219"></a>00219       <span class="keywordtype">int</span>* deps_data = <span class="keyword">reinterpret_cast&lt;</span><span class="keywordtype">int</span>*<span class="keyword">&gt;</span>(buf);
+<a name="l00220"></a>00220       <span class="keywordtype">int</span> out_id = deps_data[0];
+<a name="l00221"></a>00221       <span class="keywordtype">int</span> mtime = deps_data[1];
+<a name="l00222"></a>00222       deps_data += 2;
+<a name="l00223"></a>00223       <span class="keywordtype">int</span> deps_count = (size / 4) - 2;
+<a name="l00224"></a>00224 
+<a name="l00225"></a>00225       <a class="code" href="structDepsLog_1_1Deps.html">Deps</a>* <a class="code" href="structDepsLog.html#a849f7a1be3a785babb0089e1466fe874">deps</a> = <span class="keyword">new</span> <a class="code" href="structDepsLog_1_1Deps.html">Deps</a>(mtime, deps_count);
+<a name="l00226"></a>00226       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; deps_count; ++i) {
+<a name="l00227"></a>00227         assert(deps_data[i] &lt; (<span class="keywordtype">int</span>)<a class="code" href="structDepsLog.html#a6808f42a3e9b5e1a4f0a0664dcebaae3" title="Maps id -&gt; Node.">nodes_</a>.size());
+<a name="l00228"></a>00228         assert(<a class="code" href="structDepsLog.html#a6808f42a3e9b5e1a4f0a0664dcebaae3" title="Maps id -&gt; Node.">nodes_</a>[deps_data[i]]);
+<a name="l00229"></a>00229         deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#ab60b40fc0217ea187cdc60fb59ea27e8">nodes</a>[i] = <a class="code" href="structDepsLog.html#a6808f42a3e9b5e1a4f0a0664dcebaae3" title="Maps id -&gt; Node.">nodes_</a>[deps_data[i]];
+<a name="l00230"></a>00230       }
+<a name="l00231"></a>00231 
+<a name="l00232"></a>00232       total_dep_record_count++;
+<a name="l00233"></a>00233       <span class="keywordflow">if</span> (!<a class="code" href="structDepsLog.html#a35ce8189fffae2b7300d415ce115a0a3">UpdateDeps</a>(out_id, deps))
+<a name="l00234"></a>00234         ++unique_dep_record_count;
+<a name="l00235"></a>00235     } <span class="keywordflow">else</span> {
+<a name="l00236"></a>00236       <span class="keywordtype">int</span> path_size = size - 4;
+<a name="l00237"></a>00237       assert(path_size &gt; 0);  <span class="comment">// CanonicalizePath() rejects empty paths.</span>
+<a name="l00238"></a>00238       <span class="comment">// There can be up to 3 bytes of padding.</span>
+<a name="l00239"></a>00239       <span class="keywordflow">if</span> (buf[path_size - 1] == <span class="charliteral">&#39;\0&#39;</span>) --path_size;
+<a name="l00240"></a>00240       <span class="keywordflow">if</span> (buf[path_size - 1] == <span class="charliteral">&#39;\0&#39;</span>) --path_size;
+<a name="l00241"></a>00241       <span class="keywordflow">if</span> (buf[path_size - 1] == <span class="charliteral">&#39;\0&#39;</span>) --path_size;
+<a name="l00242"></a>00242       <a class="code" href="structStringPiece.html" title="StringPiece represents a slice of a string whose memory is managed externally.">StringPiece</a> path(buf, path_size);
+<a name="l00243"></a>00243       <a class="code" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>* node = state-&gt;<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(path);
+<a name="l00244"></a>00244 
+<a name="l00245"></a>00245       <span class="comment">// Check that the expected index matches the actual index. This can only</span>
+<a name="l00246"></a>00246       <span class="comment">// happen if two ninja processes write to the same deps log concurrently.</span>
+<a name="l00247"></a>00247       <span class="comment">// (This uses unary complement to make the checksum look less like a</span>
+<a name="l00248"></a>00248       <span class="comment">// dependency record entry.)</span>
+<a name="l00249"></a>00249       <span class="keywordtype">unsigned</span> checksum = *<span class="keyword">reinterpret_cast&lt;</span><span class="keywordtype">unsigned</span>*<span class="keyword">&gt;</span>(buf + size - 4);
+<a name="l00250"></a>00250       <span class="keywordtype">int</span> expected_id = ~checksum;
+<a name="l00251"></a>00251       <span class="keywordtype">int</span> <span class="keywordtype">id</span> = <a class="code" href="structDepsLog.html#a6808f42a3e9b5e1a4f0a0664dcebaae3" title="Maps id -&gt; Node.">nodes_</a>.size();
+<a name="l00252"></a>00252       <span class="keywordflow">if</span> (<span class="keywordtype">id</span> != expected_id) {
+<a name="l00253"></a>00253         read_failed = <span class="keyword">true</span>;
+<a name="l00254"></a>00254         <span class="keywordflow">break</span>;
+<a name="l00255"></a>00255       }
+<a name="l00256"></a>00256 
+<a name="l00257"></a>00257       assert(node-&gt;<a class="code" href="structNode.html#a703c4c528d8b5176ee7a85db7cdd4208">id</a>() &lt; 0);
+<a name="l00258"></a>00258       node-&gt;<a class="code" href="structNode.html#a1eba2a5f320852762c2f92c18560c809">set_id</a>(<span class="keywordtype">id</span>);
+<a name="l00259"></a>00259       <a class="code" href="structDepsLog.html#a6808f42a3e9b5e1a4f0a0664dcebaae3" title="Maps id -&gt; Node.">nodes_</a>.push_back(node);
+<a name="l00260"></a>00260     }
+<a name="l00261"></a>00261   }
 <a name="l00262"></a>00262 
-<a name="l00263"></a><a class="code" href="structDepsLog.html#a09515578bf5a271a93919c7ff2036001">00263</a> <span class="keywordtype">bool</span> <a class="code" href="structDepsLog.html#a09515578bf5a271a93919c7ff2036001" title="Rewrite the known log entries, throwing away old data.">DepsLog::Recompact</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path, <span class="keywordtype">string</span>* err) {
-<a name="l00264"></a>00264   <a class="code" href="metrics_8h.html#a7c19242938163dd11cedf62fdabd4ab6" title="The primary interface to metrics.">METRIC_RECORD</a>(<span class="stringliteral">&quot;.ninja_deps recompact&quot;</span>);
-<a name="l00265"></a>00265   printf(<span class="stringliteral">&quot;Recompacting deps...\n&quot;</span>);
-<a name="l00266"></a>00266 
-<a name="l00267"></a>00267   <a class="code" href="structDepsLog.html#a750f013ae662f96e7f2545d213c7f3a0">Close</a>();
-<a name="l00268"></a>00268   <span class="keywordtype">string</span> temp_path = path + <span class="stringliteral">&quot;.recompact&quot;</span>;
-<a name="l00269"></a>00269 
-<a name="l00270"></a>00270   <span class="comment">// OpenForWrite() opens for append.  Make sure it&#39;s not appending to a</span>
-<a name="l00271"></a>00271   <span class="comment">// left-over file from a previous recompaction attempt that crashed somehow.</span>
-<a name="l00272"></a>00272   unlink(temp_path.c_str());
-<a name="l00273"></a>00273 
-<a name="l00274"></a>00274   <a class="code" href="structDepsLog.html" title="As build commands run they can output extra dependency information (e.g.">DepsLog</a> new_log;
-<a name="l00275"></a>00275   <span class="keywordflow">if</span> (!new_log.OpenForWrite(temp_path, err))
-<a name="l00276"></a>00276     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00277"></a>00277 
-<a name="l00278"></a>00278   <span class="comment">// Clear all known ids so that new ones can be reassigned.  The new indices</span>
-<a name="l00279"></a>00279   <span class="comment">// will refer to the ordering in new_log, not in the current log.</span>
-<a name="l00280"></a>00280   <span class="keywordflow">for</span> (vector&lt;Node*&gt;::iterator i = <a class="code" href="structDepsLog.html#a6808f42a3e9b5e1a4f0a0664dcebaae3" title="Maps id -&gt; Node.">nodes_</a>.begin(); i != <a class="code" href="structDepsLog.html#a6808f42a3e9b5e1a4f0a0664dcebaae3" title="Maps id -&gt; Node.">nodes_</a>.end(); ++i)
-<a name="l00281"></a>00281     (*i)-&gt;set_id(-1);
-<a name="l00282"></a>00282   
-<a name="l00283"></a>00283   <span class="comment">// Write out all deps again.</span>
-<a name="l00284"></a>00284   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> old_id = 0; old_id &lt; (int)<a class="code" href="structDepsLog.html#af599cdffb987059f53caf7ebc63e41dd" title="Maps id -&gt; deps of that id.">deps_</a>.size(); ++old_id) {
-<a name="l00285"></a>00285     <a class="code" href="structDepsLog_1_1Deps.html">Deps</a>* <a class="code" href="structDepsLog.html#a849f7a1be3a785babb0089e1466fe874">deps</a> = <a class="code" href="structDepsLog.html#af599cdffb987059f53caf7ebc63e41dd" title="Maps id -&gt; deps of that id.">deps_</a>[old_id];
-<a name="l00286"></a>00286     <span class="keywordflow">if</span> (!deps) <span class="keywordflow">continue</span>;  <span class="comment">// If nodes_[old_id] is a leaf, it has no deps.</span>
-<a name="l00287"></a>00287 
-<a name="l00288"></a>00288     <span class="keywordflow">if</span> (!new_log.RecordDeps(<a class="code" href="structDepsLog.html#a6808f42a3e9b5e1a4f0a0664dcebaae3" title="Maps id -&gt; Node.">nodes_</a>[old_id], deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#ae73ed4a9faede3332a47215b2a68a5dc">mtime</a>,
-<a name="l00289"></a>00289                             deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#af59c987b02350a4dfcd24a5406624fdb">node_count</a>, deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#ab60b40fc0217ea187cdc60fb59ea27e8">nodes</a>)) {
-<a name="l00290"></a>00290       new_log.Close();
-<a name="l00291"></a>00291       <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00292"></a>00292     }
-<a name="l00293"></a>00293   }
+<a name="l00263"></a>00263   <span class="keywordflow">if</span> (read_failed) {
+<a name="l00264"></a>00264     <span class="comment">// An error occurred while loading; try to recover by truncating the</span>
+<a name="l00265"></a>00265     <span class="comment">// file to the last fully-read record.</span>
+<a name="l00266"></a>00266     <span class="keywordflow">if</span> (ferror(f)) {
+<a name="l00267"></a>00267       *err = strerror(ferror(f));
+<a name="l00268"></a>00268     } <span class="keywordflow">else</span> {
+<a name="l00269"></a>00269       *err = <span class="stringliteral">&quot;premature end of file&quot;</span>;
+<a name="l00270"></a>00270     }
+<a name="l00271"></a>00271     fclose(f);
+<a name="l00272"></a>00272 
+<a name="l00273"></a>00273     <span class="keywordflow">if</span> (!<a class="code" href="util_8cc.html#a59c00d43a10517c5124b75ef540f270a" title="Truncates a file to the given size.">Truncate</a>(path.c_str(), offset, err))
+<a name="l00274"></a>00274       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00275"></a>00275 
+<a name="l00276"></a>00276     <span class="comment">// The truncate succeeded; we&#39;ll just report the load error as a</span>
+<a name="l00277"></a>00277     <span class="comment">// warning because the build can proceed.</span>
+<a name="l00278"></a>00278     *err += <span class="stringliteral">&quot;; recovering&quot;</span>;
+<a name="l00279"></a>00279     <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00280"></a>00280   }
+<a name="l00281"></a>00281 
+<a name="l00282"></a>00282   fclose(f);
+<a name="l00283"></a>00283 
+<a name="l00284"></a>00284   <span class="comment">// Rebuild the log if there are too many dead records.</span>
+<a name="l00285"></a>00285   <span class="keywordtype">int</span> kMinCompactionEntryCount = 1000;
+<a name="l00286"></a>00286   <span class="keywordtype">int</span> kCompactionRatio = 3;
+<a name="l00287"></a>00287   <span class="keywordflow">if</span> (total_dep_record_count &gt; kMinCompactionEntryCount &amp;&amp;
+<a name="l00288"></a>00288       total_dep_record_count &gt; unique_dep_record_count * kCompactionRatio) {
+<a name="l00289"></a>00289     <a class="code" href="structDepsLog.html#adee980c7d35e5c4b32b669733b4382c4">needs_recompaction_</a> = <span class="keyword">true</span>;
+<a name="l00290"></a>00290   }
+<a name="l00291"></a>00291 
+<a name="l00292"></a>00292   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00293"></a>00293 }
 <a name="l00294"></a>00294 
-<a name="l00295"></a>00295   new_log.Close();
-<a name="l00296"></a>00296 
-<a name="l00297"></a>00297   <span class="comment">// All nodes now have ids that refer to new_log, so steal its data.</span>
-<a name="l00298"></a>00298   <a class="code" href="structDepsLog.html#af599cdffb987059f53caf7ebc63e41dd" title="Maps id -&gt; deps of that id.">deps_</a>.swap(new_log.deps_);
-<a name="l00299"></a>00299   <a class="code" href="structDepsLog.html#a6808f42a3e9b5e1a4f0a0664dcebaae3" title="Maps id -&gt; Node.">nodes_</a>.swap(new_log.nodes_);
-<a name="l00300"></a>00300 
-<a name="l00301"></a>00301   <span class="keywordflow">if</span> (unlink(path.c_str()) &lt; 0) {
-<a name="l00302"></a>00302     *err = strerror(errno);
-<a name="l00303"></a>00303     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00304"></a>00304   }
-<a name="l00305"></a>00305 
-<a name="l00306"></a>00306   <span class="keywordflow">if</span> (rename(temp_path.c_str(), path.c_str()) &lt; 0) {
-<a name="l00307"></a>00307     *err = strerror(errno);
-<a name="l00308"></a>00308     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00309"></a>00309   }
-<a name="l00310"></a>00310 
-<a name="l00311"></a>00311   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00312"></a>00312 }
+<a name="l00295"></a><a class="code" href="structDepsLog.html#a075043796f88d312004cf5ae74a53c4e">00295</a> <a class="code" href="structDepsLog_1_1Deps.html">DepsLog::Deps</a>* <a class="code" href="structDepsLog.html#a075043796f88d312004cf5ae74a53c4e">DepsLog::GetDeps</a>(<a class="code" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>* node) {
+<a name="l00296"></a>00296   <span class="comment">// Abort if the node has no id (never referenced in the deps) or if</span>
+<a name="l00297"></a>00297   <span class="comment">// there&#39;s no deps recorded for the node.</span>
+<a name="l00298"></a>00298   <span class="keywordflow">if</span> (node-&gt;<a class="code" href="structNode.html#a703c4c528d8b5176ee7a85db7cdd4208">id</a>() &lt; 0 || node-&gt;<a class="code" href="structNode.html#a703c4c528d8b5176ee7a85db7cdd4208">id</a>() &gt;= (int)<a class="code" href="structDepsLog.html#af599cdffb987059f53caf7ebc63e41dd" title="Maps id -&gt; deps of that id.">deps_</a>.size())
+<a name="l00299"></a>00299     <span class="keywordflow">return</span> NULL;
+<a name="l00300"></a>00300   <span class="keywordflow">return</span> <a class="code" href="structDepsLog.html#af599cdffb987059f53caf7ebc63e41dd" title="Maps id -&gt; deps of that id.">deps_</a>[node-&gt;<a class="code" href="structNode.html#a703c4c528d8b5176ee7a85db7cdd4208">id</a>()];
+<a name="l00301"></a>00301 }
+<a name="l00302"></a>00302 
+<a name="l00303"></a><a class="code" href="structDepsLog.html#a09515578bf5a271a93919c7ff2036001">00303</a> <span class="keywordtype">bool</span> <a class="code" href="structDepsLog.html#a09515578bf5a271a93919c7ff2036001" title="Rewrite the known log entries, throwing away old data.">DepsLog::Recompact</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path, <span class="keywordtype">string</span>* err) {
+<a name="l00304"></a>00304   <a class="code" href="metrics_8h.html#a7c19242938163dd11cedf62fdabd4ab6" title="The primary interface to metrics.">METRIC_RECORD</a>(<span class="stringliteral">&quot;.ninja_deps recompact&quot;</span>);
+<a name="l00305"></a>00305   printf(<span class="stringliteral">&quot;Recompacting deps...\n&quot;</span>);
+<a name="l00306"></a>00306 
+<a name="l00307"></a>00307   <a class="code" href="structDepsLog.html#a750f013ae662f96e7f2545d213c7f3a0">Close</a>();
+<a name="l00308"></a>00308   <span class="keywordtype">string</span> temp_path = path + <span class="stringliteral">&quot;.recompact&quot;</span>;
+<a name="l00309"></a>00309 
+<a name="l00310"></a>00310   <span class="comment">// OpenForWrite() opens for append.  Make sure it&#39;s not appending to a</span>
+<a name="l00311"></a>00311   <span class="comment">// left-over file from a previous recompaction attempt that crashed somehow.</span>
+<a name="l00312"></a>00312   unlink(temp_path.c_str());
 <a name="l00313"></a>00313 
-<a name="l00314"></a><a class="code" href="structDepsLog.html#a35ce8189fffae2b7300d415ce115a0a3">00314</a> <span class="keywordtype">bool</span> <a class="code" href="structDepsLog.html#a35ce8189fffae2b7300d415ce115a0a3">DepsLog::UpdateDeps</a>(<span class="keywordtype">int</span> out_id, <a class="code" href="structDepsLog_1_1Deps.html">Deps</a>* deps) {
-<a name="l00315"></a>00315   <span class="keywordflow">if</span> (out_id &gt;= (<span class="keywordtype">int</span>)<a class="code" href="structDepsLog.html#af599cdffb987059f53caf7ebc63e41dd" title="Maps id -&gt; deps of that id.">deps_</a>.size())
-<a name="l00316"></a>00316     <a class="code" href="structDepsLog.html#af599cdffb987059f53caf7ebc63e41dd" title="Maps id -&gt; deps of that id.">deps_</a>.resize(out_id + 1);
+<a name="l00314"></a>00314   <a class="code" href="structDepsLog.html" title="As build commands run they can output extra dependency information (e.g.">DepsLog</a> new_log;
+<a name="l00315"></a>00315   <span class="keywordflow">if</span> (!new_log.OpenForWrite(temp_path, err))
+<a name="l00316"></a>00316     <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00317"></a>00317 
-<a name="l00318"></a>00318   <span class="keywordtype">bool</span> delete_old = <a class="code" href="structDepsLog.html#af599cdffb987059f53caf7ebc63e41dd" title="Maps id -&gt; deps of that id.">deps_</a>[out_id] != NULL;
-<a name="l00319"></a>00319   <span class="keywordflow">if</span> (delete_old)
-<a name="l00320"></a>00320     <span class="keyword">delete</span> <a class="code" href="structDepsLog.html#af599cdffb987059f53caf7ebc63e41dd" title="Maps id -&gt; deps of that id.">deps_</a>[out_id];
-<a name="l00321"></a>00321   <a class="code" href="structDepsLog.html#af599cdffb987059f53caf7ebc63e41dd" title="Maps id -&gt; deps of that id.">deps_</a>[out_id] = <a class="code" href="structDepsLog.html#a849f7a1be3a785babb0089e1466fe874">deps</a>;
-<a name="l00322"></a>00322   <span class="keywordflow">return</span> delete_old;
-<a name="l00323"></a>00323 }
-<a name="l00324"></a>00324 
-<a name="l00325"></a><a class="code" href="structDepsLog.html#aa4cc04faa7d2d9256a372f1b067e61ef">00325</a> <span class="keywordtype">bool</span> <a class="code" href="structDepsLog.html#aa4cc04faa7d2d9256a372f1b067e61ef">DepsLog::RecordId</a>(<a class="code" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>* node) {
-<a name="l00326"></a>00326   <a class="code" href="win32port_8h.html#a273cf69d639a59973b6019625df33e30">uint16_t</a> size = (<a class="code" href="win32port_8h.html#a273cf69d639a59973b6019625df33e30">uint16_t</a>)node-&gt;<a class="code" href="structNode.html#a8530ccbc220a8fe1d50256c7ef4ee6d9">path</a>().size();
-<a name="l00327"></a>00327   fwrite(&amp;size, 2, 1, <a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a>);
-<a name="l00328"></a>00328   fwrite(node-&gt;<a class="code" href="structNode.html#a8530ccbc220a8fe1d50256c7ef4ee6d9">path</a>().data(), node-&gt;<a class="code" href="structNode.html#a8530ccbc220a8fe1d50256c7ef4ee6d9">path</a>().size(), 1, <a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a>);
-<a name="l00329"></a>00329   fflush(<a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a>);
-<a name="l00330"></a>00330 
-<a name="l00331"></a>00331   node-&gt;<a class="code" href="structNode.html#a1eba2a5f320852762c2f92c18560c809">set_id</a>(<a class="code" href="structDepsLog.html#a6808f42a3e9b5e1a4f0a0664dcebaae3" title="Maps id -&gt; Node.">nodes_</a>.size());
-<a name="l00332"></a>00332   <a class="code" href="structDepsLog.html#a6808f42a3e9b5e1a4f0a0664dcebaae3" title="Maps id -&gt; Node.">nodes_</a>.push_back(node);
-<a name="l00333"></a>00333 
-<a name="l00334"></a>00334   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00335"></a>00335 }
+<a name="l00318"></a>00318   <span class="comment">// Clear all known ids so that new ones can be reassigned.  The new indices</span>
+<a name="l00319"></a>00319   <span class="comment">// will refer to the ordering in new_log, not in the current log.</span>
+<a name="l00320"></a>00320   <span class="keywordflow">for</span> (vector&lt;Node*&gt;::iterator i = <a class="code" href="structDepsLog.html#a6808f42a3e9b5e1a4f0a0664dcebaae3" title="Maps id -&gt; Node.">nodes_</a>.begin(); i != <a class="code" href="structDepsLog.html#a6808f42a3e9b5e1a4f0a0664dcebaae3" title="Maps id -&gt; Node.">nodes_</a>.end(); ++i)
+<a name="l00321"></a>00321     (*i)-&gt;set_id(-1);
+<a name="l00322"></a>00322   
+<a name="l00323"></a>00323   <span class="comment">// Write out all deps again.</span>
+<a name="l00324"></a>00324   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> old_id = 0; old_id &lt; (int)<a class="code" href="structDepsLog.html#af599cdffb987059f53caf7ebc63e41dd" title="Maps id -&gt; deps of that id.">deps_</a>.size(); ++old_id) {
+<a name="l00325"></a>00325     <a class="code" href="structDepsLog_1_1Deps.html">Deps</a>* <a class="code" href="structDepsLog.html#a849f7a1be3a785babb0089e1466fe874">deps</a> = <a class="code" href="structDepsLog.html#af599cdffb987059f53caf7ebc63e41dd" title="Maps id -&gt; deps of that id.">deps_</a>[old_id];
+<a name="l00326"></a>00326     <span class="keywordflow">if</span> (!deps) <span class="keywordflow">continue</span>;  <span class="comment">// If nodes_[old_id] is a leaf, it has no deps.</span>
+<a name="l00327"></a>00327 
+<a name="l00328"></a>00328     <span class="keywordflow">if</span> (!new_log.RecordDeps(<a class="code" href="structDepsLog.html#a6808f42a3e9b5e1a4f0a0664dcebaae3" title="Maps id -&gt; Node.">nodes_</a>[old_id], deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#ae73ed4a9faede3332a47215b2a68a5dc">mtime</a>,
+<a name="l00329"></a>00329                             deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#af59c987b02350a4dfcd24a5406624fdb">node_count</a>, deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#ab60b40fc0217ea187cdc60fb59ea27e8">nodes</a>)) {
+<a name="l00330"></a>00330       new_log.Close();
+<a name="l00331"></a>00331       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00332"></a>00332     }
+<a name="l00333"></a>00333   }
+<a name="l00334"></a>00334 
+<a name="l00335"></a>00335   new_log.Close();
+<a name="l00336"></a>00336 
+<a name="l00337"></a>00337   <span class="comment">// All nodes now have ids that refer to new_log, so steal its data.</span>
+<a name="l00338"></a>00338   <a class="code" href="structDepsLog.html#af599cdffb987059f53caf7ebc63e41dd" title="Maps id -&gt; deps of that id.">deps_</a>.swap(new_log.deps_);
+<a name="l00339"></a>00339   <a class="code" href="structDepsLog.html#a6808f42a3e9b5e1a4f0a0664dcebaae3" title="Maps id -&gt; Node.">nodes_</a>.swap(new_log.nodes_);
+<a name="l00340"></a>00340 
+<a name="l00341"></a>00341   <span class="keywordflow">if</span> (unlink(path.c_str()) &lt; 0) {
+<a name="l00342"></a>00342     *err = strerror(errno);
+<a name="l00343"></a>00343     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00344"></a>00344   }
+<a name="l00345"></a>00345 
+<a name="l00346"></a>00346   <span class="keywordflow">if</span> (rename(temp_path.c_str(), path.c_str()) &lt; 0) {
+<a name="l00347"></a>00347     *err = strerror(errno);
+<a name="l00348"></a>00348     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00349"></a>00349   }
+<a name="l00350"></a>00350 
+<a name="l00351"></a>00351   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00352"></a>00352 }
+<a name="l00353"></a>00353 
+<a name="l00354"></a><a class="code" href="structDepsLog.html#a35ce8189fffae2b7300d415ce115a0a3">00354</a> <span class="keywordtype">bool</span> <a class="code" href="structDepsLog.html#a35ce8189fffae2b7300d415ce115a0a3">DepsLog::UpdateDeps</a>(<span class="keywordtype">int</span> out_id, <a class="code" href="structDepsLog_1_1Deps.html">Deps</a>* deps) {
+<a name="l00355"></a>00355   <span class="keywordflow">if</span> (out_id &gt;= (<span class="keywordtype">int</span>)<a class="code" href="structDepsLog.html#af599cdffb987059f53caf7ebc63e41dd" title="Maps id -&gt; deps of that id.">deps_</a>.size())
+<a name="l00356"></a>00356     <a class="code" href="structDepsLog.html#af599cdffb987059f53caf7ebc63e41dd" title="Maps id -&gt; deps of that id.">deps_</a>.resize(out_id + 1);
+<a name="l00357"></a>00357 
+<a name="l00358"></a>00358   <span class="keywordtype">bool</span> delete_old = <a class="code" href="structDepsLog.html#af599cdffb987059f53caf7ebc63e41dd" title="Maps id -&gt; deps of that id.">deps_</a>[out_id] != NULL;
+<a name="l00359"></a>00359   <span class="keywordflow">if</span> (delete_old)
+<a name="l00360"></a>00360     <span class="keyword">delete</span> <a class="code" href="structDepsLog.html#af599cdffb987059f53caf7ebc63e41dd" title="Maps id -&gt; deps of that id.">deps_</a>[out_id];
+<a name="l00361"></a>00361   <a class="code" href="structDepsLog.html#af599cdffb987059f53caf7ebc63e41dd" title="Maps id -&gt; deps of that id.">deps_</a>[out_id] = <a class="code" href="structDepsLog.html#a849f7a1be3a785babb0089e1466fe874">deps</a>;
+<a name="l00362"></a>00362   <span class="keywordflow">return</span> delete_old;
+<a name="l00363"></a>00363 }
+<a name="l00364"></a>00364 
+<a name="l00365"></a><a class="code" href="structDepsLog.html#aa4cc04faa7d2d9256a372f1b067e61ef">00365</a> <span class="keywordtype">bool</span> <a class="code" href="structDepsLog.html#aa4cc04faa7d2d9256a372f1b067e61ef">DepsLog::RecordId</a>(<a class="code" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>* node) {
+<a name="l00366"></a>00366   <span class="keywordtype">int</span> path_size = node-&gt;<a class="code" href="structNode.html#a8530ccbc220a8fe1d50256c7ef4ee6d9">path</a>().size();
+<a name="l00367"></a>00367   <span class="keywordtype">int</span> padding = (4 - path_size % 4) % 4;  <span class="comment">// Pad path to 4 byte boundary.</span>
+<a name="l00368"></a>00368 
+<a name="l00369"></a>00369   <span class="keywordtype">unsigned</span> size = path_size + padding + 4;
+<a name="l00370"></a>00370   <span class="keywordflow">if</span> (size &gt; <a class="code" href="deps__log_8cc.html#a14c5a973c5acd0659069ca9516d247a5">kMaxRecordSize</a>) {
+<a name="l00371"></a>00371     errno = ERANGE;
+<a name="l00372"></a>00372     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00373"></a>00373   }
+<a name="l00374"></a>00374   <span class="keywordflow">if</span> (fwrite(&amp;size, 4, 1, <a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a>) &lt; 1)
+<a name="l00375"></a>00375     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00376"></a>00376   <span class="keywordflow">if</span> (fwrite(node-&gt;<a class="code" href="structNode.html#a8530ccbc220a8fe1d50256c7ef4ee6d9">path</a>().data(), path_size, 1, <a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a>) &lt; 1) {
+<a name="l00377"></a>00377     assert(node-&gt;<a class="code" href="structNode.html#a8530ccbc220a8fe1d50256c7ef4ee6d9">path</a>().size() &gt; 0);
+<a name="l00378"></a>00378     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00379"></a>00379   }
+<a name="l00380"></a>00380   <span class="keywordflow">if</span> (padding &amp;&amp; fwrite(<span class="stringliteral">&quot;\0\0&quot;</span>, padding, 1, <a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a>) &lt; 1)
+<a name="l00381"></a>00381     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00382"></a>00382   <span class="keywordtype">int</span> <span class="keywordtype">id</span> = <a class="code" href="structDepsLog.html#a6808f42a3e9b5e1a4f0a0664dcebaae3" title="Maps id -&gt; Node.">nodes_</a>.size();
+<a name="l00383"></a>00383   <span class="keywordtype">unsigned</span> checksum = ~(unsigned)<span class="keywordtype">id</span>;
+<a name="l00384"></a>00384   <span class="keywordflow">if</span> (fwrite(&amp;checksum, 4, 1, <a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a>) &lt; 1)
+<a name="l00385"></a>00385     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00386"></a>00386   <span class="keywordflow">if</span> (fflush(<a class="code" href="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834">file_</a>) != 0)
+<a name="l00387"></a>00387     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00388"></a>00388 
+<a name="l00389"></a>00389   node-&gt;<a class="code" href="structNode.html#a1eba2a5f320852762c2f92c18560c809">set_id</a>(<span class="keywordtype">id</span>);
+<a name="l00390"></a>00390   <a class="code" href="structDepsLog.html#a6808f42a3e9b5e1a4f0a0664dcebaae3" title="Maps id -&gt; Node.">nodes_</a>.push_back(node);
+<a name="l00391"></a>00391 
+<a name="l00392"></a>00392   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00393"></a>00393 }
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Aug 8 2013 09:48:12 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Sep 12 2013 09:25:49 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

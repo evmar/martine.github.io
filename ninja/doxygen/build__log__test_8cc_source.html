@@ -108,8 +108,8 @@
 <a name="l00049"></a>00049   <span class="keywordtype">string</span> err;
 <a name="l00050"></a>00050   EXPECT_TRUE(log1.<a class="code" href="structBuildLog.html#a08a600782d1b1c8369b8437d9d9c4264">OpenForWrite</a>(kTestFilename, &amp;err));
 <a name="l00051"></a>00051   ASSERT_EQ(<span class="stringliteral">&quot;&quot;</span>, err);
-<a name="l00052"></a>00052   log1.<a class="code" href="structBuildLog.html#a52516b9c36079c570a0144d0599f4fb1">RecordCommand</a>(state_.edges_[0], 15, 18);
-<a name="l00053"></a>00053   log1.<a class="code" href="structBuildLog.html#a52516b9c36079c570a0144d0599f4fb1">RecordCommand</a>(state_.edges_[1], 20, 25);
+<a name="l00052"></a>00052   log1.<a class="code" href="structBuildLog.html#a0f6053fff49c2044bbfb0b6293d31d9f">RecordCommand</a>(state_.edges_[0], 15, 18);
+<a name="l00053"></a>00053   log1.<a class="code" href="structBuildLog.html#a0f6053fff49c2044bbfb0b6293d31d9f">RecordCommand</a>(state_.edges_[1], 20, 25);
 <a name="l00054"></a>00054   log1.<a class="code" href="structBuildLog.html#a2f0657ed16b8ba9fadfb5c03e0c81695">Close</a>();
 <a name="l00055"></a>00055 
 <a name="l00056"></a>00056   <a class="code" href="structBuildLog.html" title="Store a log of every command ran for every build.">BuildLog</a> log2;
@@ -183,8 +183,8 @@
 <a name="l00124"></a>00124   <span class="keywordtype">string</span> err;
 <a name="l00125"></a>00125   EXPECT_TRUE(log1.<a class="code" href="structBuildLog.html#a08a600782d1b1c8369b8437d9d9c4264">OpenForWrite</a>(kTestFilename, &amp;err));
 <a name="l00126"></a>00126   ASSERT_EQ(<span class="stringliteral">&quot;&quot;</span>, err);
-<a name="l00127"></a>00127   log1.<a class="code" href="structBuildLog.html#a52516b9c36079c570a0144d0599f4fb1">RecordCommand</a>(state_.edges_[0], 15, 18);
-<a name="l00128"></a>00128   log1.<a class="code" href="structBuildLog.html#a52516b9c36079c570a0144d0599f4fb1">RecordCommand</a>(state_.edges_[1], 20, 25);
+<a name="l00127"></a>00127   log1.<a class="code" href="structBuildLog.html#a0f6053fff49c2044bbfb0b6293d31d9f">RecordCommand</a>(state_.edges_[0], 15, 18);
+<a name="l00128"></a>00128   log1.<a class="code" href="structBuildLog.html#a0f6053fff49c2044bbfb0b6293d31d9f">RecordCommand</a>(state_.edges_[1], 20, 25);
 <a name="l00129"></a>00129   log1.<a class="code" href="structBuildLog.html#a2f0657ed16b8ba9fadfb5c03e0c81695">Close</a>();
 <a name="l00130"></a>00130 
 <a name="l00131"></a>00131   <span class="keyword">struct </span>stat statbuf;
@@ -198,8 +198,8 @@
 <a name="l00139"></a>00139     <span class="keywordtype">string</span> err;
 <a name="l00140"></a>00140     EXPECT_TRUE(log2.<a class="code" href="structBuildLog.html#a08a600782d1b1c8369b8437d9d9c4264">OpenForWrite</a>(kTestFilename, &amp;err));
 <a name="l00141"></a>00141     ASSERT_EQ(<span class="stringliteral">&quot;&quot;</span>, err);
-<a name="l00142"></a>00142     log2.<a class="code" href="structBuildLog.html#a52516b9c36079c570a0144d0599f4fb1">RecordCommand</a>(state_.edges_[0], 15, 18);
-<a name="l00143"></a>00143     log2.<a class="code" href="structBuildLog.html#a52516b9c36079c570a0144d0599f4fb1">RecordCommand</a>(state_.edges_[1], 20, 25);
+<a name="l00142"></a>00142     log2.<a class="code" href="structBuildLog.html#a0f6053fff49c2044bbfb0b6293d31d9f">RecordCommand</a>(state_.edges_[0], 15, 18);
+<a name="l00143"></a>00143     log2.<a class="code" href="structBuildLog.html#a0f6053fff49c2044bbfb0b6293d31d9f">RecordCommand</a>(state_.edges_[1], 20, 25);
 <a name="l00144"></a>00144     log2.<a class="code" href="structBuildLog.html#a2f0657ed16b8ba9fadfb5c03e0c81695">Close</a>();
 <a name="l00145"></a>00145 
 <a name="l00146"></a>00146     ASSERT_TRUE(<a class="code" href="util_8cc.html#a59c00d43a10517c5124b75ef540f270a" title="Truncates a file to the given size.">Truncate</a>(kTestFilename, size, &amp;err));
@@ -305,7 +305,7 @@
 <a name="l00246"></a>00246 <span class="stringliteral">&quot;build out out.d: cat\n&quot;</span>);
 <a name="l00247"></a>00247 
 <a name="l00248"></a>00248   <a class="code" href="structBuildLog.html" title="Store a log of every command ran for every build.">BuildLog</a> log;
-<a name="l00249"></a>00249   log.<a class="code" href="structBuildLog.html#a52516b9c36079c570a0144d0599f4fb1">RecordCommand</a>(state_.edges_[0], 21, 22);
+<a name="l00249"></a>00249   log.<a class="code" href="structBuildLog.html#a0f6053fff49c2044bbfb0b6293d31d9f">RecordCommand</a>(state_.edges_[0], 21, 22);
 <a name="l00250"></a>00250 
 <a name="l00251"></a>00251   ASSERT_EQ(2u, log.<a class="code" href="structBuildLog.html#aeed1beb5b39306e0a77dc6b8da16f580">entries</a>().size());
 <a name="l00252"></a>00252   <a class="code" href="structBuildLog_1_1LogEntry.html">BuildLog::LogEntry</a>* e1 = log.<a class="code" href="structBuildLog.html#af01fac6ff13246e414e69b3737692f59" title="Lookup a previously-run command by its output path.">LookupByOutput</a>(<span class="stringliteral">&quot;out&quot;</span>);
@@ -325,7 +325,7 @@
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Aug 8 2013 09:48:12 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Sep 12 2013 09:25:49 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

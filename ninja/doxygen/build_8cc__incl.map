@@ -1,19 +1,20 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$build_8h.html" title="build.h" alt="" coords="915,83,973,112"/>
-<area shape="rect" id="node19" href="$graph_8h.html" title="graph.h" alt="" coords="461,160,525,189"/>
-<area shape="rect" id="node44" href="$util_8h.html" title="util.h" alt="" coords="600,237,651,267"/>
-<area shape="rect" id="node61" href="$build__log_8h.html" title="build_log.h" alt="" coords="304,160,387,189"/>
-<area shape="rect" id="node73" href="$depfile__parser_8h.html" title="depfile_parser.h" alt="" coords="1357,237,1472,267"/>
-<area shape="rect" id="node78" href="$deps__log_8h.html" title="deps_log.h" alt="" coords="195,160,280,189"/>
-<area shape="rect" id="node84" href="$disk__interface_8h.html" title="disk_interface.h" alt="" coords="5,160,120,189"/>
-<area shape="rect" id="node89" href="$msvc__helper_8h.html" title="msvc_helper.h" alt="" coords="800,160,907,189"/>
-<area shape="rect" id="node94" href="$state_8h.html" title="state.h" alt="" coords="1648,160,1709,189"/>
-<area shape="rect" id="node102" href="$subprocess_8h.html" title="subprocess.h" alt="" coords="1336,83,1435,112"/>
-<area shape="rect" id="node35" href="$exit__status_8h.html" title="exit_status.h" alt="" coords="1205,160,1301,189"/>
-<area shape="rect" id="node37" href="$line__printer_8h.html" title="line_printer.h" alt="" coords="732,315,828,344"/>
-<area shape="rect" id="node40" href="$metrics_8h.html" title="metrics.h" alt="" coords="701,160,776,189"/>
-<area shape="rect" id="node23" href="$eval__env_8h.html" title="eval_env.h" alt="" coords="1496,237,1581,267"/>
-<area shape="rect" id="node33" href="$timestamp_8h.html" title="timestamp.h" alt="" coords="280,237,373,267"/>
-<area shape="rect" id="node28" href="$string__piece_8h.html" title="string_piece.h" alt="" coords="1472,315,1573,344"/>
-<area shape="rect" id="node65" href="$hash__map_8h.html" title="hash_map.h" alt="" coords="1656,237,1749,267"/>
+<area shape="rect" id="node3" href="$build_8h.html" title="build.h" alt="" coords="900,83,958,112"/>
+<area shape="rect" id="node19" href="$graph_8h.html" title="graph.h" alt="" coords="1222,160,1286,189"/>
+<area shape="rect" id="node44" href="$util_8h.html" title="util.h" alt="" coords="552,237,602,267"/>
+<area shape="rect" id="node61" href="$build__log_8h.html" title="build_log.h" alt="" coords="409,160,492,189"/>
+<area shape="rect" id="node73" href="$debug__flags_8h.html" title="debug_flags.h" alt="" coords="25,83,126,112"/>
+<area shape="rect" id="node76" href="$depfile__parser_8h.html" title="depfile_parser.h" alt="" coords="1444,237,1558,267"/>
+<area shape="rect" id="node81" href="$deps__log_8h.html" title="deps_log.h" alt="" coords="300,160,385,189"/>
+<area shape="rect" id="node87" href="$disk__interface_8h.html" title="disk_interface.h" alt="" coords="60,160,174,189"/>
+<area shape="rect" id="node92" href="$msvc__helper_8h.html" title="msvc_helper.h" alt="" coords="1041,160,1148,189"/>
+<area shape="rect" id="node97" href="$state_8h.html" title="state.h" alt="" coords="1753,160,1814,189"/>
+<area shape="rect" id="node105" href="$subprocess_8h.html" title="subprocess.h" alt="" coords="1441,83,1540,112"/>
+<area shape="rect" id="node35" href="$exit__status_8h.html" title="exit_status.h" alt="" coords="1310,160,1406,189"/>
+<area shape="rect" id="node37" href="$line__printer_8h.html" title="line_printer.h" alt="" coords="745,315,841,344"/>
+<area shape="rect" id="node40" href="$metrics_8h.html" title="metrics.h" alt="" coords="892,160,966,189"/>
+<area shape="rect" id="node23" href="$eval__env_8h.html" title="eval_env.h" alt="" coords="1582,237,1668,267"/>
+<area shape="rect" id="node33" href="$timestamp_8h.html" title="timestamp.h" alt="" coords="384,237,477,267"/>
+<area shape="rect" id="node28" href="$string__piece_8h.html" title="string_piece.h" alt="" coords="1505,315,1606,344"/>
+<area shape="rect" id="node65" href="$hash__map_8h.html" title="hash_map.h" alt="" coords="1692,237,1785,267"/>
 </map>

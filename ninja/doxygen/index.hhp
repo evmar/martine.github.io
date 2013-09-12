@@ -26,6 +26,8 @@ canon__perftest_8cc_source.html
 clean_8cc_source.html
 clean_8h_source.html
 clean__test_8cc_source.html
+debug__flags_8cc_source.html
+debug__flags_8h_source.html
 depfile__parser_8cc_source.html
 depfile__parser_8h_source.html
 depfile__parser_8in_8cc_source.html
@@ -42,8 +44,6 @@ edit__distance__test_8cc_source.html
 eval__env_8cc_source.html
 eval__env_8h_source.html
 exit__status_8h_source.html
-explain_8cc_source.html
-explain_8h_source.html
 getopt_8h_source.html
 graph_8cc_source.html
 graph_8h_source.html
@@ -105,6 +105,8 @@ canon__perftest_8cc.html
 clean_8cc.html
 clean_8h.html
 clean__test_8cc.html
+debug__flags_8cc.html
+debug__flags_8h.html
 depfile__parser_8cc.html
 depfile__parser_8h.html
 depfile__parser_8in_8cc.html
@@ -121,8 +123,6 @@ edit__distance__test_8cc.html
 eval__env_8cc.html
 eval__env_8h.html
 exit__status_8h.html
-explain_8cc.html
-explain_8h.html
 getopt_8h.html
 graph_8cc.html
 graph_8h.html
@@ -422,6 +422,8 @@ clean_8cc__incl.png
 clean_8h__incl.png
 clean_8h__dep__incl.png
 clean__test_8cc__incl.png
+debug__flags_8h__incl.png
+debug__flags_8h__dep__incl.png
 depfile__parser_8cc__incl.png
 depfile__parser_8h__incl.png
 depfile__parser_8h__dep__incl.png
@@ -443,8 +445,6 @@ eval__env_8cc__incl.png
 eval__env_8h__incl.png
 eval__env_8h__dep__incl.png
 exit__status_8h__dep__incl.png
-explain_8h__incl.png
-explain_8h__dep__incl.png
 getopt_8h__dep__incl.png
 graph_8cc__incl.png
 graph_8h__incl.png

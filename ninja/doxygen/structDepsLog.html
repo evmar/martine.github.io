@@ -116,9 +116,9 @@ Friends</h2></td></tr>
 <li>it can be read all at once on startup. (Alternative designs, where it contains indexing information, were considered and discarded as too complicated to implement; if the file is small than reading it fully on startup is acceptable.) Here are some stats from the Windows Chrome dependency files, to help guide the design space. The total text in the files sums to 90mb so some compression is warranted to keep load-time fast. There's about 10k files worth of dependencies that reference about 40k total paths totalling 2mb of unique strings.</li>
 </ul>
 <p>Based on these stats, here's the current design. The file is structured as version header followed by a sequence of records. Each record is either a path string or a dependency list. Numbering the path strings in file order gives them dense integer ids. A dependency list maps an output id to a list of input ids.</p>
-<p>Concretely, a record is: two bytes record length, high bit indicates record type (implies max record length 32k) path records contain just the string name of the path dependency records are an array of 4-byte integers [output path id, output path mtime, input path id, input path id...] (The mtime is compared against the on-disk output path mtime to verify the stored data is up-to-date.) If two records reference the same output the latter one in the file wins, allowing updates to just be appended to the file. A separate repacking step can run occasionally to remove dead records. </p>
+<p>Concretely, a record is: four bytes record length, high bit indicates record type (but max record sizes are capped at 512kB) path records contain the string name of the path, followed by up to 3 padding bytes to align on 4 byte boundaries, followed by the one's complement of the expected index of the record (to detect concurrent writes of multiple ninja processes to the log). dependency records are an array of 4-byte integers [output path id, output path mtime, input path id, input path id...] (The mtime is compared against the on-disk output path mtime to verify the stored data is up-to-date.) If two records reference the same output the latter one in the file wins, allowing updates to just be appended to the file. A separate repacking step can run occasionally to remove dead records. </p>
 
-<p>Definition at line <a class="el" href="deps__log_8h_source.html#l00063">63</a> of file <a class="el" href="deps__log_8h_source.html">deps_log.h</a>.</p>
+<p>Definition at line <a class="el" href="deps__log_8h_source.html#l00066">66</a> of file <a class="el" href="deps__log_8h_source.html">deps_log.h</a>.</p>
 </div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a1cb2e94499fbc1a4e3cdc8835c5d2fbd"></a><!-- doxytag: member="DepsLog::DepsLog" ref="a1cb2e94499fbc1a4e3cdc8835c5d2fbd" args="()" -->
 <div class="memitem">
@@ -134,7 +134,7 @@ Friends</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="deps__log_8h_source.html#l00064">64</a> of file <a class="el" href="deps__log_8h_source.html">deps_log.h</a>.</p>
+<p>Definition at line <a class="el" href="deps__log_8h_source.html#l00067">67</a> of file <a class="el" href="deps__log_8h_source.html">deps_log.h</a>.</p>
 
 </div>
 </div>
@@ -152,9 +152,9 @@ Friends</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="deps__log_8cc_source.html#l00040">40</a> of file <a class="el" href="deps__log_8cc_source.html">deps_log.cc</a>.</p>
+<p>Definition at line <a class="el" href="deps__log_8cc_source.html#l00039">39</a> of file <a class="el" href="deps__log_8cc_source.html">deps_log.cc</a>.</p>
 
-<p>References <a class="el" href="deps__log_8cc_source.html#l00144">Close()</a>.</p>
+<p>References <a class="el" href="deps__log_8cc_source.html#l00158">Close()</a>.</p>
 
 </div>
 </div>
@@ -173,11 +173,11 @@ Friends</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="deps__log_8cc_source.html#l00144">144</a> of file <a class="el" href="deps__log_8cc_source.html">deps_log.cc</a>.</p>
+<p>Definition at line <a class="el" href="deps__log_8cc_source.html#l00158">158</a> of file <a class="el" href="deps__log_8cc_source.html">deps_log.cc</a>.</p>
 
-<p>References <a class="el" href="deps__log_8h_source.html#l00100">file_</a>.</p>
+<p>References <a class="el" href="deps__log_8h_source.html#l00103">file_</a>.</p>
 
-<p>Referenced by <a class="el" href="deps__log_8cc_source.html#l00263">Recompact()</a>, <a class="el" href="build__test_8cc_source.html#l01440">TEST_F()</a>, and <a class="el" href="deps__log_8cc_source.html#l00040">~DepsLog()</a>.</p>
+<p>Referenced by <a class="el" href="deps__log_8cc_source.html#l00303">Recompact()</a>, <a class="el" href="build__test_8cc_source.html#l01523">TEST_F()</a>, and <a class="el" href="deps__log_8cc_source.html#l00039">~DepsLog()</a>.</p>
 
 </div>
 </div>
@@ -195,9 +195,9 @@ Friends</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="deps__log_8h_source.html#l00090">90</a> of file <a class="el" href="deps__log_8h_source.html">deps_log.h</a>.</p>
+<p>Definition at line <a class="el" href="deps__log_8h_source.html#l00093">93</a> of file <a class="el" href="deps__log_8h_source.html">deps_log.h</a>.</p>
 
-<p>Referenced by <a class="el" href="deps__log_8cc_source.html#l00150">Load()</a>, <a class="el" href="deps__log_8cc_source.html#l00263">Recompact()</a>, <a class="el" href="deps__log_8cc_source.html#l00083">RecordDeps()</a>, and <a class="el" href="deps__log_8cc_source.html#l00314">UpdateDeps()</a>.</p>
+<p>Referenced by <a class="el" href="deps__log_8cc_source.html#l00164">Load()</a>, <a class="el" href="deps__log_8cc_source.html#l00303">Recompact()</a>, <a class="el" href="deps__log_8cc_source.html#l00086">RecordDeps()</a>, and <a class="el" href="deps__log_8cc_source.html#l00354">UpdateDeps()</a>.</p>
 
 </div>
 </div>
@@ -216,11 +216,11 @@ Friends</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="deps__log_8cc_source.html#l00255">255</a> of file <a class="el" href="deps__log_8cc_source.html">deps_log.cc</a>.</p>
+<p>Definition at line <a class="el" href="deps__log_8cc_source.html#l00295">295</a> of file <a class="el" href="deps__log_8cc_source.html">deps_log.cc</a>.</p>
 
-<p>References <a class="el" href="deps__log_8h_source.html#l00105">deps_</a>, and <a class="el" href="graph_8h_source.html#l00083">Node::id()</a>.</p>
+<p>References <a class="el" href="deps__log_8h_source.html#l00108">deps_</a>, and <a class="el" href="graph_8h_source.html#l00083">Node::id()</a>.</p>
 
-<p>Referenced by <a class="el" href="graph_8cc_source.html#l00409">ImplicitDepLoader::LoadDepsFromLog()</a>, and <a class="el" href="deps__log_8cc_source.html#l00083">RecordDeps()</a>.</p>
+<p>Referenced by <a class="el" href="graph_8cc_source.html#l00390">ImplicitDepLoader::LoadDepsFromLog()</a>, and <a class="el" href="deps__log_8cc_source.html#l00086">RecordDeps()</a>.</p>
 
 </div>
 </div>
@@ -255,11 +255,11 @@ Friends</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="deps__log_8cc_source.html#l00150">150</a> of file <a class="el" href="deps__log_8cc_source.html">deps_log.cc</a>.</p>
+<p>Definition at line <a class="el" href="deps__log_8cc_source.html#l00164">164</a> of file <a class="el" href="deps__log_8cc_source.html">deps_log.cc</a>.</p>
 
-<p>References <a class="el" href="deps__log_8h_source.html#l00090">deps()</a>, <a class="el" href="state_8cc_source.html#l00112">State::GetNode()</a>, <a class="el" href="graph_8h_source.html#l00083">Node::id()</a>, <a class="el" href="deps__log_8cc_source.html#l00033">kCurrentVersion</a>, <a class="el" href="deps__log_8cc_source.html#l00032">kFileSignature</a>, <a class="el" href="metrics_8h_source.html#l00085">METRIC_RECORD</a>, <a class="el" href="deps__log_8h_source.html#l00099">needs_recompaction_</a>, <a class="el" href="deps__log_8h_source.html#l00080">DepsLog::Deps::nodes</a>, <a class="el" href="deps__log_8h_source.html#l00103">nodes_</a>, <a class="el" href="graph_8h_source.html#l00084">Node::set_id()</a>, <a class="el" href="util_8cc_source.html#l00363">Truncate()</a>, and <a class="el" href="deps__log_8cc_source.html#l00314">UpdateDeps()</a>.</p>
+<p>References <a class="el" href="deps__log_8h_source.html#l00093">deps()</a>, <a class="el" href="state_8cc_source.html#l00112">State::GetNode()</a>, <a class="el" href="graph_8h_source.html#l00083">Node::id()</a>, <a class="el" href="deps__log_8cc_source.html#l00033">kCurrentVersion</a>, <a class="el" href="deps__log_8cc_source.html#l00032">kFileSignature</a>, <a class="el" href="deps__log_8cc_source.html#l00037">kMaxRecordSize</a>, <a class="el" href="metrics_8h_source.html#l00085">METRIC_RECORD</a>, <a class="el" href="deps__log_8h_source.html#l00102">needs_recompaction_</a>, <a class="el" href="deps__log_8h_source.html#l00083">DepsLog::Deps::nodes</a>, <a class="el" href="deps__log_8h_source.html#l00106">nodes_</a>, <a class="el" href="graph_8h_source.html#l00084">Node::set_id()</a>, <a class="el" href="util_8cc_source.html#l00343">Truncate()</a>, and <a class="el" href="deps__log_8cc_source.html#l00354">UpdateDeps()</a>.</p>
 
-<p>Referenced by <a class="el" href="build__test_8cc_source.html#l01440">TEST_F()</a>.</p>
+<p>Referenced by <a class="el" href="build__test_8cc_source.html#l00462">BuildTest::RebuildTarget()</a>, and <a class="el" href="build__test_8cc_source.html#l01523">TEST_F()</a>.</p>
 
 </div>
 </div>
@@ -279,7 +279,7 @@ Friends</h2></td></tr>
 
 <p>Used for tests. </p>
 
-<p>Definition at line <a class="el" href="deps__log_8h_source.html#l00089">89</a> of file <a class="el" href="deps__log_8h_source.html">deps_log.h</a>.</p>
+<p>Definition at line <a class="el" href="deps__log_8h_source.html#l00092">92</a> of file <a class="el" href="deps__log_8h_source.html">deps_log.h</a>.</p>
 
 </div>
 </div>
@@ -308,11 +308,11 @@ Friends</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="deps__log_8cc_source.html#l00044">44</a> of file <a class="el" href="deps__log_8cc_source.html">deps_log.cc</a>.</p>
+<p>Definition at line <a class="el" href="deps__log_8cc_source.html#l00043">43</a> of file <a class="el" href="deps__log_8cc_source.html">deps_log.cc</a>.</p>
 
-<p>References <a class="el" href="deps__log_8h_source.html#l00100">file_</a>, <a class="el" href="deps__log_8cc_source.html#l00033">kCurrentVersion</a>, <a class="el" href="deps__log_8cc_source.html#l00032">kFileSignature</a>, <a class="el" href="deps__log_8cc_source.html#l00038">kMaxBufferSize</a>, <a class="el" href="deps__log_8h_source.html#l00099">needs_recompaction_</a>, <a class="el" href="deps__log_8cc_source.html#l00263">Recompact()</a>, and <a class="el" href="util_8cc_source.html#l00200">SetCloseOnExec()</a>.</p>
+<p>References <a class="el" href="deps__log_8h_source.html#l00103">file_</a>, <a class="el" href="deps__log_8cc_source.html#l00033">kCurrentVersion</a>, <a class="el" href="deps__log_8cc_source.html#l00032">kFileSignature</a>, <a class="el" href="deps__log_8cc_source.html#l00037">kMaxRecordSize</a>, <a class="el" href="deps__log_8h_source.html#l00102">needs_recompaction_</a>, <a class="el" href="deps__log_8cc_source.html#l00303">Recompact()</a>, and <a class="el" href="util_8cc_source.html#l00200">SetCloseOnExec()</a>.</p>
 
-<p>Referenced by <a class="el" href="build__test_8cc_source.html#l01440">TEST_F()</a>.</p>
+<p>Referenced by <a class="el" href="build__test_8cc_source.html#l00462">BuildTest::RebuildTarget()</a>, and <a class="el" href="build__test_8cc_source.html#l01523">TEST_F()</a>.</p>
 
 </div>
 </div>
@@ -343,11 +343,11 @@ Friends</h2></td></tr>
 
 <p>Rewrite the known log entries, throwing away old data. </p>
 
-<p>Definition at line <a class="el" href="deps__log_8cc_source.html#l00263">263</a> of file <a class="el" href="deps__log_8cc_source.html">deps_log.cc</a>.</p>
+<p>Definition at line <a class="el" href="deps__log_8cc_source.html#l00303">303</a> of file <a class="el" href="deps__log_8cc_source.html">deps_log.cc</a>.</p>
 
-<p>References <a class="el" href="deps__log_8cc_source.html#l00144">Close()</a>, <a class="el" href="deps__log_8h_source.html#l00090">deps()</a>, <a class="el" href="deps__log_8h_source.html#l00105">deps_</a>, <a class="el" href="metrics_8h_source.html#l00085">METRIC_RECORD</a>, <a class="el" href="deps__log_8h_source.html#l00078">DepsLog::Deps::mtime</a>, <a class="el" href="deps__log_8h_source.html#l00079">DepsLog::Deps::node_count</a>, <a class="el" href="deps__log_8h_source.html#l00080">DepsLog::Deps::nodes</a>, and <a class="el" href="deps__log_8h_source.html#l00103">nodes_</a>.</p>
+<p>References <a class="el" href="deps__log_8cc_source.html#l00158">Close()</a>, <a class="el" href="deps__log_8h_source.html#l00093">deps()</a>, <a class="el" href="deps__log_8h_source.html#l00108">deps_</a>, <a class="el" href="metrics_8h_source.html#l00085">METRIC_RECORD</a>, <a class="el" href="deps__log_8h_source.html#l00081">DepsLog::Deps::mtime</a>, <a class="el" href="deps__log_8h_source.html#l00082">DepsLog::Deps::node_count</a>, <a class="el" href="deps__log_8h_source.html#l00083">DepsLog::Deps::nodes</a>, and <a class="el" href="deps__log_8h_source.html#l00106">nodes_</a>.</p>
 
-<p>Referenced by <a class="el" href="deps__log_8cc_source.html#l00044">OpenForWrite()</a>.</p>
+<p>Referenced by <a class="el" href="deps__log_8cc_source.html#l00043">OpenForWrite()</a>.</p>
 
 </div>
 </div>
@@ -382,9 +382,9 @@ Friends</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="deps__log_8cc_source.html#l00077">77</a> of file <a class="el" href="deps__log_8cc_source.html">deps_log.cc</a>.</p>
+<p>Definition at line <a class="el" href="deps__log_8cc_source.html#l00080">80</a> of file <a class="el" href="deps__log_8cc_source.html">deps_log.cc</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00707">Builder::FinishCommand()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00705">Builder::FinishCommand()</a>.</p>
 
 </div>
 </div>
@@ -425,9 +425,9 @@ Friends</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="deps__log_8cc_source.html#l00083">83</a> of file <a class="el" href="deps__log_8cc_source.html">deps_log.cc</a>.</p>
+<p>Definition at line <a class="el" href="deps__log_8cc_source.html#l00086">86</a> of file <a class="el" href="deps__log_8cc_source.html">deps_log.cc</a>.</p>
 
-<p>References <a class="el" href="deps__log_8h_source.html#l00090">deps()</a>, <a class="el" href="deps__log_8h_source.html#l00100">file_</a>, <a class="el" href="deps__log_8cc_source.html#l00255">GetDeps()</a>, <a class="el" href="graph_8h_source.html#l00083">Node::id()</a>, <a class="el" href="deps__log_8h_source.html#l00078">DepsLog::Deps::mtime</a>, <a class="el" href="deps__log_8h_source.html#l00079">DepsLog::Deps::node_count</a>, <a class="el" href="deps__log_8h_source.html#l00080">DepsLog::Deps::nodes</a>, <a class="el" href="deps__log_8cc_source.html#l00325">RecordId()</a>, and <a class="el" href="deps__log_8cc_source.html#l00314">UpdateDeps()</a>.</p>
+<p>References <a class="el" href="deps__log_8h_source.html#l00093">deps()</a>, <a class="el" href="deps__log_8h_source.html#l00103">file_</a>, <a class="el" href="deps__log_8cc_source.html#l00295">GetDeps()</a>, <a class="el" href="graph_8h_source.html#l00083">Node::id()</a>, <a class="el" href="deps__log_8cc_source.html#l00037">kMaxRecordSize</a>, <a class="el" href="deps__log_8h_source.html#l00081">DepsLog::Deps::mtime</a>, <a class="el" href="deps__log_8h_source.html#l00082">DepsLog::Deps::node_count</a>, <a class="el" href="deps__log_8h_source.html#l00083">DepsLog::Deps::nodes</a>, <a class="el" href="deps__log_8cc_source.html#l00365">RecordId()</a>, and <a class="el" href="deps__log_8cc_source.html#l00354">UpdateDeps()</a>.</p>
 
 </div>
 </div>
@@ -446,11 +446,11 @@ Friends</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="deps__log_8cc_source.html#l00325">325</a> of file <a class="el" href="deps__log_8cc_source.html">deps_log.cc</a>.</p>
+<p>Definition at line <a class="el" href="deps__log_8cc_source.html#l00365">365</a> of file <a class="el" href="deps__log_8cc_source.html">deps_log.cc</a>.</p>
 
-<p>References <a class="el" href="deps__log_8h_source.html#l00100">file_</a>, <a class="el" href="deps__log_8h_source.html#l00103">nodes_</a>, <a class="el" href="graph_8h_source.html#l00073">Node::path()</a>, and <a class="el" href="graph_8h_source.html#l00084">Node::set_id()</a>.</p>
+<p>References <a class="el" href="deps__log_8h_source.html#l00103">file_</a>, <a class="el" href="deps__log_8cc_source.html#l00037">kMaxRecordSize</a>, <a class="el" href="deps__log_8h_source.html#l00106">nodes_</a>, <a class="el" href="graph_8h_source.html#l00073">Node::path()</a>, and <a class="el" href="graph_8h_source.html#l00084">Node::set_id()</a>.</p>
 
-<p>Referenced by <a class="el" href="deps__log_8cc_source.html#l00083">RecordDeps()</a>.</p>
+<p>Referenced by <a class="el" href="deps__log_8cc_source.html#l00086">RecordDeps()</a>.</p>
 
 </div>
 </div>
@@ -479,11 +479,11 @@ Friends</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="deps__log_8cc_source.html#l00314">314</a> of file <a class="el" href="deps__log_8cc_source.html">deps_log.cc</a>.</p>
+<p>Definition at line <a class="el" href="deps__log_8cc_source.html#l00354">354</a> of file <a class="el" href="deps__log_8cc_source.html">deps_log.cc</a>.</p>
 
-<p>References <a class="el" href="deps__log_8h_source.html#l00090">deps()</a>, and <a class="el" href="deps__log_8h_source.html#l00105">deps_</a>.</p>
+<p>References <a class="el" href="deps__log_8h_source.html#l00093">deps()</a>, and <a class="el" href="deps__log_8h_source.html#l00108">deps_</a>.</p>
 
-<p>Referenced by <a class="el" href="deps__log_8cc_source.html#l00150">Load()</a>, and <a class="el" href="deps__log_8cc_source.html#l00083">RecordDeps()</a>.</p>
+<p>Referenced by <a class="el" href="deps__log_8cc_source.html#l00164">Load()</a>, and <a class="el" href="deps__log_8cc_source.html#l00086">RecordDeps()</a>.</p>
 
 </div>
 </div>
@@ -499,7 +499,7 @@ Friends</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="deps__log_8h_source.html#l00107">107</a> of file <a class="el" href="deps__log_8h_source.html">deps_log.h</a>.</p>
+<p>Definition at line <a class="el" href="deps__log_8h_source.html#l00110">110</a> of file <a class="el" href="deps__log_8h_source.html">deps_log.h</a>.</p>
 
 </div>
 </div>
@@ -517,9 +517,9 @@ Friends</h2></td></tr>
 
 <p>Maps id -&gt; deps of that id. </p>
 
-<p>Definition at line <a class="el" href="deps__log_8h_source.html#l00105">105</a> of file <a class="el" href="deps__log_8h_source.html">deps_log.h</a>.</p>
+<p>Definition at line <a class="el" href="deps__log_8h_source.html#l00108">108</a> of file <a class="el" href="deps__log_8h_source.html">deps_log.h</a>.</p>
 
-<p>Referenced by <a class="el" href="deps__log_8cc_source.html#l00255">GetDeps()</a>, <a class="el" href="deps__log_8cc_source.html#l00263">Recompact()</a>, and <a class="el" href="deps__log_8cc_source.html#l00314">UpdateDeps()</a>.</p>
+<p>Referenced by <a class="el" href="deps__log_8cc_source.html#l00295">GetDeps()</a>, <a class="el" href="deps__log_8cc_source.html#l00303">Recompact()</a>, and <a class="el" href="deps__log_8cc_source.html#l00354">UpdateDeps()</a>.</p>
 
 </div>
 </div>
@@ -534,9 +534,9 @@ Friends</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="deps__log_8h_source.html#l00100">100</a> of file <a class="el" href="deps__log_8h_source.html">deps_log.h</a>.</p>
+<p>Definition at line <a class="el" href="deps__log_8h_source.html#l00103">103</a> of file <a class="el" href="deps__log_8h_source.html">deps_log.h</a>.</p>
 
-<p>Referenced by <a class="el" href="deps__log_8cc_source.html#l00144">Close()</a>, <a class="el" href="deps__log_8cc_source.html#l00044">OpenForWrite()</a>, <a class="el" href="deps__log_8cc_source.html#l00083">RecordDeps()</a>, and <a class="el" href="deps__log_8cc_source.html#l00325">RecordId()</a>.</p>
+<p>Referenced by <a class="el" href="deps__log_8cc_source.html#l00158">Close()</a>, <a class="el" href="deps__log_8cc_source.html#l00043">OpenForWrite()</a>, <a class="el" href="deps__log_8cc_source.html#l00086">RecordDeps()</a>, and <a class="el" href="deps__log_8cc_source.html#l00365">RecordId()</a>.</p>
 
 </div>
 </div>
@@ -551,9 +551,9 @@ Friends</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="deps__log_8h_source.html#l00099">99</a> of file <a class="el" href="deps__log_8h_source.html">deps_log.h</a>.</p>
+<p>Definition at line <a class="el" href="deps__log_8h_source.html#l00102">102</a> of file <a class="el" href="deps__log_8h_source.html">deps_log.h</a>.</p>
 
-<p>Referenced by <a class="el" href="deps__log_8cc_source.html#l00150">Load()</a>, and <a class="el" href="deps__log_8cc_source.html#l00044">OpenForWrite()</a>.</p>
+<p>Referenced by <a class="el" href="deps__log_8cc_source.html#l00164">Load()</a>, and <a class="el" href="deps__log_8cc_source.html#l00043">OpenForWrite()</a>.</p>
 
 </div>
 </div>
@@ -570,9 +570,9 @@ Friends</h2></td></tr>
 
 <p>Maps id -&gt; <a class="el" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>. </p>
 
-<p>Definition at line <a class="el" href="deps__log_8h_source.html#l00103">103</a> of file <a class="el" href="deps__log_8h_source.html">deps_log.h</a>.</p>
+<p>Definition at line <a class="el" href="deps__log_8h_source.html#l00106">106</a> of file <a class="el" href="deps__log_8h_source.html">deps_log.h</a>.</p>
 
-<p>Referenced by <a class="el" href="deps__log_8cc_source.html#l00150">Load()</a>, <a class="el" href="deps__log_8cc_source.html#l00263">Recompact()</a>, and <a class="el" href="deps__log_8cc_source.html#l00325">RecordId()</a>.</p>
+<p>Referenced by <a class="el" href="deps__log_8cc_source.html#l00164">Load()</a>, <a class="el" href="deps__log_8cc_source.html#l00303">Recompact()</a>, and <a class="el" href="deps__log_8cc_source.html#l00365">RecordId()</a>.</p>
 
 </div>
 </div>
@@ -584,7 +584,7 @@ Friends</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Aug 8 2013 09:48:12 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Sep 12 2013 09:25:50 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

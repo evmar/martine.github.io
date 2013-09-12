@@ -1,14 +1,15 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$build_8h.html" title="build.h" alt="" coords="261,83,320,112"/>
-<area shape="rect" id="node21" href="$subprocess_8h.html" title="subprocess.h" alt="" coords="509,83,608,112"/>
-<area shape="rect" id="node5" href="$build_8cc.html" title="build.cc" alt="" coords="397,160,464,189"/>
-<area shape="rect" id="node7" href="$build__log_8cc.html" title="build_log.cc" alt="" coords="24,160,114,189"/>
-<area shape="rect" id="node9" href="$build__test_8cc.html" title="build_test.cc" alt="" coords="138,160,234,189"/>
-<area shape="rect" id="node11" href="$clean_8h.html" title="clean.h" alt="" coords="258,160,322,189"/>
-<area shape="rect" id="node15" href="$clean__test_8cc.html" title="clean_test.cc" alt="" coords="310,237,409,267"/>
-<area shape="rect" id="node17" href="$ninja_8cc.html" title="ninja.cc" alt="" coords="40,237,106,267"/>
-<area shape="rect" id="node13" href="$clean_8cc.html" title="clean.cc" alt="" coords="217,237,286,267"/>
-<area shape="rect" id="node24" href="$subprocess-posix_8cc.html" title="subprocess&#45;posix.cc" alt="" coords="488,160,629,189"/>
-<area shape="rect" id="node26" href="$subprocess-win32_8cc.html" title="subprocess&#45;win32.cc" alt="" coords="653,160,797,189"/>
-<area shape="rect" id="node28" href="$subprocess__test_8cc.html" title="subprocess_test.cc" alt="" coords="821,160,957,189"/>
+<area shape="rect" id="node3" href="$build_8h.html" title="build.h" alt="" coords="336,83,394,112"/>
+<area shape="rect" id="node23" href="$subprocess_8h.html" title="subprocess.h" alt="" coords="637,83,736,112"/>
+<area shape="rect" id="node5" href="$build_8cc.html" title="build.cc" alt="" coords="524,160,590,189"/>
+<area shape="rect" id="node7" href="$build__log_8cc.html" title="build_log.cc" alt="" coords="150,160,241,189"/>
+<area shape="rect" id="node9" href="$build__test_8cc.html" title="build_test.cc" alt="" coords="265,160,361,189"/>
+<area shape="rect" id="node11" href="$clean_8h.html" title="clean.h" alt="" coords="385,160,449,189"/>
+<area shape="rect" id="node15" href="$clean__test_8cc.html" title="clean_test.cc" alt="" coords="437,237,536,267"/>
+<area shape="rect" id="node17" href="$ninja_8cc.html" title="ninja.cc" alt="" coords="104,237,170,267"/>
+<area shape="rect" id="node20" href="$graph__test_8cc.html" title="graph_test.cc" alt="" coords="25,160,126,189"/>
+<area shape="rect" id="node13" href="$clean_8cc.html" title="clean.cc" alt="" coords="344,237,413,267"/>
+<area shape="rect" id="node26" href="$subprocess-posix_8cc.html" title="subprocess&#45;posix.cc" alt="" coords="942,160,1084,189"/>
+<area shape="rect" id="node28" href="$subprocess-win32_8cc.html" title="subprocess&#45;win32.cc" alt="" coords="614,160,758,189"/>
+<area shape="rect" id="node30" href="$subprocess__test_8cc.html" title="subprocess_test.cc" alt="" coords="782,160,918,189"/>
 </map>

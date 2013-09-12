@@ -1,19 +1,20 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$build_8h.html" title="build.h" alt="" coords="263,83,321,112"/>
+<area shape="rect" id="node3" href="$build_8h.html" title="build.h" alt="" coords="287,83,345,112"/>
 <area shape="rect" id="node7" href="$build__log_8cc.html" title="build_log.cc" alt="" coords="5,160,96,189"/>
-<area shape="rect" id="node17" href="$ninja_8cc.html" title="ninja.cc" alt="" coords="449,237,516,267"/>
-<area shape="rect" id="node22" href="$build__log__perftest_8cc.html" title="build_log_perftest.cc" alt="" coords="571,83,712,112"/>
-<area shape="rect" id="node24" href="$canon__perftest_8cc.html" title="canon_perftest.cc" alt="" coords="736,83,861,112"/>
-<area shape="rect" id="node26" href="$deps__log_8cc.html" title="deps_log.cc" alt="" coords="885,83,976,112"/>
-<area shape="rect" id="node28" href="$graph_8cc.html" title="graph.cc" alt="" coords="1000,83,1072,112"/>
-<area shape="rect" id="node30" href="$manifest__parser_8cc.html" title="manifest_parser.cc" alt="" coords="1096,83,1229,112"/>
-<area shape="rect" id="node32" href="$metrics_8cc.html" title="metrics.cc" alt="" coords="1253,83,1336,112"/>
-<area shape="rect" id="node35" href="$parser__perftest_8cc.html" title="parser_perftest.cc" alt="" coords="1360,83,1485,112"/>
-<area shape="rect" id="node37" href="$state_8cc.html" title="state.cc" alt="" coords="1509,83,1579,112"/>
-<area shape="rect" id="node39" href="$util_8cc.html" title="util.cc" alt="" coords="1603,83,1659,112"/>
-<area shape="rect" id="node5" href="$build_8cc.html" title="build.cc" alt="" coords="259,160,325,189"/>
-<area shape="rect" id="node9" href="$build__test_8cc.html" title="build_test.cc" alt="" coords="349,160,445,189"/>
+<area shape="rect" id="node17" href="$ninja_8cc.html" title="ninja.cc" alt="" coords="280,237,347,267"/>
+<area shape="rect" id="node24" href="$build__log__perftest_8cc.html" title="build_log_perftest.cc" alt="" coords="696,83,837,112"/>
+<area shape="rect" id="node26" href="$canon__perftest_8cc.html" title="canon_perftest.cc" alt="" coords="861,83,987,112"/>
+<area shape="rect" id="node28" href="$deps__log_8cc.html" title="deps_log.cc" alt="" coords="1011,83,1101,112"/>
+<area shape="rect" id="node30" href="$graph_8cc.html" title="graph.cc" alt="" coords="1125,83,1197,112"/>
+<area shape="rect" id="node32" href="$manifest__parser_8cc.html" title="manifest_parser.cc" alt="" coords="1221,83,1355,112"/>
+<area shape="rect" id="node34" href="$metrics_8cc.html" title="metrics.cc" alt="" coords="1379,83,1461,112"/>
+<area shape="rect" id="node37" href="$parser__perftest_8cc.html" title="parser_perftest.cc" alt="" coords="1485,83,1611,112"/>
+<area shape="rect" id="node39" href="$state_8cc.html" title="state.cc" alt="" coords="1635,83,1704,112"/>
+<area shape="rect" id="node41" href="$util_8cc.html" title="util.cc" alt="" coords="1728,83,1784,112"/>
+<area shape="rect" id="node5" href="$build_8cc.html" title="build.cc" alt="" coords="435,160,501,189"/>
+<area shape="rect" id="node9" href="$build__test_8cc.html" title="build_test.cc" alt="" coords="525,160,621,189"/>
 <area shape="rect" id="node11" href="$clean_8h.html" title="clean.h" alt="" coords="171,160,235,189"/>
-<area shape="rect" id="node15" href="$clean__test_8cc.html" title="clean_test.cc" alt="" coords="84,237,183,267"/>
-<area shape="rect" id="node13" href="$clean_8cc.html" title="clean.cc" alt="" coords="207,237,276,267"/>
+<area shape="rect" id="node15" href="$clean__test_8cc.html" title="clean_test.cc" alt="" coords="64,237,163,267"/>
+<area shape="rect" id="node20" href="$graph__test_8cc.html" title="graph_test.cc" alt="" coords="309,160,411,189"/>
+<area shape="rect" id="node13" href="$clean_8cc.html" title="clean.cc" alt="" coords="187,237,256,267"/>
 </map>

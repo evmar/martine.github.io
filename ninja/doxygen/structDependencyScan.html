@@ -57,6 +57,7 @@
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a>  </div>
   <div class="headertitle">
 <div class="title">DependencyScan Struct Reference</div>  </div>
@@ -77,9 +78,13 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structDepsLog.html">DepsLog</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structDependencyScan.html#a93a181c6506df4f192baf39cbadbed0a">deps_log</a> () const </td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structDependencyScan.html#aa4c172a1d437ec83d27635262be88981">RecomputeDirty</a> (<a class="el" href="structEdge.html">Edge</a> *edge, string *err)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Examine inputs, outputs, and command lines to judge whether an edge needs to be re-run, and update outputs_ready_ and each outputs' |dirty_| state accordingly.  <a href="#aa4c172a1d437ec83d27635262be88981"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structDependencyScan.html#aef4b3d4a850f3233bb4290e9d6a63b6b">RecomputeOutputDirty</a> (<a class="el" href="structEdge.html">Edge</a> *edge, <a class="el" href="structNode.html">Node</a> *most_recent_input, <a class="el" href="timestamp_8h.html#a364f6f32873dd70e259c971fc2e28b73">TimeStamp</a> deps_mtime, const string &amp;command, <a class="el" href="structNode.html">Node</a> *output)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Recompute whether a given single output should be marked dirty.  <a href="#aef4b3d4a850f3233bb4290e9d6a63b6b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structDependencyScan.html#a0b1ec300b10142efc8559a235c4f7555">RecomputeOutputsDirty</a> (<a class="el" href="structEdge.html">Edge</a> *edge, <a class="el" href="structNode.html">Node</a> *most_recent_input)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Recompute whether any output of the edge is dirty.  <a href="#a0b1ec300b10142efc8559a235c4f7555"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structDependencyScan.html#a23ecdbf0f9e1154605c34c67c6406110">set_build_log</a> (<a class="el" href="structBuildLog.html">BuildLog</a> *log)</td></tr>
+<tr><td colspan="2"><h2><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structDependencyScan.html#ad426b831c9123de9c94da728e3dab9ef">RecomputeOutputDirty</a> (<a class="el" href="structEdge.html">Edge</a> *edge, <a class="el" href="structNode.html">Node</a> *most_recent_input, const string &amp;command, <a class="el" href="structNode.html">Node</a> *output)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Recompute whether a given single output should be marked dirty.  <a href="#ad426b831c9123de9c94da728e3dab9ef"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structBuildLog.html">BuildLog</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structDependencyScan.html#a1371f370f69a9f515b593912f6872f5b">build_log_</a></td></tr>
@@ -89,7 +94,7 @@ Private Attributes</h2></td></tr>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="structDependencyScan.html" title="DependencyScan manages the process of scanning the files in a graph and updating the dirty/outputs_re...">DependencyScan</a> manages the process of scanning the files in a graph and updating the dirty/outputs_ready state of all the nodes and edges. </p>
 
-<p>Definition at line <a class="el" href="graph_8h_source.html#l00230">230</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
+<p>Definition at line <a class="el" href="graph_8h_source.html#l00231">231</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
 </div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a5cdb50332662d4bf3f57e33c35b8a2b5"></a><!-- doxytag: member="DependencyScan::DependencyScan" ref="a5cdb50332662d4bf3f57e33c35b8a2b5" args="(State *state, BuildLog *build_log, DepsLog *deps_log, DiskInterface *disk_interface)" -->
 <div class="memitem">
@@ -128,7 +133,7 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="graph_8h_source.html#l00231">231</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
+<p>Definition at line <a class="el" href="graph_8h_source.html#l00232">232</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
 
 </div>
 </div>
@@ -147,9 +152,9 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="graph_8h_source.html#l00249">249</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
+<p>Definition at line <a class="el" href="graph_8h_source.html#l00248">248</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00707">Builder::FinishCommand()</a>, and <a class="el" href="graph_8cc_source.html#l00144">RecomputeOutputDirty()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00705">Builder::FinishCommand()</a>, and <a class="el" href="graph_8cc_source.html#l00145">RecomputeOutputDirty()</a>.</p>
 
 </div>
 </div>
@@ -167,9 +172,9 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="graph_8h_source.html#l00256">256</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
+<p>Definition at line <a class="el" href="graph_8h_source.html#l00255">255</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00707">Builder::FinishCommand()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00705">Builder::FinishCommand()</a>.</p>
 
 </div>
 </div>
@@ -203,18 +208,18 @@ Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="graph_8cc_source.html#l00060">60</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
 
-<p>References <a class="el" href="graph_8h_source.html#l00263">dep_loader_</a>, <a class="el" href="graph_8h_source.html#l00262">disk_interface_</a>, <a class="el" href="graph_8cc_source.html#l00274">Edge::EvaluateCommand()</a>, <a class="el" href="explain_8h_source.html#l00020">EXPLAIN</a>, <a class="el" href="graph_8h_source.html#l00156">Edge::inputs_</a>, <a class="el" href="graph_8h_source.html#l00180">Edge::is_order_only()</a>, <a class="el" href="graph_8cc_source.html#l00314">Edge::is_phony()</a>, <a class="el" href="graph_8cc_source.html#l00335">ImplicitDepLoader::LoadDeps()</a>, <a class="el" href="graph_8h_source.html#l00074">Node::mtime()</a>, <a class="el" href="graph_8h_source.html#l00157">Edge::outputs_</a>, <a class="el" href="graph_8h_source.html#l00159">Edge::outputs_ready_</a>, and <a class="el" href="graph_8cc_source.html#l00144">RecomputeOutputDirty()</a>.</p>
+<p>References <a class="el" href="graph_8h_source.html#l00267">dep_loader_</a>, <a class="el" href="graph_8h_source.html#l00160">Edge::deps_missing_</a>, <a class="el" href="graph_8h_source.html#l00266">disk_interface_</a>, <a class="el" href="debug__flags_8h_source.html#l00020">EXPLAIN</a>, <a class="el" href="graph_8h_source.html#l00156">Edge::inputs_</a>, <a class="el" href="graph_8h_source.html#l00181">Edge::is_order_only()</a>, <a class="el" href="graph_8cc_source.html#l00307">Edge::is_phony()</a>, <a class="el" href="graph_8cc_source.html#l00328">ImplicitDepLoader::LoadDeps()</a>, <a class="el" href="graph_8h_source.html#l00074">Node::mtime()</a>, <a class="el" href="graph_8h_source.html#l00157">Edge::outputs_</a>, <a class="el" href="graph_8h_source.html#l00159">Edge::outputs_ready_</a>, and <a class="el" href="graph_8cc_source.html#l00133">RecomputeOutputsDirty()</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00574">Builder::AddTarget()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00569">Builder::AddTarget()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="aef4b3d4a850f3233bb4290e9d6a63b6b"></a><!-- doxytag: member="DependencyScan::RecomputeOutputDirty" ref="aef4b3d4a850f3233bb4290e9d6a63b6b" args="(Edge *edge, Node *most_recent_input, TimeStamp deps_mtime, const string &amp;command, Node *output)" -->
+<a class="anchor" id="ad426b831c9123de9c94da728e3dab9ef"></a><!-- doxytag: member="DependencyScan::RecomputeOutputDirty" ref="ad426b831c9123de9c94da728e3dab9ef" args="(Edge *edge, Node *most_recent_input, const string &amp;command, Node *output)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="structDependencyScan.html#aef4b3d4a850f3233bb4290e9d6a63b6b">DependencyScan::RecomputeOutputDirty</a> </td>
+          <td class="memname">bool <a class="el" href="structDependencyScan.html#ad426b831c9123de9c94da728e3dab9ef">DependencyScan::RecomputeOutputDirty</a> </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structEdge.html">Edge</a> *&#160;</td>
           <td class="paramname"><em>edge</em>, </td>
@@ -224,12 +229,6 @@ Private Attributes</h2></td></tr>
           <td></td>
           <td class="paramtype"><a class="el" href="structNode.html">Node</a> *&#160;</td>
           <td class="paramname"><em>most_recent_input</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="timestamp_8h.html#a364f6f32873dd70e259c971fc2e28b73">TimeStamp</a>&#160;</td>
-          <td class="paramname"><em>deps_mtime</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -246,7 +245,7 @@ Private Attributes</h2></td></tr>
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td>
+          <td></td><td><code> [private]</code></td>
         </tr>
       </table>
 </div>
@@ -255,11 +254,47 @@ Private Attributes</h2></td></tr>
 <p>Recompute whether a given single output should be marked dirty. </p>
 <p>Returns true if so. </p>
 
-<p>Definition at line <a class="el" href="graph_8cc_source.html#l00144">144</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
+<p>Definition at line <a class="el" href="graph_8cc_source.html#l00145">145</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
 
-<p>References <a class="el" href="graph_8h_source.html#l00249">build_log()</a>, <a class="el" href="build__log_8h_source.html#l00049">BuildLog::LogEntry::command_hash</a>, <a class="el" href="graph_8h_source.html#l00065">Node::exists()</a>, <a class="el" href="explain_8h_source.html#l00020">EXPLAIN</a>, <a class="el" href="graph_8cc_source.html#l00289">Edge::GetBindingBool()</a>, <a class="el" href="build__log_8cc_source.html#l00091">BuildLog::LogEntry::HashCommand()</a>, <a class="el" href="graph_8h_source.html#l00156">Edge::inputs_</a>, <a class="el" href="graph_8cc_source.html#l00314">Edge::is_phony()</a>, <a class="el" href="build__log_8cc_source.html#l00337">BuildLog::LookupByOutput()</a>, <a class="el" href="graph_8h_source.html#l00074">Node::mtime()</a>, <a class="el" href="graph_8h_source.html#l00073">Node::path()</a>, and <a class="el" href="build__log_8h_source.html#l00052">BuildLog::LogEntry::restat_mtime</a>.</p>
+<p>References <a class="el" href="graph_8h_source.html#l00248">build_log()</a>, <a class="el" href="build__log_8h_source.html#l00049">BuildLog::LogEntry::command_hash</a>, <a class="el" href="graph_8h_source.html#l00065">Node::exists()</a>, <a class="el" href="debug__flags_8h_source.html#l00020">EXPLAIN</a>, <a class="el" href="graph_8cc_source.html#l00282">Edge::GetBindingBool()</a>, <a class="el" href="build__log_8cc_source.html#l00091">BuildLog::LogEntry::HashCommand()</a>, <a class="el" href="graph_8h_source.html#l00156">Edge::inputs_</a>, <a class="el" href="graph_8cc_source.html#l00307">Edge::is_phony()</a>, <a class="el" href="build__log_8cc_source.html#l00340">BuildLog::LookupByOutput()</a>, <a class="el" href="graph_8h_source.html#l00074">Node::mtime()</a>, <a class="el" href="graph_8h_source.html#l00073">Node::path()</a>, and <a class="el" href="build__log_8h_source.html#l00052">BuildLog::LogEntry::restat_mtime</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00401">Plan::CleanNode()</a>, and <a class="el" href="graph_8cc_source.html#l00060">RecomputeDirty()</a>.</p>
+<p>Referenced by <a class="el" href="graph_8cc_source.html#l00133">RecomputeOutputsDirty()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0b1ec300b10142efc8559a235c4f7555"></a><!-- doxytag: member="DependencyScan::RecomputeOutputsDirty" ref="a0b1ec300b10142efc8559a235c4f7555" args="(Edge *edge, Node *most_recent_input)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="structDependencyScan.html#a0b1ec300b10142efc8559a235c4f7555">DependencyScan::RecomputeOutputsDirty</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structEdge.html">Edge</a> *&#160;</td>
+          <td class="paramname"><em>edge</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structNode.html">Node</a> *&#160;</td>
+          <td class="paramname"><em>most_recent_input</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Recompute whether any output of the edge is dirty. </p>
+<p>Returns true if so. </p>
+
+<p>Definition at line <a class="el" href="graph_8cc_source.html#l00133">133</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
+
+<p>References <a class="el" href="graph_8h_source.html#l00266">disk_interface_</a>, <a class="el" href="graph_8cc_source.html#l00267">Edge::EvaluateCommand()</a>, <a class="el" href="graph_8h_source.html#l00157">Edge::outputs_</a>, and <a class="el" href="graph_8cc_source.html#l00145">RecomputeOutputDirty()</a>.</p>
+
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00402">Plan::CleanNode()</a>, and <a class="el" href="graph_8cc_source.html#l00060">RecomputeDirty()</a>.</p>
 
 </div>
 </div>
@@ -278,9 +313,9 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="graph_8h_source.html#l00252">252</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
+<p>Definition at line <a class="el" href="graph_8h_source.html#l00251">251</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8h_source.html#l00169">Builder::SetBuildLog()</a>.</p>
+<p>Referenced by <a class="el" href="build_8h_source.html#l00172">Builder::SetBuildLog()</a>.</p>
 
 </div>
 </div>
@@ -296,7 +331,7 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="graph_8h_source.html#l00261">261</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
+<p>Definition at line <a class="el" href="graph_8h_source.html#l00265">265</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
 
 </div>
 </div>
@@ -311,7 +346,7 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="graph_8h_source.html#l00263">263</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
+<p>Definition at line <a class="el" href="graph_8h_source.html#l00267">267</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
 
 <p>Referenced by <a class="el" href="graph_8cc_source.html#l00060">RecomputeDirty()</a>.</p>
 
@@ -328,9 +363,9 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="graph_8h_source.html#l00262">262</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
+<p>Definition at line <a class="el" href="graph_8h_source.html#l00266">266</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
 
-<p>Referenced by <a class="el" href="graph_8cc_source.html#l00060">RecomputeDirty()</a>.</p>
+<p>Referenced by <a class="el" href="graph_8cc_source.html#l00060">RecomputeDirty()</a>, and <a class="el" href="graph_8cc_source.html#l00133">RecomputeOutputsDirty()</a>.</p>
 
 </div>
 </div>
@@ -342,7 +377,7 @@ Private Attributes</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Aug 8 2013 09:48:12 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Sep 12 2013 09:25:50 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

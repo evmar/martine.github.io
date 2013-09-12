@@ -81,9 +81,9 @@ Include dependency graph for deps_log.cc:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="deps__log_8cc.html#a921b019a3680c6975e949208c2b08af8">kCurrentVersion</a> = 1</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="deps__log_8cc.html#a921b019a3680c6975e949208c2b08af8">kCurrentVersion</a> = 3</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="deps__log_8cc.html#af3689d396263e39675199367e0138314">kFileSignature</a> [] = &quot;# ninjadeps\n&quot;</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="deps__log_8cc.html#ad528d4d13536862a82c542bb4f870979">kMaxBufferSize</a> = 1 &lt;&lt; 15</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">const unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="deps__log_8cc.html#a14c5a973c5acd0659069ca9516d247a5">kMaxRecordSize</a> = (1 &lt;&lt; 19) - 1</td></tr>
 </table>
 <hr/><h2>Variable Documentation</h2>
 <a class="anchor" id="a921b019a3680c6975e949208c2b08af8"></a><!-- doxytag: member="deps_log.cc::kCurrentVersion" ref="a921b019a3680c6975e949208c2b08af8" args="" -->
@@ -91,7 +91,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const int <a class="el" href="deps__log_8cc.html#a921b019a3680c6975e949208c2b08af8">kCurrentVersion</a> = 1</td>
+          <td class="memname">const int <a class="el" href="deps__log_8cc.html#a921b019a3680c6975e949208c2b08af8">kCurrentVersion</a> = 3</td>
         </tr>
       </table>
 </div>
@@ -99,7 +99,7 @@ Variables</h2></td></tr>
 
 <p>Definition at line <a class="el" href="deps__log_8cc_source.html#l00033">33</a> of file <a class="el" href="deps__log_8cc_source.html">deps_log.cc</a>.</p>
 
-<p>Referenced by <a class="el" href="build__log_8cc_source.html#l00221">BuildLog::Load()</a>, <a class="el" href="deps__log_8cc_source.html#l00150">DepsLog::Load()</a>, <a class="el" href="build__log_8cc_source.html#l00111">BuildLog::OpenForWrite()</a>, <a class="el" href="deps__log_8cc_source.html#l00044">DepsLog::OpenForWrite()</a>, and <a class="el" href="build__log_8cc_source.html#l00350">BuildLog::Recompact()</a>.</p>
+<p>Referenced by <a class="el" href="build__log_8cc_source.html#l00224">BuildLog::Load()</a>, <a class="el" href="deps__log_8cc_source.html#l00164">DepsLog::Load()</a>, <a class="el" href="build__log_8cc_source.html#l00111">BuildLog::OpenForWrite()</a>, <a class="el" href="deps__log_8cc_source.html#l00043">DepsLog::OpenForWrite()</a>, and <a class="el" href="build__log_8cc_source.html#l00353">BuildLog::Recompact()</a>.</p>
 
 </div>
 </div>
@@ -116,24 +116,24 @@ Variables</h2></td></tr>
 
 <p>Definition at line <a class="el" href="deps__log_8cc_source.html#l00032">32</a> of file <a class="el" href="deps__log_8cc_source.html">deps_log.cc</a>.</p>
 
-<p>Referenced by <a class="el" href="build__log_8cc_source.html#l00221">BuildLog::Load()</a>, <a class="el" href="deps__log_8cc_source.html#l00150">DepsLog::Load()</a>, <a class="el" href="build__log_8cc_source.html#l00111">BuildLog::OpenForWrite()</a>, <a class="el" href="deps__log_8cc_source.html#l00044">DepsLog::OpenForWrite()</a>, and <a class="el" href="build__log_8cc_source.html#l00350">BuildLog::Recompact()</a>.</p>
+<p>Referenced by <a class="el" href="build__log_8cc_source.html#l00224">BuildLog::Load()</a>, <a class="el" href="deps__log_8cc_source.html#l00164">DepsLog::Load()</a>, <a class="el" href="build__log_8cc_source.html#l00111">BuildLog::OpenForWrite()</a>, <a class="el" href="deps__log_8cc_source.html#l00043">DepsLog::OpenForWrite()</a>, and <a class="el" href="build__log_8cc_source.html#l00353">BuildLog::Recompact()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ad528d4d13536862a82c542bb4f870979"></a><!-- doxytag: member="deps_log.cc::kMaxBufferSize" ref="ad528d4d13536862a82c542bb4f870979" args="" -->
+<a class="anchor" id="a14c5a973c5acd0659069ca9516d247a5"></a><!-- doxytag: member="deps_log.cc::kMaxRecordSize" ref="a14c5a973c5acd0659069ca9516d247a5" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const int <a class="el" href="deps__log_8cc.html#ad528d4d13536862a82c542bb4f870979">kMaxBufferSize</a> = 1 &lt;&lt; 15</td>
+          <td class="memname">const unsigned <a class="el" href="deps__log_8cc.html#a14c5a973c5acd0659069ca9516d247a5">kMaxRecordSize</a> = (1 &lt;&lt; 19) - 1</td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="deps__log_8cc_source.html#l00038">38</a> of file <a class="el" href="deps__log_8cc_source.html">deps_log.cc</a>.</p>
+<p>Definition at line <a class="el" href="deps__log_8cc_source.html#l00037">37</a> of file <a class="el" href="deps__log_8cc_source.html">deps_log.cc</a>.</p>
 
-<p>Referenced by <a class="el" href="deps__log_8cc_source.html#l00044">DepsLog::OpenForWrite()</a>.</p>
+<p>Referenced by <a class="el" href="deps__log_8cc_source.html#l00164">DepsLog::Load()</a>, <a class="el" href="deps__log_8cc_source.html#l00043">DepsLog::OpenForWrite()</a>, <a class="el" href="deps__log_8cc_source.html#l00086">DepsLog::RecordDeps()</a>, and <a class="el" href="deps__log_8cc_source.html#l00365">DepsLog::RecordId()</a>.</p>
 
 </div>
 </div>
@@ -141,7 +141,7 @@ Variables</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Aug 8 2013 09:48:12 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Sep 12 2013 09:25:50 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

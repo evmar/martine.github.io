@@ -359,88 +359,68 @@
 <a name="l00300"></a>00300   <span class="keywordflow">return</span> stripped;
 <a name="l00301"></a>00301 }
 <a name="l00302"></a>00302 
-<a name="l00303"></a>00303 <span class="preprocessor">#if defined(linux) || defined(__GLIBC__)</span>
-<a name="l00304"></a>00304 <span class="preprocessor"></span><span class="keywordtype">int</span> <a class="code" href="util_8cc.html#a03a03c74e8b71b7ab09b1af533dc253f">GetProcessorCount</a>() {
-<a name="l00305"></a>00305   <span class="keywordflow">return</span> get_nprocs();
-<a name="l00306"></a>00306 }
-<a name="l00307"></a>00307 <span class="preprocessor">#elif defined(__APPLE__) || defined(__FreeBSD__)</span>
-<a name="l00308"></a>00308 <span class="preprocessor"></span><span class="keywordtype">int</span> <a class="code" href="util_8cc.html#a03a03c74e8b71b7ab09b1af533dc253f">GetProcessorCount</a>() {
-<a name="l00309"></a>00309   <span class="keywordtype">int</span> processors;
-<a name="l00310"></a>00310   <span class="keywordtype">size_t</span> processors_size = <span class="keyword">sizeof</span>(processors);
-<a name="l00311"></a>00311   <span class="keywordtype">int</span> name[] = {CTL_HW, HW_NCPU};
-<a name="l00312"></a>00312   <span class="keywordflow">if</span> (sysctl(name, <span class="keyword">sizeof</span>(name) / <span class="keyword">sizeof</span>(<span class="keywordtype">int</span>),
-<a name="l00313"></a>00313              &amp;processors, &amp;processors_size,
-<a name="l00314"></a>00314              NULL, 0) &lt; 0) {
-<a name="l00315"></a>00315     <span class="keywordflow">return</span> 0;
-<a name="l00316"></a>00316   }
-<a name="l00317"></a>00317   <span class="keywordflow">return</span> processors;
+<a name="l00303"></a><a class="code" href="util_8h.html#a03a03c74e8b71b7ab09b1af533dc253f">00303</a> <span class="keywordtype">int</span> <a class="code" href="util_8cc.html#a03a03c74e8b71b7ab09b1af533dc253f">GetProcessorCount</a>() {
+<a name="l00304"></a>00304 <span class="preprocessor">#ifdef _WIN32</span>
+<a name="l00305"></a>00305 <span class="preprocessor"></span>  SYSTEM_INFO info;
+<a name="l00306"></a>00306   GetSystemInfo(&amp;info);
+<a name="l00307"></a>00307   <span class="keywordflow">return</span> info.dwNumberOfProcessors;
+<a name="l00308"></a>00308 <span class="preprocessor">#else</span>
+<a name="l00309"></a>00309 <span class="preprocessor"></span>  <span class="keywordflow">return</span> sysconf(_SC_NPROCESSORS_ONLN);
+<a name="l00310"></a>00310 <span class="preprocessor">#endif</span>
+<a name="l00311"></a>00311 <span class="preprocessor"></span>}
+<a name="l00312"></a>00312 
+<a name="l00313"></a>00313 <span class="preprocessor">#if defined(_WIN32) || defined(__CYGWIN__)</span>
+<a name="l00314"></a>00314 <span class="preprocessor"></span><span class="keywordtype">double</span> <a class="code" href="util_8cc.html#afb09694f1319f261012f1851bbbb285b">GetLoadAverage</a>() {
+<a name="l00315"></a>00315   <span class="comment">// TODO(nicolas.despres@gmail.com): Find a way to implement it on Windows.</span>
+<a name="l00316"></a>00316   <span class="comment">// Remember to also update Usage() when this is fixed.</span>
+<a name="l00317"></a>00317   <span class="keywordflow">return</span> -0.0f;
 <a name="l00318"></a>00318 }
-<a name="l00319"></a>00319 <span class="preprocessor">#elif defined(_WIN32)</span>
-<a name="l00320"></a>00320 <span class="preprocessor"></span><span class="keywordtype">int</span> <a class="code" href="util_8cc.html#a03a03c74e8b71b7ab09b1af533dc253f">GetProcessorCount</a>() {
-<a name="l00321"></a>00321   SYSTEM_INFO info;
-<a name="l00322"></a>00322   GetSystemInfo(&amp;info);
-<a name="l00323"></a>00323   <span class="keywordflow">return</span> info.dwNumberOfProcessors;
-<a name="l00324"></a>00324 }
-<a name="l00325"></a>00325 <span class="preprocessor">#else</span>
-<a name="l00326"></a>00326 <span class="preprocessor"></span><span class="comment">// This is what get_nprocs() should be doing in the Linux implementation</span>
-<a name="l00327"></a>00327 <span class="comment">// above, but in a more standard way.</span>
-<a name="l00328"></a><a class="code" href="util_8h.html#a03a03c74e8b71b7ab09b1af533dc253f">00328</a> <span class="keywordtype">int</span> <a class="code" href="util_8cc.html#a03a03c74e8b71b7ab09b1af533dc253f">GetProcessorCount</a>() {
-<a name="l00329"></a>00329   <span class="keywordflow">return</span> sysconf(_SC_NPROCESSORS_ONLN);
-<a name="l00330"></a>00330 }
-<a name="l00331"></a>00331 <span class="preprocessor">#endif</span>
-<a name="l00332"></a>00332 <span class="preprocessor"></span>
-<a name="l00333"></a>00333 <span class="preprocessor">#if defined(_WIN32) || defined(__CYGWIN__)</span>
-<a name="l00334"></a>00334 <span class="preprocessor"></span><span class="keywordtype">double</span> <a class="code" href="util_8cc.html#afb09694f1319f261012f1851bbbb285b">GetLoadAverage</a>() {
-<a name="l00335"></a>00335   <span class="comment">// TODO(nicolas.despres@gmail.com): Find a way to implement it on Windows.</span>
-<a name="l00336"></a>00336   <span class="comment">// Remember to also update Usage() when this is fixed.</span>
-<a name="l00337"></a>00337   <span class="keywordflow">return</span> -0.0f;
-<a name="l00338"></a>00338 }
-<a name="l00339"></a>00339 <span class="preprocessor">#else</span>
-<a name="l00340"></a><a class="code" href="util_8h.html#afb09694f1319f261012f1851bbbb285b">00340</a> <span class="preprocessor"></span><span class="keywordtype">double</span> <a class="code" href="util_8cc.html#afb09694f1319f261012f1851bbbb285b">GetLoadAverage</a>() {
-<a name="l00341"></a>00341   <span class="keywordtype">double</span> loadavg[3] = { 0.0f, 0.0f, 0.0f };
-<a name="l00342"></a>00342   <span class="keywordflow">if</span> (getloadavg(loadavg, 3) &lt; 0) {
-<a name="l00343"></a>00343     <span class="comment">// Maybe we should return an error here or the availability of</span>
-<a name="l00344"></a>00344     <span class="comment">// getloadavg(3) should be checked when ninja is configured.</span>
-<a name="l00345"></a>00345     <span class="keywordflow">return</span> -0.0f;
-<a name="l00346"></a>00346   }
-<a name="l00347"></a>00347   <span class="keywordflow">return</span> loadavg[0];
-<a name="l00348"></a>00348 }
-<a name="l00349"></a>00349 <span class="preprocessor">#endif // _WIN32</span>
-<a name="l00350"></a>00350 <span class="preprocessor"></span>
-<a name="l00351"></a><a class="code" href="util_8h.html#ac8e2d9b3b582b06d8c2ecd55cf22d512">00351</a> <span class="keywordtype">string</span> <a class="code" href="util_8cc.html#ac8e2d9b3b582b06d8c2ecd55cf22d512" title="Elide the given string str with &#39;...&#39; in the middle if the length exceeds width.">ElideMiddle</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; str, <span class="keywordtype">size_t</span> width) {
-<a name="l00352"></a>00352   <span class="keyword">const</span> <span class="keywordtype">int</span> kMargin = 3;  <span class="comment">// Space for &quot;...&quot;.</span>
-<a name="l00353"></a>00353   <span class="keywordtype">string</span> result = str;
-<a name="l00354"></a>00354   <span class="keywordflow">if</span> (result.size() + kMargin &gt; width) {
-<a name="l00355"></a>00355     <span class="keywordtype">size_t</span> elide_size = (width - kMargin) / 2;
-<a name="l00356"></a>00356     result = result.substr(0, elide_size)
-<a name="l00357"></a>00357       + <span class="stringliteral">&quot;...&quot;</span>
-<a name="l00358"></a>00358       + result.substr(result.size() - elide_size, elide_size);
-<a name="l00359"></a>00359   }
-<a name="l00360"></a>00360   <span class="keywordflow">return</span> result;
-<a name="l00361"></a>00361 }
-<a name="l00362"></a>00362 
-<a name="l00363"></a><a class="code" href="util_8h.html#a59c00d43a10517c5124b75ef540f270a">00363</a> <span class="keywordtype">bool</span> <a class="code" href="util_8cc.html#a59c00d43a10517c5124b75ef540f270a" title="Truncates a file to the given size.">Truncate</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path, <span class="keywordtype">size_t</span> size, <span class="keywordtype">string</span>* err) {
-<a name="l00364"></a>00364 <span class="preprocessor">#ifdef _WIN32</span>
-<a name="l00365"></a>00365 <span class="preprocessor"></span>  <span class="keywordtype">int</span> fh = _sopen(path.c_str(), _O_RDWR | _O_CREAT, _SH_DENYNO,
-<a name="l00366"></a>00366                   _S_IREAD | _S_IWRITE);
-<a name="l00367"></a>00367   <span class="keywordtype">int</span> success = _chsize(fh, size);
-<a name="l00368"></a>00368   _close(fh);
-<a name="l00369"></a>00369 <span class="preprocessor">#else</span>
-<a name="l00370"></a>00370 <span class="preprocessor"></span>  <span class="keywordtype">int</span> success = truncate(path.c_str(), size);
-<a name="l00371"></a>00371 <span class="preprocessor">#endif</span>
-<a name="l00372"></a>00372 <span class="preprocessor"></span>  <span class="comment">// Both truncate() and _chsize() return 0 on success and set errno and return</span>
-<a name="l00373"></a>00373   <span class="comment">// -1 on failure.</span>
-<a name="l00374"></a>00374   <span class="keywordflow">if</span> (success &lt; 0) {
-<a name="l00375"></a>00375     *err = strerror(errno);
-<a name="l00376"></a>00376     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00377"></a>00377   }
-<a name="l00378"></a>00378   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00379"></a>00379 }
+<a name="l00319"></a>00319 <span class="preprocessor">#else</span>
+<a name="l00320"></a><a class="code" href="util_8h.html#afb09694f1319f261012f1851bbbb285b">00320</a> <span class="preprocessor"></span><span class="keywordtype">double</span> <a class="code" href="util_8cc.html#afb09694f1319f261012f1851bbbb285b">GetLoadAverage</a>() {
+<a name="l00321"></a>00321   <span class="keywordtype">double</span> loadavg[3] = { 0.0f, 0.0f, 0.0f };
+<a name="l00322"></a>00322   <span class="keywordflow">if</span> (getloadavg(loadavg, 3) &lt; 0) {
+<a name="l00323"></a>00323     <span class="comment">// Maybe we should return an error here or the availability of</span>
+<a name="l00324"></a>00324     <span class="comment">// getloadavg(3) should be checked when ninja is configured.</span>
+<a name="l00325"></a>00325     <span class="keywordflow">return</span> -0.0f;
+<a name="l00326"></a>00326   }
+<a name="l00327"></a>00327   <span class="keywordflow">return</span> loadavg[0];
+<a name="l00328"></a>00328 }
+<a name="l00329"></a>00329 <span class="preprocessor">#endif // _WIN32</span>
+<a name="l00330"></a>00330 <span class="preprocessor"></span>
+<a name="l00331"></a><a class="code" href="util_8h.html#ac8e2d9b3b582b06d8c2ecd55cf22d512">00331</a> <span class="keywordtype">string</span> <a class="code" href="util_8cc.html#ac8e2d9b3b582b06d8c2ecd55cf22d512" title="Elide the given string str with &#39;...&#39; in the middle if the length exceeds width.">ElideMiddle</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; str, <span class="keywordtype">size_t</span> width) {
+<a name="l00332"></a>00332   <span class="keyword">const</span> <span class="keywordtype">int</span> kMargin = 3;  <span class="comment">// Space for &quot;...&quot;.</span>
+<a name="l00333"></a>00333   <span class="keywordtype">string</span> result = str;
+<a name="l00334"></a>00334   <span class="keywordflow">if</span> (result.size() + kMargin &gt; width) {
+<a name="l00335"></a>00335     <span class="keywordtype">size_t</span> elide_size = (width - kMargin) / 2;
+<a name="l00336"></a>00336     result = result.substr(0, elide_size)
+<a name="l00337"></a>00337       + <span class="stringliteral">&quot;...&quot;</span>
+<a name="l00338"></a>00338       + result.substr(result.size() - elide_size, elide_size);
+<a name="l00339"></a>00339   }
+<a name="l00340"></a>00340   <span class="keywordflow">return</span> result;
+<a name="l00341"></a>00341 }
+<a name="l00342"></a>00342 
+<a name="l00343"></a><a class="code" href="util_8h.html#a59c00d43a10517c5124b75ef540f270a">00343</a> <span class="keywordtype">bool</span> <a class="code" href="util_8cc.html#a59c00d43a10517c5124b75ef540f270a" title="Truncates a file to the given size.">Truncate</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path, <span class="keywordtype">size_t</span> size, <span class="keywordtype">string</span>* err) {
+<a name="l00344"></a>00344 <span class="preprocessor">#ifdef _WIN32</span>
+<a name="l00345"></a>00345 <span class="preprocessor"></span>  <span class="keywordtype">int</span> fh = _sopen(path.c_str(), _O_RDWR | _O_CREAT, _SH_DENYNO,
+<a name="l00346"></a>00346                   _S_IREAD | _S_IWRITE);
+<a name="l00347"></a>00347   <span class="keywordtype">int</span> success = _chsize(fh, size);
+<a name="l00348"></a>00348   _close(fh);
+<a name="l00349"></a>00349 <span class="preprocessor">#else</span>
+<a name="l00350"></a>00350 <span class="preprocessor"></span>  <span class="keywordtype">int</span> success = truncate(path.c_str(), size);
+<a name="l00351"></a>00351 <span class="preprocessor">#endif</span>
+<a name="l00352"></a>00352 <span class="preprocessor"></span>  <span class="comment">// Both truncate() and _chsize() return 0 on success and set errno and return</span>
+<a name="l00353"></a>00353   <span class="comment">// -1 on failure.</span>
+<a name="l00354"></a>00354   <span class="keywordflow">if</span> (success &lt; 0) {
+<a name="l00355"></a>00355     *err = strerror(errno);
+<a name="l00356"></a>00356     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00357"></a>00357   }
+<a name="l00358"></a>00358   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00359"></a>00359 }
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Aug 8 2013 09:48:12 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Sep 12 2013 09:25:50 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>
