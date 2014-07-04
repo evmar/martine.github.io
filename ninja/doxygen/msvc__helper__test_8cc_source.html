@@ -79,101 +79,117 @@
 <a name="l00020"></a>00020 <span class="preprocessor">#include &quot;<a class="code" href="util_8h.html">util.h</a>&quot;</span>
 <a name="l00021"></a>00021 
 <a name="l00022"></a><a class="code" href="msvc__helper__test_8cc.html#a0b74ecdfaf73f335a3077359b71b6082">00022</a> <a class="code" href="edit__distance__test_8cc.html#acc15124a049279589669c052c0f26149">TEST</a>(CLParserTest, ShowIncludes) {
-<a name="l00023"></a>00023   ASSERT_EQ(<span class="stringliteral">&quot;&quot;</span>, <a class="code" href="structCLParser.html#a7c4f992d80a88581b25bb48c84db4364" title="Parse a line of cl.exe output and extract /showIncludes info.">CLParser::FilterShowIncludes</a>(<span class="stringliteral">&quot;&quot;</span>));
+<a name="l00023"></a>00023   ASSERT_EQ(<span class="stringliteral">&quot;&quot;</span>, <a class="code" href="structCLParser.html#a1367b95724c75f733778e3011dd614f2" title="Parse a line of cl.exe output and extract /showIncludes info.">CLParser::FilterShowIncludes</a>(<span class="stringliteral">&quot;&quot;</span>, <span class="stringliteral">&quot;&quot;</span>));
 <a name="l00024"></a>00024 
-<a name="l00025"></a>00025   ASSERT_EQ(<span class="stringliteral">&quot;&quot;</span>, <a class="code" href="structCLParser.html#a7c4f992d80a88581b25bb48c84db4364" title="Parse a line of cl.exe output and extract /showIncludes info.">CLParser::FilterShowIncludes</a>(<span class="stringliteral">&quot;Sample compiler output&quot;</span>));
+<a name="l00025"></a>00025   ASSERT_EQ(<span class="stringliteral">&quot;&quot;</span>, <a class="code" href="structCLParser.html#a1367b95724c75f733778e3011dd614f2" title="Parse a line of cl.exe output and extract /showIncludes info.">CLParser::FilterShowIncludes</a>(<span class="stringliteral">&quot;Sample compiler output&quot;</span>, <span class="stringliteral">&quot;&quot;</span>));
 <a name="l00026"></a>00026   ASSERT_EQ(<span class="stringliteral">&quot;c:\\Some Files\\foobar.h&quot;</span>,
-<a name="l00027"></a>00027             <a class="code" href="structCLParser.html#a7c4f992d80a88581b25bb48c84db4364" title="Parse a line of cl.exe output and extract /showIncludes info.">CLParser::FilterShowIncludes</a>(<span class="stringliteral">&quot;Note: including file: &quot;</span>
-<a name="l00028"></a>00028                                          <span class="stringliteral">&quot;c:\\Some Files\\foobar.h&quot;</span>));
+<a name="l00027"></a>00027             <a class="code" href="structCLParser.html#a1367b95724c75f733778e3011dd614f2" title="Parse a line of cl.exe output and extract /showIncludes info.">CLParser::FilterShowIncludes</a>(<span class="stringliteral">&quot;Note: including file: &quot;</span>
+<a name="l00028"></a>00028                                          <span class="stringliteral">&quot;c:\\Some Files\\foobar.h&quot;</span>, <span class="stringliteral">&quot;&quot;</span>));
 <a name="l00029"></a>00029   ASSERT_EQ(<span class="stringliteral">&quot;c:\\initspaces.h&quot;</span>,
-<a name="l00030"></a>00030             <a class="code" href="structCLParser.html#a7c4f992d80a88581b25bb48c84db4364" title="Parse a line of cl.exe output and extract /showIncludes info.">CLParser::FilterShowIncludes</a>(<span class="stringliteral">&quot;Note: including file:    &quot;</span>
-<a name="l00031"></a>00031                                          <span class="stringliteral">&quot;c:\\initspaces.h&quot;</span>));
-<a name="l00032"></a>00032 }
-<a name="l00033"></a>00033 
-<a name="l00034"></a><a class="code" href="msvc__helper__test_8cc.html#af2df99191de85e89b6481d698a480770">00034</a> <a class="code" href="edit__distance__test_8cc.html#acc15124a049279589669c052c0f26149">TEST</a>(CLParserTest, FilterInputFilename) {
-<a name="l00035"></a>00035   ASSERT_TRUE(<a class="code" href="structCLParser.html#a9e815fc99c4c0e69149dfa2b02a0e687" title="Parse a line of cl.exe output and return true if it looks like it&#39;s printing an input filename...">CLParser::FilterInputFilename</a>(<span class="stringliteral">&quot;foobar.cc&quot;</span>));
-<a name="l00036"></a>00036   ASSERT_TRUE(<a class="code" href="structCLParser.html#a9e815fc99c4c0e69149dfa2b02a0e687" title="Parse a line of cl.exe output and return true if it looks like it&#39;s printing an input filename...">CLParser::FilterInputFilename</a>(<span class="stringliteral">&quot;foo bar.cc&quot;</span>));
-<a name="l00037"></a>00037   ASSERT_TRUE(<a class="code" href="structCLParser.html#a9e815fc99c4c0e69149dfa2b02a0e687" title="Parse a line of cl.exe output and return true if it looks like it&#39;s printing an input filename...">CLParser::FilterInputFilename</a>(<span class="stringliteral">&quot;baz.c&quot;</span>));
-<a name="l00038"></a>00038   ASSERT_TRUE(<a class="code" href="structCLParser.html#a9e815fc99c4c0e69149dfa2b02a0e687" title="Parse a line of cl.exe output and return true if it looks like it&#39;s printing an input filename...">CLParser::FilterInputFilename</a>(<span class="stringliteral">&quot;FOOBAR.CC&quot;</span>));
-<a name="l00039"></a>00039 
-<a name="l00040"></a>00040   ASSERT_FALSE(<a class="code" href="structCLParser.html#a9e815fc99c4c0e69149dfa2b02a0e687" title="Parse a line of cl.exe output and return true if it looks like it&#39;s printing an input filename...">CLParser::FilterInputFilename</a>(
-<a name="l00041"></a>00041                    <span class="stringliteral">&quot;src\\cl_helper.cc(166) : fatal error C1075: end &quot;</span>
-<a name="l00042"></a>00042                    <span class="stringliteral">&quot;of file found ...&quot;</span>));
-<a name="l00043"></a>00043 }
-<a name="l00044"></a>00044 
-<a name="l00045"></a><a class="code" href="msvc__helper__test_8cc.html#a53f48e512bbe68720fcf055a1f1a541b">00045</a> <a class="code" href="edit__distance__test_8cc.html#acc15124a049279589669c052c0f26149">TEST</a>(CLParserTest, ParseSimple) {
-<a name="l00046"></a>00046   <a class="code" href="structCLParser.html" title="Visual Studio&#39;s cl.exe requires some massaging to work with Ninja; for example, it emits include info...">CLParser</a> parser;
-<a name="l00047"></a>00047   <span class="keywordtype">string</span> output = parser.<a class="code" href="structCLParser.html#a00befbd4fc7b45090b1985e96ea4ba02" title="Parse the full output of cl, returning the output (if any) that should printed.">Parse</a>(
-<a name="l00048"></a>00048       <span class="stringliteral">&quot;foo\r\n&quot;</span>
-<a name="l00049"></a>00049       <span class="stringliteral">&quot;Note: including file:  foo.h\r\n&quot;</span>
-<a name="l00050"></a>00050       <span class="stringliteral">&quot;bar\r\n&quot;</span>);
-<a name="l00051"></a>00051 
-<a name="l00052"></a>00052   ASSERT_EQ(<span class="stringliteral">&quot;foo\nbar\n&quot;</span>, output);
-<a name="l00053"></a>00053   ASSERT_EQ(1u, parser.<a class="code" href="structCLParser.html#a772a95d9eb98502582d85f968c836ea5">includes_</a>.size());
-<a name="l00054"></a>00054   ASSERT_EQ(<span class="stringliteral">&quot;foo.h&quot;</span>, *parser.<a class="code" href="structCLParser.html#a772a95d9eb98502582d85f968c836ea5">includes_</a>.begin());
-<a name="l00055"></a>00055 }
+<a name="l00030"></a>00030             <a class="code" href="structCLParser.html#a1367b95724c75f733778e3011dd614f2" title="Parse a line of cl.exe output and extract /showIncludes info.">CLParser::FilterShowIncludes</a>(<span class="stringliteral">&quot;Note: including file:    &quot;</span>
+<a name="l00031"></a>00031                                          <span class="stringliteral">&quot;c:\\initspaces.h&quot;</span>, <span class="stringliteral">&quot;&quot;</span>));
+<a name="l00032"></a>00032   ASSERT_EQ(<span class="stringliteral">&quot;c:\\initspaces.h&quot;</span>,
+<a name="l00033"></a>00033             <a class="code" href="structCLParser.html#a1367b95724c75f733778e3011dd614f2" title="Parse a line of cl.exe output and extract /showIncludes info.">CLParser::FilterShowIncludes</a>(<span class="stringliteral">&quot;Non-default prefix: inc file:    &quot;</span>
+<a name="l00034"></a>00034                                          <span class="stringliteral">&quot;c:\\initspaces.h&quot;</span>,
+<a name="l00035"></a>00035                     <span class="stringliteral">&quot;Non-default prefix: inc file:&quot;</span>));
+<a name="l00036"></a>00036 }
+<a name="l00037"></a>00037 
+<a name="l00038"></a><a class="code" href="msvc__helper__test_8cc.html#af2df99191de85e89b6481d698a480770">00038</a> <a class="code" href="edit__distance__test_8cc.html#acc15124a049279589669c052c0f26149">TEST</a>(CLParserTest, FilterInputFilename) {
+<a name="l00039"></a>00039   ASSERT_TRUE(<a class="code" href="structCLParser.html#a9e815fc99c4c0e69149dfa2b02a0e687" title="Parse a line of cl.exe output and return true if it looks like it&#39;s printing an input filename...">CLParser::FilterInputFilename</a>(<span class="stringliteral">&quot;foobar.cc&quot;</span>));
+<a name="l00040"></a>00040   ASSERT_TRUE(<a class="code" href="structCLParser.html#a9e815fc99c4c0e69149dfa2b02a0e687" title="Parse a line of cl.exe output and return true if it looks like it&#39;s printing an input filename...">CLParser::FilterInputFilename</a>(<span class="stringliteral">&quot;foo bar.cc&quot;</span>));
+<a name="l00041"></a>00041   ASSERT_TRUE(<a class="code" href="structCLParser.html#a9e815fc99c4c0e69149dfa2b02a0e687" title="Parse a line of cl.exe output and return true if it looks like it&#39;s printing an input filename...">CLParser::FilterInputFilename</a>(<span class="stringliteral">&quot;baz.c&quot;</span>));
+<a name="l00042"></a>00042   ASSERT_TRUE(<a class="code" href="structCLParser.html#a9e815fc99c4c0e69149dfa2b02a0e687" title="Parse a line of cl.exe output and return true if it looks like it&#39;s printing an input filename...">CLParser::FilterInputFilename</a>(<span class="stringliteral">&quot;FOOBAR.CC&quot;</span>));
+<a name="l00043"></a>00043 
+<a name="l00044"></a>00044   ASSERT_FALSE(<a class="code" href="structCLParser.html#a9e815fc99c4c0e69149dfa2b02a0e687" title="Parse a line of cl.exe output and return true if it looks like it&#39;s printing an input filename...">CLParser::FilterInputFilename</a>(
+<a name="l00045"></a>00045                    <span class="stringliteral">&quot;src\\cl_helper.cc(166) : fatal error C1075: end &quot;</span>
+<a name="l00046"></a>00046                    <span class="stringliteral">&quot;of file found ...&quot;</span>));
+<a name="l00047"></a>00047 }
+<a name="l00048"></a>00048 
+<a name="l00049"></a><a class="code" href="msvc__helper__test_8cc.html#a53f48e512bbe68720fcf055a1f1a541b">00049</a> <a class="code" href="edit__distance__test_8cc.html#acc15124a049279589669c052c0f26149">TEST</a>(CLParserTest, ParseSimple) {
+<a name="l00050"></a>00050   <a class="code" href="structCLParser.html" title="Visual Studio&#39;s cl.exe requires some massaging to work with Ninja; for example, it emits include info...">CLParser</a> parser;
+<a name="l00051"></a>00051   <span class="keywordtype">string</span> output = parser.<a class="code" href="structCLParser.html#a4f374d6ed6eeba338560c98e210bdbe0" title="Parse the full output of cl, returning the output (if any) that should printed.">Parse</a>(
+<a name="l00052"></a>00052       <span class="stringliteral">&quot;foo\r\n&quot;</span>
+<a name="l00053"></a>00053       <span class="stringliteral">&quot;Note: inc file prefix:  foo.h\r\n&quot;</span>
+<a name="l00054"></a>00054       <span class="stringliteral">&quot;bar\r\n&quot;</span>,
+<a name="l00055"></a>00055       <span class="stringliteral">&quot;Note: inc file prefix:&quot;</span>);
 <a name="l00056"></a>00056 
-<a name="l00057"></a><a class="code" href="msvc__helper__test_8cc.html#af11c173a02f30ba760c1cc21d68691df">00057</a> <a class="code" href="edit__distance__test_8cc.html#acc15124a049279589669c052c0f26149">TEST</a>(CLParserTest, ParseFilenameFilter) {
-<a name="l00058"></a>00058   <a class="code" href="structCLParser.html" title="Visual Studio&#39;s cl.exe requires some massaging to work with Ninja; for example, it emits include info...">CLParser</a> parser;
-<a name="l00059"></a>00059   <span class="keywordtype">string</span> output = parser.<a class="code" href="structCLParser.html#a00befbd4fc7b45090b1985e96ea4ba02" title="Parse the full output of cl, returning the output (if any) that should printed.">Parse</a>(
-<a name="l00060"></a>00060       <span class="stringliteral">&quot;foo.cc\r\n&quot;</span>
-<a name="l00061"></a>00061       <span class="stringliteral">&quot;cl: warning\r\n&quot;</span>);
-<a name="l00062"></a>00062   ASSERT_EQ(<span class="stringliteral">&quot;cl: warning\n&quot;</span>, output);
-<a name="l00063"></a>00063 }
-<a name="l00064"></a>00064 
-<a name="l00065"></a><a class="code" href="msvc__helper__test_8cc.html#a6ff3d969de00c7d43af39db36e04a71e">00065</a> <a class="code" href="edit__distance__test_8cc.html#acc15124a049279589669c052c0f26149">TEST</a>(CLParserTest, ParseSystemInclude) {
-<a name="l00066"></a>00066   <a class="code" href="structCLParser.html" title="Visual Studio&#39;s cl.exe requires some massaging to work with Ninja; for example, it emits include info...">CLParser</a> parser;
-<a name="l00067"></a>00067   <span class="keywordtype">string</span> output = parser.<a class="code" href="structCLParser.html#a00befbd4fc7b45090b1985e96ea4ba02" title="Parse the full output of cl, returning the output (if any) that should printed.">Parse</a>(
-<a name="l00068"></a>00068       <span class="stringliteral">&quot;Note: including file: c:\\Program Files\\foo.h\r\n&quot;</span>
-<a name="l00069"></a>00069       <span class="stringliteral">&quot;Note: including file: d:\\Microsoft Visual Studio\\bar.h\r\n&quot;</span>
-<a name="l00070"></a>00070       <span class="stringliteral">&quot;Note: including file: path.h\r\n&quot;</span>);
-<a name="l00071"></a>00071   <span class="comment">// We should have dropped the first two includes because they look like</span>
-<a name="l00072"></a>00072   <span class="comment">// system headers.</span>
-<a name="l00073"></a>00073   ASSERT_EQ(<span class="stringliteral">&quot;&quot;</span>, output);
-<a name="l00074"></a>00074   ASSERT_EQ(1u, parser.<a class="code" href="structCLParser.html#a772a95d9eb98502582d85f968c836ea5">includes_</a>.size());
-<a name="l00075"></a>00075   ASSERT_EQ(<span class="stringliteral">&quot;path.h&quot;</span>, *parser.<a class="code" href="structCLParser.html#a772a95d9eb98502582d85f968c836ea5">includes_</a>.begin());
-<a name="l00076"></a>00076 }
-<a name="l00077"></a>00077 
-<a name="l00078"></a><a class="code" href="msvc__helper__test_8cc.html#af71bbe55225ccc262470aaf501f00b90">00078</a> <a class="code" href="edit__distance__test_8cc.html#acc15124a049279589669c052c0f26149">TEST</a>(CLParserTest, DuplicatedHeader) {
-<a name="l00079"></a>00079   <a class="code" href="structCLParser.html" title="Visual Studio&#39;s cl.exe requires some massaging to work with Ninja; for example, it emits include info...">CLParser</a> parser;
-<a name="l00080"></a>00080   <span class="keywordtype">string</span> output = parser.<a class="code" href="structCLParser.html#a00befbd4fc7b45090b1985e96ea4ba02" title="Parse the full output of cl, returning the output (if any) that should printed.">Parse</a>(
-<a name="l00081"></a>00081       <span class="stringliteral">&quot;Note: including file: foo.h\r\n&quot;</span>
-<a name="l00082"></a>00082       <span class="stringliteral">&quot;Note: including file: bar.h\r\n&quot;</span>
-<a name="l00083"></a>00083       <span class="stringliteral">&quot;Note: including file: foo.h\r\n&quot;</span>);
-<a name="l00084"></a>00084   <span class="comment">// We should have dropped one copy of foo.h.</span>
-<a name="l00085"></a>00085   ASSERT_EQ(<span class="stringliteral">&quot;&quot;</span>, output);
-<a name="l00086"></a>00086   ASSERT_EQ(2u, parser.<a class="code" href="structCLParser.html#a772a95d9eb98502582d85f968c836ea5">includes_</a>.size());
-<a name="l00087"></a>00087 }
-<a name="l00088"></a>00088 
-<a name="l00089"></a><a class="code" href="msvc__helper__test_8cc.html#a6d835c0a62120350c2555e6e2fe9dd48">00089</a> <a class="code" href="edit__distance__test_8cc.html#acc15124a049279589669c052c0f26149">TEST</a>(CLParserTest, DuplicatedHeaderPathConverted) {
-<a name="l00090"></a>00090   <a class="code" href="structCLParser.html" title="Visual Studio&#39;s cl.exe requires some massaging to work with Ninja; for example, it emits include info...">CLParser</a> parser;
-<a name="l00091"></a>00091   <span class="keywordtype">string</span> output = parser.<a class="code" href="structCLParser.html#a00befbd4fc7b45090b1985e96ea4ba02" title="Parse the full output of cl, returning the output (if any) that should printed.">Parse</a>(
-<a name="l00092"></a>00092       <span class="stringliteral">&quot;Note: including file: sub/foo.h\r\n&quot;</span>
-<a name="l00093"></a>00093       <span class="stringliteral">&quot;Note: including file: bar.h\r\n&quot;</span>
-<a name="l00094"></a>00094       <span class="stringliteral">&quot;Note: including file: sub\\foo.h\r\n&quot;</span>);
-<a name="l00095"></a>00095   <span class="comment">// We should have dropped one copy of foo.h.</span>
-<a name="l00096"></a>00096   ASSERT_EQ(<span class="stringliteral">&quot;&quot;</span>, output);
-<a name="l00097"></a>00097   ASSERT_EQ(2u, parser.<a class="code" href="structCLParser.html#a772a95d9eb98502582d85f968c836ea5">includes_</a>.size());
-<a name="l00098"></a>00098 }
-<a name="l00099"></a>00099 
-<a name="l00100"></a><a class="code" href="msvc__helper__test_8cc.html#abf52421453f12cceefba2c37de16e9af">00100</a> <a class="code" href="edit__distance__test_8cc.html#acc15124a049279589669c052c0f26149">TEST</a>(CLParserTest, SpacesInFilename) {
-<a name="l00101"></a>00101   ASSERT_EQ(<span class="stringliteral">&quot;sub\\some\\ sdk\\foo.h&quot;</span>,
-<a name="l00102"></a>00102             <a class="code" href="msvc__helper-win32_8cc.html#a300d98ae05003710d74d83f46f8e7592">EscapeForDepfile</a>(<span class="stringliteral">&quot;sub\\some sdk\\foo.h&quot;</span>));
-<a name="l00103"></a>00103 }
-<a name="l00104"></a>00104 
-<a name="l00105"></a><a class="code" href="msvc__helper__test_8cc.html#a26a859ad0b8a55b333b30446a6104011">00105</a> <a class="code" href="edit__distance__test_8cc.html#acc15124a049279589669c052c0f26149">TEST</a>(MSVCHelperTest, EnvBlock) {
-<a name="l00106"></a>00106   <span class="keywordtype">char</span> env_block[] = <span class="stringliteral">&quot;foo=bar\0&quot;</span>;
-<a name="l00107"></a>00107   <a class="code" href="structCLWrapper.html" title="Wraps a synchronous execution of a CL subprocess.">CLWrapper</a> cl;
-<a name="l00108"></a>00108   cl.<a class="code" href="structCLWrapper.html#af33715b81c86f13894321539553908fa" title="Set the environment block (as suitable for CreateProcess) to be used by Run().">SetEnvBlock</a>(env_block);
-<a name="l00109"></a>00109   <span class="keywordtype">string</span> output;
-<a name="l00110"></a>00110   cl.<a class="code" href="structCLWrapper.html#a5e11f246c0f1b9dd491b377a92b56ceb" title="Start a process and gather its raw output.">Run</a>(<span class="stringliteral">&quot;cmd /c \&quot;echo foo is %foo%&quot;</span>, &amp;output);
-<a name="l00111"></a>00111   ASSERT_EQ(<span class="stringliteral">&quot;foo is bar\r\n&quot;</span>, output);
+<a name="l00057"></a>00057   ASSERT_EQ(<span class="stringliteral">&quot;foo\nbar\n&quot;</span>, output);
+<a name="l00058"></a>00058   ASSERT_EQ(1u, parser.<a class="code" href="structCLParser.html#a772a95d9eb98502582d85f968c836ea5">includes_</a>.size());
+<a name="l00059"></a>00059   ASSERT_EQ(<span class="stringliteral">&quot;foo.h&quot;</span>, *parser.<a class="code" href="structCLParser.html#a772a95d9eb98502582d85f968c836ea5">includes_</a>.begin());
+<a name="l00060"></a>00060 }
+<a name="l00061"></a>00061 
+<a name="l00062"></a><a class="code" href="msvc__helper__test_8cc.html#af11c173a02f30ba760c1cc21d68691df">00062</a> <a class="code" href="edit__distance__test_8cc.html#acc15124a049279589669c052c0f26149">TEST</a>(CLParserTest, ParseFilenameFilter) {
+<a name="l00063"></a>00063   <a class="code" href="structCLParser.html" title="Visual Studio&#39;s cl.exe requires some massaging to work with Ninja; for example, it emits include info...">CLParser</a> parser;
+<a name="l00064"></a>00064   <span class="keywordtype">string</span> output = parser.<a class="code" href="structCLParser.html#a4f374d6ed6eeba338560c98e210bdbe0" title="Parse the full output of cl, returning the output (if any) that should printed.">Parse</a>(
+<a name="l00065"></a>00065       <span class="stringliteral">&quot;foo.cc\r\n&quot;</span>
+<a name="l00066"></a>00066       <span class="stringliteral">&quot;cl: warning\r\n&quot;</span>,
+<a name="l00067"></a>00067       <span class="stringliteral">&quot;&quot;</span>);
+<a name="l00068"></a>00068   ASSERT_EQ(<span class="stringliteral">&quot;cl: warning\n&quot;</span>, output);
+<a name="l00069"></a>00069 }
+<a name="l00070"></a>00070 
+<a name="l00071"></a><a class="code" href="msvc__helper__test_8cc.html#a6ff3d969de00c7d43af39db36e04a71e">00071</a> <a class="code" href="edit__distance__test_8cc.html#acc15124a049279589669c052c0f26149">TEST</a>(CLParserTest, ParseSystemInclude) {
+<a name="l00072"></a>00072   <a class="code" href="structCLParser.html" title="Visual Studio&#39;s cl.exe requires some massaging to work with Ninja; for example, it emits include info...">CLParser</a> parser;
+<a name="l00073"></a>00073   <span class="keywordtype">string</span> output = parser.<a class="code" href="structCLParser.html#a4f374d6ed6eeba338560c98e210bdbe0" title="Parse the full output of cl, returning the output (if any) that should printed.">Parse</a>(
+<a name="l00074"></a>00074       <span class="stringliteral">&quot;Note: including file: c:\\Program Files\\foo.h\r\n&quot;</span>
+<a name="l00075"></a>00075       <span class="stringliteral">&quot;Note: including file: d:\\Microsoft Visual Studio\\bar.h\r\n&quot;</span>
+<a name="l00076"></a>00076       <span class="stringliteral">&quot;Note: including file: path.h\r\n&quot;</span>,
+<a name="l00077"></a>00077       <span class="stringliteral">&quot;&quot;</span>);
+<a name="l00078"></a>00078   <span class="comment">// We should have dropped the first two includes because they look like</span>
+<a name="l00079"></a>00079   <span class="comment">// system headers.</span>
+<a name="l00080"></a>00080   ASSERT_EQ(<span class="stringliteral">&quot;&quot;</span>, output);
+<a name="l00081"></a>00081   ASSERT_EQ(1u, parser.<a class="code" href="structCLParser.html#a772a95d9eb98502582d85f968c836ea5">includes_</a>.size());
+<a name="l00082"></a>00082   ASSERT_EQ(<span class="stringliteral">&quot;path.h&quot;</span>, *parser.<a class="code" href="structCLParser.html#a772a95d9eb98502582d85f968c836ea5">includes_</a>.begin());
+<a name="l00083"></a>00083 }
+<a name="l00084"></a>00084 
+<a name="l00085"></a><a class="code" href="msvc__helper__test_8cc.html#af71bbe55225ccc262470aaf501f00b90">00085</a> <a class="code" href="edit__distance__test_8cc.html#acc15124a049279589669c052c0f26149">TEST</a>(CLParserTest, DuplicatedHeader) {
+<a name="l00086"></a>00086   <a class="code" href="structCLParser.html" title="Visual Studio&#39;s cl.exe requires some massaging to work with Ninja; for example, it emits include info...">CLParser</a> parser;
+<a name="l00087"></a>00087   <span class="keywordtype">string</span> output = parser.<a class="code" href="structCLParser.html#a4f374d6ed6eeba338560c98e210bdbe0" title="Parse the full output of cl, returning the output (if any) that should printed.">Parse</a>(
+<a name="l00088"></a>00088       <span class="stringliteral">&quot;Note: including file: foo.h\r\n&quot;</span>
+<a name="l00089"></a>00089       <span class="stringliteral">&quot;Note: including file: bar.h\r\n&quot;</span>
+<a name="l00090"></a>00090       <span class="stringliteral">&quot;Note: including file: foo.h\r\n&quot;</span>,
+<a name="l00091"></a>00091       <span class="stringliteral">&quot;&quot;</span>);
+<a name="l00092"></a>00092   <span class="comment">// We should have dropped one copy of foo.h.</span>
+<a name="l00093"></a>00093   ASSERT_EQ(<span class="stringliteral">&quot;&quot;</span>, output);
+<a name="l00094"></a>00094   ASSERT_EQ(2u, parser.<a class="code" href="structCLParser.html#a772a95d9eb98502582d85f968c836ea5">includes_</a>.size());
+<a name="l00095"></a>00095 }
+<a name="l00096"></a>00096 
+<a name="l00097"></a><a class="code" href="msvc__helper__test_8cc.html#a6d835c0a62120350c2555e6e2fe9dd48">00097</a> <a class="code" href="edit__distance__test_8cc.html#acc15124a049279589669c052c0f26149">TEST</a>(CLParserTest, DuplicatedHeaderPathConverted) {
+<a name="l00098"></a>00098   <a class="code" href="structCLParser.html" title="Visual Studio&#39;s cl.exe requires some massaging to work with Ninja; for example, it emits include info...">CLParser</a> parser;
+<a name="l00099"></a>00099   <span class="keywordtype">string</span> output = parser.<a class="code" href="structCLParser.html#a4f374d6ed6eeba338560c98e210bdbe0" title="Parse the full output of cl, returning the output (if any) that should printed.">Parse</a>(
+<a name="l00100"></a>00100       <span class="stringliteral">&quot;Note: including file: sub/foo.h\r\n&quot;</span>
+<a name="l00101"></a>00101       <span class="stringliteral">&quot;Note: including file: bar.h\r\n&quot;</span>
+<a name="l00102"></a>00102       <span class="stringliteral">&quot;Note: including file: sub\\foo.h\r\n&quot;</span>,
+<a name="l00103"></a>00103       <span class="stringliteral">&quot;&quot;</span>);
+<a name="l00104"></a>00104   <span class="comment">// We should have dropped one copy of foo.h.</span>
+<a name="l00105"></a>00105   ASSERT_EQ(<span class="stringliteral">&quot;&quot;</span>, output);
+<a name="l00106"></a>00106   ASSERT_EQ(2u, parser.<a class="code" href="structCLParser.html#a772a95d9eb98502582d85f968c836ea5">includes_</a>.size());
+<a name="l00107"></a>00107 }
+<a name="l00108"></a>00108 
+<a name="l00109"></a><a class="code" href="msvc__helper__test_8cc.html#abf52421453f12cceefba2c37de16e9af">00109</a> <a class="code" href="edit__distance__test_8cc.html#acc15124a049279589669c052c0f26149">TEST</a>(CLParserTest, SpacesInFilename) {
+<a name="l00110"></a>00110   ASSERT_EQ(<span class="stringliteral">&quot;sub\\some\\ sdk\\foo.h&quot;</span>,
+<a name="l00111"></a>00111             <a class="code" href="msvc__helper-win32_8cc.html#a300d98ae05003710d74d83f46f8e7592">EscapeForDepfile</a>(<span class="stringliteral">&quot;sub\\some sdk\\foo.h&quot;</span>));
 <a name="l00112"></a>00112 }
+<a name="l00113"></a>00113 
+<a name="l00114"></a><a class="code" href="msvc__helper__test_8cc.html#a26a859ad0b8a55b333b30446a6104011">00114</a> <a class="code" href="edit__distance__test_8cc.html#acc15124a049279589669c052c0f26149">TEST</a>(MSVCHelperTest, EnvBlock) {
+<a name="l00115"></a>00115   <span class="keywordtype">char</span> env_block[] = <span class="stringliteral">&quot;foo=bar\0&quot;</span>;
+<a name="l00116"></a>00116   <a class="code" href="structCLWrapper.html" title="Wraps a synchronous execution of a CL subprocess.">CLWrapper</a> cl;
+<a name="l00117"></a>00117   cl.<a class="code" href="structCLWrapper.html#af33715b81c86f13894321539553908fa" title="Set the environment block (as suitable for CreateProcess) to be used by Run().">SetEnvBlock</a>(env_block);
+<a name="l00118"></a>00118   <span class="keywordtype">string</span> output;
+<a name="l00119"></a>00119   cl.<a class="code" href="structCLWrapper.html#a5e11f246c0f1b9dd491b377a92b56ceb" title="Start a process and gather its raw output.">Run</a>(<span class="stringliteral">&quot;cmd /c \&quot;echo foo is %foo%&quot;</span>, &amp;output);
+<a name="l00120"></a>00120   ASSERT_EQ(<span class="stringliteral">&quot;foo is bar\r\n&quot;</span>, output);
+<a name="l00121"></a>00121 }
+<a name="l00122"></a>00122 
+<a name="l00123"></a><a class="code" href="msvc__helper__test_8cc.html#abbbfd10f3c61893955d399a3c4359f6b">00123</a> <a class="code" href="edit__distance__test_8cc.html#acc15124a049279589669c052c0f26149">TEST</a>(MSVCHelperTest, NoReadOfStderr) {
+<a name="l00124"></a>00124   <a class="code" href="structCLWrapper.html" title="Wraps a synchronous execution of a CL subprocess.">CLWrapper</a> cl;
+<a name="l00125"></a>00125   <span class="keywordtype">string</span> output;
+<a name="l00126"></a>00126   cl.<a class="code" href="structCLWrapper.html#a5e11f246c0f1b9dd491b377a92b56ceb" title="Start a process and gather its raw output.">Run</a>(<span class="stringliteral">&quot;cmd /c \&quot;echo to stdout&amp;&amp; echo to stderr 1&gt;&amp;2&quot;</span>, &amp;output);
+<a name="l00127"></a>00127   ASSERT_EQ(<span class="stringliteral">&quot;to stdout\r\n&quot;</span>, output);
+<a name="l00128"></a>00128 }
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 12 2013 09:25:49 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 4 2014 09:13:00 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

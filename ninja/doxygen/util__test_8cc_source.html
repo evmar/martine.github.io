@@ -195,38 +195,69 @@
 <a name="l00136"></a>00136   EXPECT_EQ(<span class="stringliteral">&quot;file ./file bar/.&quot;</span>, <span class="keywordtype">string</span>(path));
 <a name="l00137"></a>00137 }
 <a name="l00138"></a>00138 
-<a name="l00139"></a>00139 <a class="code" href="edit__distance__test_8cc.html#acc15124a049279589669c052c0f26149">TEST</a>(<a class="code" href="util_8cc.html#ab47e6d9b7e9e9f6a9d4560f148cd3643" title="Removes all Ansi escape codes (http://www.termsys.demon.co.uk/vtansi.htm).">StripAnsiEscapeCodes</a>, EscapeAtEnd) {
-<a name="l00140"></a>00140   <span class="keywordtype">string</span> stripped = <a class="code" href="util_8cc.html#ab47e6d9b7e9e9f6a9d4560f148cd3643" title="Removes all Ansi escape codes (http://www.termsys.demon.co.uk/vtansi.htm).">StripAnsiEscapeCodes</a>(<span class="stringliteral">&quot;foo\33&quot;</span>);
-<a name="l00141"></a>00141   EXPECT_EQ(<span class="stringliteral">&quot;foo&quot;</span>, stripped);
-<a name="l00142"></a>00142 
-<a name="l00143"></a>00143   stripped = <a class="code" href="util_8cc.html#ab47e6d9b7e9e9f6a9d4560f148cd3643" title="Removes all Ansi escape codes (http://www.termsys.demon.co.uk/vtansi.htm).">StripAnsiEscapeCodes</a>(<span class="stringliteral">&quot;foo\33[&quot;</span>);
-<a name="l00144"></a>00144   EXPECT_EQ(<span class="stringliteral">&quot;foo&quot;</span>, stripped);
-<a name="l00145"></a>00145 }
-<a name="l00146"></a>00146 
-<a name="l00147"></a>00147 <a class="code" href="edit__distance__test_8cc.html#acc15124a049279589669c052c0f26149">TEST</a>(<a class="code" href="util_8cc.html#ab47e6d9b7e9e9f6a9d4560f148cd3643" title="Removes all Ansi escape codes (http://www.termsys.demon.co.uk/vtansi.htm).">StripAnsiEscapeCodes</a>, StripColors) {
-<a name="l00148"></a>00148   <span class="comment">// An actual clang warning.</span>
-<a name="l00149"></a>00149   <span class="keywordtype">string</span> input = <span class="stringliteral">&quot;\33[1maffixmgr.cxx:286:15: \33[0m\33[0;1;35mwarning: &quot;</span>
-<a name="l00150"></a>00150                  <span class="stringliteral">&quot;\33[0m\33[1musing the result... [-Wparentheses]\33[0m&quot;</span>;
-<a name="l00151"></a>00151   <span class="keywordtype">string</span> stripped = <a class="code" href="util_8cc.html#ab47e6d9b7e9e9f6a9d4560f148cd3643" title="Removes all Ansi escape codes (http://www.termsys.demon.co.uk/vtansi.htm).">StripAnsiEscapeCodes</a>(input);
-<a name="l00152"></a>00152   EXPECT_EQ(<span class="stringliteral">&quot;affixmgr.cxx:286:15: warning: using the result... [-Wparentheses]&quot;</span>,
-<a name="l00153"></a>00153             stripped);
-<a name="l00154"></a>00154 }
-<a name="l00155"></a>00155 
-<a name="l00156"></a>00156 <a class="code" href="edit__distance__test_8cc.html#acc15124a049279589669c052c0f26149">TEST</a>(<a class="code" href="util_8cc.html#ac8e2d9b3b582b06d8c2ecd55cf22d512" title="Elide the given string str with &#39;...&#39; in the middle if the length exceeds width.">ElideMiddle</a>, NothingToElide) {
-<a name="l00157"></a>00157   <span class="keywordtype">string</span> input = <span class="stringliteral">&quot;Nothing to elide in this short string.&quot;</span>;
-<a name="l00158"></a>00158   EXPECT_EQ(input, <a class="code" href="util_8cc.html#ac8e2d9b3b582b06d8c2ecd55cf22d512" title="Elide the given string str with &#39;...&#39; in the middle if the length exceeds width.">ElideMiddle</a>(input, 80));
-<a name="l00159"></a>00159 }
-<a name="l00160"></a>00160 
-<a name="l00161"></a>00161 <a class="code" href="edit__distance__test_8cc.html#acc15124a049279589669c052c0f26149">TEST</a>(<a class="code" href="util_8cc.html#ac8e2d9b3b582b06d8c2ecd55cf22d512" title="Elide the given string str with &#39;...&#39; in the middle if the length exceeds width.">ElideMiddle</a>, ElideInTheMiddle) {
-<a name="l00162"></a>00162   <span class="keywordtype">string</span> input = <span class="stringliteral">&quot;01234567890123456789&quot;</span>;
-<a name="l00163"></a>00163   <span class="keywordtype">string</span> elided = <a class="code" href="util_8cc.html#ac8e2d9b3b582b06d8c2ecd55cf22d512" title="Elide the given string str with &#39;...&#39; in the middle if the length exceeds width.">ElideMiddle</a>(input, 10);
-<a name="l00164"></a>00164   EXPECT_EQ(<span class="stringliteral">&quot;012...789&quot;</span>, elided);
-<a name="l00165"></a>00165 }
+<a name="l00139"></a>00139 <a class="code" href="edit__distance__test_8cc.html#acc15124a049279589669c052c0f26149">TEST</a>(PathEscaping, TortureTest) {
+<a name="l00140"></a>00140   <span class="keywordtype">string</span> result;
+<a name="l00141"></a>00141   
+<a name="l00142"></a>00142   <a class="code" href="util_8cc.html#a147fcbfb98ba43b1cb5a4739bf0c7702">GetWin32EscapedString</a>(<span class="stringliteral">&quot;foo bar\\\&quot;&#39;$@d!st!c&#39;\\path&#39;\\&quot;</span>, &amp;result);
+<a name="l00143"></a>00143   EXPECT_EQ(<span class="stringliteral">&quot;\&quot;foo bar\\\\\\\&quot;&#39;$@d!st!c&#39;\\path&#39;\\\\\&quot;&quot;</span>, result);
+<a name="l00144"></a>00144   result.clear();  
+<a name="l00145"></a>00145 
+<a name="l00146"></a>00146   <a class="code" href="util_8cc.html#a5d89d1621913641fab23969f8665d3d5" title="Appends |input| to |*result|, escaping according to the whims of either Bash, or Win32&#39;s CommandLineT...">GetShellEscapedString</a>(<span class="stringliteral">&quot;foo bar\&quot;/&#39;$@d!st!c&#39;/path&#39;&quot;</span>, &amp;result);
+<a name="l00147"></a>00147   EXPECT_EQ(<span class="stringliteral">&quot;&#39;foo bar\&quot;/&#39;\\&#39;&#39;$@d!st!c&#39;\\&#39;&#39;/path&#39;\\&#39;&#39;&#39;&quot;</span>, result);
+<a name="l00148"></a>00148 }
+<a name="l00149"></a>00149 
+<a name="l00150"></a>00150 <a class="code" href="edit__distance__test_8cc.html#acc15124a049279589669c052c0f26149">TEST</a>(PathEscaping, SensiblePathsAreNotNeedlesslyEscaped) {
+<a name="l00151"></a>00151   <span class="keyword">const</span> <span class="keywordtype">char</span>* path = <span class="stringliteral">&quot;some/sensible/path/without/crazy/characters.c++&quot;</span>;
+<a name="l00152"></a>00152   <span class="keywordtype">string</span> result;
+<a name="l00153"></a>00153 
+<a name="l00154"></a>00154   <a class="code" href="util_8cc.html#a147fcbfb98ba43b1cb5a4739bf0c7702">GetWin32EscapedString</a>(path, &amp;result);
+<a name="l00155"></a>00155   EXPECT_EQ(path, result);
+<a name="l00156"></a>00156   result.clear();
+<a name="l00157"></a>00157 
+<a name="l00158"></a>00158   <a class="code" href="util_8cc.html#a5d89d1621913641fab23969f8665d3d5" title="Appends |input| to |*result|, escaping according to the whims of either Bash, or Win32&#39;s CommandLineT...">GetShellEscapedString</a>(path, &amp;result);
+<a name="l00159"></a>00159   EXPECT_EQ(path, result);
+<a name="l00160"></a>00160 }
+<a name="l00161"></a>00161 
+<a name="l00162"></a>00162 <a class="code" href="edit__distance__test_8cc.html#acc15124a049279589669c052c0f26149">TEST</a>(PathEscaping, SensibleWin32PathsAreNotNeedlesslyEscaped) {
+<a name="l00163"></a>00163   <span class="keyword">const</span> <span class="keywordtype">char</span>* path = <span class="stringliteral">&quot;some\\sensible\\path\\without\\crazy\\characters.c++&quot;</span>;
+<a name="l00164"></a>00164   <span class="keywordtype">string</span> result;
+<a name="l00165"></a>00165 
+<a name="l00166"></a>00166   <a class="code" href="util_8cc.html#a147fcbfb98ba43b1cb5a4739bf0c7702">GetWin32EscapedString</a>(path, &amp;result);
+<a name="l00167"></a>00167   EXPECT_EQ(path, result);
+<a name="l00168"></a>00168 }
+<a name="l00169"></a>00169 
+<a name="l00170"></a>00170 <a class="code" href="edit__distance__test_8cc.html#acc15124a049279589669c052c0f26149">TEST</a>(<a class="code" href="util_8cc.html#ab47e6d9b7e9e9f6a9d4560f148cd3643" title="Removes all Ansi escape codes (http://www.termsys.demon.co.uk/vtansi.htm).">StripAnsiEscapeCodes</a>, EscapeAtEnd) {
+<a name="l00171"></a>00171   <span class="keywordtype">string</span> stripped = <a class="code" href="util_8cc.html#ab47e6d9b7e9e9f6a9d4560f148cd3643" title="Removes all Ansi escape codes (http://www.termsys.demon.co.uk/vtansi.htm).">StripAnsiEscapeCodes</a>(<span class="stringliteral">&quot;foo\33&quot;</span>);
+<a name="l00172"></a>00172   EXPECT_EQ(<span class="stringliteral">&quot;foo&quot;</span>, stripped);
+<a name="l00173"></a>00173 
+<a name="l00174"></a>00174   stripped = <a class="code" href="util_8cc.html#ab47e6d9b7e9e9f6a9d4560f148cd3643" title="Removes all Ansi escape codes (http://www.termsys.demon.co.uk/vtansi.htm).">StripAnsiEscapeCodes</a>(<span class="stringliteral">&quot;foo\33[&quot;</span>);
+<a name="l00175"></a>00175   EXPECT_EQ(<span class="stringliteral">&quot;foo&quot;</span>, stripped);
+<a name="l00176"></a>00176 }
+<a name="l00177"></a>00177 
+<a name="l00178"></a>00178 <a class="code" href="edit__distance__test_8cc.html#acc15124a049279589669c052c0f26149">TEST</a>(<a class="code" href="util_8cc.html#ab47e6d9b7e9e9f6a9d4560f148cd3643" title="Removes all Ansi escape codes (http://www.termsys.demon.co.uk/vtansi.htm).">StripAnsiEscapeCodes</a>, StripColors) {
+<a name="l00179"></a>00179   <span class="comment">// An actual clang warning.</span>
+<a name="l00180"></a>00180   <span class="keywordtype">string</span> input = <span class="stringliteral">&quot;\33[1maffixmgr.cxx:286:15: \33[0m\33[0;1;35mwarning: &quot;</span>
+<a name="l00181"></a>00181                  <span class="stringliteral">&quot;\33[0m\33[1musing the result... [-Wparentheses]\33[0m&quot;</span>;
+<a name="l00182"></a>00182   <span class="keywordtype">string</span> stripped = <a class="code" href="util_8cc.html#ab47e6d9b7e9e9f6a9d4560f148cd3643" title="Removes all Ansi escape codes (http://www.termsys.demon.co.uk/vtansi.htm).">StripAnsiEscapeCodes</a>(input);
+<a name="l00183"></a>00183   EXPECT_EQ(<span class="stringliteral">&quot;affixmgr.cxx:286:15: warning: using the result... [-Wparentheses]&quot;</span>,
+<a name="l00184"></a>00184             stripped);
+<a name="l00185"></a>00185 }
+<a name="l00186"></a>00186 
+<a name="l00187"></a>00187 <a class="code" href="edit__distance__test_8cc.html#acc15124a049279589669c052c0f26149">TEST</a>(<a class="code" href="util_8cc.html#ac8e2d9b3b582b06d8c2ecd55cf22d512" title="Elide the given string str with &#39;...&#39; in the middle if the length exceeds width.">ElideMiddle</a>, NothingToElide) {
+<a name="l00188"></a>00188   <span class="keywordtype">string</span> input = <span class="stringliteral">&quot;Nothing to elide in this short string.&quot;</span>;
+<a name="l00189"></a>00189   EXPECT_EQ(input, <a class="code" href="util_8cc.html#ac8e2d9b3b582b06d8c2ecd55cf22d512" title="Elide the given string str with &#39;...&#39; in the middle if the length exceeds width.">ElideMiddle</a>(input, 80));
+<a name="l00190"></a>00190 }
+<a name="l00191"></a>00191 
+<a name="l00192"></a>00192 <a class="code" href="edit__distance__test_8cc.html#acc15124a049279589669c052c0f26149">TEST</a>(<a class="code" href="util_8cc.html#ac8e2d9b3b582b06d8c2ecd55cf22d512" title="Elide the given string str with &#39;...&#39; in the middle if the length exceeds width.">ElideMiddle</a>, ElideInTheMiddle) {
+<a name="l00193"></a>00193   <span class="keywordtype">string</span> input = <span class="stringliteral">&quot;01234567890123456789&quot;</span>;
+<a name="l00194"></a>00194   <span class="keywordtype">string</span> elided = <a class="code" href="util_8cc.html#ac8e2d9b3b582b06d8c2ecd55cf22d512" title="Elide the given string str with &#39;...&#39; in the middle if the length exceeds width.">ElideMiddle</a>(input, 10);
+<a name="l00195"></a>00195   EXPECT_EQ(<span class="stringliteral">&quot;012...789&quot;</span>, elided);
+<a name="l00196"></a>00196 }
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 12 2013 09:25:50 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 4 2014 09:13:00 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

@@ -198,118 +198,123 @@
 <a name="l00139"></a>00139   }
 <a name="l00140"></a>00140 }
 <a name="l00141"></a>00141 
-<a name="l00142"></a><a class="code" href="graph__test_8cc.html#a3ce7b34bbff6b1cfcca4d07443ccb0f2">00142</a> <a class="code" href="build__test_8cc.html#aa2d4879a1416ae4b4db00986d0b091eb">TEST_F</a>(<a class="code" href="structGraphTest.html">GraphTest</a>, VarInOutQuoteSpaces) {
+<a name="l00142"></a><a class="code" href="graph__test_8cc.html#a1e70689714609ae5d42e4d6c9a9b4cec">00142</a> <a class="code" href="build__test_8cc.html#aa2d4879a1416ae4b4db00986d0b091eb">TEST_F</a>(<a class="code" href="structGraphTest.html">GraphTest</a>, VarInOutPathEscaping) {
 <a name="l00143"></a>00143   ASSERT_NO_FATAL_FAILURE(<a class="code" href="test_8cc.html#afb20bae83c4de264129c46c005ad3907">AssertParse</a>(&amp;state_,
-<a name="l00144"></a>00144 <span class="stringliteral">&quot;build a$ b: cat nospace with$ space nospace2\n&quot;</span>));
+<a name="l00144"></a>00144 <span class="stringliteral">&quot;build a$ b: cat no&#39;space with$ space$$ no\&quot;space2\n&quot;</span>));
 <a name="l00145"></a>00145 
 <a name="l00146"></a>00146   <a class="code" href="structEdge.html" title="An edge in the dependency graph; links between Nodes using Rules.">Edge</a>* edge = GetNode(<span class="stringliteral">&quot;a b&quot;</span>)-&gt;in_edge();
-<a name="l00147"></a>00147   EXPECT_EQ(<span class="stringliteral">&quot;cat nospace \&quot;with space\&quot; nospace2 &gt; \&quot;a b\&quot;&quot;</span>,
-<a name="l00148"></a>00148       edge-&gt;<a class="code" href="structEdge.html#ac4086e06c9982fbebdb9b1a5d52af3cd" title="Expand all variables in a command and return it as a string.">EvaluateCommand</a>());
-<a name="l00149"></a>00149 }
-<a name="l00150"></a>00150 
-<a name="l00151"></a>00151 <span class="comment">// Regression test for https://github.com/martine/ninja/issues/380</span>
-<a name="l00152"></a><a class="code" href="graph__test_8cc.html#abbd930b6b28fda6478c445ca336328fd">00152</a> <a class="code" href="build__test_8cc.html#aa2d4879a1416ae4b4db00986d0b091eb">TEST_F</a>(<a class="code" href="structGraphTest.html">GraphTest</a>, DepfileWithCanonicalizablePath) {
-<a name="l00153"></a>00153   ASSERT_NO_FATAL_FAILURE(<a class="code" href="test_8cc.html#afb20bae83c4de264129c46c005ad3907">AssertParse</a>(&amp;state_,
-<a name="l00154"></a>00154 <span class="stringliteral">&quot;rule catdep\n&quot;</span>
-<a name="l00155"></a>00155 <span class="stringliteral">&quot;  depfile = $out.d\n&quot;</span>
-<a name="l00156"></a>00156 <span class="stringliteral">&quot;  command = cat $in &gt; $out\n&quot;</span>
-<a name="l00157"></a>00157 <span class="stringliteral">&quot;build ./out.o: catdep ./foo.cc\n&quot;</span>));
-<a name="l00158"></a>00158   fs_.Create(<span class="stringliteral">&quot;foo.cc&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);
-<a name="l00159"></a>00159   fs_.Create(<span class="stringliteral">&quot;out.o.d&quot;</span>, <span class="stringliteral">&quot;out.o: bar/../foo.cc\n&quot;</span>);
-<a name="l00160"></a>00160   fs_.Create(<span class="stringliteral">&quot;out.o&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);
-<a name="l00161"></a>00161 
-<a name="l00162"></a>00162   <a class="code" href="structEdge.html" title="An edge in the dependency graph; links between Nodes using Rules.">Edge</a>* edge = GetNode(<span class="stringliteral">&quot;out.o&quot;</span>)-&gt;in_edge();
-<a name="l00163"></a>00163   <span class="keywordtype">string</span> err;
-<a name="l00164"></a>00164   EXPECT_TRUE(scan_.RecomputeDirty(edge, &amp;err));
-<a name="l00165"></a>00165   ASSERT_EQ(<span class="stringliteral">&quot;&quot;</span>, err);
+<a name="l00147"></a>00147 <span class="preprocessor">#if _WIN32</span>
+<a name="l00148"></a>00148 <span class="preprocessor"></span>  EXPECT_EQ(<span class="stringliteral">&quot;cat no&#39;space \&quot;with space$\&quot; \&quot;no\\\&quot;space2\&quot; &gt; \&quot;a b\&quot;&quot;</span>,
+<a name="l00149"></a>00149       edge-&gt;<a class="code" href="structEdge.html#ac4086e06c9982fbebdb9b1a5d52af3cd" title="Expand all variables in a command and return it as a string.">EvaluateCommand</a>());
+<a name="l00150"></a>00150 <span class="preprocessor">#else</span>
+<a name="l00151"></a>00151 <span class="preprocessor"></span>  EXPECT_EQ(<span class="stringliteral">&quot;cat &#39;no&#39;\\&#39;&#39;space&#39; &#39;with space$&#39; &#39;no\&quot;space2&#39; &gt; &#39;a b&#39;&quot;</span>,
+<a name="l00152"></a>00152       edge-&gt;<a class="code" href="structEdge.html#ac4086e06c9982fbebdb9b1a5d52af3cd" title="Expand all variables in a command and return it as a string.">EvaluateCommand</a>());
+<a name="l00153"></a>00153 <span class="preprocessor">#endif</span>
+<a name="l00154"></a>00154 <span class="preprocessor"></span>}
+<a name="l00155"></a>00155 
+<a name="l00156"></a>00156 <span class="comment">// Regression test for https://github.com/martine/ninja/issues/380</span>
+<a name="l00157"></a><a class="code" href="graph__test_8cc.html#abbd930b6b28fda6478c445ca336328fd">00157</a> <a class="code" href="build__test_8cc.html#aa2d4879a1416ae4b4db00986d0b091eb">TEST_F</a>(<a class="code" href="structGraphTest.html">GraphTest</a>, DepfileWithCanonicalizablePath) {
+<a name="l00158"></a>00158   ASSERT_NO_FATAL_FAILURE(<a class="code" href="test_8cc.html#afb20bae83c4de264129c46c005ad3907">AssertParse</a>(&amp;state_,
+<a name="l00159"></a>00159 <span class="stringliteral">&quot;rule catdep\n&quot;</span>
+<a name="l00160"></a>00160 <span class="stringliteral">&quot;  depfile = $out.d\n&quot;</span>
+<a name="l00161"></a>00161 <span class="stringliteral">&quot;  command = cat $in &gt; $out\n&quot;</span>
+<a name="l00162"></a>00162 <span class="stringliteral">&quot;build ./out.o: catdep ./foo.cc\n&quot;</span>));
+<a name="l00163"></a>00163   fs_.Create(<span class="stringliteral">&quot;foo.cc&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);
+<a name="l00164"></a>00164   fs_.Create(<span class="stringliteral">&quot;out.o.d&quot;</span>, <span class="stringliteral">&quot;out.o: bar/../foo.cc\n&quot;</span>);
+<a name="l00165"></a>00165   fs_.Create(<span class="stringliteral">&quot;out.o&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);
 <a name="l00166"></a>00166 
-<a name="l00167"></a>00167   EXPECT_FALSE(GetNode(<span class="stringliteral">&quot;out.o&quot;</span>)-&gt;dirty());
-<a name="l00168"></a>00168 }
-<a name="l00169"></a>00169 
-<a name="l00170"></a>00170 <span class="comment">// Regression test for https://github.com/martine/ninja/issues/404</span>
-<a name="l00171"></a><a class="code" href="graph__test_8cc.html#accd75ce502e865f2e896cee05b59a1a7">00171</a> <a class="code" href="build__test_8cc.html#aa2d4879a1416ae4b4db00986d0b091eb">TEST_F</a>(<a class="code" href="structGraphTest.html">GraphTest</a>, DepfileRemoved) {
-<a name="l00172"></a>00172   ASSERT_NO_FATAL_FAILURE(<a class="code" href="test_8cc.html#afb20bae83c4de264129c46c005ad3907">AssertParse</a>(&amp;state_,
-<a name="l00173"></a>00173 <span class="stringliteral">&quot;rule catdep\n&quot;</span>
-<a name="l00174"></a>00174 <span class="stringliteral">&quot;  depfile = $out.d\n&quot;</span>
-<a name="l00175"></a>00175 <span class="stringliteral">&quot;  command = cat $in &gt; $out\n&quot;</span>
-<a name="l00176"></a>00176 <span class="stringliteral">&quot;build ./out.o: catdep ./foo.cc\n&quot;</span>));
-<a name="l00177"></a>00177   fs_.Create(<span class="stringliteral">&quot;foo.h&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);
-<a name="l00178"></a>00178   fs_.Create(<span class="stringliteral">&quot;foo.cc&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);
-<a name="l00179"></a>00179   fs_.Tick();
-<a name="l00180"></a>00180   fs_.Create(<span class="stringliteral">&quot;out.o.d&quot;</span>, <span class="stringliteral">&quot;out.o: foo.h\n&quot;</span>);
-<a name="l00181"></a>00181   fs_.Create(<span class="stringliteral">&quot;out.o&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);
-<a name="l00182"></a>00182 
-<a name="l00183"></a>00183   <a class="code" href="structEdge.html" title="An edge in the dependency graph; links between Nodes using Rules.">Edge</a>* edge = GetNode(<span class="stringliteral">&quot;out.o&quot;</span>)-&gt;in_edge();
-<a name="l00184"></a>00184   <span class="keywordtype">string</span> err;
-<a name="l00185"></a>00185   EXPECT_TRUE(scan_.RecomputeDirty(edge, &amp;err));
-<a name="l00186"></a>00186   ASSERT_EQ(<span class="stringliteral">&quot;&quot;</span>, err);
-<a name="l00187"></a>00187   EXPECT_FALSE(GetNode(<span class="stringliteral">&quot;out.o&quot;</span>)-&gt;dirty());
-<a name="l00188"></a>00188 
-<a name="l00189"></a>00189   state_.Reset();
-<a name="l00190"></a>00190   fs_.RemoveFile(<span class="stringliteral">&quot;out.o.d&quot;</span>);
-<a name="l00191"></a>00191   EXPECT_TRUE(scan_.RecomputeDirty(edge, &amp;err));
-<a name="l00192"></a>00192   ASSERT_EQ(<span class="stringliteral">&quot;&quot;</span>, err);
-<a name="l00193"></a>00193   EXPECT_TRUE(GetNode(<span class="stringliteral">&quot;out.o&quot;</span>)-&gt;dirty());
-<a name="l00194"></a>00194 }
-<a name="l00195"></a>00195 
-<a name="l00196"></a>00196 <span class="comment">// Check that rule-level variables are in scope for eval.</span>
-<a name="l00197"></a><a class="code" href="graph__test_8cc.html#ae2e48c11ab2adc395211f0e907523679">00197</a> <a class="code" href="build__test_8cc.html#aa2d4879a1416ae4b4db00986d0b091eb">TEST_F</a>(<a class="code" href="structGraphTest.html">GraphTest</a>, RuleVariablesInScope) {
-<a name="l00198"></a>00198   ASSERT_NO_FATAL_FAILURE(<a class="code" href="test_8cc.html#afb20bae83c4de264129c46c005ad3907">AssertParse</a>(&amp;state_,
-<a name="l00199"></a>00199 <span class="stringliteral">&quot;rule r\n&quot;</span>
-<a name="l00200"></a>00200 <span class="stringliteral">&quot;  depfile = x\n&quot;</span>
-<a name="l00201"></a>00201 <span class="stringliteral">&quot;  command = depfile is $depfile\n&quot;</span>
-<a name="l00202"></a>00202 <span class="stringliteral">&quot;build out: r in\n&quot;</span>));
-<a name="l00203"></a>00203   <a class="code" href="structEdge.html" title="An edge in the dependency graph; links between Nodes using Rules.">Edge</a>* edge = GetNode(<span class="stringliteral">&quot;out&quot;</span>)-&gt;in_edge();
-<a name="l00204"></a>00204   EXPECT_EQ(<span class="stringliteral">&quot;depfile is x&quot;</span>, edge-&gt;<a class="code" href="structEdge.html#ac4086e06c9982fbebdb9b1a5d52af3cd" title="Expand all variables in a command and return it as a string.">EvaluateCommand</a>());
-<a name="l00205"></a>00205 }
-<a name="l00206"></a>00206 
-<a name="l00207"></a>00207 <span class="comment">// Check that build statements can override rule builtins like depfile.</span>
-<a name="l00208"></a><a class="code" href="graph__test_8cc.html#a4ffb4c3335b35654dac3891e30245415">00208</a> <a class="code" href="build__test_8cc.html#aa2d4879a1416ae4b4db00986d0b091eb">TEST_F</a>(<a class="code" href="structGraphTest.html">GraphTest</a>, DepfileOverride) {
-<a name="l00209"></a>00209   ASSERT_NO_FATAL_FAILURE(<a class="code" href="test_8cc.html#afb20bae83c4de264129c46c005ad3907">AssertParse</a>(&amp;state_,
-<a name="l00210"></a>00210 <span class="stringliteral">&quot;rule r\n&quot;</span>
-<a name="l00211"></a>00211 <span class="stringliteral">&quot;  depfile = x\n&quot;</span>
-<a name="l00212"></a>00212 <span class="stringliteral">&quot;  command = unused\n&quot;</span>
-<a name="l00213"></a>00213 <span class="stringliteral">&quot;build out: r in\n&quot;</span>
-<a name="l00214"></a>00214 <span class="stringliteral">&quot;  depfile = y\n&quot;</span>));
-<a name="l00215"></a>00215   <a class="code" href="structEdge.html" title="An edge in the dependency graph; links between Nodes using Rules.">Edge</a>* edge = GetNode(<span class="stringliteral">&quot;out&quot;</span>)-&gt;in_edge();
-<a name="l00216"></a>00216   EXPECT_EQ(<span class="stringliteral">&quot;y&quot;</span>, edge-&gt;<a class="code" href="structEdge.html#a4f495554a299524a951620f7b643d111">GetBinding</a>(<span class="stringliteral">&quot;depfile&quot;</span>));
-<a name="l00217"></a>00217 }
-<a name="l00218"></a>00218 
-<a name="l00219"></a>00219 <span class="comment">// Check that overridden values show up in expansion of rule-level bindings.</span>
-<a name="l00220"></a><a class="code" href="graph__test_8cc.html#ad6f8f516a73429e6586689b2d7a7f29d">00220</a> <a class="code" href="build__test_8cc.html#aa2d4879a1416ae4b4db00986d0b091eb">TEST_F</a>(<a class="code" href="structGraphTest.html">GraphTest</a>, DepfileOverrideParent) {
-<a name="l00221"></a>00221   ASSERT_NO_FATAL_FAILURE(<a class="code" href="test_8cc.html#afb20bae83c4de264129c46c005ad3907">AssertParse</a>(&amp;state_,
-<a name="l00222"></a>00222 <span class="stringliteral">&quot;rule r\n&quot;</span>
-<a name="l00223"></a>00223 <span class="stringliteral">&quot;  depfile = x\n&quot;</span>
-<a name="l00224"></a>00224 <span class="stringliteral">&quot;  command = depfile is $depfile\n&quot;</span>
-<a name="l00225"></a>00225 <span class="stringliteral">&quot;build out: r in\n&quot;</span>
-<a name="l00226"></a>00226 <span class="stringliteral">&quot;  depfile = y\n&quot;</span>));
-<a name="l00227"></a>00227   <a class="code" href="structEdge.html" title="An edge in the dependency graph; links between Nodes using Rules.">Edge</a>* edge = GetNode(<span class="stringliteral">&quot;out&quot;</span>)-&gt;in_edge();
-<a name="l00228"></a>00228   EXPECT_EQ(<span class="stringliteral">&quot;depfile is y&quot;</span>, edge-&gt;<a class="code" href="structEdge.html#a4f495554a299524a951620f7b643d111">GetBinding</a>(<span class="stringliteral">&quot;command&quot;</span>));
-<a name="l00229"></a>00229 }
-<a name="l00230"></a>00230 
-<a name="l00231"></a>00231 <span class="comment">// Verify that building a nested phony rule prints &quot;no work to do&quot;</span>
-<a name="l00232"></a><a class="code" href="graph__test_8cc.html#a7080698fad79bfd22c1f53563890336a">00232</a> <a class="code" href="build__test_8cc.html#aa2d4879a1416ae4b4db00986d0b091eb">TEST_F</a>(<a class="code" href="structGraphTest.html">GraphTest</a>, NestedPhonyPrintsDone) {
-<a name="l00233"></a>00233   <a class="code" href="test_8cc.html#afb20bae83c4de264129c46c005ad3907">AssertParse</a>(&amp;state_,
-<a name="l00234"></a>00234 <span class="stringliteral">&quot;build n1: phony \n&quot;</span>
-<a name="l00235"></a>00235 <span class="stringliteral">&quot;build n2: phony n1\n&quot;</span>
-<a name="l00236"></a>00236   );
-<a name="l00237"></a>00237   <span class="keywordtype">string</span> err;
-<a name="l00238"></a>00238   <a class="code" href="structEdge.html" title="An edge in the dependency graph; links between Nodes using Rules.">Edge</a>* edge = GetNode(<span class="stringliteral">&quot;n2&quot;</span>)-&gt;in_edge();
-<a name="l00239"></a>00239   EXPECT_TRUE(scan_.RecomputeDirty(edge, &amp;err));
-<a name="l00240"></a>00240   ASSERT_EQ(<span class="stringliteral">&quot;&quot;</span>, err);
-<a name="l00241"></a>00241 
-<a name="l00242"></a>00242   <a class="code" href="structPlan.html" title="Plan stores the state of a build plan: what we intend to build, which steps we&#39;re ready to execute...">Plan</a> plan_;
-<a name="l00243"></a>00243   EXPECT_TRUE(plan_.<a class="code" href="structPlan.html#ace573e539c7ddf7192b27c045bfda819" title="Add a target to our plan (including all its dependencies).">AddTarget</a>(GetNode(<span class="stringliteral">&quot;n2&quot;</span>), &amp;err));
-<a name="l00244"></a>00244   ASSERT_EQ(<span class="stringliteral">&quot;&quot;</span>, err);
-<a name="l00245"></a>00245 
-<a name="l00246"></a>00246   EXPECT_EQ(0, plan_.<a class="code" href="structPlan.html#a2c28ad28e9516290e567f8caede3aafa" title="Number of edges with commands to run.">command_edge_count</a>());
-<a name="l00247"></a>00247   ASSERT_FALSE(plan_.<a class="code" href="structPlan.html#a41faf1d55334495c5443cdf0eb2c2ca4" title="Returns true if there&#39;s more work to be done.">more_to_do</a>());
-<a name="l00248"></a>00248 }
+<a name="l00167"></a>00167   <a class="code" href="structEdge.html" title="An edge in the dependency graph; links between Nodes using Rules.">Edge</a>* edge = GetNode(<span class="stringliteral">&quot;out.o&quot;</span>)-&gt;in_edge();
+<a name="l00168"></a>00168   <span class="keywordtype">string</span> err;
+<a name="l00169"></a>00169   EXPECT_TRUE(scan_.RecomputeDirty(edge, &amp;err));
+<a name="l00170"></a>00170   ASSERT_EQ(<span class="stringliteral">&quot;&quot;</span>, err);
+<a name="l00171"></a>00171 
+<a name="l00172"></a>00172   EXPECT_FALSE(GetNode(<span class="stringliteral">&quot;out.o&quot;</span>)-&gt;dirty());
+<a name="l00173"></a>00173 }
+<a name="l00174"></a>00174 
+<a name="l00175"></a>00175 <span class="comment">// Regression test for https://github.com/martine/ninja/issues/404</span>
+<a name="l00176"></a><a class="code" href="graph__test_8cc.html#accd75ce502e865f2e896cee05b59a1a7">00176</a> <a class="code" href="build__test_8cc.html#aa2d4879a1416ae4b4db00986d0b091eb">TEST_F</a>(<a class="code" href="structGraphTest.html">GraphTest</a>, DepfileRemoved) {
+<a name="l00177"></a>00177   ASSERT_NO_FATAL_FAILURE(<a class="code" href="test_8cc.html#afb20bae83c4de264129c46c005ad3907">AssertParse</a>(&amp;state_,
+<a name="l00178"></a>00178 <span class="stringliteral">&quot;rule catdep\n&quot;</span>
+<a name="l00179"></a>00179 <span class="stringliteral">&quot;  depfile = $out.d\n&quot;</span>
+<a name="l00180"></a>00180 <span class="stringliteral">&quot;  command = cat $in &gt; $out\n&quot;</span>
+<a name="l00181"></a>00181 <span class="stringliteral">&quot;build ./out.o: catdep ./foo.cc\n&quot;</span>));
+<a name="l00182"></a>00182   fs_.Create(<span class="stringliteral">&quot;foo.h&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);
+<a name="l00183"></a>00183   fs_.Create(<span class="stringliteral">&quot;foo.cc&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);
+<a name="l00184"></a>00184   fs_.Tick();
+<a name="l00185"></a>00185   fs_.Create(<span class="stringliteral">&quot;out.o.d&quot;</span>, <span class="stringliteral">&quot;out.o: foo.h\n&quot;</span>);
+<a name="l00186"></a>00186   fs_.Create(<span class="stringliteral">&quot;out.o&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);
+<a name="l00187"></a>00187 
+<a name="l00188"></a>00188   <a class="code" href="structEdge.html" title="An edge in the dependency graph; links between Nodes using Rules.">Edge</a>* edge = GetNode(<span class="stringliteral">&quot;out.o&quot;</span>)-&gt;in_edge();
+<a name="l00189"></a>00189   <span class="keywordtype">string</span> err;
+<a name="l00190"></a>00190   EXPECT_TRUE(scan_.RecomputeDirty(edge, &amp;err));
+<a name="l00191"></a>00191   ASSERT_EQ(<span class="stringliteral">&quot;&quot;</span>, err);
+<a name="l00192"></a>00192   EXPECT_FALSE(GetNode(<span class="stringliteral">&quot;out.o&quot;</span>)-&gt;dirty());
+<a name="l00193"></a>00193 
+<a name="l00194"></a>00194   state_.Reset();
+<a name="l00195"></a>00195   fs_.RemoveFile(<span class="stringliteral">&quot;out.o.d&quot;</span>);
+<a name="l00196"></a>00196   EXPECT_TRUE(scan_.RecomputeDirty(edge, &amp;err));
+<a name="l00197"></a>00197   ASSERT_EQ(<span class="stringliteral">&quot;&quot;</span>, err);
+<a name="l00198"></a>00198   EXPECT_TRUE(GetNode(<span class="stringliteral">&quot;out.o&quot;</span>)-&gt;dirty());
+<a name="l00199"></a>00199 }
+<a name="l00200"></a>00200 
+<a name="l00201"></a>00201 <span class="comment">// Check that rule-level variables are in scope for eval.</span>
+<a name="l00202"></a><a class="code" href="graph__test_8cc.html#ae2e48c11ab2adc395211f0e907523679">00202</a> <a class="code" href="build__test_8cc.html#aa2d4879a1416ae4b4db00986d0b091eb">TEST_F</a>(<a class="code" href="structGraphTest.html">GraphTest</a>, RuleVariablesInScope) {
+<a name="l00203"></a>00203   ASSERT_NO_FATAL_FAILURE(<a class="code" href="test_8cc.html#afb20bae83c4de264129c46c005ad3907">AssertParse</a>(&amp;state_,
+<a name="l00204"></a>00204 <span class="stringliteral">&quot;rule r\n&quot;</span>
+<a name="l00205"></a>00205 <span class="stringliteral">&quot;  depfile = x\n&quot;</span>
+<a name="l00206"></a>00206 <span class="stringliteral">&quot;  command = depfile is $depfile\n&quot;</span>
+<a name="l00207"></a>00207 <span class="stringliteral">&quot;build out: r in\n&quot;</span>));
+<a name="l00208"></a>00208   <a class="code" href="structEdge.html" title="An edge in the dependency graph; links between Nodes using Rules.">Edge</a>* edge = GetNode(<span class="stringliteral">&quot;out&quot;</span>)-&gt;in_edge();
+<a name="l00209"></a>00209   EXPECT_EQ(<span class="stringliteral">&quot;depfile is x&quot;</span>, edge-&gt;<a class="code" href="structEdge.html#ac4086e06c9982fbebdb9b1a5d52af3cd" title="Expand all variables in a command and return it as a string.">EvaluateCommand</a>());
+<a name="l00210"></a>00210 }
+<a name="l00211"></a>00211 
+<a name="l00212"></a>00212 <span class="comment">// Check that build statements can override rule builtins like depfile.</span>
+<a name="l00213"></a><a class="code" href="graph__test_8cc.html#a4ffb4c3335b35654dac3891e30245415">00213</a> <a class="code" href="build__test_8cc.html#aa2d4879a1416ae4b4db00986d0b091eb">TEST_F</a>(<a class="code" href="structGraphTest.html">GraphTest</a>, DepfileOverride) {
+<a name="l00214"></a>00214   ASSERT_NO_FATAL_FAILURE(<a class="code" href="test_8cc.html#afb20bae83c4de264129c46c005ad3907">AssertParse</a>(&amp;state_,
+<a name="l00215"></a>00215 <span class="stringliteral">&quot;rule r\n&quot;</span>
+<a name="l00216"></a>00216 <span class="stringliteral">&quot;  depfile = x\n&quot;</span>
+<a name="l00217"></a>00217 <span class="stringliteral">&quot;  command = unused\n&quot;</span>
+<a name="l00218"></a>00218 <span class="stringliteral">&quot;build out: r in\n&quot;</span>
+<a name="l00219"></a>00219 <span class="stringliteral">&quot;  depfile = y\n&quot;</span>));
+<a name="l00220"></a>00220   <a class="code" href="structEdge.html" title="An edge in the dependency graph; links between Nodes using Rules.">Edge</a>* edge = GetNode(<span class="stringliteral">&quot;out&quot;</span>)-&gt;in_edge();
+<a name="l00221"></a>00221   EXPECT_EQ(<span class="stringliteral">&quot;y&quot;</span>, edge-&gt;<a class="code" href="structEdge.html#a4f495554a299524a951620f7b643d111" title="Returns the shell-escaped value of |key|.">GetBinding</a>(<span class="stringliteral">&quot;depfile&quot;</span>));
+<a name="l00222"></a>00222 }
+<a name="l00223"></a>00223 
+<a name="l00224"></a>00224 <span class="comment">// Check that overridden values show up in expansion of rule-level bindings.</span>
+<a name="l00225"></a><a class="code" href="graph__test_8cc.html#ad6f8f516a73429e6586689b2d7a7f29d">00225</a> <a class="code" href="build__test_8cc.html#aa2d4879a1416ae4b4db00986d0b091eb">TEST_F</a>(<a class="code" href="structGraphTest.html">GraphTest</a>, DepfileOverrideParent) {
+<a name="l00226"></a>00226   ASSERT_NO_FATAL_FAILURE(<a class="code" href="test_8cc.html#afb20bae83c4de264129c46c005ad3907">AssertParse</a>(&amp;state_,
+<a name="l00227"></a>00227 <span class="stringliteral">&quot;rule r\n&quot;</span>
+<a name="l00228"></a>00228 <span class="stringliteral">&quot;  depfile = x\n&quot;</span>
+<a name="l00229"></a>00229 <span class="stringliteral">&quot;  command = depfile is $depfile\n&quot;</span>
+<a name="l00230"></a>00230 <span class="stringliteral">&quot;build out: r in\n&quot;</span>
+<a name="l00231"></a>00231 <span class="stringliteral">&quot;  depfile = y\n&quot;</span>));
+<a name="l00232"></a>00232   <a class="code" href="structEdge.html" title="An edge in the dependency graph; links between Nodes using Rules.">Edge</a>* edge = GetNode(<span class="stringliteral">&quot;out&quot;</span>)-&gt;in_edge();
+<a name="l00233"></a>00233   EXPECT_EQ(<span class="stringliteral">&quot;depfile is y&quot;</span>, edge-&gt;<a class="code" href="structEdge.html#a4f495554a299524a951620f7b643d111" title="Returns the shell-escaped value of |key|.">GetBinding</a>(<span class="stringliteral">&quot;command&quot;</span>));
+<a name="l00234"></a>00234 }
+<a name="l00235"></a>00235 
+<a name="l00236"></a>00236 <span class="comment">// Verify that building a nested phony rule prints &quot;no work to do&quot;</span>
+<a name="l00237"></a><a class="code" href="graph__test_8cc.html#a7080698fad79bfd22c1f53563890336a">00237</a> <a class="code" href="build__test_8cc.html#aa2d4879a1416ae4b4db00986d0b091eb">TEST_F</a>(<a class="code" href="structGraphTest.html">GraphTest</a>, NestedPhonyPrintsDone) {
+<a name="l00238"></a>00238   <a class="code" href="test_8cc.html#afb20bae83c4de264129c46c005ad3907">AssertParse</a>(&amp;state_,
+<a name="l00239"></a>00239 <span class="stringliteral">&quot;build n1: phony \n&quot;</span>
+<a name="l00240"></a>00240 <span class="stringliteral">&quot;build n2: phony n1\n&quot;</span>
+<a name="l00241"></a>00241   );
+<a name="l00242"></a>00242   <span class="keywordtype">string</span> err;
+<a name="l00243"></a>00243   <a class="code" href="structEdge.html" title="An edge in the dependency graph; links between Nodes using Rules.">Edge</a>* edge = GetNode(<span class="stringliteral">&quot;n2&quot;</span>)-&gt;in_edge();
+<a name="l00244"></a>00244   EXPECT_TRUE(scan_.RecomputeDirty(edge, &amp;err));
+<a name="l00245"></a>00245   ASSERT_EQ(<span class="stringliteral">&quot;&quot;</span>, err);
+<a name="l00246"></a>00246 
+<a name="l00247"></a>00247   <a class="code" href="structPlan.html" title="Plan stores the state of a build plan: what we intend to build, which steps we&#39;re ready to execute...">Plan</a> plan_;
+<a name="l00248"></a>00248   EXPECT_TRUE(plan_.<a class="code" href="structPlan.html#ace573e539c7ddf7192b27c045bfda819" title="Add a target to our plan (including all its dependencies).">AddTarget</a>(GetNode(<span class="stringliteral">&quot;n2&quot;</span>), &amp;err));
+<a name="l00249"></a>00249   ASSERT_EQ(<span class="stringliteral">&quot;&quot;</span>, err);
+<a name="l00250"></a>00250 
+<a name="l00251"></a>00251   EXPECT_EQ(0, plan_.<a class="code" href="structPlan.html#a2c28ad28e9516290e567f8caede3aafa" title="Number of edges with commands to run.">command_edge_count</a>());
+<a name="l00252"></a>00252   ASSERT_FALSE(plan_.<a class="code" href="structPlan.html#a41faf1d55334495c5443cdf0eb2c2ca4" title="Returns true if there&#39;s more work to be done.">more_to_do</a>());
+<a name="l00253"></a>00253 }
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 12 2013 09:25:49 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 4 2014 09:13:00 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

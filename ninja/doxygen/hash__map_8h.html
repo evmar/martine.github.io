@@ -61,7 +61,8 @@
 <div class="title">hash_map.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;string.h&gt;</code><br/>
+<div class="textblock"><code>#include &lt;algorithm&gt;</code><br/>
+<code>#include &lt;string.h&gt;</code><br/>
 <code>#include &quot;<a class="el" href="string__piece_8h_source.html">string_piece.h</a>&quot;</code><br/>
 <code>#include &lt;ext/hash_map&gt;</code><br/>
 </div><div class="textblock"><div class="dynheader">
@@ -69,14 +70,14 @@ Include dependency graph for hash_map.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="hash__map_8h__incl.png" border="0" usemap="#hash__map_8h" alt=""/></div>
 <map name="hash__map_8h" id="hash__map_8h">
-<area shape="rect" id="node5" href="string__piece_8h.html" title="string_piece.h" alt="" coords="72,83,173,112"/></map>
+<area shape="rect" id="node7" href="string__piece_8h.html" title="string_piece.h" alt="" coords="155,83,256,112"/></map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="hash__map_8h__dep__incl.png" border="0" usemap="#hash__map_8hdep" alt=""/></div>
 <map name="hash__map_8hdep" id="hash__map_8hdep">
-<area shape="rect" id="node3" href="build__log_8h.html" title="build_log.h" alt="" coords="416,83,499,112"/><area shape="rect" id="node23" href="state_8h.html" title="state.h" alt="" coords="969,83,1031,112"/><area shape="rect" id="node5" href="build_8cc.html" title="build.cc" alt="" coords="645,160,712,189"/><area shape="rect" id="node7" href="build__log_8cc.html" title="build_log.cc" alt="" coords="5,160,96,189"/><area shape="rect" id="node9" href="build__log__perftest_8cc.html" title="build_log_perftest.cc" alt="" coords="736,160,877,189"/><area shape="rect" id="node11" href="build__log__test_8cc.html" title="build_log_test.cc" alt="" coords="188,237,308,267"/><area shape="rect" id="node13" href="build__test_8cc.html" title="build_test.cc" alt="" coords="332,237,428,267"/><area shape="rect" id="node15" href="graph_8cc.html" title="graph.cc" alt="" coords="459,160,531,189"/><area shape="rect" id="node17" href="hash__collision__bench_8cc.html" title="hash_collision_bench.cc" alt="" coords="120,160,283,189"/><area shape="rect" id="node19" href="ninja_8cc.html" title="ninja.cc" alt="" coords="555,160,621,189"/><area shape="rect" id="node21" href="test_8cc.html" title="test.cc" alt="" coords="452,237,513,267"/><area shape="rect" id="node27" href="test_8h.html" title="test.h" alt="" coords="1024,160,1077,189"/><area shape="rect" id="node50" href="clean_8cc.html" title="clean.cc" alt="" coords="1101,160,1171,189"/><area shape="rect" id="node52" href="deps__log_8cc.html" title="deps_log.cc" alt="" coords="1195,160,1285,189"/><area shape="rect" id="node55" href="manifest__parser_8cc.html" title="manifest_parser.cc" alt="" coords="1309,160,1443,189"/><area shape="rect" id="node57" href="manifest__parser__test_8cc.html" title="manifest_parser_test.cc" alt="" coords="1467,160,1629,189"/><area shape="rect" id="node60" href="state_8cc.html" title="state.cc" alt="" coords="1653,160,1723,189"/><area shape="rect" id="node62" href="state__test_8cc.html" title="state_test.cc" alt="" coords="901,160,1000,189"/><area shape="rect" id="node31" href="clean__test_8cc.html" title="clean_test.cc" alt="" coords="537,237,636,267"/><area shape="rect" id="node33" href="deps__log__test_8cc.html" title="deps_log_test.cc" alt="" coords="660,237,780,267"/><area shape="rect" id="node35" href="disk__interface__test_8cc.html" title="disk_interface_test.cc" alt="" coords="804,237,953,267"/><area shape="rect" id="node37" href="edit__distance__test_8cc.html" title="edit_distance_test.cc" alt="" coords="977,237,1124,267"/><area shape="rect" id="node39" href="graph__test_8cc.html" title="graph_test.cc" alt="" coords="1148,237,1249,267"/><area shape="rect" id="node41" href="includes__normalize__test_8cc.html" title="includes_normalize_test.cc" alt="" coords="1273,237,1452,267"/><area shape="rect" id="node43" href="msvc__helper__test_8cc.html" title="msvc_helper_test.cc" alt="" coords="1476,237,1617,267"/><area shape="rect" id="node45" href="subprocess__test_8cc.html" title="subprocess_test.cc" alt="" coords="1641,237,1777,267"/><area shape="rect" id="node48" href="util__test_8cc.html" title="util_test.cc" alt="" coords="1801,237,1887,267"/></map>
+<area shape="rect" id="node3" href="build__log_8h.html" title="build_log.h" alt="" coords="368,83,450,112"/><area shape="rect" id="node23" href="state_8h.html" title="state.h" alt="" coords="1054,83,1116,112"/><area shape="rect" id="node5" href="build_8cc.html" title="build.cc" alt="" coords="745,160,812,189"/><area shape="rect" id="node7" href="build__log_8cc.html" title="build_log.cc" alt="" coords="41,160,132,189"/><area shape="rect" id="node9" href="build__log__perftest_8cc.html" title="build_log_perftest.cc" alt="" coords="393,160,534,189"/><area shape="rect" id="node11" href="build__log__test_8cc.html" title="build_log_test.cc" alt="" coords="560,237,680,267"/><area shape="rect" id="node13" href="build__test_8cc.html" title="build_test.cc" alt="" coords="216,237,312,267"/><area shape="rect" id="node15" href="graph_8cc.html" title="graph.cc" alt="" coords="558,160,630,189"/><area shape="rect" id="node17" href="hash__collision__bench_8cc.html" title="hash_collision_bench.cc" alt="" coords="156,160,318,189"/><area shape="rect" id="node19" href="ninja_8cc.html" title="ninja.cc" alt="" coords="654,160,721,189"/><area shape="rect" id="node21" href="test_8cc.html" title="test.cc" alt="" coords="428,237,489,267"/><area shape="rect" id="node27" href="test_8h.html" title="test.h" alt="" coords="1604,160,1657,189"/><area shape="rect" id="node50" href="clean_8cc.html" title="clean.cc" alt="" coords="1681,160,1750,189"/><area shape="rect" id="node52" href="deps__log_8cc.html" title="deps_log.cc" alt="" coords="1774,160,1865,189"/><area shape="rect" id="node55" href="manifest__parser_8cc.html" title="manifest_parser.cc" alt="" coords="836,160,969,189"/><area shape="rect" id="node57" href="manifest__parser__perftest_8cc.html" title="manifest_parser_perftest.cc" alt="" coords="993,160,1177,189"/><area shape="rect" id="node59" href="manifest__parser__test_8cc.html" title="manifest_parser_test.cc" alt="" coords="1201,160,1364,189"/><area shape="rect" id="node62" href="state_8cc.html" title="state.cc" alt="" coords="1388,160,1457,189"/><area shape="rect" id="node64" href="state__test_8cc.html" title="state_test.cc" alt="" coords="1481,160,1580,189"/><area shape="rect" id="node31" href="clean__test_8cc.html" title="clean_test.cc" alt="" coords="969,237,1068,267"/><area shape="rect" id="node33" href="deps__log__test_8cc.html" title="deps_log_test.cc" alt="" coords="1092,237,1212,267"/><area shape="rect" id="node35" href="disk__interface__test_8cc.html" title="disk_interface_test.cc" alt="" coords="1236,237,1385,267"/><area shape="rect" id="node37" href="edit__distance__test_8cc.html" title="edit_distance_test.cc" alt="" coords="1409,237,1556,267"/><area shape="rect" id="node39" href="graph__test_8cc.html" title="graph_test.cc" alt="" coords="1580,237,1681,267"/><area shape="rect" id="node41" href="includes__normalize__test_8cc.html" title="includes_normalize_test.cc" alt="" coords="1705,237,1884,267"/><area shape="rect" id="node43" href="msvc__helper__test_8cc.html" title="msvc_helper_test.cc" alt="" coords="1908,237,2049,267"/><area shape="rect" id="node45" href="subprocess__test_8cc.html" title="subprocess_test.cc" alt="" coords="2073,237,2209,267"/><area shape="rect" id="node48" href="util__test_8cc.html" title="util_test.cc" alt="" coords="2233,237,2318,267"/></map>
 </div>
 </div>
 <p><a href="hash__map_8h_source.html">Go to the source code of this file.</a></p>
@@ -120,9 +121,9 @@ Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="hash__map_8h_source.html#l00023">23</a> of file <a class="el" href="hash__map_8h_source.html">hash_map.h</a>.</p>
+<p>Definition at line <a class="el" href="hash__map_8h_source.html#l00024">24</a> of file <a class="el" href="hash__map_8h_source.html">hash_map.h</a>.</p>
 
-<p>Referenced by <a class="el" href="hash__map_8h_source.html#l00090">__gnu_cxx::hash&lt; StringPiece &gt;::operator()()</a>.</p>
+<p>Referenced by <a class="el" href="hash__map_8h_source.html#l00091">__gnu_cxx::hash&lt; StringPiece &gt;::operator()()</a>.</p>
 
 </div>
 </div>
@@ -130,7 +131,7 @@ Functions</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 12 2013 09:25:50 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 4 2014 09:13:00 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

@@ -79,348 +79,452 @@
 <a name="l00020"></a>00020 <span class="preprocessor">#include &lt;share.h&gt;</span>
 <a name="l00021"></a>00021 <span class="preprocessor">#endif</span>
 <a name="l00022"></a>00022 <span class="preprocessor"></span>
-<a name="l00023"></a>00023 <span class="preprocessor">#include &lt;errno.h&gt;</span>
-<a name="l00024"></a>00024 <span class="preprocessor">#include &lt;fcntl.h&gt;</span>
-<a name="l00025"></a>00025 <span class="preprocessor">#include &lt;stdarg.h&gt;</span>
-<a name="l00026"></a>00026 <span class="preprocessor">#include &lt;stdio.h&gt;</span>
-<a name="l00027"></a>00027 <span class="preprocessor">#include &lt;stdlib.h&gt;</span>
-<a name="l00028"></a>00028 <span class="preprocessor">#include &lt;string.h&gt;</span>
-<a name="l00029"></a>00029 <span class="preprocessor">#include &lt;sys/stat.h&gt;</span>
-<a name="l00030"></a>00030 <span class="preprocessor">#include &lt;sys/types.h&gt;</span>
-<a name="l00031"></a>00031 
-<a name="l00032"></a>00032 <span class="preprocessor">#ifndef _WIN32</span>
-<a name="l00033"></a>00033 <span class="preprocessor"></span><span class="preprocessor">#include &lt;unistd.h&gt;</span>
-<a name="l00034"></a>00034 <span class="preprocessor">#include &lt;sys/time.h&gt;</span>
-<a name="l00035"></a>00035 <span class="preprocessor">#endif</span>
-<a name="l00036"></a>00036 <span class="preprocessor"></span>
-<a name="l00037"></a>00037 <span class="preprocessor">#include &lt;vector&gt;</span>
-<a name="l00038"></a>00038 
-<a name="l00039"></a>00039 <span class="preprocessor">#if defined(__APPLE__) || defined(__FreeBSD__)</span>
-<a name="l00040"></a>00040 <span class="preprocessor"></span><span class="preprocessor">#include &lt;sys/sysctl.h&gt;</span>
-<a name="l00041"></a>00041 <span class="preprocessor">#elif defined(__SVR4) &amp;&amp; defined(__sun)</span>
-<a name="l00042"></a>00042 <span class="preprocessor"></span><span class="preprocessor">#include &lt;unistd.h&gt;</span>
-<a name="l00043"></a>00043 <span class="preprocessor">#include &lt;sys/loadavg.h&gt;</span>
-<a name="l00044"></a>00044 <span class="preprocessor">#elif defined(linux) || defined(__GLIBC__)</span>
-<a name="l00045"></a>00045 <span class="preprocessor"></span><span class="preprocessor">#include &lt;sys/sysinfo.h&gt;</span>
-<a name="l00046"></a>00046 <span class="preprocessor">#endif</span>
-<a name="l00047"></a>00047 <span class="preprocessor"></span>
-<a name="l00048"></a>00048 <span class="preprocessor">#include &quot;<a class="code" href="edit__distance_8h.html">edit_distance.h</a>&quot;</span>
-<a name="l00049"></a>00049 <span class="preprocessor">#include &quot;<a class="code" href="metrics_8h.html">metrics.h</a>&quot;</span>
-<a name="l00050"></a>00050 
-<a name="l00051"></a><a class="code" href="util_8h.html#ae5fb7d249da6072c1f3e5e33b16a2b56">00051</a> <span class="keywordtype">void</span> <a class="code" href="util_8cc.html#ad98ec6fb76f27b3d5a805cdad742df92" title="Log a fatal message and exit.">Fatal</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* msg, ...) {
-<a name="l00052"></a>00052   va_list ap;
-<a name="l00053"></a>00053   fprintf(stderr, <span class="stringliteral">&quot;ninja: fatal: &quot;</span>);
-<a name="l00054"></a>00054   va_start(ap, msg);
-<a name="l00055"></a>00055   vfprintf(stderr, msg, ap);
-<a name="l00056"></a>00056   va_end(ap);
-<a name="l00057"></a>00057   fprintf(stderr, <span class="stringliteral">&quot;\n&quot;</span>);
-<a name="l00058"></a>00058 <span class="preprocessor">#ifdef _WIN32</span>
-<a name="l00059"></a>00059 <span class="preprocessor"></span>  <span class="comment">// On Windows, some tools may inject extra threads.</span>
-<a name="l00060"></a>00060   <span class="comment">// exit() may block on locks held by those threads, so forcibly exit.</span>
-<a name="l00061"></a>00061   fflush(stderr);
-<a name="l00062"></a>00062   fflush(stdout);
-<a name="l00063"></a>00063   ExitProcess(1);
-<a name="l00064"></a>00064 <span class="preprocessor">#else</span>
-<a name="l00065"></a>00065 <span class="preprocessor"></span>  exit(1);
-<a name="l00066"></a>00066 <span class="preprocessor">#endif</span>
-<a name="l00067"></a>00067 <span class="preprocessor"></span>}
-<a name="l00068"></a>00068 
-<a name="l00069"></a><a class="code" href="util_8h.html#aa92567b4012d3191db5d247c8db8e9d9">00069</a> <span class="keywordtype">void</span> <a class="code" href="util_8cc.html#aa92567b4012d3191db5d247c8db8e9d9" title="Log a warning message.">Warning</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* msg, ...) {
-<a name="l00070"></a>00070   va_list ap;
-<a name="l00071"></a>00071   fprintf(stderr, <span class="stringliteral">&quot;ninja: warning: &quot;</span>);
-<a name="l00072"></a>00072   va_start(ap, msg);
-<a name="l00073"></a>00073   vfprintf(stderr, msg, ap);
-<a name="l00074"></a>00074   va_end(ap);
-<a name="l00075"></a>00075   fprintf(stderr, <span class="stringliteral">&quot;\n&quot;</span>);
-<a name="l00076"></a>00076 }
-<a name="l00077"></a>00077 
-<a name="l00078"></a><a class="code" href="util_8h.html#a8d48223b92317abcaf5984a00a97efb4">00078</a> <span class="keywordtype">void</span> <a class="code" href="util_8cc.html#a8d48223b92317abcaf5984a00a97efb4" title="Log an error message.">Error</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* msg, ...) {
-<a name="l00079"></a>00079   va_list ap;
-<a name="l00080"></a>00080   fprintf(stderr, <span class="stringliteral">&quot;ninja: error: &quot;</span>);
-<a name="l00081"></a>00081   va_start(ap, msg);
-<a name="l00082"></a>00082   vfprintf(stderr, msg, ap);
-<a name="l00083"></a>00083   va_end(ap);
-<a name="l00084"></a>00084   fprintf(stderr, <span class="stringliteral">&quot;\n&quot;</span>);
-<a name="l00085"></a>00085 }
-<a name="l00086"></a>00086 
-<a name="l00087"></a><a class="code" href="util_8h.html#abdb5937692c9c5a0fbe6cbbab7941414">00087</a> <span class="keywordtype">bool</span> <a class="code" href="util_8cc.html#abdb5937692c9c5a0fbe6cbbab7941414" title="Canonicalize a path like &quot;foo/../bar.h&quot; into just &quot;bar.h&quot;.">CanonicalizePath</a>(<span class="keywordtype">string</span>* path, <span class="keywordtype">string</span>* err) {
-<a name="l00088"></a>00088   <a class="code" href="metrics_8h.html#a7c19242938163dd11cedf62fdabd4ab6" title="The primary interface to metrics.">METRIC_RECORD</a>(<span class="stringliteral">&quot;canonicalize str&quot;</span>);
-<a name="l00089"></a>00089   <span class="keywordtype">size_t</span> len = path-&gt;size();
-<a name="l00090"></a>00090   <span class="keywordtype">char</span>* str = 0;
-<a name="l00091"></a>00091   <span class="keywordflow">if</span> (len &gt; 0)
-<a name="l00092"></a>00092     str = &amp;(*path)[0];
-<a name="l00093"></a>00093   <span class="keywordflow">if</span> (!<a class="code" href="util_8cc.html#abdb5937692c9c5a0fbe6cbbab7941414" title="Canonicalize a path like &quot;foo/../bar.h&quot; into just &quot;bar.h&quot;.">CanonicalizePath</a>(str, &amp;len, err))
-<a name="l00094"></a>00094     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00095"></a>00095   path-&gt;resize(len);
-<a name="l00096"></a>00096   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00097"></a>00097 }
-<a name="l00098"></a>00098 
-<a name="l00099"></a><a class="code" href="util_8h.html#a27bef6168502194cff01450b0ddce51a">00099</a> <span class="keywordtype">bool</span> <a class="code" href="util_8cc.html#abdb5937692c9c5a0fbe6cbbab7941414" title="Canonicalize a path like &quot;foo/../bar.h&quot; into just &quot;bar.h&quot;.">CanonicalizePath</a>(<span class="keywordtype">char</span>* path, <span class="keywordtype">size_t</span>* len, <span class="keywordtype">string</span>* err) {
-<a name="l00100"></a>00100   <span class="comment">// WARNING: this function is performance-critical; please benchmark</span>
-<a name="l00101"></a>00101   <span class="comment">// any changes you make to it.</span>
-<a name="l00102"></a>00102   <a class="code" href="metrics_8h.html#a7c19242938163dd11cedf62fdabd4ab6" title="The primary interface to metrics.">METRIC_RECORD</a>(<span class="stringliteral">&quot;canonicalize path&quot;</span>);
-<a name="l00103"></a>00103   <span class="keywordflow">if</span> (*len == 0) {
-<a name="l00104"></a>00104     *err = <span class="stringliteral">&quot;empty path&quot;</span>;
-<a name="l00105"></a>00105     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00106"></a>00106   }
-<a name="l00107"></a>00107 
-<a name="l00108"></a>00108   <span class="keyword">const</span> <span class="keywordtype">int</span> kMaxPathComponents = 30;
-<a name="l00109"></a>00109   <span class="keywordtype">char</span>* components[kMaxPathComponents];
-<a name="l00110"></a>00110   <span class="keywordtype">int</span> component_count = 0;
-<a name="l00111"></a>00111 
-<a name="l00112"></a>00112   <span class="keywordtype">char</span>* start = path;
-<a name="l00113"></a>00113   <span class="keywordtype">char</span>* dst = start;
-<a name="l00114"></a>00114   <span class="keyword">const</span> <span class="keywordtype">char</span>* src = start;
-<a name="l00115"></a>00115   <span class="keyword">const</span> <span class="keywordtype">char</span>* end = start + *len;
-<a name="l00116"></a>00116 
-<a name="l00117"></a>00117   <span class="keywordflow">if</span> (*src == <span class="charliteral">&#39;/&#39;</span>) {
-<a name="l00118"></a>00118 <span class="preprocessor">#ifdef _WIN32</span>
-<a name="l00119"></a>00119 <span class="preprocessor"></span>    <span class="comment">// network path starts with //</span>
-<a name="l00120"></a>00120     <span class="keywordflow">if</span> (*len &gt; 1 &amp;&amp; *(src + 1) == <span class="charliteral">&#39;/&#39;</span>) {
-<a name="l00121"></a>00121       src += 2;
-<a name="l00122"></a>00122       dst += 2;
-<a name="l00123"></a>00123     } <span class="keywordflow">else</span> {
-<a name="l00124"></a>00124       ++src;
-<a name="l00125"></a>00125       ++dst;
-<a name="l00126"></a>00126     }
-<a name="l00127"></a>00127 <span class="preprocessor">#else</span>
-<a name="l00128"></a>00128 <span class="preprocessor"></span>    ++src;
-<a name="l00129"></a>00129     ++dst;
-<a name="l00130"></a>00130 <span class="preprocessor">#endif</span>
-<a name="l00131"></a>00131 <span class="preprocessor"></span>  }
-<a name="l00132"></a>00132 
-<a name="l00133"></a>00133   <span class="keywordflow">while</span> (src &lt; end) {
-<a name="l00134"></a>00134     <span class="keywordflow">if</span> (*src == <span class="charliteral">&#39;.&#39;</span>) {
-<a name="l00135"></a>00135       <span class="keywordflow">if</span> (src + 1 == end || src[1] == <span class="charliteral">&#39;/&#39;</span>) {
-<a name="l00136"></a>00136         <span class="comment">// &#39;.&#39; component; eliminate.</span>
-<a name="l00137"></a>00137         src += 2;
-<a name="l00138"></a>00138         <span class="keywordflow">continue</span>;
-<a name="l00139"></a>00139       } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (src[1] == <span class="charliteral">&#39;.&#39;</span> &amp;&amp; (src + 2 == end || src[2] == <span class="charliteral">&#39;/&#39;</span>)) {
-<a name="l00140"></a>00140         <span class="comment">// &#39;..&#39; component.  Back up if possible.</span>
-<a name="l00141"></a>00141         <span class="keywordflow">if</span> (component_count &gt; 0) {
-<a name="l00142"></a>00142           dst = components[component_count - 1];
-<a name="l00143"></a>00143           src += 3;
-<a name="l00144"></a>00144           --component_count;
-<a name="l00145"></a>00145         } <span class="keywordflow">else</span> {
-<a name="l00146"></a>00146           *dst++ = *src++;
+<a name="l00023"></a>00023 <span class="preprocessor">#include &lt;assert.h&gt;</span>
+<a name="l00024"></a>00024 <span class="preprocessor">#include &lt;errno.h&gt;</span>
+<a name="l00025"></a>00025 <span class="preprocessor">#include &lt;fcntl.h&gt;</span>
+<a name="l00026"></a>00026 <span class="preprocessor">#include &lt;stdarg.h&gt;</span>
+<a name="l00027"></a>00027 <span class="preprocessor">#include &lt;stdio.h&gt;</span>
+<a name="l00028"></a>00028 <span class="preprocessor">#include &lt;stdlib.h&gt;</span>
+<a name="l00029"></a>00029 <span class="preprocessor">#include &lt;string.h&gt;</span>
+<a name="l00030"></a>00030 <span class="preprocessor">#include &lt;sys/stat.h&gt;</span>
+<a name="l00031"></a>00031 <span class="preprocessor">#include &lt;sys/types.h&gt;</span>
+<a name="l00032"></a>00032 
+<a name="l00033"></a>00033 <span class="preprocessor">#ifndef _WIN32</span>
+<a name="l00034"></a>00034 <span class="preprocessor"></span><span class="preprocessor">#include &lt;unistd.h&gt;</span>
+<a name="l00035"></a>00035 <span class="preprocessor">#include &lt;sys/time.h&gt;</span>
+<a name="l00036"></a>00036 <span class="preprocessor">#endif</span>
+<a name="l00037"></a>00037 <span class="preprocessor"></span>
+<a name="l00038"></a>00038 <span class="preprocessor">#include &lt;vector&gt;</span>
+<a name="l00039"></a>00039 
+<a name="l00040"></a>00040 <span class="preprocessor">#if defined(__APPLE__) || defined(__FreeBSD__)</span>
+<a name="l00041"></a>00041 <span class="preprocessor"></span><span class="preprocessor">#include &lt;sys/sysctl.h&gt;</span>
+<a name="l00042"></a>00042 <span class="preprocessor">#elif defined(__SVR4) &amp;&amp; defined(__sun)</span>
+<a name="l00043"></a>00043 <span class="preprocessor"></span><span class="preprocessor">#include &lt;unistd.h&gt;</span>
+<a name="l00044"></a>00044 <span class="preprocessor">#include &lt;sys/loadavg.h&gt;</span>
+<a name="l00045"></a>00045 <span class="preprocessor">#elif defined(linux) || defined(__GLIBC__)</span>
+<a name="l00046"></a>00046 <span class="preprocessor"></span><span class="preprocessor">#include &lt;sys/sysinfo.h&gt;</span>
+<a name="l00047"></a>00047 <span class="preprocessor">#endif</span>
+<a name="l00048"></a>00048 <span class="preprocessor"></span>
+<a name="l00049"></a>00049 <span class="preprocessor">#include &quot;<a class="code" href="edit__distance_8h.html">edit_distance.h</a>&quot;</span>
+<a name="l00050"></a>00050 <span class="preprocessor">#include &quot;<a class="code" href="metrics_8h.html">metrics.h</a>&quot;</span>
+<a name="l00051"></a>00051 
+<a name="l00052"></a><a class="code" href="util_8h.html#ae5fb7d249da6072c1f3e5e33b16a2b56">00052</a> <span class="keywordtype">void</span> <a class="code" href="util_8cc.html#ad98ec6fb76f27b3d5a805cdad742df92" title="Log a fatal message and exit.">Fatal</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* msg, ...) {
+<a name="l00053"></a>00053   va_list ap;
+<a name="l00054"></a>00054   fprintf(stderr, <span class="stringliteral">&quot;ninja: fatal: &quot;</span>);
+<a name="l00055"></a>00055   va_start(ap, msg);
+<a name="l00056"></a>00056   vfprintf(stderr, msg, ap);
+<a name="l00057"></a>00057   va_end(ap);
+<a name="l00058"></a>00058   fprintf(stderr, <span class="stringliteral">&quot;\n&quot;</span>);
+<a name="l00059"></a>00059 <span class="preprocessor">#ifdef _WIN32</span>
+<a name="l00060"></a>00060 <span class="preprocessor"></span>  <span class="comment">// On Windows, some tools may inject extra threads.</span>
+<a name="l00061"></a>00061   <span class="comment">// exit() may block on locks held by those threads, so forcibly exit.</span>
+<a name="l00062"></a>00062   fflush(stderr);
+<a name="l00063"></a>00063   fflush(stdout);
+<a name="l00064"></a>00064   ExitProcess(1);
+<a name="l00065"></a>00065 <span class="preprocessor">#else</span>
+<a name="l00066"></a>00066 <span class="preprocessor"></span>  exit(1);
+<a name="l00067"></a>00067 <span class="preprocessor">#endif</span>
+<a name="l00068"></a>00068 <span class="preprocessor"></span>}
+<a name="l00069"></a>00069 
+<a name="l00070"></a><a class="code" href="util_8h.html#aa92567b4012d3191db5d247c8db8e9d9">00070</a> <span class="keywordtype">void</span> <a class="code" href="util_8cc.html#aa92567b4012d3191db5d247c8db8e9d9" title="Log a warning message.">Warning</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* msg, ...) {
+<a name="l00071"></a>00071   va_list ap;
+<a name="l00072"></a>00072   fprintf(stderr, <span class="stringliteral">&quot;ninja: warning: &quot;</span>);
+<a name="l00073"></a>00073   va_start(ap, msg);
+<a name="l00074"></a>00074   vfprintf(stderr, msg, ap);
+<a name="l00075"></a>00075   va_end(ap);
+<a name="l00076"></a>00076   fprintf(stderr, <span class="stringliteral">&quot;\n&quot;</span>);
+<a name="l00077"></a>00077 }
+<a name="l00078"></a>00078 
+<a name="l00079"></a><a class="code" href="util_8h.html#a8d48223b92317abcaf5984a00a97efb4">00079</a> <span class="keywordtype">void</span> <a class="code" href="util_8cc.html#a8d48223b92317abcaf5984a00a97efb4" title="Log an error message.">Error</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* msg, ...) {
+<a name="l00080"></a>00080   va_list ap;
+<a name="l00081"></a>00081   fprintf(stderr, <span class="stringliteral">&quot;ninja: error: &quot;</span>);
+<a name="l00082"></a>00082   va_start(ap, msg);
+<a name="l00083"></a>00083   vfprintf(stderr, msg, ap);
+<a name="l00084"></a>00084   va_end(ap);
+<a name="l00085"></a>00085   fprintf(stderr, <span class="stringliteral">&quot;\n&quot;</span>);
+<a name="l00086"></a>00086 }
+<a name="l00087"></a>00087 
+<a name="l00088"></a><a class="code" href="util_8h.html#abdb5937692c9c5a0fbe6cbbab7941414">00088</a> <span class="keywordtype">bool</span> <a class="code" href="util_8cc.html#abdb5937692c9c5a0fbe6cbbab7941414" title="Canonicalize a path like &quot;foo/../bar.h&quot; into just &quot;bar.h&quot;.">CanonicalizePath</a>(<span class="keywordtype">string</span>* path, <span class="keywordtype">string</span>* err) {
+<a name="l00089"></a>00089   <a class="code" href="metrics_8h.html#a7c19242938163dd11cedf62fdabd4ab6" title="The primary interface to metrics.">METRIC_RECORD</a>(<span class="stringliteral">&quot;canonicalize str&quot;</span>);
+<a name="l00090"></a>00090   <span class="keywordtype">size_t</span> len = path-&gt;size();
+<a name="l00091"></a>00091   <span class="keywordtype">char</span>* str = 0;
+<a name="l00092"></a>00092   <span class="keywordflow">if</span> (len &gt; 0)
+<a name="l00093"></a>00093     str = &amp;(*path)[0];
+<a name="l00094"></a>00094   <span class="keywordflow">if</span> (!<a class="code" href="util_8cc.html#abdb5937692c9c5a0fbe6cbbab7941414" title="Canonicalize a path like &quot;foo/../bar.h&quot; into just &quot;bar.h&quot;.">CanonicalizePath</a>(str, &amp;len, err))
+<a name="l00095"></a>00095     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00096"></a>00096   path-&gt;resize(len);
+<a name="l00097"></a>00097   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00098"></a>00098 }
+<a name="l00099"></a>00099 
+<a name="l00100"></a><a class="code" href="util_8h.html#a27bef6168502194cff01450b0ddce51a">00100</a> <span class="keywordtype">bool</span> <a class="code" href="util_8cc.html#abdb5937692c9c5a0fbe6cbbab7941414" title="Canonicalize a path like &quot;foo/../bar.h&quot; into just &quot;bar.h&quot;.">CanonicalizePath</a>(<span class="keywordtype">char</span>* path, <span class="keywordtype">size_t</span>* len, <span class="keywordtype">string</span>* err) {
+<a name="l00101"></a>00101   <span class="comment">// WARNING: this function is performance-critical; please benchmark</span>
+<a name="l00102"></a>00102   <span class="comment">// any changes you make to it.</span>
+<a name="l00103"></a>00103   <a class="code" href="metrics_8h.html#a7c19242938163dd11cedf62fdabd4ab6" title="The primary interface to metrics.">METRIC_RECORD</a>(<span class="stringliteral">&quot;canonicalize path&quot;</span>);
+<a name="l00104"></a>00104   <span class="keywordflow">if</span> (*len == 0) {
+<a name="l00105"></a>00105     *err = <span class="stringliteral">&quot;empty path&quot;</span>;
+<a name="l00106"></a>00106     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00107"></a>00107   }
+<a name="l00108"></a>00108 
+<a name="l00109"></a>00109   <span class="keyword">const</span> <span class="keywordtype">int</span> kMaxPathComponents = 30;
+<a name="l00110"></a>00110   <span class="keywordtype">char</span>* components[kMaxPathComponents];
+<a name="l00111"></a>00111   <span class="keywordtype">int</span> component_count = 0;
+<a name="l00112"></a>00112 
+<a name="l00113"></a>00113   <span class="keywordtype">char</span>* start = path;
+<a name="l00114"></a>00114   <span class="keywordtype">char</span>* dst = start;
+<a name="l00115"></a>00115   <span class="keyword">const</span> <span class="keywordtype">char</span>* src = start;
+<a name="l00116"></a>00116   <span class="keyword">const</span> <span class="keywordtype">char</span>* end = start + *len;
+<a name="l00117"></a>00117 
+<a name="l00118"></a>00118   <span class="keywordflow">if</span> (*src == <span class="charliteral">&#39;/&#39;</span>) {
+<a name="l00119"></a>00119 <span class="preprocessor">#ifdef _WIN32</span>
+<a name="l00120"></a>00120 <span class="preprocessor"></span>    <span class="comment">// network path starts with //</span>
+<a name="l00121"></a>00121     <span class="keywordflow">if</span> (*len &gt; 1 &amp;&amp; *(src + 1) == <span class="charliteral">&#39;/&#39;</span>) {
+<a name="l00122"></a>00122       src += 2;
+<a name="l00123"></a>00123       dst += 2;
+<a name="l00124"></a>00124     } <span class="keywordflow">else</span> {
+<a name="l00125"></a>00125       ++src;
+<a name="l00126"></a>00126       ++dst;
+<a name="l00127"></a>00127     }
+<a name="l00128"></a>00128 <span class="preprocessor">#else</span>
+<a name="l00129"></a>00129 <span class="preprocessor"></span>    ++src;
+<a name="l00130"></a>00130     ++dst;
+<a name="l00131"></a>00131 <span class="preprocessor">#endif</span>
+<a name="l00132"></a>00132 <span class="preprocessor"></span>  }
+<a name="l00133"></a>00133 
+<a name="l00134"></a>00134   <span class="keywordflow">while</span> (src &lt; end) {
+<a name="l00135"></a>00135     <span class="keywordflow">if</span> (*src == <span class="charliteral">&#39;.&#39;</span>) {
+<a name="l00136"></a>00136       <span class="keywordflow">if</span> (src + 1 == end || src[1] == <span class="charliteral">&#39;/&#39;</span>) {
+<a name="l00137"></a>00137         <span class="comment">// &#39;.&#39; component; eliminate.</span>
+<a name="l00138"></a>00138         src += 2;
+<a name="l00139"></a>00139         <span class="keywordflow">continue</span>;
+<a name="l00140"></a>00140       } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (src[1] == <span class="charliteral">&#39;.&#39;</span> &amp;&amp; (src + 2 == end || src[2] == <span class="charliteral">&#39;/&#39;</span>)) {
+<a name="l00141"></a>00141         <span class="comment">// &#39;..&#39; component.  Back up if possible.</span>
+<a name="l00142"></a>00142         <span class="keywordflow">if</span> (component_count &gt; 0) {
+<a name="l00143"></a>00143           dst = components[component_count - 1];
+<a name="l00144"></a>00144           src += 3;
+<a name="l00145"></a>00145           --component_count;
+<a name="l00146"></a>00146         } <span class="keywordflow">else</span> {
 <a name="l00147"></a>00147           *dst++ = *src++;
 <a name="l00148"></a>00148           *dst++ = *src++;
-<a name="l00149"></a>00149         }
-<a name="l00150"></a>00150         <span class="keywordflow">continue</span>;
-<a name="l00151"></a>00151       }
-<a name="l00152"></a>00152     }
-<a name="l00153"></a>00153 
-<a name="l00154"></a>00154     <span class="keywordflow">if</span> (*src == <span class="charliteral">&#39;/&#39;</span>) {
-<a name="l00155"></a>00155       src++;
-<a name="l00156"></a>00156       <span class="keywordflow">continue</span>;
-<a name="l00157"></a>00157     }
-<a name="l00158"></a>00158 
-<a name="l00159"></a>00159     <span class="keywordflow">if</span> (component_count == kMaxPathComponents)
-<a name="l00160"></a>00160       <a class="code" href="util_8cc.html#ad98ec6fb76f27b3d5a805cdad742df92" title="Log a fatal message and exit.">Fatal</a>(<span class="stringliteral">&quot;path has too many components : %s&quot;</span>, path);
-<a name="l00161"></a>00161     components[component_count] = dst;
-<a name="l00162"></a>00162     ++component_count;
-<a name="l00163"></a>00163 
-<a name="l00164"></a>00164     <span class="keywordflow">while</span> (*src != <span class="charliteral">&#39;/&#39;</span> &amp;&amp; src != end)
-<a name="l00165"></a>00165       *dst++ = *src++;
-<a name="l00166"></a>00166     *dst++ = *src++;  <span class="comment">// Copy &#39;/&#39; or final \0 character as well.</span>
-<a name="l00167"></a>00167   }
-<a name="l00168"></a>00168 
-<a name="l00169"></a>00169   <span class="keywordflow">if</span> (dst == start) {
-<a name="l00170"></a>00170     *err = <span class="stringliteral">&quot;path canonicalizes to the empty path&quot;</span>;
-<a name="l00171"></a>00171     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00172"></a>00172   }
-<a name="l00173"></a>00173 
-<a name="l00174"></a>00174   *len = dst - start - 1;
-<a name="l00175"></a>00175   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00176"></a>00176 }
-<a name="l00177"></a>00177 
-<a name="l00178"></a><a class="code" href="util_8h.html#afa2642aae4af8af879417889a5e8f4f5">00178</a> <span class="keywordtype">int</span> <a class="code" href="util_8cc.html#afa2642aae4af8af879417889a5e8f4f5" title="Read a file to a string (in text mode: with CRLF conversion on Windows).">ReadFile</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path, <span class="keywordtype">string</span>* contents, <span class="keywordtype">string</span>* err) {
-<a name="l00179"></a>00179   FILE* f = fopen(path.c_str(), <span class="stringliteral">&quot;r&quot;</span>);
-<a name="l00180"></a>00180   <span class="keywordflow">if</span> (!f) {
-<a name="l00181"></a>00181     err-&gt;assign(strerror(errno));
-<a name="l00182"></a>00182     <span class="keywordflow">return</span> -errno;
-<a name="l00183"></a>00183   }
-<a name="l00184"></a>00184 
-<a name="l00185"></a>00185   <span class="keywordtype">char</span> buf[64 &lt;&lt; 10];
-<a name="l00186"></a>00186   <span class="keywordtype">size_t</span> len;
-<a name="l00187"></a>00187   <span class="keywordflow">while</span> ((len = fread(buf, 1, <span class="keyword">sizeof</span>(buf), f)) &gt; 0) {
-<a name="l00188"></a>00188     contents-&gt;append(buf, len);
-<a name="l00189"></a>00189   }
-<a name="l00190"></a>00190   <span class="keywordflow">if</span> (ferror(f)) {
-<a name="l00191"></a>00191     err-&gt;assign(strerror(errno));  <span class="comment">// XXX errno?</span>
-<a name="l00192"></a>00192     contents-&gt;clear();
-<a name="l00193"></a>00193     fclose(f);
-<a name="l00194"></a>00194     <span class="keywordflow">return</span> -errno;
-<a name="l00195"></a>00195   }
-<a name="l00196"></a>00196   fclose(f);
-<a name="l00197"></a>00197   <span class="keywordflow">return</span> 0;
-<a name="l00198"></a>00198 }
-<a name="l00199"></a>00199 
-<a name="l00200"></a><a class="code" href="util_8h.html#a946927145681d8bb8318f5a7c4dc57ae">00200</a> <span class="keywordtype">void</span> <a class="code" href="util_8cc.html#a946927145681d8bb8318f5a7c4dc57ae" title="Mark a file descriptor to not be inherited on exec()s.">SetCloseOnExec</a>(<span class="keywordtype">int</span> fd) {
-<a name="l00201"></a>00201 <span class="preprocessor">#ifndef _WIN32</span>
-<a name="l00202"></a>00202 <span class="preprocessor"></span>  <span class="keywordtype">int</span> flags = fcntl(fd, F_GETFD);
-<a name="l00203"></a>00203   <span class="keywordflow">if</span> (flags &lt; 0) {
-<a name="l00204"></a>00204     perror(<span class="stringliteral">&quot;fcntl(F_GETFD)&quot;</span>);
-<a name="l00205"></a>00205   } <span class="keywordflow">else</span> {
-<a name="l00206"></a>00206     <span class="keywordflow">if</span> (fcntl(fd, F_SETFD, flags | FD_CLOEXEC) &lt; 0)
-<a name="l00207"></a>00207       perror(<span class="stringliteral">&quot;fcntl(F_SETFD)&quot;</span>);
-<a name="l00208"></a>00208   }
-<a name="l00209"></a>00209 <span class="preprocessor">#else</span>
-<a name="l00210"></a>00210 <span class="preprocessor"></span>  <a class="code" href="minidump-win32_8cc.html#a80271737d50feb2e2d81a211d97d677b">HANDLE</a> hd = (<a class="code" href="minidump-win32_8cc.html#a80271737d50feb2e2d81a211d97d677b">HANDLE</a>) _get_osfhandle(fd);
-<a name="l00211"></a>00211   <span class="keywordflow">if</span> (! SetHandleInformation(hd, HANDLE_FLAG_INHERIT, 0)) {
-<a name="l00212"></a>00212     fprintf(stderr, <span class="stringliteral">&quot;SetHandleInformation(): %s&quot;</span>, GetLastErrorString().c_str());
-<a name="l00213"></a>00213   }
-<a name="l00214"></a>00214 <span class="preprocessor">#endif  // ! _WIN32</span>
-<a name="l00215"></a>00215 <span class="preprocessor"></span>}
-<a name="l00216"></a>00216 
-<a name="l00217"></a>00217 
-<a name="l00218"></a><a class="code" href="util_8h.html#ad214b089117a607f2d7855404befab82">00218</a> <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="util_8cc.html#ad214b089117a607f2d7855404befab82" title="Given a misspelled string and a list of correct spellings, returns the closest match or NULL if there...">SpellcheckStringV</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; text,
-<a name="l00219"></a>00219                               <span class="keyword">const</span> vector&lt;const char*&gt;&amp; words) {
-<a name="l00220"></a>00220   <span class="keyword">const</span> <span class="keywordtype">bool</span> kAllowReplacements = <span class="keyword">true</span>;
-<a name="l00221"></a>00221   <span class="keyword">const</span> <span class="keywordtype">int</span> kMaxValidEditDistance = 3;
+<a name="l00149"></a>00149           *dst++ = *src++;
+<a name="l00150"></a>00150         }
+<a name="l00151"></a>00151         <span class="keywordflow">continue</span>;
+<a name="l00152"></a>00152       }
+<a name="l00153"></a>00153     }
+<a name="l00154"></a>00154 
+<a name="l00155"></a>00155     <span class="keywordflow">if</span> (*src == <span class="charliteral">&#39;/&#39;</span>) {
+<a name="l00156"></a>00156       src++;
+<a name="l00157"></a>00157       <span class="keywordflow">continue</span>;
+<a name="l00158"></a>00158     }
+<a name="l00159"></a>00159 
+<a name="l00160"></a>00160     <span class="keywordflow">if</span> (component_count == kMaxPathComponents)
+<a name="l00161"></a>00161       <a class="code" href="util_8cc.html#ad98ec6fb76f27b3d5a805cdad742df92" title="Log a fatal message and exit.">Fatal</a>(<span class="stringliteral">&quot;path has too many components : %s&quot;</span>, path);
+<a name="l00162"></a>00162     components[component_count] = dst;
+<a name="l00163"></a>00163     ++component_count;
+<a name="l00164"></a>00164 
+<a name="l00165"></a>00165     <span class="keywordflow">while</span> (*src != <span class="charliteral">&#39;/&#39;</span> &amp;&amp; src != end)
+<a name="l00166"></a>00166       *dst++ = *src++;
+<a name="l00167"></a>00167     *dst++ = *src++;  <span class="comment">// Copy &#39;/&#39; or final \0 character as well.</span>
+<a name="l00168"></a>00168   }
+<a name="l00169"></a>00169 
+<a name="l00170"></a>00170   <span class="keywordflow">if</span> (dst == start) {
+<a name="l00171"></a>00171     *err = <span class="stringliteral">&quot;path canonicalizes to the empty path&quot;</span>;
+<a name="l00172"></a>00172     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00173"></a>00173   }
+<a name="l00174"></a>00174 
+<a name="l00175"></a>00175   *len = dst - start - 1;
+<a name="l00176"></a>00176   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00177"></a>00177 }
+<a name="l00178"></a>00178 
+<a name="l00179"></a><a class="code" href="util_8cc.html#a38e7f4f3b273c116d16ab33e6a065fa2">00179</a> <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="util_8cc.html#a38e7f4f3b273c116d16ab33e6a065fa2">IsKnownShellSafeCharacter</a>(<span class="keywordtype">char</span> ch) {
+<a name="l00180"></a>00180   <span class="keywordflow">if</span> (<span class="charliteral">&#39;A&#39;</span> &lt;= ch &amp;&amp; ch &lt;= <span class="charliteral">&#39;Z&#39;</span>) <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00181"></a>00181   <span class="keywordflow">if</span> (<span class="charliteral">&#39;a&#39;</span> &lt;= ch &amp;&amp; ch &lt;= <span class="charliteral">&#39;z&#39;</span>) <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00182"></a>00182   <span class="keywordflow">if</span> (<span class="charliteral">&#39;0&#39;</span> &lt;= ch &amp;&amp; ch &lt;= <span class="charliteral">&#39;9&#39;</span>) <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00183"></a>00183 
+<a name="l00184"></a>00184   <span class="keywordflow">switch</span> (ch) {
+<a name="l00185"></a>00185     <span class="keywordflow">case</span> <span class="charliteral">&#39;_&#39;</span>:
+<a name="l00186"></a>00186     <span class="keywordflow">case</span> <span class="charliteral">&#39;+&#39;</span>:
+<a name="l00187"></a>00187     <span class="keywordflow">case</span> <span class="charliteral">&#39;-&#39;</span>:
+<a name="l00188"></a>00188     <span class="keywordflow">case</span> <span class="charliteral">&#39;.&#39;</span>:
+<a name="l00189"></a>00189     <span class="keywordflow">case</span> <span class="charliteral">&#39;/&#39;</span>:
+<a name="l00190"></a>00190       <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00191"></a>00191     <span class="keywordflow">default</span>:
+<a name="l00192"></a>00192       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00193"></a>00193   }
+<a name="l00194"></a>00194 }
+<a name="l00195"></a>00195 
+<a name="l00196"></a><a class="code" href="util_8cc.html#a4316c8580a35e3bedd6e76bba3343b58">00196</a> <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="util_8cc.html#a4316c8580a35e3bedd6e76bba3343b58">IsKnownWin32SafeCharacter</a>(<span class="keywordtype">char</span> ch) {
+<a name="l00197"></a>00197   <span class="keywordflow">switch</span> (ch) {
+<a name="l00198"></a>00198     <span class="keywordflow">case</span> <span class="charliteral">&#39; &#39;</span>:
+<a name="l00199"></a>00199     <span class="keywordflow">case</span> <span class="charliteral">&#39;&quot;&#39;</span>:
+<a name="l00200"></a>00200       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00201"></a>00201     <span class="keywordflow">default</span>:
+<a name="l00202"></a>00202       <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00203"></a>00203   }
+<a name="l00204"></a>00204 }
+<a name="l00205"></a>00205 
+<a name="l00206"></a><a class="code" href="util_8cc.html#a3ecae07db3444ba89a9c421fda0e657d">00206</a> <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="util_8cc.html#a3ecae07db3444ba89a9c421fda0e657d">StringNeedsShellEscaping</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; input) {
+<a name="l00207"></a>00207   <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; input.size(); ++i) {
+<a name="l00208"></a>00208     <span class="keywordflow">if</span> (!<a class="code" href="util_8cc.html#a38e7f4f3b273c116d16ab33e6a065fa2">IsKnownShellSafeCharacter</a>(input[i])) <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00209"></a>00209   }
+<a name="l00210"></a>00210   <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00211"></a>00211 }
+<a name="l00212"></a>00212 
+<a name="l00213"></a><a class="code" href="util_8cc.html#ab86d152a35ccd032649973e01b79f606">00213</a> <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="util_8cc.html#ab86d152a35ccd032649973e01b79f606">StringNeedsWin32Escaping</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; input) {
+<a name="l00214"></a>00214   <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; input.size(); ++i) {
+<a name="l00215"></a>00215     <span class="keywordflow">if</span> (!<a class="code" href="util_8cc.html#a4316c8580a35e3bedd6e76bba3343b58">IsKnownWin32SafeCharacter</a>(input[i])) <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00216"></a>00216   }
+<a name="l00217"></a>00217   <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00218"></a>00218 }
+<a name="l00219"></a>00219 
+<a name="l00220"></a><a class="code" href="util_8h.html#a5d89d1621913641fab23969f8665d3d5">00220</a> <span class="keywordtype">void</span> <a class="code" href="util_8cc.html#a5d89d1621913641fab23969f8665d3d5" title="Appends |input| to |*result|, escaping according to the whims of either Bash, or Win32&#39;s CommandLineT...">GetShellEscapedString</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; input, <span class="keywordtype">string</span>* result) {
+<a name="l00221"></a>00221   assert(result);
 <a name="l00222"></a>00222 
-<a name="l00223"></a>00223   <span class="keywordtype">int</span> min_distance = kMaxValidEditDistance + 1;
-<a name="l00224"></a>00224   <span class="keyword">const</span> <span class="keywordtype">char</span>* result = NULL;
-<a name="l00225"></a>00225   <span class="keywordflow">for</span> (vector&lt;const char*&gt;::const_iterator i = words.begin();
-<a name="l00226"></a>00226        i != words.end(); ++i) {
-<a name="l00227"></a>00227     <span class="keywordtype">int</span> distance = <a class="code" href="edit__distance_8cc.html#a80813485ab7d8f872aa96ca1e7b20bb1">EditDistance</a>(*i, text, kAllowReplacements,
-<a name="l00228"></a>00228                                 kMaxValidEditDistance);
-<a name="l00229"></a>00229     <span class="keywordflow">if</span> (distance &lt; min_distance) {
-<a name="l00230"></a>00230       min_distance = distance;
-<a name="l00231"></a>00231       result = *i;
-<a name="l00232"></a>00232     }
-<a name="l00233"></a>00233   }
-<a name="l00234"></a>00234   <span class="keywordflow">return</span> result;
-<a name="l00235"></a>00235 }
-<a name="l00236"></a>00236 
-<a name="l00237"></a><a class="code" href="util_8h.html#a3e5761332ec67e6554262cb0d9cae4d0">00237</a> <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="util_8cc.html#a3e5761332ec67e6554262cb0d9cae4d0" title="Like SpellcheckStringV, but takes a NULL-terminated list.">SpellcheckString</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* text, ...) {
-<a name="l00238"></a>00238   <span class="comment">// Note: This takes a const char* instead of a string&amp; because using</span>
-<a name="l00239"></a>00239   <span class="comment">// va_start() with a reference parameter is undefined behavior.</span>
-<a name="l00240"></a>00240   va_list ap;
-<a name="l00241"></a>00241   va_start(ap, text);
-<a name="l00242"></a>00242   vector&lt;const char*&gt; words;
-<a name="l00243"></a>00243   <span class="keyword">const</span> <span class="keywordtype">char</span>* word;
-<a name="l00244"></a>00244   <span class="keywordflow">while</span> ((word = va_arg(ap, <span class="keyword">const</span> <span class="keywordtype">char</span>*)))
-<a name="l00245"></a>00245     words.push_back(word);
-<a name="l00246"></a>00246   va_end(ap);
-<a name="l00247"></a>00247   <span class="keywordflow">return</span> <a class="code" href="util_8cc.html#ad214b089117a607f2d7855404befab82" title="Given a misspelled string and a list of correct spellings, returns the closest match or NULL if there...">SpellcheckStringV</a>(text, words);
-<a name="l00248"></a>00248 }
-<a name="l00249"></a>00249 
-<a name="l00250"></a>00250 <span class="preprocessor">#ifdef _WIN32</span>
-<a name="l00251"></a>00251 <span class="preprocessor"></span><span class="keywordtype">string</span> GetLastErrorString() {
-<a name="l00252"></a>00252   <a class="code" href="minidump-win32_8cc.html#a976e4ee8a5d560b950e63ebcf583c773">DWORD</a> err = GetLastError();
+<a name="l00223"></a>00223   <span class="keywordflow">if</span> (!<a class="code" href="util_8cc.html#a3ecae07db3444ba89a9c421fda0e657d">StringNeedsShellEscaping</a>(input)) {
+<a name="l00224"></a>00224     result-&gt;append(input);
+<a name="l00225"></a>00225     <span class="keywordflow">return</span>;
+<a name="l00226"></a>00226   }
+<a name="l00227"></a>00227 
+<a name="l00228"></a>00228   <span class="keyword">const</span> <span class="keywordtype">char</span> kQuote = <span class="charliteral">&#39;\&#39;&#39;</span>;
+<a name="l00229"></a>00229   <span class="keyword">const</span> <span class="keywordtype">char</span> kEscapeSequence[] = <span class="stringliteral">&quot;&#39;\\&#39;&quot;</span>;
+<a name="l00230"></a>00230 
+<a name="l00231"></a>00231   result-&gt;push_back(kQuote);
+<a name="l00232"></a>00232 
+<a name="l00233"></a>00233   string::const_iterator span_begin = input.begin();
+<a name="l00234"></a>00234   <span class="keywordflow">for</span> (string::const_iterator it = input.begin(), end = input.end(); it != end;
+<a name="l00235"></a>00235        ++it) {
+<a name="l00236"></a>00236     <span class="keywordflow">if</span> (*it == kQuote) {
+<a name="l00237"></a>00237       result-&gt;append(span_begin, it);
+<a name="l00238"></a>00238       result-&gt;append(kEscapeSequence);
+<a name="l00239"></a>00239       span_begin = it;
+<a name="l00240"></a>00240     }
+<a name="l00241"></a>00241   }
+<a name="l00242"></a>00242   result-&gt;append(span_begin, input.end());
+<a name="l00243"></a>00243   result-&gt;push_back(kQuote);
+<a name="l00244"></a>00244 }
+<a name="l00245"></a>00245 
+<a name="l00246"></a>00246 
+<a name="l00247"></a><a class="code" href="util_8h.html#a147fcbfb98ba43b1cb5a4739bf0c7702">00247</a> <span class="keywordtype">void</span> <a class="code" href="util_8cc.html#a147fcbfb98ba43b1cb5a4739bf0c7702">GetWin32EscapedString</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; input, <span class="keywordtype">string</span>* result) {
+<a name="l00248"></a>00248   assert(result);
+<a name="l00249"></a>00249   <span class="keywordflow">if</span> (!<a class="code" href="util_8cc.html#ab86d152a35ccd032649973e01b79f606">StringNeedsWin32Escaping</a>(input)) {
+<a name="l00250"></a>00250     result-&gt;append(input);
+<a name="l00251"></a>00251     <span class="keywordflow">return</span>;
+<a name="l00252"></a>00252   }
 <a name="l00253"></a>00253 
-<a name="l00254"></a>00254   <span class="keywordtype">char</span>* msg_buf;
-<a name="l00255"></a>00255   FormatMessageA(
-<a name="l00256"></a>00256         FORMAT_MESSAGE_ALLOCATE_BUFFER |
-<a name="l00257"></a>00257         FORMAT_MESSAGE_FROM_SYSTEM |
-<a name="l00258"></a>00258         FORMAT_MESSAGE_IGNORE_INSERTS,
-<a name="l00259"></a>00259         NULL,
-<a name="l00260"></a>00260         err,
-<a name="l00261"></a>00261         MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
-<a name="l00262"></a>00262         (<span class="keywordtype">char</span>*)&amp;msg_buf,
-<a name="l00263"></a>00263         0,
-<a name="l00264"></a>00264         NULL);
-<a name="l00265"></a>00265   <span class="keywordtype">string</span> msg = msg_buf;
-<a name="l00266"></a>00266   LocalFree(msg_buf);
-<a name="l00267"></a>00267   <span class="keywordflow">return</span> msg;
-<a name="l00268"></a>00268 }
-<a name="l00269"></a>00269 
-<a name="l00270"></a>00270 <span class="keywordtype">void</span> Win32Fatal(<span class="keyword">const</span> <span class="keywordtype">char</span>* <span class="keyword">function</span>) {
-<a name="l00271"></a>00271   <a class="code" href="util_8cc.html#ad98ec6fb76f27b3d5a805cdad742df92" title="Log a fatal message and exit.">Fatal</a>(<span class="stringliteral">&quot;%s: %s&quot;</span>, <span class="keyword">function</span>, GetLastErrorString().c_str());
-<a name="l00272"></a>00272 }
-<a name="l00273"></a>00273 <span class="preprocessor">#endif</span>
-<a name="l00274"></a>00274 <span class="preprocessor"></span>
-<a name="l00275"></a><a class="code" href="util_8cc.html#a004abead93a39ce70b226bea8fa39680">00275</a> <span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code" href="util_8cc.html#a004abead93a39ce70b226bea8fa39680">islatinalpha</a>(<span class="keywordtype">int</span> c) {
-<a name="l00276"></a>00276   <span class="comment">// isalpha() is locale-dependent.</span>
-<a name="l00277"></a>00277   <span class="keywordflow">return</span> (c &gt;= <span class="charliteral">&#39;a&#39;</span> &amp;&amp; c &lt;= <span class="charliteral">&#39;z&#39;</span>) || (c &gt;= <span class="charliteral">&#39;A&#39;</span> &amp;&amp; c &lt;= <span class="charliteral">&#39;Z&#39;</span>);
-<a name="l00278"></a>00278 }
-<a name="l00279"></a>00279 
-<a name="l00280"></a><a class="code" href="util_8h.html#ab47e6d9b7e9e9f6a9d4560f148cd3643">00280</a> <span class="keywordtype">string</span> <a class="code" href="util_8cc.html#ab47e6d9b7e9e9f6a9d4560f148cd3643" title="Removes all Ansi escape codes (http://www.termsys.demon.co.uk/vtansi.htm).">StripAnsiEscapeCodes</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; in) {
-<a name="l00281"></a>00281   <span class="keywordtype">string</span> stripped;
-<a name="l00282"></a>00282   stripped.reserve(in.size());
-<a name="l00283"></a>00283 
-<a name="l00284"></a>00284   <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; in.size(); ++i) {
-<a name="l00285"></a>00285     <span class="keywordflow">if</span> (in[i] != <span class="stringliteral">&#39;\33&#39;</span>) {
-<a name="l00286"></a>00286       <span class="comment">// Not an escape code.</span>
-<a name="l00287"></a>00287       stripped.push_back(in[i]);
-<a name="l00288"></a>00288       <span class="keywordflow">continue</span>;
-<a name="l00289"></a>00289     }
-<a name="l00290"></a>00290 
-<a name="l00291"></a>00291     <span class="comment">// Only strip CSIs for now.</span>
-<a name="l00292"></a>00292     <span class="keywordflow">if</span> (i + 1 &gt;= in.size()) <span class="keywordflow">break</span>;
-<a name="l00293"></a>00293     <span class="keywordflow">if</span> (in[i + 1] != <span class="charliteral">&#39;[&#39;</span>) <span class="keywordflow">continue</span>;  <span class="comment">// Not a CSI.</span>
-<a name="l00294"></a>00294     i += 2;
-<a name="l00295"></a>00295 
-<a name="l00296"></a>00296     <span class="comment">// Skip everything up to and including the next [a-zA-Z].</span>
-<a name="l00297"></a>00297     <span class="keywordflow">while</span> (i &lt; in.size() &amp;&amp; !<a class="code" href="util_8cc.html#a004abead93a39ce70b226bea8fa39680">islatinalpha</a>(in[i]))
-<a name="l00298"></a>00298       ++i;
+<a name="l00254"></a>00254   <span class="keyword">const</span> <span class="keywordtype">char</span> kQuote = <span class="charliteral">&#39;&quot;&#39;</span>;
+<a name="l00255"></a>00255   <span class="keyword">const</span> <span class="keywordtype">char</span> kBackslash = <span class="charliteral">&#39;\\&#39;</span>;
+<a name="l00256"></a>00256 
+<a name="l00257"></a>00257   result-&gt;push_back(kQuote);
+<a name="l00258"></a>00258   <span class="keywordtype">size_t</span> consecutive_backslash_count = 0;
+<a name="l00259"></a>00259   string::const_iterator span_begin = input.begin();
+<a name="l00260"></a>00260   <span class="keywordflow">for</span> (string::const_iterator it = input.begin(), end = input.end(); it != end;
+<a name="l00261"></a>00261        ++it) {
+<a name="l00262"></a>00262     <span class="keywordflow">switch</span> (*it) {
+<a name="l00263"></a>00263       <span class="keywordflow">case</span> kBackslash:
+<a name="l00264"></a>00264         ++consecutive_backslash_count;
+<a name="l00265"></a>00265         <span class="keywordflow">break</span>;
+<a name="l00266"></a>00266       <span class="keywordflow">case</span> kQuote:
+<a name="l00267"></a>00267         result-&gt;append(span_begin, it);
+<a name="l00268"></a>00268         result-&gt;append(consecutive_backslash_count + 1, kBackslash);
+<a name="l00269"></a>00269         span_begin = it;
+<a name="l00270"></a>00270         consecutive_backslash_count = 0;
+<a name="l00271"></a>00271         <span class="keywordflow">break</span>;
+<a name="l00272"></a>00272       <span class="keywordflow">default</span>:
+<a name="l00273"></a>00273         consecutive_backslash_count = 0;
+<a name="l00274"></a>00274         <span class="keywordflow">break</span>;
+<a name="l00275"></a>00275     }
+<a name="l00276"></a>00276   }
+<a name="l00277"></a>00277   result-&gt;append(span_begin, input.end());
+<a name="l00278"></a>00278   result-&gt;append(consecutive_backslash_count, kBackslash);
+<a name="l00279"></a>00279   result-&gt;push_back(kQuote);
+<a name="l00280"></a>00280 }
+<a name="l00281"></a>00281 
+<a name="l00282"></a><a class="code" href="util_8h.html#afa2642aae4af8af879417889a5e8f4f5">00282</a> <span class="keywordtype">int</span> <a class="code" href="util_8cc.html#afa2642aae4af8af879417889a5e8f4f5" title="Read a file to a string (in text mode: with CRLF conversion on Windows).">ReadFile</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path, <span class="keywordtype">string</span>* contents, <span class="keywordtype">string</span>* err) {
+<a name="l00283"></a>00283   FILE* f = fopen(path.c_str(), <span class="stringliteral">&quot;r&quot;</span>);
+<a name="l00284"></a>00284   <span class="keywordflow">if</span> (!f) {
+<a name="l00285"></a>00285     err-&gt;assign(strerror(errno));
+<a name="l00286"></a>00286     <span class="keywordflow">return</span> -errno;
+<a name="l00287"></a>00287   }
+<a name="l00288"></a>00288 
+<a name="l00289"></a>00289   <span class="keywordtype">char</span> buf[64 &lt;&lt; 10];
+<a name="l00290"></a>00290   <span class="keywordtype">size_t</span> len;
+<a name="l00291"></a>00291   <span class="keywordflow">while</span> ((len = fread(buf, 1, <span class="keyword">sizeof</span>(buf), f)) &gt; 0) {
+<a name="l00292"></a>00292     contents-&gt;append(buf, len);
+<a name="l00293"></a>00293   }
+<a name="l00294"></a>00294   <span class="keywordflow">if</span> (ferror(f)) {
+<a name="l00295"></a>00295     err-&gt;assign(strerror(errno));  <span class="comment">// XXX errno?</span>
+<a name="l00296"></a>00296     contents-&gt;clear();
+<a name="l00297"></a>00297     fclose(f);
+<a name="l00298"></a>00298     <span class="keywordflow">return</span> -errno;
 <a name="l00299"></a>00299   }
-<a name="l00300"></a>00300   <span class="keywordflow">return</span> stripped;
-<a name="l00301"></a>00301 }
-<a name="l00302"></a>00302 
-<a name="l00303"></a><a class="code" href="util_8h.html#a03a03c74e8b71b7ab09b1af533dc253f">00303</a> <span class="keywordtype">int</span> <a class="code" href="util_8cc.html#a03a03c74e8b71b7ab09b1af533dc253f">GetProcessorCount</a>() {
-<a name="l00304"></a>00304 <span class="preprocessor">#ifdef _WIN32</span>
-<a name="l00305"></a>00305 <span class="preprocessor"></span>  SYSTEM_INFO info;
-<a name="l00306"></a>00306   GetSystemInfo(&amp;info);
-<a name="l00307"></a>00307   <span class="keywordflow">return</span> info.dwNumberOfProcessors;
-<a name="l00308"></a>00308 <span class="preprocessor">#else</span>
-<a name="l00309"></a>00309 <span class="preprocessor"></span>  <span class="keywordflow">return</span> sysconf(_SC_NPROCESSORS_ONLN);
-<a name="l00310"></a>00310 <span class="preprocessor">#endif</span>
-<a name="l00311"></a>00311 <span class="preprocessor"></span>}
-<a name="l00312"></a>00312 
-<a name="l00313"></a>00313 <span class="preprocessor">#if defined(_WIN32) || defined(__CYGWIN__)</span>
-<a name="l00314"></a>00314 <span class="preprocessor"></span><span class="keywordtype">double</span> <a class="code" href="util_8cc.html#afb09694f1319f261012f1851bbbb285b">GetLoadAverage</a>() {
-<a name="l00315"></a>00315   <span class="comment">// TODO(nicolas.despres@gmail.com): Find a way to implement it on Windows.</span>
-<a name="l00316"></a>00316   <span class="comment">// Remember to also update Usage() when this is fixed.</span>
-<a name="l00317"></a>00317   <span class="keywordflow">return</span> -0.0f;
-<a name="l00318"></a>00318 }
-<a name="l00319"></a>00319 <span class="preprocessor">#else</span>
-<a name="l00320"></a><a class="code" href="util_8h.html#afb09694f1319f261012f1851bbbb285b">00320</a> <span class="preprocessor"></span><span class="keywordtype">double</span> <a class="code" href="util_8cc.html#afb09694f1319f261012f1851bbbb285b">GetLoadAverage</a>() {
-<a name="l00321"></a>00321   <span class="keywordtype">double</span> loadavg[3] = { 0.0f, 0.0f, 0.0f };
-<a name="l00322"></a>00322   <span class="keywordflow">if</span> (getloadavg(loadavg, 3) &lt; 0) {
-<a name="l00323"></a>00323     <span class="comment">// Maybe we should return an error here or the availability of</span>
-<a name="l00324"></a>00324     <span class="comment">// getloadavg(3) should be checked when ninja is configured.</span>
-<a name="l00325"></a>00325     <span class="keywordflow">return</span> -0.0f;
-<a name="l00326"></a>00326   }
-<a name="l00327"></a>00327   <span class="keywordflow">return</span> loadavg[0];
-<a name="l00328"></a>00328 }
-<a name="l00329"></a>00329 <span class="preprocessor">#endif // _WIN32</span>
-<a name="l00330"></a>00330 <span class="preprocessor"></span>
-<a name="l00331"></a><a class="code" href="util_8h.html#ac8e2d9b3b582b06d8c2ecd55cf22d512">00331</a> <span class="keywordtype">string</span> <a class="code" href="util_8cc.html#ac8e2d9b3b582b06d8c2ecd55cf22d512" title="Elide the given string str with &#39;...&#39; in the middle if the length exceeds width.">ElideMiddle</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; str, <span class="keywordtype">size_t</span> width) {
-<a name="l00332"></a>00332   <span class="keyword">const</span> <span class="keywordtype">int</span> kMargin = 3;  <span class="comment">// Space for &quot;...&quot;.</span>
-<a name="l00333"></a>00333   <span class="keywordtype">string</span> result = str;
-<a name="l00334"></a>00334   <span class="keywordflow">if</span> (result.size() + kMargin &gt; width) {
-<a name="l00335"></a>00335     <span class="keywordtype">size_t</span> elide_size = (width - kMargin) / 2;
-<a name="l00336"></a>00336     result = result.substr(0, elide_size)
-<a name="l00337"></a>00337       + <span class="stringliteral">&quot;...&quot;</span>
-<a name="l00338"></a>00338       + result.substr(result.size() - elide_size, elide_size);
-<a name="l00339"></a>00339   }
-<a name="l00340"></a>00340   <span class="keywordflow">return</span> result;
-<a name="l00341"></a>00341 }
-<a name="l00342"></a>00342 
-<a name="l00343"></a><a class="code" href="util_8h.html#a59c00d43a10517c5124b75ef540f270a">00343</a> <span class="keywordtype">bool</span> <a class="code" href="util_8cc.html#a59c00d43a10517c5124b75ef540f270a" title="Truncates a file to the given size.">Truncate</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path, <span class="keywordtype">size_t</span> size, <span class="keywordtype">string</span>* err) {
-<a name="l00344"></a>00344 <span class="preprocessor">#ifdef _WIN32</span>
-<a name="l00345"></a>00345 <span class="preprocessor"></span>  <span class="keywordtype">int</span> fh = _sopen(path.c_str(), _O_RDWR | _O_CREAT, _SH_DENYNO,
-<a name="l00346"></a>00346                   _S_IREAD | _S_IWRITE);
-<a name="l00347"></a>00347   <span class="keywordtype">int</span> success = _chsize(fh, size);
-<a name="l00348"></a>00348   _close(fh);
-<a name="l00349"></a>00349 <span class="preprocessor">#else</span>
-<a name="l00350"></a>00350 <span class="preprocessor"></span>  <span class="keywordtype">int</span> success = truncate(path.c_str(), size);
-<a name="l00351"></a>00351 <span class="preprocessor">#endif</span>
-<a name="l00352"></a>00352 <span class="preprocessor"></span>  <span class="comment">// Both truncate() and _chsize() return 0 on success and set errno and return</span>
-<a name="l00353"></a>00353   <span class="comment">// -1 on failure.</span>
-<a name="l00354"></a>00354   <span class="keywordflow">if</span> (success &lt; 0) {
-<a name="l00355"></a>00355     *err = strerror(errno);
-<a name="l00356"></a>00356     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00357"></a>00357   }
-<a name="l00358"></a>00358   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00359"></a>00359 }
+<a name="l00300"></a>00300   fclose(f);
+<a name="l00301"></a>00301   <span class="keywordflow">return</span> 0;
+<a name="l00302"></a>00302 }
+<a name="l00303"></a>00303 
+<a name="l00304"></a><a class="code" href="util_8h.html#a946927145681d8bb8318f5a7c4dc57ae">00304</a> <span class="keywordtype">void</span> <a class="code" href="util_8cc.html#a946927145681d8bb8318f5a7c4dc57ae" title="Mark a file descriptor to not be inherited on exec()s.">SetCloseOnExec</a>(<span class="keywordtype">int</span> fd) {
+<a name="l00305"></a>00305 <span class="preprocessor">#ifndef _WIN32</span>
+<a name="l00306"></a>00306 <span class="preprocessor"></span>  <span class="keywordtype">int</span> flags = fcntl(fd, F_GETFD);
+<a name="l00307"></a>00307   <span class="keywordflow">if</span> (flags &lt; 0) {
+<a name="l00308"></a>00308     perror(<span class="stringliteral">&quot;fcntl(F_GETFD)&quot;</span>);
+<a name="l00309"></a>00309   } <span class="keywordflow">else</span> {
+<a name="l00310"></a>00310     <span class="keywordflow">if</span> (fcntl(fd, F_SETFD, flags | FD_CLOEXEC) &lt; 0)
+<a name="l00311"></a>00311       perror(<span class="stringliteral">&quot;fcntl(F_SETFD)&quot;</span>);
+<a name="l00312"></a>00312   }
+<a name="l00313"></a>00313 <span class="preprocessor">#else</span>
+<a name="l00314"></a>00314 <span class="preprocessor"></span>  <a class="code" href="minidump-win32_8cc.html#a80271737d50feb2e2d81a211d97d677b">HANDLE</a> hd = (<a class="code" href="minidump-win32_8cc.html#a80271737d50feb2e2d81a211d97d677b">HANDLE</a>) _get_osfhandle(fd);
+<a name="l00315"></a>00315   <span class="keywordflow">if</span> (! SetHandleInformation(hd, HANDLE_FLAG_INHERIT, 0)) {
+<a name="l00316"></a>00316     fprintf(stderr, <span class="stringliteral">&quot;SetHandleInformation(): %s&quot;</span>, GetLastErrorString().c_str());
+<a name="l00317"></a>00317   }
+<a name="l00318"></a>00318 <span class="preprocessor">#endif  // ! _WIN32</span>
+<a name="l00319"></a>00319 <span class="preprocessor"></span>}
+<a name="l00320"></a>00320 
+<a name="l00321"></a>00321 
+<a name="l00322"></a><a class="code" href="util_8h.html#ad214b089117a607f2d7855404befab82">00322</a> <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="util_8cc.html#ad214b089117a607f2d7855404befab82" title="Given a misspelled string and a list of correct spellings, returns the closest match or NULL if there...">SpellcheckStringV</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; text,
+<a name="l00323"></a>00323                               <span class="keyword">const</span> vector&lt;const char*&gt;&amp; words) {
+<a name="l00324"></a>00324   <span class="keyword">const</span> <span class="keywordtype">bool</span> kAllowReplacements = <span class="keyword">true</span>;
+<a name="l00325"></a>00325   <span class="keyword">const</span> <span class="keywordtype">int</span> kMaxValidEditDistance = 3;
+<a name="l00326"></a>00326 
+<a name="l00327"></a>00327   <span class="keywordtype">int</span> min_distance = kMaxValidEditDistance + 1;
+<a name="l00328"></a>00328   <span class="keyword">const</span> <span class="keywordtype">char</span>* result = NULL;
+<a name="l00329"></a>00329   <span class="keywordflow">for</span> (vector&lt;const char*&gt;::const_iterator i = words.begin();
+<a name="l00330"></a>00330        i != words.end(); ++i) {
+<a name="l00331"></a>00331     <span class="keywordtype">int</span> distance = <a class="code" href="edit__distance_8cc.html#a80813485ab7d8f872aa96ca1e7b20bb1">EditDistance</a>(*i, text, kAllowReplacements,
+<a name="l00332"></a>00332                                 kMaxValidEditDistance);
+<a name="l00333"></a>00333     <span class="keywordflow">if</span> (distance &lt; min_distance) {
+<a name="l00334"></a>00334       min_distance = distance;
+<a name="l00335"></a>00335       result = *i;
+<a name="l00336"></a>00336     }
+<a name="l00337"></a>00337   }
+<a name="l00338"></a>00338   <span class="keywordflow">return</span> result;
+<a name="l00339"></a>00339 }
+<a name="l00340"></a>00340 
+<a name="l00341"></a><a class="code" href="util_8h.html#a3e5761332ec67e6554262cb0d9cae4d0">00341</a> <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="util_8cc.html#a3e5761332ec67e6554262cb0d9cae4d0" title="Like SpellcheckStringV, but takes a NULL-terminated list.">SpellcheckString</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* text, ...) {
+<a name="l00342"></a>00342   <span class="comment">// Note: This takes a const char* instead of a string&amp; because using</span>
+<a name="l00343"></a>00343   <span class="comment">// va_start() with a reference parameter is undefined behavior.</span>
+<a name="l00344"></a>00344   va_list ap;
+<a name="l00345"></a>00345   va_start(ap, text);
+<a name="l00346"></a>00346   vector&lt;const char*&gt; words;
+<a name="l00347"></a>00347   <span class="keyword">const</span> <span class="keywordtype">char</span>* word;
+<a name="l00348"></a>00348   <span class="keywordflow">while</span> ((word = va_arg(ap, <span class="keyword">const</span> <span class="keywordtype">char</span>*)))
+<a name="l00349"></a>00349     words.push_back(word);
+<a name="l00350"></a>00350   va_end(ap);
+<a name="l00351"></a>00351   <span class="keywordflow">return</span> <a class="code" href="util_8cc.html#ad214b089117a607f2d7855404befab82" title="Given a misspelled string and a list of correct spellings, returns the closest match or NULL if there...">SpellcheckStringV</a>(text, words);
+<a name="l00352"></a>00352 }
+<a name="l00353"></a>00353 
+<a name="l00354"></a>00354 <span class="preprocessor">#ifdef _WIN32</span>
+<a name="l00355"></a>00355 <span class="preprocessor"></span><span class="keywordtype">string</span> GetLastErrorString() {
+<a name="l00356"></a>00356   <a class="code" href="minidump-win32_8cc.html#a976e4ee8a5d560b950e63ebcf583c773">DWORD</a> err = GetLastError();
+<a name="l00357"></a>00357 
+<a name="l00358"></a>00358   <span class="keywordtype">char</span>* msg_buf;
+<a name="l00359"></a>00359   FormatMessageA(
+<a name="l00360"></a>00360         FORMAT_MESSAGE_ALLOCATE_BUFFER |
+<a name="l00361"></a>00361         FORMAT_MESSAGE_FROM_SYSTEM |
+<a name="l00362"></a>00362         FORMAT_MESSAGE_IGNORE_INSERTS,
+<a name="l00363"></a>00363         NULL,
+<a name="l00364"></a>00364         err,
+<a name="l00365"></a>00365         MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+<a name="l00366"></a>00366         (<span class="keywordtype">char</span>*)&amp;msg_buf,
+<a name="l00367"></a>00367         0,
+<a name="l00368"></a>00368         NULL);
+<a name="l00369"></a>00369   <span class="keywordtype">string</span> msg = msg_buf;
+<a name="l00370"></a>00370   LocalFree(msg_buf);
+<a name="l00371"></a>00371   <span class="keywordflow">return</span> msg;
+<a name="l00372"></a>00372 }
+<a name="l00373"></a>00373 
+<a name="l00374"></a>00374 <span class="keywordtype">void</span> Win32Fatal(<span class="keyword">const</span> <span class="keywordtype">char</span>* <span class="keyword">function</span>) {
+<a name="l00375"></a>00375   <a class="code" href="util_8cc.html#ad98ec6fb76f27b3d5a805cdad742df92" title="Log a fatal message and exit.">Fatal</a>(<span class="stringliteral">&quot;%s: %s&quot;</span>, <span class="keyword">function</span>, GetLastErrorString().c_str());
+<a name="l00376"></a>00376 }
+<a name="l00377"></a>00377 <span class="preprocessor">#endif</span>
+<a name="l00378"></a>00378 <span class="preprocessor"></span>
+<a name="l00379"></a><a class="code" href="util_8cc.html#a004abead93a39ce70b226bea8fa39680">00379</a> <span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code" href="util_8cc.html#a004abead93a39ce70b226bea8fa39680">islatinalpha</a>(<span class="keywordtype">int</span> c) {
+<a name="l00380"></a>00380   <span class="comment">// isalpha() is locale-dependent.</span>
+<a name="l00381"></a>00381   <span class="keywordflow">return</span> (c &gt;= <span class="charliteral">&#39;a&#39;</span> &amp;&amp; c &lt;= <span class="charliteral">&#39;z&#39;</span>) || (c &gt;= <span class="charliteral">&#39;A&#39;</span> &amp;&amp; c &lt;= <span class="charliteral">&#39;Z&#39;</span>);
+<a name="l00382"></a>00382 }
+<a name="l00383"></a>00383 
+<a name="l00384"></a><a class="code" href="util_8h.html#ab47e6d9b7e9e9f6a9d4560f148cd3643">00384</a> <span class="keywordtype">string</span> <a class="code" href="util_8cc.html#ab47e6d9b7e9e9f6a9d4560f148cd3643" title="Removes all Ansi escape codes (http://www.termsys.demon.co.uk/vtansi.htm).">StripAnsiEscapeCodes</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; in) {
+<a name="l00385"></a>00385   <span class="keywordtype">string</span> stripped;
+<a name="l00386"></a>00386   stripped.reserve(in.size());
+<a name="l00387"></a>00387 
+<a name="l00388"></a>00388   <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; in.size(); ++i) {
+<a name="l00389"></a>00389     <span class="keywordflow">if</span> (in[i] != <span class="stringliteral">&#39;\33&#39;</span>) {
+<a name="l00390"></a>00390       <span class="comment">// Not an escape code.</span>
+<a name="l00391"></a>00391       stripped.push_back(in[i]);
+<a name="l00392"></a>00392       <span class="keywordflow">continue</span>;
+<a name="l00393"></a>00393     }
+<a name="l00394"></a>00394 
+<a name="l00395"></a>00395     <span class="comment">// Only strip CSIs for now.</span>
+<a name="l00396"></a>00396     <span class="keywordflow">if</span> (i + 1 &gt;= in.size()) <span class="keywordflow">break</span>;
+<a name="l00397"></a>00397     <span class="keywordflow">if</span> (in[i + 1] != <span class="charliteral">&#39;[&#39;</span>) <span class="keywordflow">continue</span>;  <span class="comment">// Not a CSI.</span>
+<a name="l00398"></a>00398     i += 2;
+<a name="l00399"></a>00399 
+<a name="l00400"></a>00400     <span class="comment">// Skip everything up to and including the next [a-zA-Z].</span>
+<a name="l00401"></a>00401     <span class="keywordflow">while</span> (i &lt; in.size() &amp;&amp; !<a class="code" href="util_8cc.html#a004abead93a39ce70b226bea8fa39680">islatinalpha</a>(in[i]))
+<a name="l00402"></a>00402       ++i;
+<a name="l00403"></a>00403   }
+<a name="l00404"></a>00404   <span class="keywordflow">return</span> stripped;
+<a name="l00405"></a>00405 }
+<a name="l00406"></a>00406 
+<a name="l00407"></a><a class="code" href="util_8h.html#a03a03c74e8b71b7ab09b1af533dc253f">00407</a> <span class="keywordtype">int</span> <a class="code" href="util_8cc.html#a03a03c74e8b71b7ab09b1af533dc253f">GetProcessorCount</a>() {
+<a name="l00408"></a>00408 <span class="preprocessor">#ifdef _WIN32</span>
+<a name="l00409"></a>00409 <span class="preprocessor"></span>  SYSTEM_INFO info;
+<a name="l00410"></a>00410   GetSystemInfo(&amp;info);
+<a name="l00411"></a>00411   <span class="keywordflow">return</span> info.dwNumberOfProcessors;
+<a name="l00412"></a>00412 <span class="preprocessor">#else</span>
+<a name="l00413"></a>00413 <span class="preprocessor"></span>  <span class="keywordflow">return</span> sysconf(_SC_NPROCESSORS_ONLN);
+<a name="l00414"></a>00414 <span class="preprocessor">#endif</span>
+<a name="l00415"></a>00415 <span class="preprocessor"></span>}
+<a name="l00416"></a>00416 
+<a name="l00417"></a>00417 <span class="preprocessor">#if defined(_WIN32) || defined(__CYGWIN__)</span>
+<a name="l00418"></a>00418 <span class="preprocessor"></span><span class="keywordtype">double</span> <a class="code" href="util_8cc.html#afb09694f1319f261012f1851bbbb285b">GetLoadAverage</a>() {
+<a name="l00419"></a>00419   <span class="comment">// TODO(nicolas.despres@gmail.com): Find a way to implement it on Windows.</span>
+<a name="l00420"></a>00420   <span class="comment">// Remember to also update Usage() when this is fixed.</span>
+<a name="l00421"></a>00421   <span class="keywordflow">return</span> -0.0f;
+<a name="l00422"></a>00422 }
+<a name="l00423"></a>00423 <span class="preprocessor">#else</span>
+<a name="l00424"></a><a class="code" href="util_8h.html#afb09694f1319f261012f1851bbbb285b">00424</a> <span class="preprocessor"></span><span class="keywordtype">double</span> <a class="code" href="util_8cc.html#afb09694f1319f261012f1851bbbb285b">GetLoadAverage</a>() {
+<a name="l00425"></a>00425   <span class="keywordtype">double</span> loadavg[3] = { 0.0f, 0.0f, 0.0f };
+<a name="l00426"></a>00426   <span class="keywordflow">if</span> (getloadavg(loadavg, 3) &lt; 0) {
+<a name="l00427"></a>00427     <span class="comment">// Maybe we should return an error here or the availability of</span>
+<a name="l00428"></a>00428     <span class="comment">// getloadavg(3) should be checked when ninja is configured.</span>
+<a name="l00429"></a>00429     <span class="keywordflow">return</span> -0.0f;
+<a name="l00430"></a>00430   }
+<a name="l00431"></a>00431   <span class="keywordflow">return</span> loadavg[0];
+<a name="l00432"></a>00432 }
+<a name="l00433"></a>00433 <span class="preprocessor">#endif // _WIN32</span>
+<a name="l00434"></a>00434 <span class="preprocessor"></span>
+<a name="l00435"></a><a class="code" href="util_8h.html#ac8e2d9b3b582b06d8c2ecd55cf22d512">00435</a> <span class="keywordtype">string</span> <a class="code" href="util_8cc.html#ac8e2d9b3b582b06d8c2ecd55cf22d512" title="Elide the given string str with &#39;...&#39; in the middle if the length exceeds width.">ElideMiddle</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; str, <span class="keywordtype">size_t</span> width) {
+<a name="l00436"></a>00436   <span class="keyword">const</span> <span class="keywordtype">int</span> kMargin = 3;  <span class="comment">// Space for &quot;...&quot;.</span>
+<a name="l00437"></a>00437   <span class="keywordtype">string</span> result = str;
+<a name="l00438"></a>00438   <span class="keywordflow">if</span> (result.size() + kMargin &gt; width) {
+<a name="l00439"></a>00439     <span class="keywordtype">size_t</span> elide_size = (width - kMargin) / 2;
+<a name="l00440"></a>00440     result = result.substr(0, elide_size)
+<a name="l00441"></a>00441       + <span class="stringliteral">&quot;...&quot;</span>
+<a name="l00442"></a>00442       + result.substr(result.size() - elide_size, elide_size);
+<a name="l00443"></a>00443   }
+<a name="l00444"></a>00444   <span class="keywordflow">return</span> result;
+<a name="l00445"></a>00445 }
+<a name="l00446"></a>00446 
+<a name="l00447"></a><a class="code" href="util_8h.html#a59c00d43a10517c5124b75ef540f270a">00447</a> <span class="keywordtype">bool</span> <a class="code" href="util_8cc.html#a59c00d43a10517c5124b75ef540f270a" title="Truncates a file to the given size.">Truncate</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path, <span class="keywordtype">size_t</span> size, <span class="keywordtype">string</span>* err) {
+<a name="l00448"></a>00448 <span class="preprocessor">#ifdef _WIN32</span>
+<a name="l00449"></a>00449 <span class="preprocessor"></span>  <span class="keywordtype">int</span> fh = _sopen(path.c_str(), _O_RDWR | _O_CREAT, _SH_DENYNO,
+<a name="l00450"></a>00450                   _S_IREAD | _S_IWRITE);
+<a name="l00451"></a>00451   <span class="keywordtype">int</span> success = _chsize(fh, size);
+<a name="l00452"></a>00452   _close(fh);
+<a name="l00453"></a>00453 <span class="preprocessor">#else</span>
+<a name="l00454"></a>00454 <span class="preprocessor"></span>  <span class="keywordtype">int</span> success = truncate(path.c_str(), size);
+<a name="l00455"></a>00455 <span class="preprocessor">#endif</span>
+<a name="l00456"></a>00456 <span class="preprocessor"></span>  <span class="comment">// Both truncate() and _chsize() return 0 on success and set errno and return</span>
+<a name="l00457"></a>00457   <span class="comment">// -1 on failure.</span>
+<a name="l00458"></a>00458   <span class="keywordflow">if</span> (success &lt; 0) {
+<a name="l00459"></a>00459     *err = strerror(errno);
+<a name="l00460"></a>00460     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00461"></a>00461   }
+<a name="l00462"></a>00462   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00463"></a>00463 }
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 12 2013 09:25:50 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 4 2014 09:13:00 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

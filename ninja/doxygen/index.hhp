@@ -31,6 +31,7 @@ debug__flags_8h_source.html
 depfile__parser_8cc_source.html
 depfile__parser_8h_source.html
 depfile__parser_8in_8cc_source.html
+depfile__parser__perftest_8cc_source.html
 depfile__parser__test_8cc_source.html
 deps__log_8cc_source.html
 deps__log_8h_source.html
@@ -63,6 +64,7 @@ line__printer_8cc_source.html
 line__printer_8h_source.html
 manifest__parser_8cc_source.html
 manifest__parser_8h_source.html
+manifest__parser__perftest_8cc_source.html
 manifest__parser__test_8cc_source.html
 metrics_8cc_source.html
 metrics_8h_source.html
@@ -73,7 +75,6 @@ msvc__helper__main-win32_8cc_source.html
 msvc__helper__test_8cc_source.html
 ninja_8cc_source.html
 ninja__test_8cc_source.html
-parser__perftest_8cc_source.html
 state_8cc_source.html
 state_8h_source.html
 state__test_8cc_source.html
@@ -110,6 +111,7 @@ debug__flags_8h.html
 depfile__parser_8cc.html
 depfile__parser_8h.html
 depfile__parser_8in_8cc.html
+depfile__parser__perftest_8cc.html
 depfile__parser__test_8cc.html
 deps__log_8cc.html
 deps__log_8h.html
@@ -142,6 +144,7 @@ line__printer_8cc.html
 line__printer_8h.html
 manifest__parser_8cc.html
 manifest__parser_8h.html
+manifest__parser__perftest_8cc.html
 manifest__parser__test_8cc.html
 metrics_8cc.html
 metrics_8h.html
@@ -152,7 +155,6 @@ msvc__helper__main-win32_8cc.html
 msvc__helper__test_8cc.html
 ninja_8cc.html
 ninja__test_8cc.html
-parser__perftest_8cc.html
 state_8cc.html
 state_8h.html
 state__test_8cc.html
@@ -182,6 +184,8 @@ structBuildLog.html
 structBuildLog-members.html
 structBuildLog_1_1LogEntry.html
 structBuildLog_1_1LogEntry-members.html
+structBuildLogUser.html
+structBuildLogUser-members.html
 structBuildStatus.html
 structBuildStatus-members.html
 structBuildStatus_1_1RateInfo.html
@@ -258,6 +262,8 @@ structMetrics.html
 structMetrics-members.html
 structNode.html
 structNode-members.html
+structNoDeadPaths.html
+structNoDeadPaths-members.html
 structParserTest.html
 structParserTest-members.html
 structPlan.html
@@ -270,6 +276,8 @@ structRealCommandRunner.html
 structRealCommandRunner-members.html
 structRealDiskInterface.html
 structRealDiskInterface-members.html
+structRealFileReader.html
+structRealFileReader-members.html
 structRule.html
 structRule-members.html
 structScopedMetric.html
@@ -368,6 +376,7 @@ globals_0x67.html
 globals_0x68.html
 globals_0x69.html
 globals_0x6b.html
+globals_0x6c.html
 globals_0x6d.html
 globals_0x6e.html
 globals_0x6f.html
@@ -384,6 +393,7 @@ globals_func_0x65.html
 globals_func_0x66.html
 globals_func_0x67.html
 globals_func_0x69.html
+globals_func_0x6c.html
 globals_func_0x6d.html
 globals_func_0x70.html
 globals_func_0x72.html
@@ -428,6 +438,7 @@ depfile__parser_8cc__incl.png
 depfile__parser_8h__incl.png
 depfile__parser_8h__dep__incl.png
 depfile__parser_8in_8cc__incl.png
+depfile__parser__perftest_8cc__incl.png
 depfile__parser__test_8cc__incl.png
 deps__log_8cc__incl.png
 deps__log_8h__incl.png
@@ -471,6 +482,7 @@ line__printer_8h__dep__incl.png
 manifest__parser_8cc__incl.png
 manifest__parser_8h__incl.png
 manifest__parser_8h__dep__incl.png
+manifest__parser__perftest_8cc__incl.png
 manifest__parser__test_8cc__incl.png
 metrics_8cc__incl.png
 metrics_8h__incl.png
@@ -483,7 +495,6 @@ msvc__helper__main-win32_8cc__incl.png
 msvc__helper__test_8cc__incl.png
 ninja_8cc__incl.png
 ninja__test_8cc__incl.png
-parser__perftest_8cc__incl.png
 state_8cc__incl.png
 state_8h__incl.png
 state_8h__dep__incl.png
@@ -508,6 +519,7 @@ version_8h__incl.png
 version_8h__dep__incl.png
 structBindingEnv__inherit__graph.png
 structBuildDryRun__inherit__graph.png
+structBuildLogUser__inherit__graph.png
 structBuildTest__inherit__graph.png
 structBuildWithDepsLogTest__inherit__graph.png
 structBuildWithLogTest__inherit__graph.png
@@ -520,10 +532,12 @@ structExternalStringHashMap__inherit__graph.png
 structFakeCommandRunner__inherit__graph.png
 structGraphTest__inherit__graph.png
 structManifestParser_1_1FileReader__inherit__graph.png
+structNoDeadPaths__inherit__graph.png
 structParserTest__inherit__graph.png
 structPlanTest__inherit__graph.png
 structRealCommandRunner__inherit__graph.png
 structRealDiskInterface__inherit__graph.png
+structRealFileReader__inherit__graph.png
 structStateTestWithBuiltinRules__inherit__graph.png
 structVirtualFileSystem__inherit__graph.png
 graph_legend.png

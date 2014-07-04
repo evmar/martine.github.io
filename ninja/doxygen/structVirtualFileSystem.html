@@ -98,8 +98,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a file to a string. Fill in |err| on error.  <a href="#ab47293dbafe8926db6fb02742b42e140"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structVirtualFileSystem.html#adec99a414371927c9d5546b97c4e1cb0">RemoveFile</a> (const string &amp;path)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove the file named <em>path</em>.  <a href="#adec99a414371927c9d5546b97c4e1cb0"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="timestamp_8h.html#a364f6f32873dd70e259c971fc2e28b73">TimeStamp</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structVirtualFileSystem.html#adb7c97119619c0d060579aaaf14c7847">Stat</a> (const string &amp;path)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">stat() a file, returning the mtime, or 0 if missing and -1 on other errors.  <a href="#adb7c97119619c0d060579aaaf14c7847"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="timestamp_8h.html#a364f6f32873dd70e259c971fc2e28b73">TimeStamp</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structVirtualFileSystem.html#a21576b9c44cb6c1649ab85381c0983fd">Stat</a> (const string &amp;path) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">stat() a file, returning the mtime, or 0 if missing and -1 on other errors.  <a href="#a21576b9c44cb6c1649ab85381c0983fd"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structVirtualFileSystem.html#a912bc655f005b0c522fa8e954b71eeee">Tick</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Tick "time" forwards; subsequent file operations will be newer than previous ones.  <a href="#a912bc655f005b0c522fa8e954b71eeee"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structVirtualFileSystem.html#aecd1015fa61653d78dd46f22daf72c5a">VirtualFileSystem</a> ()</td></tr>
@@ -187,7 +187,7 @@ Public Attributes</h2></td></tr>
 
 <p>References <a class="el" href="test_8h_source.html#l00077">files_</a>, <a class="el" href="test_8h_source.html#l00079">files_created_</a>, and <a class="el" href="test_8h_source.html#l00082">now_</a>.</p>
 
-<p>Referenced by <a class="el" href="build__test_8cc_source.html#l00421">BuildTest::SetUp()</a>, <a class="el" href="build__test_8cc_source.html#l00502">FakeCommandRunner::StartCommand()</a>, and <a class="el" href="test_8cc_source.html#l00115">WriteFile()</a>.</p>
+<p>Referenced by <a class="el" href="build__test_8cc_source.html#l00436">BuildTest::SetUp()</a>, <a class="el" href="build__test_8cc_source.html#l00519">FakeCommandRunner::StartCommand()</a>, and <a class="el" href="test_8cc_source.html#l00115">WriteFile()</a>.</p>
 
 </div>
 </div>
@@ -233,11 +233,9 @@ Public Attributes</h2></td></tr>
 
 <p>Create all the parent directories for path; like mkdir -p `basename path`. </p>
 
-<p>Definition at line <a class="el" href="disk__interface_8cc_source.html#l00059">59</a> of file <a class="el" href="disk__interface_8cc_source.html">disk_interface.cc</a>.</p>
+<p>Definition at line <a class="el" href="disk__interface_8cc_source.html#l00134">134</a> of file <a class="el" href="disk__interface_8cc_source.html">disk_interface.cc</a>.</p>
 
-<p>References <a class="el" href="structDiskInterface.html#abf89f5cfce3c775997e7b40607107779">DiskInterface::MakeDir()</a>, and <a class="el" href="structDiskInterface.html#ac99deecbc7f235272f0a8e308e7792d7">DiskInterface::Stat()</a>.</p>
-
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00672">Builder::StartEdge()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00682">Builder::StartEdge()</a>.</p>
 
 </div>
 </div>
@@ -303,16 +301,16 @@ Public Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="adb7c97119619c0d060579aaaf14c7847"></a><!-- doxytag: member="VirtualFileSystem::Stat" ref="adb7c97119619c0d060579aaaf14c7847" args="(const string &amp;path)" -->
+<a class="anchor" id="a21576b9c44cb6c1649ab85381c0983fd"></a><!-- doxytag: member="VirtualFileSystem::Stat" ref="a21576b9c44cb6c1649ab85381c0983fd" args="(const string &amp;path) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="timestamp_8h.html#a364f6f32873dd70e259c971fc2e28b73">TimeStamp</a> <a class="el" href="structVirtualFileSystem.html#adb7c97119619c0d060579aaaf14c7847">VirtualFileSystem::Stat</a> </td>
+          <td class="memname"><a class="el" href="timestamp_8h.html#a364f6f32873dd70e259c971fc2e28b73">TimeStamp</a> <a class="el" href="structVirtualFileSystem.html#a21576b9c44cb6c1649ab85381c0983fd">VirtualFileSystem::Stat</a> </td>
           <td>(</td>
           <td class="paramtype">const string &amp;&#160;</td>
           <td class="paramname"><em>path</em></td><td>)</td>
-          <td><code> [virtual]</code></td>
+          <td> const<code> [virtual]</code></td>
         </tr>
       </table>
 </div>
@@ -320,7 +318,7 @@ Public Attributes</h2></td></tr>
 
 <p>stat() a file, returning the mtime, or 0 if missing and -1 on other errors. </p>
 
-<p>Implements <a class="el" href="structDiskInterface.html#ac99deecbc7f235272f0a8e308e7792d7">DiskInterface</a>.</p>
+<p>Implements <a class="el" href="structDiskInterface.html#a1095cf31175f95f005fc38b28683b0cb">DiskInterface</a>.</p>
 
 <p>Definition at line <a class="el" href="test_8cc_source.html#l00108">108</a> of file <a class="el" href="test_8cc_source.html">test.cc</a>.</p>
 
@@ -498,7 +496,7 @@ Public Attributes</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 12 2013 09:25:50 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 4 2014 09:13:00 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

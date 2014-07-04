@@ -59,21 +59,22 @@
 <div class="title">disk_interface.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;string&gt;</code><br/>
+<div class="textblock"><code>#include &lt;map&gt;</code><br/>
+<code>#include &lt;string&gt;</code><br/>
 <code>#include &quot;<a class="el" href="timestamp_8h_source.html">timestamp.h</a>&quot;</code><br/>
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for disk_interface.h:</div>
 <div class="dyncontent">
 <div class="center"><img src="disk__interface_8h__incl.png" border="0" usemap="#disk__interface_8h" alt=""/></div>
 <map name="disk__interface_8h" id="disk__interface_8h">
-<area shape="rect" id="node5" href="timestamp_8h.html" title="timestamp.h" alt="" coords="83,83,176,112"/></map>
+<area shape="rect" id="node7" href="timestamp_8h.html" title="timestamp.h" alt="" coords="152,83,245,112"/></map>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
 <div class="center"><img src="disk__interface_8h__dep__incl.png" border="0" usemap="#disk__interface_8hdep" alt=""/></div>
 <map name="disk__interface_8hdep" id="disk__interface_8hdep">
-<area shape="rect" id="node3" href="build_8cc.html" title="build.cc" alt="" coords="615,83,681,112"/><area shape="rect" id="node5" href="test_8h.html" title="test.h" alt="" coords="756,83,809,112"/><area shape="rect" id="node15" href="disk__interface__test_8cc.html" title="disk_interface_test.cc" alt="" coords="5,160,155,189"/><area shape="rect" id="node31" href="clean_8cc.html" title="clean.cc" alt="" coords="833,83,903,112"/><area shape="rect" id="node33" href="disk__interface_8cc.html" title="disk_interface.cc" alt="" coords="927,83,1047,112"/><area shape="rect" id="node36" href="graph_8cc.html" title="graph.cc" alt="" coords="1071,83,1143,112"/><area shape="rect" id="node38" href="ninja_8cc.html" title="ninja.cc" alt="" coords="1167,83,1233,112"/><area shape="rect" id="node7" href="build__log__test_8cc.html" title="build_log_test.cc" alt="" coords="179,160,299,189"/><area shape="rect" id="node9" href="build__test_8cc.html" title="build_test.cc" alt="" coords="323,160,419,189"/><area shape="rect" id="node11" href="clean__test_8cc.html" title="clean_test.cc" alt="" coords="443,160,541,189"/><area shape="rect" id="node13" href="deps__log__test_8cc.html" title="deps_log_test.cc" alt="" coords="565,160,685,189"/><area shape="rect" id="node17" href="edit__distance__test_8cc.html" title="edit_distance_test.cc" alt="" coords="709,160,856,189"/><area shape="rect" id="node19" href="graph__test_8cc.html" title="graph_test.cc" alt="" coords="880,160,981,189"/><area shape="rect" id="node21" href="includes__normalize__test_8cc.html" title="includes_normalize_test.cc" alt="" coords="1005,160,1184,189"/><area shape="rect" id="node23" href="msvc__helper__test_8cc.html" title="msvc_helper_test.cc" alt="" coords="1208,160,1349,189"/><area shape="rect" id="node25" href="subprocess__test_8cc.html" title="subprocess_test.cc" alt="" coords="1373,160,1509,189"/><area shape="rect" id="node27" href="test_8cc.html" title="test.cc" alt="" coords="1533,160,1595,189"/><area shape="rect" id="node29" href="util__test_8cc.html" title="util_test.cc" alt="" coords="1619,160,1704,189"/></map>
+<area shape="rect" id="node3" href="build_8cc.html" title="build.cc" alt="" coords="615,83,681,112"/><area shape="rect" id="node5" href="test_8h.html" title="test.h" alt="" coords="756,83,809,112"/><area shape="rect" id="node15" href="disk__interface__test_8cc.html" title="disk_interface_test.cc" alt="" coords="5,160,155,189"/><area shape="rect" id="node31" href="clean_8cc.html" title="clean.cc" alt="" coords="833,83,903,112"/><area shape="rect" id="node33" href="disk__interface_8cc.html" title="disk_interface.cc" alt="" coords="927,83,1047,112"/><area shape="rect" id="node36" href="graph_8cc.html" title="graph.cc" alt="" coords="1071,83,1143,112"/><area shape="rect" id="node38" href="manifest__parser__perftest_8cc.html" title="manifest_parser_perftest.cc" alt="" coords="1167,83,1351,112"/><area shape="rect" id="node40" href="ninja_8cc.html" title="ninja.cc" alt="" coords="1375,83,1441,112"/><area shape="rect" id="node7" href="build__log__test_8cc.html" title="build_log_test.cc" alt="" coords="179,160,299,189"/><area shape="rect" id="node9" href="build__test_8cc.html" title="build_test.cc" alt="" coords="323,160,419,189"/><area shape="rect" id="node11" href="clean__test_8cc.html" title="clean_test.cc" alt="" coords="443,160,541,189"/><area shape="rect" id="node13" href="deps__log__test_8cc.html" title="deps_log_test.cc" alt="" coords="565,160,685,189"/><area shape="rect" id="node17" href="edit__distance__test_8cc.html" title="edit_distance_test.cc" alt="" coords="709,160,856,189"/><area shape="rect" id="node19" href="graph__test_8cc.html" title="graph_test.cc" alt="" coords="880,160,981,189"/><area shape="rect" id="node21" href="includes__normalize__test_8cc.html" title="includes_normalize_test.cc" alt="" coords="1005,160,1184,189"/><area shape="rect" id="node23" href="msvc__helper__test_8cc.html" title="msvc_helper_test.cc" alt="" coords="1208,160,1349,189"/><area shape="rect" id="node25" href="subprocess__test_8cc.html" title="subprocess_test.cc" alt="" coords="1373,160,1509,189"/><area shape="rect" id="node27" href="test_8cc.html" title="test.cc" alt="" coords="1533,160,1595,189"/><area shape="rect" id="node29" href="util__test_8cc.html" title="util_test.cc" alt="" coords="1619,160,1704,189"/></map>
 </div>
 </div>
 <p><a href="disk__interface_8h_source.html">Go to the source code of this file.</a></p>
@@ -89,7 +90,7 @@ Classes</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 12 2013 09:25:50 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 4 2014 09:13:00 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

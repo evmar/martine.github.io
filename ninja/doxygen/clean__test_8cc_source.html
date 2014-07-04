@@ -345,97 +345,121 @@
 <a name="l00286"></a>00286 <span class="stringliteral">&quot;  rspfile = $rspfile\n&quot;</span>
 <a name="l00287"></a>00287 <span class="stringliteral">&quot;  rspfile_content=$in\n&quot;</span>
 <a name="l00288"></a>00288 <span class="stringliteral">&quot;build out1: cc in1\n&quot;</span>
-<a name="l00289"></a>00289 <span class="stringliteral">&quot;  rspfile = cc1.rsp\n&quot;</span>
-<a name="l00290"></a>00290 <span class="stringliteral">&quot;  rspfile_content=$in\n&quot;</span>));
-<a name="l00291"></a>00291   fs_.Create(<span class="stringliteral">&quot;out1&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);
-<a name="l00292"></a>00292   fs_.Create(<span class="stringliteral">&quot;cc1.rsp&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);
-<a name="l00293"></a>00293 
-<a name="l00294"></a>00294   <a class="code" href="structCleaner.html">Cleaner</a> cleaner(&amp;state_, config_, &amp;fs_);
-<a name="l00295"></a>00295   EXPECT_EQ(0, cleaner.<a class="code" href="structCleaner.html#aee224f1e7c956ac8d9ad5280209434ad" title="Clean all built files, except for files created by generator rules.">CleanAll</a>());
-<a name="l00296"></a>00296   EXPECT_EQ(2, cleaner.<a class="code" href="structCleaner.html#af4b0d5cb3c426f05e96c1222f724b880">cleaned_files_count</a>());
-<a name="l00297"></a>00297   EXPECT_EQ(2u, fs_.files_removed_.size());
-<a name="l00298"></a>00298 }
-<a name="l00299"></a>00299 
-<a name="l00300"></a><a class="code" href="clean__test_8cc.html#aa25fa70584ce9b82a06f64dbb4fe87a6">00300</a> <a class="code" href="build__test_8cc.html#aa2d4879a1416ae4b4db00986d0b091eb">TEST_F</a>(<a class="code" href="structCleanTest.html">CleanTest</a>, CleanRsp) {
-<a name="l00301"></a>00301   ASSERT_NO_FATAL_FAILURE(<a class="code" href="test_8cc.html#afb20bae83c4de264129c46c005ad3907">AssertParse</a>(&amp;state_,
-<a name="l00302"></a>00302 <span class="stringliteral">&quot;rule cat_rsp \n&quot;</span>
-<a name="l00303"></a>00303 <span class="stringliteral">&quot;  command = cat $rspfile &gt; $out\n&quot;</span>
-<a name="l00304"></a>00304 <span class="stringliteral">&quot;  rspfile = $rspfile\n&quot;</span>
-<a name="l00305"></a>00305 <span class="stringliteral">&quot;  rspfile_content = $in\n&quot;</span>
-<a name="l00306"></a>00306 <span class="stringliteral">&quot;build in1: cat src1\n&quot;</span>
-<a name="l00307"></a>00307 <span class="stringliteral">&quot;build out1: cat in1\n&quot;</span>
-<a name="l00308"></a>00308 <span class="stringliteral">&quot;build in2: cat_rsp src2\n&quot;</span>
-<a name="l00309"></a>00309 <span class="stringliteral">&quot;  rspfile=in2.rsp\n&quot;</span>
-<a name="l00310"></a>00310 <span class="stringliteral">&quot;  rspfile_content=$in\n&quot;</span>
-<a name="l00311"></a>00311 <span class="stringliteral">&quot;build out2: cat_rsp in2\n&quot;</span>
-<a name="l00312"></a>00312 <span class="stringliteral">&quot;  rspfile=out2.rsp\n&quot;</span>
-<a name="l00313"></a>00313 <span class="stringliteral">&quot;  rspfile_content=$in\n&quot;</span>));
-<a name="l00314"></a>00314   fs_.Create(<span class="stringliteral">&quot;in1&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);
-<a name="l00315"></a>00315   fs_.Create(<span class="stringliteral">&quot;out1&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);
-<a name="l00316"></a>00316   fs_.Create(<span class="stringliteral">&quot;in2.rsp&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);
-<a name="l00317"></a>00317   fs_.Create(<span class="stringliteral">&quot;out2.rsp&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);
-<a name="l00318"></a>00318   fs_.Create(<span class="stringliteral">&quot;in2&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);
-<a name="l00319"></a>00319   fs_.Create(<span class="stringliteral">&quot;out2&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);
-<a name="l00320"></a>00320 
-<a name="l00321"></a>00321   <a class="code" href="structCleaner.html">Cleaner</a> cleaner(&amp;state_, config_, &amp;fs_);
-<a name="l00322"></a>00322   ASSERT_EQ(0, cleaner.<a class="code" href="structCleaner.html#af4b0d5cb3c426f05e96c1222f724b880">cleaned_files_count</a>());
-<a name="l00323"></a>00323   ASSERT_EQ(0, cleaner.<a class="code" href="structCleaner.html#a146f242991cf962752883da58c86d77c" title="Clean the given target and all the file built for it.">CleanTarget</a>(<span class="stringliteral">&quot;out1&quot;</span>));
-<a name="l00324"></a>00324   EXPECT_EQ(2, cleaner.<a class="code" href="structCleaner.html#af4b0d5cb3c426f05e96c1222f724b880">cleaned_files_count</a>()); 
-<a name="l00325"></a>00325   ASSERT_EQ(0, cleaner.<a class="code" href="structCleaner.html#a146f242991cf962752883da58c86d77c" title="Clean the given target and all the file built for it.">CleanTarget</a>(<span class="stringliteral">&quot;in2&quot;</span>));
+<a name="l00289"></a>00289 <span class="stringliteral">&quot;  rspfile = cc1.rsp\n&quot;</span>));
+<a name="l00290"></a>00290   fs_.Create(<span class="stringliteral">&quot;out1&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);
+<a name="l00291"></a>00291   fs_.Create(<span class="stringliteral">&quot;cc1.rsp&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);
+<a name="l00292"></a>00292 
+<a name="l00293"></a>00293   <a class="code" href="structCleaner.html">Cleaner</a> cleaner(&amp;state_, config_, &amp;fs_);
+<a name="l00294"></a>00294   EXPECT_EQ(0, cleaner.<a class="code" href="structCleaner.html#aee224f1e7c956ac8d9ad5280209434ad" title="Clean all built files, except for files created by generator rules.">CleanAll</a>());
+<a name="l00295"></a>00295   EXPECT_EQ(2, cleaner.<a class="code" href="structCleaner.html#af4b0d5cb3c426f05e96c1222f724b880">cleaned_files_count</a>());
+<a name="l00296"></a>00296   EXPECT_EQ(2u, fs_.files_removed_.size());
+<a name="l00297"></a>00297 }
+<a name="l00298"></a>00298 
+<a name="l00299"></a><a class="code" href="clean__test_8cc.html#aa25fa70584ce9b82a06f64dbb4fe87a6">00299</a> <a class="code" href="build__test_8cc.html#aa2d4879a1416ae4b4db00986d0b091eb">TEST_F</a>(<a class="code" href="structCleanTest.html">CleanTest</a>, CleanRsp) {
+<a name="l00300"></a>00300   ASSERT_NO_FATAL_FAILURE(<a class="code" href="test_8cc.html#afb20bae83c4de264129c46c005ad3907">AssertParse</a>(&amp;state_,
+<a name="l00301"></a>00301 <span class="stringliteral">&quot;rule cat_rsp \n&quot;</span>
+<a name="l00302"></a>00302 <span class="stringliteral">&quot;  command = cat $rspfile &gt; $out\n&quot;</span>
+<a name="l00303"></a>00303 <span class="stringliteral">&quot;  rspfile = $rspfile\n&quot;</span>
+<a name="l00304"></a>00304 <span class="stringliteral">&quot;  rspfile_content = $in\n&quot;</span>
+<a name="l00305"></a>00305 <span class="stringliteral">&quot;build in1: cat src1\n&quot;</span>
+<a name="l00306"></a>00306 <span class="stringliteral">&quot;build out1: cat in1\n&quot;</span>
+<a name="l00307"></a>00307 <span class="stringliteral">&quot;build in2: cat_rsp src2\n&quot;</span>
+<a name="l00308"></a>00308 <span class="stringliteral">&quot;  rspfile=in2.rsp\n&quot;</span>
+<a name="l00309"></a>00309 <span class="stringliteral">&quot;build out2: cat_rsp in2\n&quot;</span>
+<a name="l00310"></a>00310 <span class="stringliteral">&quot;  rspfile=out2.rsp\n&quot;</span>
+<a name="l00311"></a>00311 ));
+<a name="l00312"></a>00312   fs_.Create(<span class="stringliteral">&quot;in1&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);
+<a name="l00313"></a>00313   fs_.Create(<span class="stringliteral">&quot;out1&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);
+<a name="l00314"></a>00314   fs_.Create(<span class="stringliteral">&quot;in2.rsp&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);
+<a name="l00315"></a>00315   fs_.Create(<span class="stringliteral">&quot;out2.rsp&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);
+<a name="l00316"></a>00316   fs_.Create(<span class="stringliteral">&quot;in2&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);
+<a name="l00317"></a>00317   fs_.Create(<span class="stringliteral">&quot;out2&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);
+<a name="l00318"></a>00318 
+<a name="l00319"></a>00319   <a class="code" href="structCleaner.html">Cleaner</a> cleaner(&amp;state_, config_, &amp;fs_);
+<a name="l00320"></a>00320   ASSERT_EQ(0, cleaner.<a class="code" href="structCleaner.html#af4b0d5cb3c426f05e96c1222f724b880">cleaned_files_count</a>());
+<a name="l00321"></a>00321   ASSERT_EQ(0, cleaner.<a class="code" href="structCleaner.html#a146f242991cf962752883da58c86d77c" title="Clean the given target and all the file built for it.">CleanTarget</a>(<span class="stringliteral">&quot;out1&quot;</span>));
+<a name="l00322"></a>00322   EXPECT_EQ(2, cleaner.<a class="code" href="structCleaner.html#af4b0d5cb3c426f05e96c1222f724b880">cleaned_files_count</a>()); 
+<a name="l00323"></a>00323   ASSERT_EQ(0, cleaner.<a class="code" href="structCleaner.html#a146f242991cf962752883da58c86d77c" title="Clean the given target and all the file built for it.">CleanTarget</a>(<span class="stringliteral">&quot;in2&quot;</span>));
+<a name="l00324"></a>00324   EXPECT_EQ(2, cleaner.<a class="code" href="structCleaner.html#af4b0d5cb3c426f05e96c1222f724b880">cleaned_files_count</a>());
+<a name="l00325"></a>00325   ASSERT_EQ(0, cleaner.<a class="code" href="structCleaner.html#a0d7bcd7981b24ae786dd6654157b5978" title="Clean all the file built with the given rule rule.">CleanRule</a>(<span class="stringliteral">&quot;cat_rsp&quot;</span>));
 <a name="l00326"></a>00326   EXPECT_EQ(2, cleaner.<a class="code" href="structCleaner.html#af4b0d5cb3c426f05e96c1222f724b880">cleaned_files_count</a>());
-<a name="l00327"></a>00327   ASSERT_EQ(0, cleaner.<a class="code" href="structCleaner.html#a0d7bcd7981b24ae786dd6654157b5978" title="Clean all the file built with the given rule rule.">CleanRule</a>(<span class="stringliteral">&quot;cat_rsp&quot;</span>));
-<a name="l00328"></a>00328   EXPECT_EQ(2, cleaner.<a class="code" href="structCleaner.html#af4b0d5cb3c426f05e96c1222f724b880">cleaned_files_count</a>());
+<a name="l00327"></a>00327 
+<a name="l00328"></a>00328   EXPECT_EQ(6u, fs_.files_removed_.size());
 <a name="l00329"></a>00329 
-<a name="l00330"></a>00330   EXPECT_EQ(6u, fs_.files_removed_.size());
-<a name="l00331"></a>00331 
-<a name="l00332"></a>00332   <span class="comment">// Check they are removed.</span>
-<a name="l00333"></a>00333   EXPECT_EQ(0, fs_.Stat(<span class="stringliteral">&quot;in1&quot;</span>));
-<a name="l00334"></a>00334   EXPECT_EQ(0, fs_.Stat(<span class="stringliteral">&quot;out1&quot;</span>));
-<a name="l00335"></a>00335   EXPECT_EQ(0, fs_.Stat(<span class="stringliteral">&quot;in2&quot;</span>));
-<a name="l00336"></a>00336   EXPECT_EQ(0, fs_.Stat(<span class="stringliteral">&quot;out2&quot;</span>));
-<a name="l00337"></a>00337   EXPECT_EQ(0, fs_.Stat(<span class="stringliteral">&quot;in2.rsp&quot;</span>));
-<a name="l00338"></a>00338   EXPECT_EQ(0, fs_.Stat(<span class="stringliteral">&quot;out2.rsp&quot;</span>));
-<a name="l00339"></a>00339 
-<a name="l00340"></a>00340   fs_.files_removed_.clear();
-<a name="l00341"></a>00341 }
-<a name="l00342"></a>00342 
-<a name="l00343"></a><a class="code" href="clean__test_8cc.html#af0dd311ab2c2d0a2df64dbbbbb5cbe68">00343</a> <a class="code" href="build__test_8cc.html#aa2d4879a1416ae4b4db00986d0b091eb">TEST_F</a>(<a class="code" href="structCleanTest.html">CleanTest</a>, CleanFailure) {
-<a name="l00344"></a>00344   ASSERT_NO_FATAL_FAILURE(<a class="code" href="test_8cc.html#afb20bae83c4de264129c46c005ad3907">AssertParse</a>(&amp;state_,
-<a name="l00345"></a>00345                                       <span class="stringliteral">&quot;build dir: cat src1\n&quot;</span>));
-<a name="l00346"></a>00346   fs_.MakeDir(<span class="stringliteral">&quot;dir&quot;</span>);
-<a name="l00347"></a>00347   <a class="code" href="structCleaner.html">Cleaner</a> cleaner(&amp;state_, config_, &amp;fs_);
-<a name="l00348"></a>00348   EXPECT_NE(0, cleaner.<a class="code" href="structCleaner.html#aee224f1e7c956ac8d9ad5280209434ad" title="Clean all built files, except for files created by generator rules.">CleanAll</a>());
-<a name="l00349"></a>00349 }
-<a name="l00350"></a>00350 
-<a name="l00351"></a><a class="code" href="clean__test_8cc.html#a55ce4d655e0160d4640317ad106fee9a">00351</a> <a class="code" href="build__test_8cc.html#aa2d4879a1416ae4b4db00986d0b091eb">TEST_F</a>(<a class="code" href="structCleanTest.html">CleanTest</a>, CleanPhony) {
-<a name="l00352"></a>00352   ASSERT_NO_FATAL_FAILURE(<a class="code" href="test_8cc.html#afb20bae83c4de264129c46c005ad3907">AssertParse</a>(&amp;state_,
-<a name="l00353"></a>00353 <span class="stringliteral">&quot;build phony: phony t1 t2\n&quot;</span>
-<a name="l00354"></a>00354 <span class="stringliteral">&quot;build t1: cat\n&quot;</span>
-<a name="l00355"></a>00355 <span class="stringliteral">&quot;build t2: cat\n&quot;</span>));
+<a name="l00330"></a>00330   <span class="comment">// Check they are removed.</span>
+<a name="l00331"></a>00331   EXPECT_EQ(0, fs_.Stat(<span class="stringliteral">&quot;in1&quot;</span>));
+<a name="l00332"></a>00332   EXPECT_EQ(0, fs_.Stat(<span class="stringliteral">&quot;out1&quot;</span>));
+<a name="l00333"></a>00333   EXPECT_EQ(0, fs_.Stat(<span class="stringliteral">&quot;in2&quot;</span>));
+<a name="l00334"></a>00334   EXPECT_EQ(0, fs_.Stat(<span class="stringliteral">&quot;out2&quot;</span>));
+<a name="l00335"></a>00335   EXPECT_EQ(0, fs_.Stat(<span class="stringliteral">&quot;in2.rsp&quot;</span>));
+<a name="l00336"></a>00336   EXPECT_EQ(0, fs_.Stat(<span class="stringliteral">&quot;out2.rsp&quot;</span>));
+<a name="l00337"></a>00337 }
+<a name="l00338"></a>00338 
+<a name="l00339"></a><a class="code" href="clean__test_8cc.html#af0dd311ab2c2d0a2df64dbbbbb5cbe68">00339</a> <a class="code" href="build__test_8cc.html#aa2d4879a1416ae4b4db00986d0b091eb">TEST_F</a>(<a class="code" href="structCleanTest.html">CleanTest</a>, CleanFailure) {
+<a name="l00340"></a>00340   ASSERT_NO_FATAL_FAILURE(<a class="code" href="test_8cc.html#afb20bae83c4de264129c46c005ad3907">AssertParse</a>(&amp;state_,
+<a name="l00341"></a>00341                                       <span class="stringliteral">&quot;build dir: cat src1\n&quot;</span>));
+<a name="l00342"></a>00342   fs_.MakeDir(<span class="stringliteral">&quot;dir&quot;</span>);
+<a name="l00343"></a>00343   <a class="code" href="structCleaner.html">Cleaner</a> cleaner(&amp;state_, config_, &amp;fs_);
+<a name="l00344"></a>00344   EXPECT_NE(0, cleaner.<a class="code" href="structCleaner.html#aee224f1e7c956ac8d9ad5280209434ad" title="Clean all built files, except for files created by generator rules.">CleanAll</a>());
+<a name="l00345"></a>00345 }
+<a name="l00346"></a>00346 
+<a name="l00347"></a><a class="code" href="clean__test_8cc.html#a55ce4d655e0160d4640317ad106fee9a">00347</a> <a class="code" href="build__test_8cc.html#aa2d4879a1416ae4b4db00986d0b091eb">TEST_F</a>(<a class="code" href="structCleanTest.html">CleanTest</a>, CleanPhony) {
+<a name="l00348"></a>00348   ASSERT_NO_FATAL_FAILURE(<a class="code" href="test_8cc.html#afb20bae83c4de264129c46c005ad3907">AssertParse</a>(&amp;state_,
+<a name="l00349"></a>00349 <span class="stringliteral">&quot;build phony: phony t1 t2\n&quot;</span>
+<a name="l00350"></a>00350 <span class="stringliteral">&quot;build t1: cat\n&quot;</span>
+<a name="l00351"></a>00351 <span class="stringliteral">&quot;build t2: cat\n&quot;</span>));
+<a name="l00352"></a>00352 
+<a name="l00353"></a>00353   fs_.Create(<span class="stringliteral">&quot;phony&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);
+<a name="l00354"></a>00354   fs_.Create(<span class="stringliteral">&quot;t1&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);
+<a name="l00355"></a>00355   fs_.Create(<span class="stringliteral">&quot;t2&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);
 <a name="l00356"></a>00356 
-<a name="l00357"></a>00357   fs_.Create(<span class="stringliteral">&quot;phony&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);
-<a name="l00358"></a>00358   fs_.Create(<span class="stringliteral">&quot;t1&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);
-<a name="l00359"></a>00359   fs_.Create(<span class="stringliteral">&quot;t2&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);
-<a name="l00360"></a>00360 
-<a name="l00361"></a>00361   <span class="comment">// Check that CleanAll does not remove &quot;phony&quot;.</span>
-<a name="l00362"></a>00362   <a class="code" href="structCleaner.html">Cleaner</a> cleaner(&amp;state_, config_, &amp;fs_);
-<a name="l00363"></a>00363   EXPECT_EQ(0, cleaner.<a class="code" href="structCleaner.html#aee224f1e7c956ac8d9ad5280209434ad" title="Clean all built files, except for files created by generator rules.">CleanAll</a>());
-<a name="l00364"></a>00364   EXPECT_EQ(2, cleaner.<a class="code" href="structCleaner.html#af4b0d5cb3c426f05e96c1222f724b880">cleaned_files_count</a>());
-<a name="l00365"></a>00365   EXPECT_NE(0, fs_.Stat(<span class="stringliteral">&quot;phony&quot;</span>));
-<a name="l00366"></a>00366 
-<a name="l00367"></a>00367   fs_.Create(<span class="stringliteral">&quot;t1&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);
-<a name="l00368"></a>00368   fs_.Create(<span class="stringliteral">&quot;t2&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);
-<a name="l00369"></a>00369 
-<a name="l00370"></a>00370   <span class="comment">// Check that CleanTarget does not remove &quot;phony&quot;.</span>
-<a name="l00371"></a>00371   EXPECT_EQ(0, cleaner.<a class="code" href="structCleaner.html#a146f242991cf962752883da58c86d77c" title="Clean the given target and all the file built for it.">CleanTarget</a>(<span class="stringliteral">&quot;phony&quot;</span>));
-<a name="l00372"></a>00372   EXPECT_EQ(2, cleaner.<a class="code" href="structCleaner.html#af4b0d5cb3c426f05e96c1222f724b880">cleaned_files_count</a>());
-<a name="l00373"></a>00373   EXPECT_NE(0, fs_.Stat(<span class="stringliteral">&quot;phony&quot;</span>));
-<a name="l00374"></a>00374 }
+<a name="l00357"></a>00357   <span class="comment">// Check that CleanAll does not remove &quot;phony&quot;.</span>
+<a name="l00358"></a>00358   <a class="code" href="structCleaner.html">Cleaner</a> cleaner(&amp;state_, config_, &amp;fs_);
+<a name="l00359"></a>00359   EXPECT_EQ(0, cleaner.<a class="code" href="structCleaner.html#aee224f1e7c956ac8d9ad5280209434ad" title="Clean all built files, except for files created by generator rules.">CleanAll</a>());
+<a name="l00360"></a>00360   EXPECT_EQ(2, cleaner.<a class="code" href="structCleaner.html#af4b0d5cb3c426f05e96c1222f724b880">cleaned_files_count</a>());
+<a name="l00361"></a>00361   EXPECT_NE(0, fs_.Stat(<span class="stringliteral">&quot;phony&quot;</span>));
+<a name="l00362"></a>00362 
+<a name="l00363"></a>00363   fs_.Create(<span class="stringliteral">&quot;t1&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);
+<a name="l00364"></a>00364   fs_.Create(<span class="stringliteral">&quot;t2&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);
+<a name="l00365"></a>00365 
+<a name="l00366"></a>00366   <span class="comment">// Check that CleanTarget does not remove &quot;phony&quot;.</span>
+<a name="l00367"></a>00367   EXPECT_EQ(0, cleaner.<a class="code" href="structCleaner.html#a146f242991cf962752883da58c86d77c" title="Clean the given target and all the file built for it.">CleanTarget</a>(<span class="stringliteral">&quot;phony&quot;</span>));
+<a name="l00368"></a>00368   EXPECT_EQ(2, cleaner.<a class="code" href="structCleaner.html#af4b0d5cb3c426f05e96c1222f724b880">cleaned_files_count</a>());
+<a name="l00369"></a>00369   EXPECT_NE(0, fs_.Stat(<span class="stringliteral">&quot;phony&quot;</span>));
+<a name="l00370"></a>00370 }
+<a name="l00371"></a>00371 
+<a name="l00372"></a><a class="code" href="clean__test_8cc.html#ae051ae9d586ce4c2da38b157d9155667">00372</a> <a class="code" href="build__test_8cc.html#aa2d4879a1416ae4b4db00986d0b091eb">TEST_F</a>(<a class="code" href="structCleanTest.html">CleanTest</a>, CleanDepFileAndRspFileWithSpaces) {
+<a name="l00373"></a>00373   ASSERT_NO_FATAL_FAILURE(<a class="code" href="test_8cc.html#afb20bae83c4de264129c46c005ad3907">AssertParse</a>(&amp;state_,
+<a name="l00374"></a>00374 <span class="stringliteral">&quot;rule cc_dep\n&quot;</span>
+<a name="l00375"></a>00375 <span class="stringliteral">&quot;  command = cc $in &gt; $out\n&quot;</span>
+<a name="l00376"></a>00376 <span class="stringliteral">&quot;  depfile = $out.d\n&quot;</span>
+<a name="l00377"></a>00377 <span class="stringliteral">&quot;rule cc_rsp\n&quot;</span>
+<a name="l00378"></a>00378 <span class="stringliteral">&quot;  command = cc $in &gt; $out\n&quot;</span>
+<a name="l00379"></a>00379 <span class="stringliteral">&quot;  rspfile = $out.rsp\n&quot;</span>
+<a name="l00380"></a>00380 <span class="stringliteral">&quot;  rspfile_content = $in\n&quot;</span>
+<a name="l00381"></a>00381 <span class="stringliteral">&quot;build out$ 1: cc_dep in$ 1\n&quot;</span>
+<a name="l00382"></a>00382 <span class="stringliteral">&quot;build out$ 2: cc_rsp in$ 1\n&quot;</span>
+<a name="l00383"></a>00383 ));
+<a name="l00384"></a>00384   fs_.Create(<span class="stringliteral">&quot;out 1&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);
+<a name="l00385"></a>00385   fs_.Create(<span class="stringliteral">&quot;out 2&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);
+<a name="l00386"></a>00386   fs_.Create(<span class="stringliteral">&quot;out 1.d&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);
+<a name="l00387"></a>00387   fs_.Create(<span class="stringliteral">&quot;out 2.rsp&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);
+<a name="l00388"></a>00388 
+<a name="l00389"></a>00389   <a class="code" href="structCleaner.html">Cleaner</a> cleaner(&amp;state_, config_, &amp;fs_);
+<a name="l00390"></a>00390   EXPECT_EQ(0, cleaner.<a class="code" href="structCleaner.html#aee224f1e7c956ac8d9ad5280209434ad" title="Clean all built files, except for files created by generator rules.">CleanAll</a>());
+<a name="l00391"></a>00391   EXPECT_EQ(4, cleaner.<a class="code" href="structCleaner.html#af4b0d5cb3c426f05e96c1222f724b880">cleaned_files_count</a>());
+<a name="l00392"></a>00392   EXPECT_EQ(4u, fs_.files_removed_.size());
+<a name="l00393"></a>00393 
+<a name="l00394"></a>00394   EXPECT_EQ(0, fs_.Stat(<span class="stringliteral">&quot;out 1&quot;</span>));
+<a name="l00395"></a>00395   EXPECT_EQ(0, fs_.Stat(<span class="stringliteral">&quot;out 2&quot;</span>));
+<a name="l00396"></a>00396   EXPECT_EQ(0, fs_.Stat(<span class="stringliteral">&quot;out 1.d&quot;</span>));
+<a name="l00397"></a>00397   EXPECT_EQ(0, fs_.Stat(<span class="stringliteral">&quot;out 2.rsp&quot;</span>));
+<a name="l00398"></a>00398 }
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 12 2013 09:25:49 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 4 2014 09:13:00 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

@@ -1,0 +1,7 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$structBuildTest.html" title="BuildTest" alt="" coords="125,83,203,112"/>
+<area shape="rect" id="node11" href="$structNoDeadPaths.html" title="NoDeadPaths" alt="" coords="227,83,331,112"/>
+<area shape="rect" id="node5" href="$structBuildWithDepsLogTest.html" title="Tests of builds involving deps logs necessarily must span multiple builds." alt="" coords="5,160,160,189"/>
+<area shape="rect" id="node7" href="$structBuildWithLogTest.html" title="BuildWithLogTest" alt="" coords="184,160,309,189"/>
+<area shape="rect" id="node9" href="$structBuildDryRun.html" title="BuildDryRun" alt="" coords="199,237,295,267"/>
+</map>

@@ -114,7 +114,7 @@ Private Attributes</h2></td></tr>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Tracks the status of a build: completion fraction, printing updates. </p>
 
-<p>Definition at line <a class="el" href="build_8h_source.html#l00195">195</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
+<p>Definition at line <a class="el" href="build_8h_source.html#l00196">196</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
 </div><hr/><h2>Member Typedef Documentation</h2>
 <a class="anchor" id="ab7b1138530a4b0d2e4c6ac9825747c69"></a><!-- doxytag: member="BuildStatus::RunningEdgeMap" ref="ab7b1138530a4b0d2e4c6ac9825747c69" args="" -->
 <div class="memitem">
@@ -129,7 +129,7 @@ Private Attributes</h2></td></tr>
 
 <p>Map of running edge to time the edge started running. </p>
 
-<p>Definition at line <a class="el" href="build_8h_source.html#l00220">220</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
+<p>Definition at line <a class="el" href="build_8h_source.html#l00221">221</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
 
 </div>
 </div>
@@ -151,7 +151,7 @@ Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="build_8cc_source.html#l00074">74</a> of file <a class="el" href="build_8cc_source.html">build.cc</a>.</p>
 
-<p>References <a class="el" href="build_8h_source.html#l00212">config_</a>, <a class="el" href="build_8h_source.html#l00129">BuildConfig::NORMAL</a>, <a class="el" href="build_8h_source.html#l00224">printer_</a>, <a class="el" href="build_8h_source.html#l00227">progress_status_format_</a>, <a class="el" href="line__printer_8h_source.html#l00027">LinePrinter::set_smart_terminal()</a>, and <a class="el" href="build_8h_source.html#l00133">BuildConfig::verbosity</a>.</p>
+<p>References <a class="el" href="build_8h_source.html#l00213">config_</a>, <a class="el" href="build_8h_source.html#l00129">BuildConfig::NORMAL</a>, <a class="el" href="build_8h_source.html#l00225">printer_</a>, <a class="el" href="build_8h_source.html#l00228">progress_status_format_</a>, <a class="el" href="line__printer_8h_source.html#l00028">LinePrinter::set_smart_terminal()</a>, and <a class="el" href="build_8h_source.html#l00133">BuildConfig::verbosity</a>.</p>
 
 </div>
 </div>
@@ -199,11 +199,11 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="build_8cc_source.html#l00102">102</a> of file <a class="el" href="build_8cc_source.html">build.cc</a>.</p>
+<p>Definition at line <a class="el" href="build_8cc_source.html#l00105">105</a> of file <a class="el" href="build_8cc_source.html">build.cc</a>.</p>
 
-<p>References <a class="el" href="build_8h_source.html#l00212">config_</a>, <a class="el" href="graph_8cc_source.html#l00267">Edge::EvaluateCommand()</a>, <a class="el" href="build_8h_source.html#l00217">finished_edges_</a>, <a class="el" href="metrics_8cc_source.html#l00122">GetTimeMillis()</a>, <a class="el" href="line__printer_8h_source.html#l00026">LinePrinter::is_smart_terminal()</a>, <a class="el" href="build_8h_source.html#l00224">printer_</a>, <a class="el" href="line__printer_8cc_source.html#l00104">LinePrinter::PrintOnNewLine()</a>, <a class="el" href="build_8cc_source.html#l00234">PrintStatus()</a>, <a class="el" href="build_8h_source.html#l00130">BuildConfig::QUIET</a>, <a class="el" href="build_8h_source.html#l00221">running_edges_</a>, <a class="el" href="build_8h_source.html#l00215">start_time_millis_</a>, <a class="el" href="util_8cc_source.html#l00280">StripAnsiEscapeCodes()</a>, and <a class="el" href="build_8h_source.html#l00133">BuildConfig::verbosity</a>.</p>
+<p>References <a class="el" href="build_8h_source.html#l00213">config_</a>, <a class="el" href="graph_8cc_source.html#l00273">Edge::EvaluateCommand()</a>, <a class="el" href="build_8h_source.html#l00218">finished_edges_</a>, <a class="el" href="metrics_8cc_source.html#l00124">GetTimeMillis()</a>, <a class="el" href="line__printer_8h_source.html#l00027">LinePrinter::is_smart_terminal()</a>, <a class="el" href="build_8h_source.html#l00225">printer_</a>, <a class="el" href="line__printer_8cc_source.html#l00120">LinePrinter::PrintOnNewLine()</a>, <a class="el" href="build_8cc_source.html#l00241">PrintStatus()</a>, <a class="el" href="build_8h_source.html#l00130">BuildConfig::QUIET</a>, <a class="el" href="build_8h_source.html#l00222">running_edges_</a>, <a class="el" href="line__printer_8cc_source.html#l00135">LinePrinter::SetConsoleLocked()</a>, <a class="el" href="build_8h_source.html#l00216">start_time_millis_</a>, <a class="el" href="util_8cc_source.html#l00384">StripAnsiEscapeCodes()</a>, <a class="el" href="graph_8cc_source.html#l00327">Edge::use_console()</a>, and <a class="el" href="build_8h_source.html#l00133">BuildConfig::verbosity</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00705">Builder::FinishCommand()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00715">Builder::FinishCommand()</a>.</p>
 
 </div>
 </div>
@@ -224,9 +224,9 @@ Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="build_8cc_source.html#l00094">94</a> of file <a class="el" href="build_8cc_source.html">build.cc</a>.</p>
 
-<p>References <a class="el" href="metrics_8cc_source.html#l00122">GetTimeMillis()</a>, <a class="el" href="build_8cc_source.html#l00234">PrintStatus()</a>, <a class="el" href="build_8h_source.html#l00221">running_edges_</a>, <a class="el" href="build_8h_source.html#l00215">start_time_millis_</a>, and <a class="el" href="build_8h_source.html#l00217">started_edges_</a>.</p>
+<p>References <a class="el" href="metrics_8cc_source.html#l00124">GetTimeMillis()</a>, <a class="el" href="build_8h_source.html#l00225">printer_</a>, <a class="el" href="build_8cc_source.html#l00241">PrintStatus()</a>, <a class="el" href="build_8h_source.html#l00222">running_edges_</a>, <a class="el" href="line__printer_8cc_source.html#l00135">LinePrinter::SetConsoleLocked()</a>, <a class="el" href="build_8h_source.html#l00216">start_time_millis_</a>, <a class="el" href="build_8h_source.html#l00218">started_edges_</a>, and <a class="el" href="graph_8cc_source.html#l00327">Edge::use_console()</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00672">Builder::StartEdge()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00682">Builder::StartEdge()</a>.</p>
 
 </div>
 </div>
@@ -244,11 +244,11 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="build_8cc_source.html#l00147">147</a> of file <a class="el" href="build_8cc_source.html">build.cc</a>.</p>
+<p>Definition at line <a class="el" href="build_8cc_source.html#l00153">153</a> of file <a class="el" href="build_8cc_source.html">build.cc</a>.</p>
 
-<p>References <a class="el" href="build_8h_source.html#l00224">printer_</a>, and <a class="el" href="line__printer_8cc_source.html#l00104">LinePrinter::PrintOnNewLine()</a>.</p>
+<p>References <a class="el" href="build_8h_source.html#l00225">printer_</a>, <a class="el" href="line__printer_8cc_source.html#l00120">LinePrinter::PrintOnNewLine()</a>, and <a class="el" href="line__printer_8cc_source.html#l00135">LinePrinter::SetConsoleLocked()</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00588">Builder::Build()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00595">Builder::Build()</a>.</p>
 
 </div>
 </div>
@@ -276,11 +276,11 @@ Private Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="build_8cc_source.html#l00151">151</a> of file <a class="el" href="build_8cc_source.html">build.cc</a>.</p>
+<p>Definition at line <a class="el" href="build_8cc_source.html#l00158">158</a> of file <a class="el" href="build_8cc_source.html">build.cc</a>.</p>
 
-<p>References <a class="el" href="build_8h_source.html#l00279">current_rate_</a>, <a class="el" href="build_8h_source.html#l00239">BuildStatus::RateInfo::Elapsed()</a>, <a class="el" href="util_8cc_source.html#l00051">Fatal()</a>, <a class="el" href="build_8h_source.html#l00217">finished_edges_</a>, <a class="el" href="build_8h_source.html#l00278">overall_rate_</a>, <a class="el" href="build_8h_source.html#l00240">BuildStatus::RateInfo::rate()</a>, <a class="el" href="build_8h_source.html#l00256">BuildStatus::SlidingRateInfo::rate()</a>, <a class="el" href="build_8h_source.html#l00230">snprinfRate()</a>, <a class="el" href="build_8h_source.html#l00217">started_edges_</a>, <a class="el" href="build_8h_source.html#l00217">total_edges_</a>, <a class="el" href="build_8h_source.html#l00242">BuildStatus::RateInfo::UpdateRate()</a>, and <a class="el" href="build_8h_source.html#l00258">BuildStatus::SlidingRateInfo::UpdateRate()</a>.</p>
+<p>References <a class="el" href="build_8h_source.html#l00280">current_rate_</a>, <a class="el" href="build_8h_source.html#l00240">BuildStatus::RateInfo::Elapsed()</a>, <a class="el" href="util_8cc_source.html#l00052">Fatal()</a>, <a class="el" href="build_8h_source.html#l00218">finished_edges_</a>, <a class="el" href="build_8h_source.html#l00279">overall_rate_</a>, <a class="el" href="build_8h_source.html#l00241">BuildStatus::RateInfo::rate()</a>, <a class="el" href="build_8h_source.html#l00257">BuildStatus::SlidingRateInfo::rate()</a>, <a class="el" href="build_8h_source.html#l00231">snprinfRate()</a>, <a class="el" href="build_8h_source.html#l00218">started_edges_</a>, <a class="el" href="build_8h_source.html#l00218">total_edges_</a>, <a class="el" href="build_8h_source.html#l00243">BuildStatus::RateInfo::UpdateRate()</a>, and <a class="el" href="build_8h_source.html#l00259">BuildStatus::SlidingRateInfo::UpdateRate()</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00234">PrintStatus()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00241">PrintStatus()</a>.</p>
 
 </div>
 </div>
@@ -301,9 +301,9 @@ Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="build_8cc_source.html#l00090">90</a> of file <a class="el" href="build_8cc_source.html">build.cc</a>.</p>
 
-<p>References <a class="el" href="build_8h_source.html#l00217">total_edges_</a>.</p>
+<p>References <a class="el" href="build_8h_source.html#l00218">total_edges_</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00588">Builder::Build()</a>, and <a class="el" href="build_8cc_source.html#l00705">Builder::FinishCommand()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00595">Builder::Build()</a>, and <a class="el" href="build_8cc_source.html#l00715">Builder::FinishCommand()</a>.</p>
 
 </div>
 </div>
@@ -322,11 +322,11 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="build_8cc_source.html#l00234">234</a> of file <a class="el" href="build_8cc_source.html">build.cc</a>.</p>
+<p>Definition at line <a class="el" href="build_8cc_source.html#l00241">241</a> of file <a class="el" href="build_8cc_source.html">build.cc</a>.</p>
 
-<p>References <a class="el" href="build_8h_source.html#l00212">config_</a>, <a class="el" href="build_8h_source.html#l00279">current_rate_</a>, <a class="el" href="line__printer_8h_source.html#l00031">LinePrinter::ELIDE</a>, <a class="el" href="build_8h_source.html#l00217">finished_edges_</a>, <a class="el" href="build_8cc_source.html#l00151">FormatProgressStatus()</a>, <a class="el" href="line__printer_8h_source.html#l00030">LinePrinter::FULL</a>, <a class="el" href="graph_8cc_source.html#l00277">Edge::GetBinding()</a>, <a class="el" href="build_8h_source.html#l00278">overall_rate_</a>, <a class="el" href="line__printer_8cc_source.html#l00045">LinePrinter::Print()</a>, <a class="el" href="build_8h_source.html#l00224">printer_</a>, <a class="el" href="build_8h_source.html#l00227">progress_status_format_</a>, <a class="el" href="build_8h_source.html#l00130">BuildConfig::QUIET</a>, <a class="el" href="build_8h_source.html#l00238">BuildStatus::RateInfo::Restart()</a>, <a class="el" href="build_8h_source.html#l00255">BuildStatus::SlidingRateInfo::Restart()</a>, <a class="el" href="build_8h_source.html#l00131">BuildConfig::VERBOSE</a>, and <a class="el" href="build_8h_source.html#l00133">BuildConfig::verbosity</a>.</p>
+<p>References <a class="el" href="build_8h_source.html#l00213">config_</a>, <a class="el" href="build_8h_source.html#l00280">current_rate_</a>, <a class="el" href="line__printer_8h_source.html#l00032">LinePrinter::ELIDE</a>, <a class="el" href="build_8h_source.html#l00218">finished_edges_</a>, <a class="el" href="build_8cc_source.html#l00158">FormatProgressStatus()</a>, <a class="el" href="line__printer_8h_source.html#l00031">LinePrinter::FULL</a>, <a class="el" href="graph_8cc_source.html#l00283">Edge::GetBinding()</a>, <a class="el" href="build_8h_source.html#l00279">overall_rate_</a>, <a class="el" href="line__printer_8cc_source.html#l00045">LinePrinter::Print()</a>, <a class="el" href="build_8h_source.html#l00225">printer_</a>, <a class="el" href="build_8h_source.html#l00228">progress_status_format_</a>, <a class="el" href="build_8h_source.html#l00130">BuildConfig::QUIET</a>, <a class="el" href="build_8h_source.html#l00239">BuildStatus::RateInfo::Restart()</a>, <a class="el" href="build_8h_source.html#l00256">BuildStatus::SlidingRateInfo::Restart()</a>, <a class="el" href="build_8h_source.html#l00131">BuildConfig::VERBOSE</a>, and <a class="el" href="build_8h_source.html#l00133">BuildConfig::verbosity</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00102">BuildEdgeFinished()</a>, and <a class="el" href="build_8cc_source.html#l00094">BuildEdgeStarted()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00105">BuildEdgeFinished()</a>, and <a class="el" href="build_8cc_source.html#l00094">BuildEdgeStarted()</a>.</p>
 
 </div>
 </div>
@@ -363,9 +363,9 @@ template&lt;size_t S&gt; </div>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="build_8h_source.html#l00230">230</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
+<p>Definition at line <a class="el" href="build_8h_source.html#l00231">231</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00151">FormatProgressStatus()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00158">FormatProgressStatus()</a>.</p>
 
 </div>
 </div>
@@ -381,9 +381,9 @@ template&lt;size_t S&gt; </div>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="build_8h_source.html#l00212">212</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
+<p>Definition at line <a class="el" href="build_8h_source.html#l00213">213</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00102">BuildEdgeFinished()</a>, <a class="el" href="build_8cc_source.html#l00074">BuildStatus()</a>, and <a class="el" href="build_8cc_source.html#l00234">PrintStatus()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00105">BuildEdgeFinished()</a>, <a class="el" href="build_8cc_source.html#l00074">BuildStatus()</a>, and <a class="el" href="build_8cc_source.html#l00241">PrintStatus()</a>.</p>
 
 </div>
 </div>
@@ -398,9 +398,9 @@ template&lt;size_t S&gt; </div>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="build_8h_source.html#l00279">279</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
+<p>Definition at line <a class="el" href="build_8h_source.html#l00280">280</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00151">FormatProgressStatus()</a>, and <a class="el" href="build_8cc_source.html#l00234">PrintStatus()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00158">FormatProgressStatus()</a>, and <a class="el" href="build_8cc_source.html#l00241">PrintStatus()</a>.</p>
 
 </div>
 </div>
@@ -415,9 +415,9 @@ template&lt;size_t S&gt; </div>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="build_8h_source.html#l00217">217</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
+<p>Definition at line <a class="el" href="build_8h_source.html#l00218">218</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00102">BuildEdgeFinished()</a>, <a class="el" href="build_8cc_source.html#l00151">FormatProgressStatus()</a>, and <a class="el" href="build_8cc_source.html#l00234">PrintStatus()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00105">BuildEdgeFinished()</a>, <a class="el" href="build_8cc_source.html#l00158">FormatProgressStatus()</a>, and <a class="el" href="build_8cc_source.html#l00241">PrintStatus()</a>.</p>
 
 </div>
 </div>
@@ -432,9 +432,9 @@ template&lt;size_t S&gt; </div>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="build_8h_source.html#l00278">278</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
+<p>Definition at line <a class="el" href="build_8h_source.html#l00279">279</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00151">FormatProgressStatus()</a>, and <a class="el" href="build_8cc_source.html#l00234">PrintStatus()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00158">FormatProgressStatus()</a>, and <a class="el" href="build_8cc_source.html#l00241">PrintStatus()</a>.</p>
 
 </div>
 </div>
@@ -451,9 +451,9 @@ template&lt;size_t S&gt; </div>
 
 <p>Prints progress output. </p>
 
-<p>Definition at line <a class="el" href="build_8h_source.html#l00224">224</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
+<p>Definition at line <a class="el" href="build_8h_source.html#l00225">225</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00102">BuildEdgeFinished()</a>, <a class="el" href="build_8cc_source.html#l00147">BuildFinished()</a>, <a class="el" href="build_8cc_source.html#l00074">BuildStatus()</a>, and <a class="el" href="build_8cc_source.html#l00234">PrintStatus()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00105">BuildEdgeFinished()</a>, <a class="el" href="build_8cc_source.html#l00094">BuildEdgeStarted()</a>, <a class="el" href="build_8cc_source.html#l00153">BuildFinished()</a>, <a class="el" href="build_8cc_source.html#l00074">BuildStatus()</a>, and <a class="el" href="build_8cc_source.html#l00241">PrintStatus()</a>.</p>
 
 </div>
 </div>
@@ -470,9 +470,9 @@ template&lt;size_t S&gt; </div>
 
 <p>The custom progress status format to use. </p>
 
-<p>Definition at line <a class="el" href="build_8h_source.html#l00227">227</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
+<p>Definition at line <a class="el" href="build_8h_source.html#l00228">228</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00074">BuildStatus()</a>, and <a class="el" href="build_8cc_source.html#l00234">PrintStatus()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00074">BuildStatus()</a>, and <a class="el" href="build_8cc_source.html#l00241">PrintStatus()</a>.</p>
 
 </div>
 </div>
@@ -487,9 +487,9 @@ template&lt;size_t S&gt; </div>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="build_8h_source.html#l00221">221</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
+<p>Definition at line <a class="el" href="build_8h_source.html#l00222">222</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00102">BuildEdgeFinished()</a>, and <a class="el" href="build_8cc_source.html#l00094">BuildEdgeStarted()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00105">BuildEdgeFinished()</a>, and <a class="el" href="build_8cc_source.html#l00094">BuildEdgeStarted()</a>.</p>
 
 </div>
 </div>
@@ -506,9 +506,9 @@ template&lt;size_t S&gt; </div>
 
 <p>Time the build started. </p>
 
-<p>Definition at line <a class="el" href="build_8h_source.html#l00215">215</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
+<p>Definition at line <a class="el" href="build_8h_source.html#l00216">216</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00102">BuildEdgeFinished()</a>, and <a class="el" href="build_8cc_source.html#l00094">BuildEdgeStarted()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00105">BuildEdgeFinished()</a>, and <a class="el" href="build_8cc_source.html#l00094">BuildEdgeStarted()</a>.</p>
 
 </div>
 </div>
@@ -523,9 +523,9 @@ template&lt;size_t S&gt; </div>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="build_8h_source.html#l00217">217</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
+<p>Definition at line <a class="el" href="build_8h_source.html#l00218">218</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00094">BuildEdgeStarted()</a>, and <a class="el" href="build_8cc_source.html#l00151">FormatProgressStatus()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00094">BuildEdgeStarted()</a>, and <a class="el" href="build_8cc_source.html#l00158">FormatProgressStatus()</a>.</p>
 
 </div>
 </div>
@@ -540,9 +540,9 @@ template&lt;size_t S&gt; </div>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="build_8h_source.html#l00217">217</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
+<p>Definition at line <a class="el" href="build_8h_source.html#l00218">218</a> of file <a class="el" href="build_8h_source.html">build.h</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00151">FormatProgressStatus()</a>, and <a class="el" href="build_8cc_source.html#l00090">PlanHasTotalEdges()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00158">FormatProgressStatus()</a>, and <a class="el" href="build_8cc_source.html#l00090">PlanHasTotalEdges()</a>.</p>
 
 </div>
 </div>
@@ -554,7 +554,7 @@ template&lt;size_t S&gt; </div>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 12 2013 09:25:50 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 4 2014 09:13:00 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

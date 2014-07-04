@@ -222,263 +222,318 @@
 <a name="l00163"></a>00163 
 <a name="l00164"></a>00164 <span class="comment">// Verify that adding the new deps works and can be compacted away.</span>
 <a name="l00165"></a>00165 <a class="code" href="build__test_8cc.html#aa2d4879a1416ae4b4db00986d0b091eb">TEST_F</a>(DepsLogTest, Recompact) {
-<a name="l00166"></a>00166   <span class="comment">// Write some deps to the file and grab its size.</span>
-<a name="l00167"></a>00167   <span class="keywordtype">int</span> file_size;
-<a name="l00168"></a>00168   {
-<a name="l00169"></a>00169     <a class="code" href="structState.html" title="Global state (file status, loaded rules) for a single run.">State</a> state;
-<a name="l00170"></a>00170     <a class="code" href="structDepsLog.html" title="As build commands run they can output extra dependency information (e.g.">DepsLog</a> log;
-<a name="l00171"></a>00171     <span class="keywordtype">string</span> err;
-<a name="l00172"></a>00172     ASSERT_TRUE(log.<a class="code" href="structDepsLog.html#af49ad152c2917c7e86742ce335db0263">OpenForWrite</a>(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, &amp;err));
-<a name="l00173"></a>00173     ASSERT_EQ(<span class="stringliteral">&quot;&quot;</span>, err);
-<a name="l00174"></a>00174 
-<a name="l00175"></a>00175     vector&lt;Node*&gt; deps;
-<a name="l00176"></a>00176     deps.push_back(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;foo.h&quot;</span>));
-<a name="l00177"></a>00177     deps.push_back(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;bar.h&quot;</span>));
-<a name="l00178"></a>00178     log.<a class="code" href="structDepsLog.html#a970cd6713ab54b3fff2f9de5255352fc">RecordDeps</a>(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;out.o&quot;</span>), 1, deps);
-<a name="l00179"></a>00179 
-<a name="l00180"></a>00180     deps.clear();
-<a name="l00181"></a>00181     deps.push_back(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;foo.h&quot;</span>));
-<a name="l00182"></a>00182     deps.push_back(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;baz.h&quot;</span>));
-<a name="l00183"></a>00183     log.<a class="code" href="structDepsLog.html#a970cd6713ab54b3fff2f9de5255352fc">RecordDeps</a>(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;other_out.o&quot;</span>), 1, deps);
-<a name="l00184"></a>00184 
-<a name="l00185"></a>00185     log.<a class="code" href="structDepsLog.html#a750f013ae662f96e7f2545d213c7f3a0">Close</a>();
-<a name="l00186"></a>00186 
-<a name="l00187"></a>00187     <span class="keyword">struct </span>stat st;
-<a name="l00188"></a>00188     ASSERT_EQ(0, stat(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, &amp;st));
-<a name="l00189"></a>00189     file_size = (int)st.st_size;
-<a name="l00190"></a>00190     ASSERT_GT(file_size, 0);
-<a name="l00191"></a>00191   }
+<a name="l00166"></a>00166   <span class="keyword">const</span> <span class="keywordtype">char</span> kManifest[] =
+<a name="l00167"></a>00167 <span class="stringliteral">&quot;rule cc\n&quot;</span>
+<a name="l00168"></a>00168 <span class="stringliteral">&quot;  command = cc\n&quot;</span>
+<a name="l00169"></a>00169 <span class="stringliteral">&quot;  deps = gcc\n&quot;</span>
+<a name="l00170"></a>00170 <span class="stringliteral">&quot;build out.o: cc\n&quot;</span>
+<a name="l00171"></a>00171 <span class="stringliteral">&quot;build other_out.o: cc\n&quot;</span>;
+<a name="l00172"></a>00172 
+<a name="l00173"></a>00173   <span class="comment">// Write some deps to the file and grab its size.</span>
+<a name="l00174"></a>00174   <span class="keywordtype">int</span> file_size;
+<a name="l00175"></a>00175   {
+<a name="l00176"></a>00176     <a class="code" href="structState.html" title="Global state (file status, loaded rules) for a single run.">State</a> state;
+<a name="l00177"></a>00177     ASSERT_NO_FATAL_FAILURE(<a class="code" href="test_8cc.html#afb20bae83c4de264129c46c005ad3907">AssertParse</a>(&amp;state, kManifest));
+<a name="l00178"></a>00178     <a class="code" href="structDepsLog.html" title="As build commands run they can output extra dependency information (e.g.">DepsLog</a> log;
+<a name="l00179"></a>00179     <span class="keywordtype">string</span> err;
+<a name="l00180"></a>00180     ASSERT_TRUE(log.<a class="code" href="structDepsLog.html#af49ad152c2917c7e86742ce335db0263">OpenForWrite</a>(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, &amp;err));
+<a name="l00181"></a>00181     ASSERT_EQ(<span class="stringliteral">&quot;&quot;</span>, err);
+<a name="l00182"></a>00182 
+<a name="l00183"></a>00183     vector&lt;Node*&gt; deps;
+<a name="l00184"></a>00184     deps.push_back(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;foo.h&quot;</span>));
+<a name="l00185"></a>00185     deps.push_back(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;bar.h&quot;</span>));
+<a name="l00186"></a>00186     log.<a class="code" href="structDepsLog.html#a970cd6713ab54b3fff2f9de5255352fc">RecordDeps</a>(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;out.o&quot;</span>), 1, deps);
+<a name="l00187"></a>00187 
+<a name="l00188"></a>00188     deps.clear();
+<a name="l00189"></a>00189     deps.push_back(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;foo.h&quot;</span>));
+<a name="l00190"></a>00190     deps.push_back(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;baz.h&quot;</span>));
+<a name="l00191"></a>00191     log.<a class="code" href="structDepsLog.html#a970cd6713ab54b3fff2f9de5255352fc">RecordDeps</a>(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;other_out.o&quot;</span>), 1, deps);
 <a name="l00192"></a>00192 
-<a name="l00193"></a>00193   <span class="comment">// Now reload the file, and add slighly different deps.</span>
-<a name="l00194"></a>00194   <span class="keywordtype">int</span> file_size_2;
-<a name="l00195"></a>00195   {
-<a name="l00196"></a>00196     <a class="code" href="structState.html" title="Global state (file status, loaded rules) for a single run.">State</a> state;
-<a name="l00197"></a>00197     <a class="code" href="structDepsLog.html" title="As build commands run they can output extra dependency information (e.g.">DepsLog</a> log;
-<a name="l00198"></a>00198     <span class="keywordtype">string</span> err;
-<a name="l00199"></a>00199     ASSERT_TRUE(log.<a class="code" href="structDepsLog.html#a698004cf8030703ddf6b19f8ab7bd50e">Load</a>(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, &amp;state, &amp;err));
+<a name="l00193"></a>00193     log.<a class="code" href="structDepsLog.html#a750f013ae662f96e7f2545d213c7f3a0">Close</a>();
+<a name="l00194"></a>00194 
+<a name="l00195"></a>00195     <span class="keyword">struct </span>stat st;
+<a name="l00196"></a>00196     ASSERT_EQ(0, stat(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, &amp;st));
+<a name="l00197"></a>00197     file_size = (int)st.st_size;
+<a name="l00198"></a>00198     ASSERT_GT(file_size, 0);
+<a name="l00199"></a>00199   }
 <a name="l00200"></a>00200 
-<a name="l00201"></a>00201     ASSERT_TRUE(log.<a class="code" href="structDepsLog.html#af49ad152c2917c7e86742ce335db0263">OpenForWrite</a>(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, &amp;err));
-<a name="l00202"></a>00202     ASSERT_EQ(<span class="stringliteral">&quot;&quot;</span>, err);
-<a name="l00203"></a>00203 
-<a name="l00204"></a>00204     vector&lt;Node*&gt; deps;
-<a name="l00205"></a>00205     deps.push_back(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;foo.h&quot;</span>));
-<a name="l00206"></a>00206     log.<a class="code" href="structDepsLog.html#a970cd6713ab54b3fff2f9de5255352fc">RecordDeps</a>(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;out.o&quot;</span>), 1, deps);
-<a name="l00207"></a>00207     log.<a class="code" href="structDepsLog.html#a750f013ae662f96e7f2545d213c7f3a0">Close</a>();
-<a name="l00208"></a>00208 
-<a name="l00209"></a>00209     <span class="keyword">struct </span>stat st;
-<a name="l00210"></a>00210     ASSERT_EQ(0, stat(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, &amp;st));
-<a name="l00211"></a>00211     file_size_2 = (int)st.st_size;
-<a name="l00212"></a>00212     <span class="comment">// The file should grow to record the new deps.</span>
-<a name="l00213"></a>00213     ASSERT_GT(file_size_2, file_size);
-<a name="l00214"></a>00214   }
-<a name="l00215"></a>00215 
-<a name="l00216"></a>00216   <span class="comment">// Now reload the file, verify the new deps have replaced the old, then</span>
-<a name="l00217"></a>00217   <span class="comment">// recompact.</span>
-<a name="l00218"></a>00218   {
-<a name="l00219"></a>00219     <a class="code" href="structState.html" title="Global state (file status, loaded rules) for a single run.">State</a> state;
-<a name="l00220"></a>00220     <a class="code" href="structDepsLog.html" title="As build commands run they can output extra dependency information (e.g.">DepsLog</a> log;
-<a name="l00221"></a>00221     <span class="keywordtype">string</span> err;
-<a name="l00222"></a>00222     ASSERT_TRUE(log.<a class="code" href="structDepsLog.html#a698004cf8030703ddf6b19f8ab7bd50e">Load</a>(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, &amp;state, &amp;err));
-<a name="l00223"></a>00223 
-<a name="l00224"></a>00224     <a class="code" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>* out = state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;out.o&quot;</span>);
-<a name="l00225"></a>00225     <a class="code" href="structDepsLog_1_1Deps.html">DepsLog::Deps</a>* deps = log.<a class="code" href="structDepsLog.html#a075043796f88d312004cf5ae74a53c4e">GetDeps</a>(out);
-<a name="l00226"></a>00226     ASSERT_TRUE(deps);
-<a name="l00227"></a>00227     ASSERT_EQ(1, deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#ae73ed4a9faede3332a47215b2a68a5dc">mtime</a>);
-<a name="l00228"></a>00228     ASSERT_EQ(1, deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#af59c987b02350a4dfcd24a5406624fdb">node_count</a>);
-<a name="l00229"></a>00229     ASSERT_EQ(<span class="stringliteral">&quot;foo.h&quot;</span>, deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#ab60b40fc0217ea187cdc60fb59ea27e8">nodes</a>[0]-&gt;<a class="code" href="structNode.html#a8530ccbc220a8fe1d50256c7ef4ee6d9">path</a>());
-<a name="l00230"></a>00230 
-<a name="l00231"></a>00231     <a class="code" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>* other_out = state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;other_out.o&quot;</span>);
-<a name="l00232"></a>00232     deps = log.<a class="code" href="structDepsLog.html#a075043796f88d312004cf5ae74a53c4e">GetDeps</a>(other_out);
-<a name="l00233"></a>00233     ASSERT_TRUE(deps);
-<a name="l00234"></a>00234     ASSERT_EQ(1, deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#ae73ed4a9faede3332a47215b2a68a5dc">mtime</a>);
-<a name="l00235"></a>00235     ASSERT_EQ(2, deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#af59c987b02350a4dfcd24a5406624fdb">node_count</a>);
-<a name="l00236"></a>00236     ASSERT_EQ(<span class="stringliteral">&quot;foo.h&quot;</span>, deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#ab60b40fc0217ea187cdc60fb59ea27e8">nodes</a>[0]-&gt;<a class="code" href="structNode.html#a8530ccbc220a8fe1d50256c7ef4ee6d9">path</a>());
-<a name="l00237"></a>00237     ASSERT_EQ(<span class="stringliteral">&quot;baz.h&quot;</span>, deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#ab60b40fc0217ea187cdc60fb59ea27e8">nodes</a>[1]-&gt;<a class="code" href="structNode.html#a8530ccbc220a8fe1d50256c7ef4ee6d9">path</a>());
-<a name="l00238"></a>00238 
-<a name="l00239"></a>00239     ASSERT_TRUE(log.<a class="code" href="structDepsLog.html#a09515578bf5a271a93919c7ff2036001" title="Rewrite the known log entries, throwing away old data.">Recompact</a>(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, &amp;err));
-<a name="l00240"></a>00240 
-<a name="l00241"></a>00241     <span class="comment">// The in-memory deps graph should still be valid after recompaction.</span>
-<a name="l00242"></a>00242     deps = log.<a class="code" href="structDepsLog.html#a075043796f88d312004cf5ae74a53c4e">GetDeps</a>(out);
-<a name="l00243"></a>00243     ASSERT_TRUE(deps);
-<a name="l00244"></a>00244     ASSERT_EQ(1, deps-&gt;mtime);
-<a name="l00245"></a>00245     ASSERT_EQ(1, deps-&gt;node_count);
-<a name="l00246"></a>00246     ASSERT_EQ(<span class="stringliteral">&quot;foo.h&quot;</span>, deps-&gt;nodes[0]-&gt;path());
-<a name="l00247"></a>00247     ASSERT_EQ(out, log.<a class="code" href="structDepsLog.html#a94bb97eecb9d8293ef1c7f19f1a65f1b" title="Used for tests.">nodes</a>()[out-&gt;id()]);
-<a name="l00248"></a>00248 
-<a name="l00249"></a>00249     deps = log.<a class="code" href="structDepsLog.html#a075043796f88d312004cf5ae74a53c4e">GetDeps</a>(other_out);
-<a name="l00250"></a>00250     ASSERT_TRUE(deps);
-<a name="l00251"></a>00251     ASSERT_EQ(1, deps-&gt;mtime);
-<a name="l00252"></a>00252     ASSERT_EQ(2, deps-&gt;node_count);
-<a name="l00253"></a>00253     ASSERT_EQ(<span class="stringliteral">&quot;foo.h&quot;</span>, deps-&gt;nodes[0]-&gt;path());
-<a name="l00254"></a>00254     ASSERT_EQ(<span class="stringliteral">&quot;baz.h&quot;</span>, deps-&gt;nodes[1]-&gt;path());
-<a name="l00255"></a>00255     ASSERT_EQ(other_out, log.<a class="code" href="structDepsLog.html#a94bb97eecb9d8293ef1c7f19f1a65f1b" title="Used for tests.">nodes</a>()[other_out-&gt;id()]);
-<a name="l00256"></a>00256 
-<a name="l00257"></a>00257     <span class="comment">// The file should have shrunk a bit for the smaller deps.</span>
-<a name="l00258"></a>00258     <span class="keyword">struct </span>stat st;
-<a name="l00259"></a>00259     ASSERT_EQ(0, stat(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, &amp;st));
-<a name="l00260"></a>00260     <span class="keywordtype">int</span> file_size_3 = (int)st.st_size;
-<a name="l00261"></a>00261     ASSERT_LT(file_size_3, file_size_2);
-<a name="l00262"></a>00262   }
-<a name="l00263"></a>00263 }
-<a name="l00264"></a>00264 
-<a name="l00265"></a>00265 <span class="comment">// Verify that invalid file headers cause a new build.</span>
-<a name="l00266"></a>00266 <a class="code" href="build__test_8cc.html#aa2d4879a1416ae4b4db00986d0b091eb">TEST_F</a>(DepsLogTest, InvalidHeader) {
-<a name="l00267"></a>00267   <span class="keyword">const</span> <span class="keywordtype">char</span> *kInvalidHeaders[] = {
-<a name="l00268"></a>00268     <span class="stringliteral">&quot;&quot;</span>,                              <span class="comment">// Empty file.</span>
-<a name="l00269"></a>00269     <span class="stringliteral">&quot;# ninjad&quot;</span>,                      <span class="comment">// Truncated first line.</span>
-<a name="l00270"></a>00270     <span class="stringliteral">&quot;# ninjadeps\n&quot;</span>,                 <span class="comment">// No version int.</span>
-<a name="l00271"></a>00271     <span class="stringliteral">&quot;# ninjadeps\n\001\002&quot;</span>,         <span class="comment">// Truncated version int.</span>
-<a name="l00272"></a>00272     <span class="stringliteral">&quot;# ninjadeps\n\001\002\003\004&quot;</span>  <span class="comment">// Invalid version int.</span>
-<a name="l00273"></a>00273   };
-<a name="l00274"></a>00274   <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; <span class="keyword">sizeof</span>(kInvalidHeaders) / <span class="keyword">sizeof</span>(kInvalidHeaders[0]);
-<a name="l00275"></a>00275        ++i) {
-<a name="l00276"></a>00276     FILE* deps_log = fopen(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, <span class="stringliteral">&quot;wb&quot;</span>);
-<a name="l00277"></a>00277     ASSERT_TRUE(deps_log != NULL);
-<a name="l00278"></a>00278     ASSERT_EQ(
-<a name="l00279"></a>00279         strlen(kInvalidHeaders[i]),
-<a name="l00280"></a>00280         fwrite(kInvalidHeaders[i], 1, strlen(kInvalidHeaders[i]), deps_log));
-<a name="l00281"></a>00281     ASSERT_EQ(0 ,fclose(deps_log));
-<a name="l00282"></a>00282 
-<a name="l00283"></a>00283     <span class="keywordtype">string</span> err;
-<a name="l00284"></a>00284     <a class="code" href="structDepsLog.html" title="As build commands run they can output extra dependency information (e.g.">DepsLog</a> log;
-<a name="l00285"></a>00285     <a class="code" href="structState.html" title="Global state (file status, loaded rules) for a single run.">State</a> state;
-<a name="l00286"></a>00286     ASSERT_TRUE(log.<a class="code" href="structDepsLog.html#a698004cf8030703ddf6b19f8ab7bd50e">Load</a>(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, &amp;state, &amp;err));
-<a name="l00287"></a>00287     EXPECT_EQ(<span class="stringliteral">&quot;bad deps log signature or version; starting over&quot;</span>, err);
-<a name="l00288"></a>00288   }
-<a name="l00289"></a>00289 }
+<a name="l00201"></a>00201   <span class="comment">// Now reload the file, and add slighly different deps.</span>
+<a name="l00202"></a>00202   <span class="keywordtype">int</span> file_size_2;
+<a name="l00203"></a>00203   {
+<a name="l00204"></a>00204     <a class="code" href="structState.html" title="Global state (file status, loaded rules) for a single run.">State</a> state;
+<a name="l00205"></a>00205     ASSERT_NO_FATAL_FAILURE(<a class="code" href="test_8cc.html#afb20bae83c4de264129c46c005ad3907">AssertParse</a>(&amp;state, kManifest));
+<a name="l00206"></a>00206     <a class="code" href="structDepsLog.html" title="As build commands run they can output extra dependency information (e.g.">DepsLog</a> log;
+<a name="l00207"></a>00207     <span class="keywordtype">string</span> err;
+<a name="l00208"></a>00208     ASSERT_TRUE(log.<a class="code" href="structDepsLog.html#a698004cf8030703ddf6b19f8ab7bd50e">Load</a>(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, &amp;state, &amp;err));
+<a name="l00209"></a>00209 
+<a name="l00210"></a>00210     ASSERT_TRUE(log.<a class="code" href="structDepsLog.html#af49ad152c2917c7e86742ce335db0263">OpenForWrite</a>(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, &amp;err));
+<a name="l00211"></a>00211     ASSERT_EQ(<span class="stringliteral">&quot;&quot;</span>, err);
+<a name="l00212"></a>00212 
+<a name="l00213"></a>00213     vector&lt;Node*&gt; deps;
+<a name="l00214"></a>00214     deps.push_back(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;foo.h&quot;</span>));
+<a name="l00215"></a>00215     log.<a class="code" href="structDepsLog.html#a970cd6713ab54b3fff2f9de5255352fc">RecordDeps</a>(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;out.o&quot;</span>), 1, deps);
+<a name="l00216"></a>00216     log.<a class="code" href="structDepsLog.html#a750f013ae662f96e7f2545d213c7f3a0">Close</a>();
+<a name="l00217"></a>00217 
+<a name="l00218"></a>00218     <span class="keyword">struct </span>stat st;
+<a name="l00219"></a>00219     ASSERT_EQ(0, stat(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, &amp;st));
+<a name="l00220"></a>00220     file_size_2 = (int)st.st_size;
+<a name="l00221"></a>00221     <span class="comment">// The file should grow to record the new deps.</span>
+<a name="l00222"></a>00222     ASSERT_GT(file_size_2, file_size);
+<a name="l00223"></a>00223   }
+<a name="l00224"></a>00224 
+<a name="l00225"></a>00225   <span class="comment">// Now reload the file, verify the new deps have replaced the old, then</span>
+<a name="l00226"></a>00226   <span class="comment">// recompact.</span>
+<a name="l00227"></a>00227   <span class="keywordtype">int</span> file_size_3;
+<a name="l00228"></a>00228   {
+<a name="l00229"></a>00229     <a class="code" href="structState.html" title="Global state (file status, loaded rules) for a single run.">State</a> state;
+<a name="l00230"></a>00230     ASSERT_NO_FATAL_FAILURE(<a class="code" href="test_8cc.html#afb20bae83c4de264129c46c005ad3907">AssertParse</a>(&amp;state, kManifest));
+<a name="l00231"></a>00231     <a class="code" href="structDepsLog.html" title="As build commands run they can output extra dependency information (e.g.">DepsLog</a> log;
+<a name="l00232"></a>00232     <span class="keywordtype">string</span> err;
+<a name="l00233"></a>00233     ASSERT_TRUE(log.<a class="code" href="structDepsLog.html#a698004cf8030703ddf6b19f8ab7bd50e">Load</a>(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, &amp;state, &amp;err));
+<a name="l00234"></a>00234 
+<a name="l00235"></a>00235     <a class="code" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>* out = state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;out.o&quot;</span>);
+<a name="l00236"></a>00236     <a class="code" href="structDepsLog_1_1Deps.html">DepsLog::Deps</a>* deps = log.<a class="code" href="structDepsLog.html#a075043796f88d312004cf5ae74a53c4e">GetDeps</a>(out);
+<a name="l00237"></a>00237     ASSERT_TRUE(deps);
+<a name="l00238"></a>00238     ASSERT_EQ(1, deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#ae73ed4a9faede3332a47215b2a68a5dc">mtime</a>);
+<a name="l00239"></a>00239     ASSERT_EQ(1, deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#af59c987b02350a4dfcd24a5406624fdb">node_count</a>);
+<a name="l00240"></a>00240     ASSERT_EQ(<span class="stringliteral">&quot;foo.h&quot;</span>, deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#ab60b40fc0217ea187cdc60fb59ea27e8">nodes</a>[0]-&gt;<a class="code" href="structNode.html#a8530ccbc220a8fe1d50256c7ef4ee6d9">path</a>());
+<a name="l00241"></a>00241 
+<a name="l00242"></a>00242     <a class="code" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>* other_out = state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;other_out.o&quot;</span>);
+<a name="l00243"></a>00243     deps = log.<a class="code" href="structDepsLog.html#a075043796f88d312004cf5ae74a53c4e">GetDeps</a>(other_out);
+<a name="l00244"></a>00244     ASSERT_TRUE(deps);
+<a name="l00245"></a>00245     ASSERT_EQ(1, deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#ae73ed4a9faede3332a47215b2a68a5dc">mtime</a>);
+<a name="l00246"></a>00246     ASSERT_EQ(2, deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#af59c987b02350a4dfcd24a5406624fdb">node_count</a>);
+<a name="l00247"></a>00247     ASSERT_EQ(<span class="stringliteral">&quot;foo.h&quot;</span>, deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#ab60b40fc0217ea187cdc60fb59ea27e8">nodes</a>[0]-&gt;<a class="code" href="structNode.html#a8530ccbc220a8fe1d50256c7ef4ee6d9">path</a>());
+<a name="l00248"></a>00248     ASSERT_EQ(<span class="stringliteral">&quot;baz.h&quot;</span>, deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#ab60b40fc0217ea187cdc60fb59ea27e8">nodes</a>[1]-&gt;<a class="code" href="structNode.html#a8530ccbc220a8fe1d50256c7ef4ee6d9">path</a>());
+<a name="l00249"></a>00249 
+<a name="l00250"></a>00250     ASSERT_TRUE(log.<a class="code" href="structDepsLog.html#a09515578bf5a271a93919c7ff2036001" title="Rewrite the known log entries, throwing away old data.">Recompact</a>(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, &amp;err));
+<a name="l00251"></a>00251 
+<a name="l00252"></a>00252     <span class="comment">// The in-memory deps graph should still be valid after recompaction.</span>
+<a name="l00253"></a>00253     deps = log.<a class="code" href="structDepsLog.html#a075043796f88d312004cf5ae74a53c4e">GetDeps</a>(out);
+<a name="l00254"></a>00254     ASSERT_TRUE(deps);
+<a name="l00255"></a>00255     ASSERT_EQ(1, deps-&gt;mtime);
+<a name="l00256"></a>00256     ASSERT_EQ(1, deps-&gt;node_count);
+<a name="l00257"></a>00257     ASSERT_EQ(<span class="stringliteral">&quot;foo.h&quot;</span>, deps-&gt;nodes[0]-&gt;path());
+<a name="l00258"></a>00258     ASSERT_EQ(out, log.<a class="code" href="structDepsLog.html#a94bb97eecb9d8293ef1c7f19f1a65f1b" title="Used for tests.">nodes</a>()[out-&gt;id()]);
+<a name="l00259"></a>00259 
+<a name="l00260"></a>00260     deps = log.<a class="code" href="structDepsLog.html#a075043796f88d312004cf5ae74a53c4e">GetDeps</a>(other_out);
+<a name="l00261"></a>00261     ASSERT_TRUE(deps);
+<a name="l00262"></a>00262     ASSERT_EQ(1, deps-&gt;mtime);
+<a name="l00263"></a>00263     ASSERT_EQ(2, deps-&gt;node_count);
+<a name="l00264"></a>00264     ASSERT_EQ(<span class="stringliteral">&quot;foo.h&quot;</span>, deps-&gt;nodes[0]-&gt;path());
+<a name="l00265"></a>00265     ASSERT_EQ(<span class="stringliteral">&quot;baz.h&quot;</span>, deps-&gt;nodes[1]-&gt;path());
+<a name="l00266"></a>00266     ASSERT_EQ(other_out, log.<a class="code" href="structDepsLog.html#a94bb97eecb9d8293ef1c7f19f1a65f1b" title="Used for tests.">nodes</a>()[other_out-&gt;id()]);
+<a name="l00267"></a>00267 
+<a name="l00268"></a>00268     <span class="comment">// The file should have shrunk a bit for the smaller deps.</span>
+<a name="l00269"></a>00269     <span class="keyword">struct </span>stat st;
+<a name="l00270"></a>00270     ASSERT_EQ(0, stat(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, &amp;st));
+<a name="l00271"></a>00271     file_size_3 = (int)st.st_size;
+<a name="l00272"></a>00272     ASSERT_LT(file_size_3, file_size_2);
+<a name="l00273"></a>00273   }
+<a name="l00274"></a>00274 
+<a name="l00275"></a>00275   <span class="comment">// Now reload the file and recompact with an empty manifest. The previous</span>
+<a name="l00276"></a>00276   <span class="comment">// entries should be removed.</span>
+<a name="l00277"></a>00277   {
+<a name="l00278"></a>00278     <a class="code" href="structState.html" title="Global state (file status, loaded rules) for a single run.">State</a> state;
+<a name="l00279"></a>00279     <span class="comment">// Intentionally not parsing kManifest here.</span>
+<a name="l00280"></a>00280     <a class="code" href="structDepsLog.html" title="As build commands run they can output extra dependency information (e.g.">DepsLog</a> log;
+<a name="l00281"></a>00281     <span class="keywordtype">string</span> err;
+<a name="l00282"></a>00282     ASSERT_TRUE(log.<a class="code" href="structDepsLog.html#a698004cf8030703ddf6b19f8ab7bd50e">Load</a>(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, &amp;state, &amp;err));
+<a name="l00283"></a>00283 
+<a name="l00284"></a>00284     <a class="code" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>* out = state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;out.o&quot;</span>);
+<a name="l00285"></a>00285     <a class="code" href="structDepsLog_1_1Deps.html">DepsLog::Deps</a>* deps = log.<a class="code" href="structDepsLog.html#a075043796f88d312004cf5ae74a53c4e">GetDeps</a>(out);
+<a name="l00286"></a>00286     ASSERT_TRUE(deps);
+<a name="l00287"></a>00287     ASSERT_EQ(1, deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#ae73ed4a9faede3332a47215b2a68a5dc">mtime</a>);
+<a name="l00288"></a>00288     ASSERT_EQ(1, deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#af59c987b02350a4dfcd24a5406624fdb">node_count</a>);
+<a name="l00289"></a>00289     ASSERT_EQ(<span class="stringliteral">&quot;foo.h&quot;</span>, deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#ab60b40fc0217ea187cdc60fb59ea27e8">nodes</a>[0]-&gt;<a class="code" href="structNode.html#a8530ccbc220a8fe1d50256c7ef4ee6d9">path</a>());
 <a name="l00290"></a>00290 
-<a name="l00291"></a>00291 <span class="comment">// Simulate what happens when loading a truncated log file.</span>
-<a name="l00292"></a>00292 <a class="code" href="build__test_8cc.html#aa2d4879a1416ae4b4db00986d0b091eb">TEST_F</a>(DepsLogTest, Truncated) {
-<a name="l00293"></a>00293   <span class="comment">// Create a file with some entries.</span>
-<a name="l00294"></a>00294   {
-<a name="l00295"></a>00295     <a class="code" href="structState.html" title="Global state (file status, loaded rules) for a single run.">State</a> state;
-<a name="l00296"></a>00296     <a class="code" href="structDepsLog.html" title="As build commands run they can output extra dependency information (e.g.">DepsLog</a> log;
-<a name="l00297"></a>00297     <span class="keywordtype">string</span> err;
-<a name="l00298"></a>00298     EXPECT_TRUE(log.<a class="code" href="structDepsLog.html#af49ad152c2917c7e86742ce335db0263">OpenForWrite</a>(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, &amp;err));
-<a name="l00299"></a>00299     ASSERT_EQ(<span class="stringliteral">&quot;&quot;</span>, err);
+<a name="l00291"></a>00291     <a class="code" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>* other_out = state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;other_out.o&quot;</span>);
+<a name="l00292"></a>00292     deps = log.<a class="code" href="structDepsLog.html#a075043796f88d312004cf5ae74a53c4e">GetDeps</a>(other_out);
+<a name="l00293"></a>00293     ASSERT_TRUE(deps);
+<a name="l00294"></a>00294     ASSERT_EQ(1, deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#ae73ed4a9faede3332a47215b2a68a5dc">mtime</a>);
+<a name="l00295"></a>00295     ASSERT_EQ(2, deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#af59c987b02350a4dfcd24a5406624fdb">node_count</a>);
+<a name="l00296"></a>00296     ASSERT_EQ(<span class="stringliteral">&quot;foo.h&quot;</span>, deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#ab60b40fc0217ea187cdc60fb59ea27e8">nodes</a>[0]-&gt;<a class="code" href="structNode.html#a8530ccbc220a8fe1d50256c7ef4ee6d9">path</a>());
+<a name="l00297"></a>00297     ASSERT_EQ(<span class="stringliteral">&quot;baz.h&quot;</span>, deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#ab60b40fc0217ea187cdc60fb59ea27e8">nodes</a>[1]-&gt;<a class="code" href="structNode.html#a8530ccbc220a8fe1d50256c7ef4ee6d9">path</a>());
+<a name="l00298"></a>00298 
+<a name="l00299"></a>00299     ASSERT_TRUE(log.<a class="code" href="structDepsLog.html#a09515578bf5a271a93919c7ff2036001" title="Rewrite the known log entries, throwing away old data.">Recompact</a>(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, &amp;err));
 <a name="l00300"></a>00300 
-<a name="l00301"></a>00301     vector&lt;Node*&gt; deps;
-<a name="l00302"></a>00302     deps.push_back(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;foo.h&quot;</span>));
-<a name="l00303"></a>00303     deps.push_back(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;bar.h&quot;</span>));
-<a name="l00304"></a>00304     log.<a class="code" href="structDepsLog.html#a970cd6713ab54b3fff2f9de5255352fc">RecordDeps</a>(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;out.o&quot;</span>), 1, deps);
-<a name="l00305"></a>00305 
-<a name="l00306"></a>00306     deps.clear();
-<a name="l00307"></a>00307     deps.push_back(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;foo.h&quot;</span>));
-<a name="l00308"></a>00308     deps.push_back(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;bar2.h&quot;</span>));
-<a name="l00309"></a>00309     log.<a class="code" href="structDepsLog.html#a970cd6713ab54b3fff2f9de5255352fc">RecordDeps</a>(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;out2.o&quot;</span>), 2, deps);
-<a name="l00310"></a>00310 
-<a name="l00311"></a>00311     log.<a class="code" href="structDepsLog.html#a750f013ae662f96e7f2545d213c7f3a0">Close</a>();
-<a name="l00312"></a>00312   }
-<a name="l00313"></a>00313 
-<a name="l00314"></a>00314   <span class="comment">// Get the file size.</span>
-<a name="l00315"></a>00315   <span class="keyword">struct </span>stat st;
-<a name="l00316"></a>00316   ASSERT_EQ(0, stat(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, &amp;st));
-<a name="l00317"></a>00317 
-<a name="l00318"></a>00318   <span class="comment">// Try reloading at truncated sizes.</span>
-<a name="l00319"></a>00319   <span class="comment">// Track how many nodes/deps were found; they should decrease with</span>
-<a name="l00320"></a>00320   <span class="comment">// smaller sizes.</span>
-<a name="l00321"></a>00321   <span class="keywordtype">int</span> node_count = 5;
-<a name="l00322"></a>00322   <span class="keywordtype">int</span> deps_count = 2;
-<a name="l00323"></a>00323   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> size = (<span class="keywordtype">int</span>)st.st_size; size &gt; 0; --size) {
-<a name="l00324"></a>00324     <span class="keywordtype">string</span> err;
-<a name="l00325"></a>00325     ASSERT_TRUE(<a class="code" href="util_8cc.html#a59c00d43a10517c5124b75ef540f270a" title="Truncates a file to the given size.">Truncate</a>(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, size, &amp;err));
-<a name="l00326"></a>00326 
-<a name="l00327"></a>00327     <a class="code" href="structState.html" title="Global state (file status, loaded rules) for a single run.">State</a> state;
-<a name="l00328"></a>00328     <a class="code" href="structDepsLog.html" title="As build commands run they can output extra dependency information (e.g.">DepsLog</a> log;
-<a name="l00329"></a>00329     EXPECT_TRUE(log.<a class="code" href="structDepsLog.html#a698004cf8030703ddf6b19f8ab7bd50e">Load</a>(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, &amp;state, &amp;err));
-<a name="l00330"></a>00330     <span class="keywordflow">if</span> (!err.empty()) {
-<a name="l00331"></a>00331       <span class="comment">// At some point the log will be so short as to be unparseable.</span>
-<a name="l00332"></a>00332       <span class="keywordflow">break</span>;
-<a name="l00333"></a>00333     }
-<a name="l00334"></a>00334 
-<a name="l00335"></a>00335     ASSERT_GE(node_count, (<span class="keywordtype">int</span>)log.<a class="code" href="structDepsLog.html#a94bb97eecb9d8293ef1c7f19f1a65f1b" title="Used for tests.">nodes</a>().size());
-<a name="l00336"></a>00336     node_count = log.<a class="code" href="structDepsLog.html#a94bb97eecb9d8293ef1c7f19f1a65f1b" title="Used for tests.">nodes</a>().size();
+<a name="l00301"></a>00301     <span class="comment">// The previous entries should have been removed.</span>
+<a name="l00302"></a>00302     deps = log.<a class="code" href="structDepsLog.html#a075043796f88d312004cf5ae74a53c4e">GetDeps</a>(out);
+<a name="l00303"></a>00303     ASSERT_FALSE(deps);
+<a name="l00304"></a>00304 
+<a name="l00305"></a>00305     deps = log.<a class="code" href="structDepsLog.html#a075043796f88d312004cf5ae74a53c4e">GetDeps</a>(other_out);
+<a name="l00306"></a>00306     ASSERT_FALSE(deps);
+<a name="l00307"></a>00307 
+<a name="l00308"></a>00308     <span class="comment">// The .h files pulled in via deps should no longer have ids either.</span>
+<a name="l00309"></a>00309     ASSERT_EQ(-1, state.<a class="code" href="structState.html#a9b89c1d3065f1c2100d16a41c1602ac5">LookupNode</a>(<span class="stringliteral">&quot;foo.h&quot;</span>)-&gt;<a class="code" href="structNode.html#a703c4c528d8b5176ee7a85db7cdd4208">id</a>());
+<a name="l00310"></a>00310     ASSERT_EQ(-1, state.<a class="code" href="structState.html#a9b89c1d3065f1c2100d16a41c1602ac5">LookupNode</a>(<span class="stringliteral">&quot;baz.h&quot;</span>)-&gt;<a class="code" href="structNode.html#a703c4c528d8b5176ee7a85db7cdd4208">id</a>());
+<a name="l00311"></a>00311 
+<a name="l00312"></a>00312     <span class="comment">// The file should have shrunk more.</span>
+<a name="l00313"></a>00313     <span class="keyword">struct </span>stat st;
+<a name="l00314"></a>00314     ASSERT_EQ(0, stat(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, &amp;st));
+<a name="l00315"></a>00315     <span class="keywordtype">int</span> file_size_4 = (int)st.st_size;
+<a name="l00316"></a>00316     ASSERT_LT(file_size_4, file_size_3);
+<a name="l00317"></a>00317   }
+<a name="l00318"></a>00318 }
+<a name="l00319"></a>00319 
+<a name="l00320"></a>00320 <span class="comment">// Verify that invalid file headers cause a new build.</span>
+<a name="l00321"></a>00321 <a class="code" href="build__test_8cc.html#aa2d4879a1416ae4b4db00986d0b091eb">TEST_F</a>(DepsLogTest, InvalidHeader) {
+<a name="l00322"></a>00322   <span class="keyword">const</span> <span class="keywordtype">char</span> *kInvalidHeaders[] = {
+<a name="l00323"></a>00323     <span class="stringliteral">&quot;&quot;</span>,                              <span class="comment">// Empty file.</span>
+<a name="l00324"></a>00324     <span class="stringliteral">&quot;# ninjad&quot;</span>,                      <span class="comment">// Truncated first line.</span>
+<a name="l00325"></a>00325     <span class="stringliteral">&quot;# ninjadeps\n&quot;</span>,                 <span class="comment">// No version int.</span>
+<a name="l00326"></a>00326     <span class="stringliteral">&quot;# ninjadeps\n\001\002&quot;</span>,         <span class="comment">// Truncated version int.</span>
+<a name="l00327"></a>00327     <span class="stringliteral">&quot;# ninjadeps\n\001\002\003\004&quot;</span>  <span class="comment">// Invalid version int.</span>
+<a name="l00328"></a>00328   };
+<a name="l00329"></a>00329   <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; <span class="keyword">sizeof</span>(kInvalidHeaders) / <span class="keyword">sizeof</span>(kInvalidHeaders[0]);
+<a name="l00330"></a>00330        ++i) {
+<a name="l00331"></a>00331     FILE* deps_log = fopen(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, <span class="stringliteral">&quot;wb&quot;</span>);
+<a name="l00332"></a>00332     ASSERT_TRUE(deps_log != NULL);
+<a name="l00333"></a>00333     ASSERT_EQ(
+<a name="l00334"></a>00334         strlen(kInvalidHeaders[i]),
+<a name="l00335"></a>00335         fwrite(kInvalidHeaders[i], 1, strlen(kInvalidHeaders[i]), deps_log));
+<a name="l00336"></a>00336     ASSERT_EQ(0 ,fclose(deps_log));
 <a name="l00337"></a>00337 
-<a name="l00338"></a>00338     <span class="comment">// Count how many non-NULL deps entries there are.</span>
-<a name="l00339"></a>00339     <span class="keywordtype">int</span> new_deps_count = 0;
-<a name="l00340"></a>00340     <span class="keywordflow">for</span> (vector&lt;DepsLog::Deps*&gt;::const_iterator i = log.<a class="code" href="structDepsLog.html#a849f7a1be3a785babb0089e1466fe874">deps</a>().begin();
-<a name="l00341"></a>00341          i != log.<a class="code" href="structDepsLog.html#a849f7a1be3a785babb0089e1466fe874">deps</a>().end(); ++i) {
-<a name="l00342"></a>00342       <span class="keywordflow">if</span> (*i)
-<a name="l00343"></a>00343         ++new_deps_count;
-<a name="l00344"></a>00344     }
-<a name="l00345"></a>00345     ASSERT_GE(deps_count, new_deps_count);
-<a name="l00346"></a>00346     deps_count = new_deps_count;
-<a name="l00347"></a>00347   }
-<a name="l00348"></a>00348 }
-<a name="l00349"></a>00349 
-<a name="l00350"></a>00350 <span class="comment">// Run the truncation-recovery logic.</span>
-<a name="l00351"></a>00351 <a class="code" href="build__test_8cc.html#aa2d4879a1416ae4b4db00986d0b091eb">TEST_F</a>(DepsLogTest, TruncatedRecovery) {
-<a name="l00352"></a>00352   <span class="comment">// Create a file with some entries.</span>
-<a name="l00353"></a>00353   {
-<a name="l00354"></a>00354     <a class="code" href="structState.html" title="Global state (file status, loaded rules) for a single run.">State</a> state;
-<a name="l00355"></a>00355     <a class="code" href="structDepsLog.html" title="As build commands run they can output extra dependency information (e.g.">DepsLog</a> log;
-<a name="l00356"></a>00356     <span class="keywordtype">string</span> err;
-<a name="l00357"></a>00357     EXPECT_TRUE(log.<a class="code" href="structDepsLog.html#af49ad152c2917c7e86742ce335db0263">OpenForWrite</a>(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, &amp;err));
-<a name="l00358"></a>00358     ASSERT_EQ(<span class="stringliteral">&quot;&quot;</span>, err);
-<a name="l00359"></a>00359 
-<a name="l00360"></a>00360     vector&lt;Node*&gt; deps;
-<a name="l00361"></a>00361     deps.push_back(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;foo.h&quot;</span>));
-<a name="l00362"></a>00362     deps.push_back(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;bar.h&quot;</span>));
-<a name="l00363"></a>00363     log.<a class="code" href="structDepsLog.html#a970cd6713ab54b3fff2f9de5255352fc">RecordDeps</a>(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;out.o&quot;</span>), 1, deps);
-<a name="l00364"></a>00364 
-<a name="l00365"></a>00365     deps.clear();
-<a name="l00366"></a>00366     deps.push_back(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;foo.h&quot;</span>));
-<a name="l00367"></a>00367     deps.push_back(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;bar2.h&quot;</span>));
-<a name="l00368"></a>00368     log.<a class="code" href="structDepsLog.html#a970cd6713ab54b3fff2f9de5255352fc">RecordDeps</a>(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;out2.o&quot;</span>), 2, deps);
-<a name="l00369"></a>00369 
-<a name="l00370"></a>00370     log.<a class="code" href="structDepsLog.html#a750f013ae662f96e7f2545d213c7f3a0">Close</a>();
-<a name="l00371"></a>00371   }
+<a name="l00338"></a>00338     <span class="keywordtype">string</span> err;
+<a name="l00339"></a>00339     <a class="code" href="structDepsLog.html" title="As build commands run they can output extra dependency information (e.g.">DepsLog</a> log;
+<a name="l00340"></a>00340     <a class="code" href="structState.html" title="Global state (file status, loaded rules) for a single run.">State</a> state;
+<a name="l00341"></a>00341     ASSERT_TRUE(log.<a class="code" href="structDepsLog.html#a698004cf8030703ddf6b19f8ab7bd50e">Load</a>(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, &amp;state, &amp;err));
+<a name="l00342"></a>00342     EXPECT_EQ(<span class="stringliteral">&quot;bad deps log signature or version; starting over&quot;</span>, err);
+<a name="l00343"></a>00343   }
+<a name="l00344"></a>00344 }
+<a name="l00345"></a>00345 
+<a name="l00346"></a>00346 <span class="comment">// Simulate what happens when loading a truncated log file.</span>
+<a name="l00347"></a>00347 <a class="code" href="build__test_8cc.html#aa2d4879a1416ae4b4db00986d0b091eb">TEST_F</a>(DepsLogTest, Truncated) {
+<a name="l00348"></a>00348   <span class="comment">// Create a file with some entries.</span>
+<a name="l00349"></a>00349   {
+<a name="l00350"></a>00350     <a class="code" href="structState.html" title="Global state (file status, loaded rules) for a single run.">State</a> state;
+<a name="l00351"></a>00351     <a class="code" href="structDepsLog.html" title="As build commands run they can output extra dependency information (e.g.">DepsLog</a> log;
+<a name="l00352"></a>00352     <span class="keywordtype">string</span> err;
+<a name="l00353"></a>00353     EXPECT_TRUE(log.<a class="code" href="structDepsLog.html#af49ad152c2917c7e86742ce335db0263">OpenForWrite</a>(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, &amp;err));
+<a name="l00354"></a>00354     ASSERT_EQ(<span class="stringliteral">&quot;&quot;</span>, err);
+<a name="l00355"></a>00355 
+<a name="l00356"></a>00356     vector&lt;Node*&gt; deps;
+<a name="l00357"></a>00357     deps.push_back(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;foo.h&quot;</span>));
+<a name="l00358"></a>00358     deps.push_back(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;bar.h&quot;</span>));
+<a name="l00359"></a>00359     log.<a class="code" href="structDepsLog.html#a970cd6713ab54b3fff2f9de5255352fc">RecordDeps</a>(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;out.o&quot;</span>), 1, deps);
+<a name="l00360"></a>00360 
+<a name="l00361"></a>00361     deps.clear();
+<a name="l00362"></a>00362     deps.push_back(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;foo.h&quot;</span>));
+<a name="l00363"></a>00363     deps.push_back(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;bar2.h&quot;</span>));
+<a name="l00364"></a>00364     log.<a class="code" href="structDepsLog.html#a970cd6713ab54b3fff2f9de5255352fc">RecordDeps</a>(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;out2.o&quot;</span>), 2, deps);
+<a name="l00365"></a>00365 
+<a name="l00366"></a>00366     log.<a class="code" href="structDepsLog.html#a750f013ae662f96e7f2545d213c7f3a0">Close</a>();
+<a name="l00367"></a>00367   }
+<a name="l00368"></a>00368 
+<a name="l00369"></a>00369   <span class="comment">// Get the file size.</span>
+<a name="l00370"></a>00370   <span class="keyword">struct </span>stat st;
+<a name="l00371"></a>00371   ASSERT_EQ(0, stat(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, &amp;st));
 <a name="l00372"></a>00372 
-<a name="l00373"></a>00373   <span class="comment">// Shorten the file, corrupting the last record.</span>
-<a name="l00374"></a>00374   <span class="keyword">struct </span>stat st;
-<a name="l00375"></a>00375   ASSERT_EQ(0, stat(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, &amp;st));
-<a name="l00376"></a>00376   <span class="keywordtype">string</span> err;
-<a name="l00377"></a>00377   ASSERT_TRUE(<a class="code" href="util_8cc.html#a59c00d43a10517c5124b75ef540f270a" title="Truncates a file to the given size.">Truncate</a>(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, st.st_size - 2, &amp;err));
-<a name="l00378"></a>00378 
-<a name="l00379"></a>00379   <span class="comment">// Load the file again, add an entry.</span>
-<a name="l00380"></a>00380   {
-<a name="l00381"></a>00381     <a class="code" href="structState.html" title="Global state (file status, loaded rules) for a single run.">State</a> state;
-<a name="l00382"></a>00382     <a class="code" href="structDepsLog.html" title="As build commands run they can output extra dependency information (e.g.">DepsLog</a> log;
-<a name="l00383"></a>00383     <span class="keywordtype">string</span> err;
+<a name="l00373"></a>00373   <span class="comment">// Try reloading at truncated sizes.</span>
+<a name="l00374"></a>00374   <span class="comment">// Track how many nodes/deps were found; they should decrease with</span>
+<a name="l00375"></a>00375   <span class="comment">// smaller sizes.</span>
+<a name="l00376"></a>00376   <span class="keywordtype">int</span> node_count = 5;
+<a name="l00377"></a>00377   <span class="keywordtype">int</span> deps_count = 2;
+<a name="l00378"></a>00378   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> size = (<span class="keywordtype">int</span>)st.st_size; size &gt; 0; --size) {
+<a name="l00379"></a>00379     <span class="keywordtype">string</span> err;
+<a name="l00380"></a>00380     ASSERT_TRUE(<a class="code" href="util_8cc.html#a59c00d43a10517c5124b75ef540f270a" title="Truncates a file to the given size.">Truncate</a>(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, size, &amp;err));
+<a name="l00381"></a>00381 
+<a name="l00382"></a>00382     <a class="code" href="structState.html" title="Global state (file status, loaded rules) for a single run.">State</a> state;
+<a name="l00383"></a>00383     <a class="code" href="structDepsLog.html" title="As build commands run they can output extra dependency information (e.g.">DepsLog</a> log;
 <a name="l00384"></a>00384     EXPECT_TRUE(log.<a class="code" href="structDepsLog.html#a698004cf8030703ddf6b19f8ab7bd50e">Load</a>(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, &amp;state, &amp;err));
-<a name="l00385"></a>00385     ASSERT_EQ(<span class="stringliteral">&quot;premature end of file; recovering&quot;</span>, err);
-<a name="l00386"></a>00386     err.clear();
-<a name="l00387"></a>00387 
-<a name="l00388"></a>00388     <span class="comment">// The truncated entry should&#39;ve been discarded.</span>
-<a name="l00389"></a>00389     EXPECT_EQ(NULL, log.<a class="code" href="structDepsLog.html#a075043796f88d312004cf5ae74a53c4e">GetDeps</a>(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;out2.o&quot;</span>)));
-<a name="l00390"></a>00390 
-<a name="l00391"></a>00391     EXPECT_TRUE(log.<a class="code" href="structDepsLog.html#af49ad152c2917c7e86742ce335db0263">OpenForWrite</a>(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, &amp;err));
-<a name="l00392"></a>00392     ASSERT_EQ(<span class="stringliteral">&quot;&quot;</span>, err);
-<a name="l00393"></a>00393 
-<a name="l00394"></a>00394     <span class="comment">// Add a new entry.</span>
-<a name="l00395"></a>00395     vector&lt;Node*&gt; deps;
-<a name="l00396"></a>00396     deps.push_back(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;foo.h&quot;</span>));
-<a name="l00397"></a>00397     deps.push_back(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;bar2.h&quot;</span>));
-<a name="l00398"></a>00398     log.<a class="code" href="structDepsLog.html#a970cd6713ab54b3fff2f9de5255352fc">RecordDeps</a>(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;out2.o&quot;</span>), 3, deps);
-<a name="l00399"></a>00399 
-<a name="l00400"></a>00400     log.<a class="code" href="structDepsLog.html#a750f013ae662f96e7f2545d213c7f3a0">Close</a>();
-<a name="l00401"></a>00401   }
-<a name="l00402"></a>00402 
-<a name="l00403"></a>00403   <span class="comment">// Load the file a third time to verify appending after a mangled</span>
-<a name="l00404"></a>00404   <span class="comment">// entry doesn&#39;t break things.</span>
-<a name="l00405"></a>00405   {
-<a name="l00406"></a>00406     <a class="code" href="structState.html" title="Global state (file status, loaded rules) for a single run.">State</a> state;
-<a name="l00407"></a>00407     <a class="code" href="structDepsLog.html" title="As build commands run they can output extra dependency information (e.g.">DepsLog</a> log;
-<a name="l00408"></a>00408     <span class="keywordtype">string</span> err;
-<a name="l00409"></a>00409     EXPECT_TRUE(log.<a class="code" href="structDepsLog.html#a698004cf8030703ddf6b19f8ab7bd50e">Load</a>(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, &amp;state, &amp;err));
-<a name="l00410"></a>00410 
-<a name="l00411"></a>00411     <span class="comment">// The truncated entry should exist.</span>
-<a name="l00412"></a>00412     <a class="code" href="structDepsLog_1_1Deps.html">DepsLog::Deps</a>* deps = log.<a class="code" href="structDepsLog.html#a075043796f88d312004cf5ae74a53c4e">GetDeps</a>(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;out2.o&quot;</span>));
-<a name="l00413"></a>00413     ASSERT_TRUE(deps);
-<a name="l00414"></a>00414   }
-<a name="l00415"></a>00415 }
-<a name="l00416"></a>00416 
-<a name="l00417"></a>00417 }  <span class="comment">// anonymous namespace</span>
+<a name="l00385"></a>00385     <span class="keywordflow">if</span> (!err.empty()) {
+<a name="l00386"></a>00386       <span class="comment">// At some point the log will be so short as to be unparseable.</span>
+<a name="l00387"></a>00387       <span class="keywordflow">break</span>;
+<a name="l00388"></a>00388     }
+<a name="l00389"></a>00389 
+<a name="l00390"></a>00390     ASSERT_GE(node_count, (<span class="keywordtype">int</span>)log.<a class="code" href="structDepsLog.html#a94bb97eecb9d8293ef1c7f19f1a65f1b" title="Used for tests.">nodes</a>().size());
+<a name="l00391"></a>00391     node_count = log.<a class="code" href="structDepsLog.html#a94bb97eecb9d8293ef1c7f19f1a65f1b" title="Used for tests.">nodes</a>().size();
+<a name="l00392"></a>00392 
+<a name="l00393"></a>00393     <span class="comment">// Count how many non-NULL deps entries there are.</span>
+<a name="l00394"></a>00394     <span class="keywordtype">int</span> new_deps_count = 0;
+<a name="l00395"></a>00395     <span class="keywordflow">for</span> (vector&lt;DepsLog::Deps*&gt;::const_iterator i = log.<a class="code" href="structDepsLog.html#a849f7a1be3a785babb0089e1466fe874">deps</a>().begin();
+<a name="l00396"></a>00396          i != log.<a class="code" href="structDepsLog.html#a849f7a1be3a785babb0089e1466fe874">deps</a>().end(); ++i) {
+<a name="l00397"></a>00397       <span class="keywordflow">if</span> (*i)
+<a name="l00398"></a>00398         ++new_deps_count;
+<a name="l00399"></a>00399     }
+<a name="l00400"></a>00400     ASSERT_GE(deps_count, new_deps_count);
+<a name="l00401"></a>00401     deps_count = new_deps_count;
+<a name="l00402"></a>00402   }
+<a name="l00403"></a>00403 }
+<a name="l00404"></a>00404 
+<a name="l00405"></a>00405 <span class="comment">// Run the truncation-recovery logic.</span>
+<a name="l00406"></a>00406 <a class="code" href="build__test_8cc.html#aa2d4879a1416ae4b4db00986d0b091eb">TEST_F</a>(DepsLogTest, TruncatedRecovery) {
+<a name="l00407"></a>00407   <span class="comment">// Create a file with some entries.</span>
+<a name="l00408"></a>00408   {
+<a name="l00409"></a>00409     <a class="code" href="structState.html" title="Global state (file status, loaded rules) for a single run.">State</a> state;
+<a name="l00410"></a>00410     <a class="code" href="structDepsLog.html" title="As build commands run they can output extra dependency information (e.g.">DepsLog</a> log;
+<a name="l00411"></a>00411     <span class="keywordtype">string</span> err;
+<a name="l00412"></a>00412     EXPECT_TRUE(log.<a class="code" href="structDepsLog.html#af49ad152c2917c7e86742ce335db0263">OpenForWrite</a>(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, &amp;err));
+<a name="l00413"></a>00413     ASSERT_EQ(<span class="stringliteral">&quot;&quot;</span>, err);
+<a name="l00414"></a>00414 
+<a name="l00415"></a>00415     vector&lt;Node*&gt; deps;
+<a name="l00416"></a>00416     deps.push_back(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;foo.h&quot;</span>));
+<a name="l00417"></a>00417     deps.push_back(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;bar.h&quot;</span>));
+<a name="l00418"></a>00418     log.<a class="code" href="structDepsLog.html#a970cd6713ab54b3fff2f9de5255352fc">RecordDeps</a>(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;out.o&quot;</span>), 1, deps);
+<a name="l00419"></a>00419 
+<a name="l00420"></a>00420     deps.clear();
+<a name="l00421"></a>00421     deps.push_back(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;foo.h&quot;</span>));
+<a name="l00422"></a>00422     deps.push_back(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;bar2.h&quot;</span>));
+<a name="l00423"></a>00423     log.<a class="code" href="structDepsLog.html#a970cd6713ab54b3fff2f9de5255352fc">RecordDeps</a>(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;out2.o&quot;</span>), 2, deps);
+<a name="l00424"></a>00424 
+<a name="l00425"></a>00425     log.<a class="code" href="structDepsLog.html#a750f013ae662f96e7f2545d213c7f3a0">Close</a>();
+<a name="l00426"></a>00426   }
+<a name="l00427"></a>00427 
+<a name="l00428"></a>00428   <span class="comment">// Shorten the file, corrupting the last record.</span>
+<a name="l00429"></a>00429   <span class="keyword">struct </span>stat st;
+<a name="l00430"></a>00430   ASSERT_EQ(0, stat(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, &amp;st));
+<a name="l00431"></a>00431   <span class="keywordtype">string</span> err;
+<a name="l00432"></a>00432   ASSERT_TRUE(<a class="code" href="util_8cc.html#a59c00d43a10517c5124b75ef540f270a" title="Truncates a file to the given size.">Truncate</a>(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, st.st_size - 2, &amp;err));
+<a name="l00433"></a>00433 
+<a name="l00434"></a>00434   <span class="comment">// Load the file again, add an entry.</span>
+<a name="l00435"></a>00435   {
+<a name="l00436"></a>00436     <a class="code" href="structState.html" title="Global state (file status, loaded rules) for a single run.">State</a> state;
+<a name="l00437"></a>00437     <a class="code" href="structDepsLog.html" title="As build commands run they can output extra dependency information (e.g.">DepsLog</a> log;
+<a name="l00438"></a>00438     <span class="keywordtype">string</span> err;
+<a name="l00439"></a>00439     EXPECT_TRUE(log.<a class="code" href="structDepsLog.html#a698004cf8030703ddf6b19f8ab7bd50e">Load</a>(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, &amp;state, &amp;err));
+<a name="l00440"></a>00440     ASSERT_EQ(<span class="stringliteral">&quot;premature end of file; recovering&quot;</span>, err);
+<a name="l00441"></a>00441     err.clear();
+<a name="l00442"></a>00442 
+<a name="l00443"></a>00443     <span class="comment">// The truncated entry should&#39;ve been discarded.</span>
+<a name="l00444"></a>00444     EXPECT_EQ(NULL, log.<a class="code" href="structDepsLog.html#a075043796f88d312004cf5ae74a53c4e">GetDeps</a>(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;out2.o&quot;</span>)));
+<a name="l00445"></a>00445 
+<a name="l00446"></a>00446     EXPECT_TRUE(log.<a class="code" href="structDepsLog.html#af49ad152c2917c7e86742ce335db0263">OpenForWrite</a>(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, &amp;err));
+<a name="l00447"></a>00447     ASSERT_EQ(<span class="stringliteral">&quot;&quot;</span>, err);
+<a name="l00448"></a>00448 
+<a name="l00449"></a>00449     <span class="comment">// Add a new entry.</span>
+<a name="l00450"></a>00450     vector&lt;Node*&gt; deps;
+<a name="l00451"></a>00451     deps.push_back(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;foo.h&quot;</span>));
+<a name="l00452"></a>00452     deps.push_back(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;bar2.h&quot;</span>));
+<a name="l00453"></a>00453     log.<a class="code" href="structDepsLog.html#a970cd6713ab54b3fff2f9de5255352fc">RecordDeps</a>(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;out2.o&quot;</span>), 3, deps);
+<a name="l00454"></a>00454 
+<a name="l00455"></a>00455     log.<a class="code" href="structDepsLog.html#a750f013ae662f96e7f2545d213c7f3a0">Close</a>();
+<a name="l00456"></a>00456   }
+<a name="l00457"></a>00457 
+<a name="l00458"></a>00458   <span class="comment">// Load the file a third time to verify appending after a mangled</span>
+<a name="l00459"></a>00459   <span class="comment">// entry doesn&#39;t break things.</span>
+<a name="l00460"></a>00460   {
+<a name="l00461"></a>00461     <a class="code" href="structState.html" title="Global state (file status, loaded rules) for a single run.">State</a> state;
+<a name="l00462"></a>00462     <a class="code" href="structDepsLog.html" title="As build commands run they can output extra dependency information (e.g.">DepsLog</a> log;
+<a name="l00463"></a>00463     <span class="keywordtype">string</span> err;
+<a name="l00464"></a>00464     EXPECT_TRUE(log.<a class="code" href="structDepsLog.html#a698004cf8030703ddf6b19f8ab7bd50e">Load</a>(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, &amp;state, &amp;err));
+<a name="l00465"></a>00465 
+<a name="l00466"></a>00466     <span class="comment">// The truncated entry should exist.</span>
+<a name="l00467"></a>00467     <a class="code" href="structDepsLog_1_1Deps.html">DepsLog::Deps</a>* deps = log.<a class="code" href="structDepsLog.html#a075043796f88d312004cf5ae74a53c4e">GetDeps</a>(state.<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(<span class="stringliteral">&quot;out2.o&quot;</span>));
+<a name="l00468"></a>00468     ASSERT_TRUE(deps);
+<a name="l00469"></a>00469   }
+<a name="l00470"></a>00470 }
+<a name="l00471"></a>00471 
+<a name="l00472"></a>00472 }  <span class="comment">// anonymous namespace</span>
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 12 2013 09:25:49 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 4 2014 09:13:00 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

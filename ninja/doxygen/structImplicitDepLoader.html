@@ -96,7 +96,7 @@ Private Attributes</h2></td></tr>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="structImplicitDepLoader.html" title="ImplicitDepLoader loads implicit dependencies, as referenced via the &quot;depfile&quot; attribute in build fil...">ImplicitDepLoader</a> loads implicit dependencies, as referenced via the "depfile" attribute in build files. </p>
 
-<p>Definition at line <a class="el" href="graph_8h_source.html#l00191">191</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
+<p>Definition at line <a class="el" href="graph_8h_source.html#l00198">198</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
 </div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a6a31a5bd83e08117a2fb3a43c88fc718"></a><!-- doxytag: member="ImplicitDepLoader::ImplicitDepLoader" ref="a6a31a5bd83e08117a2fb3a43c88fc718" args="(State *state, DepsLog *deps_log, DiskInterface *disk_interface)" -->
 <div class="memitem">
@@ -129,7 +129,7 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="graph_8h_source.html#l00192">192</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
+<p>Definition at line <a class="el" href="graph_8h_source.html#l00199">199</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
 
 </div>
 </div>
@@ -151,11 +151,11 @@ Private Attributes</h2></td></tr>
 
 <p>If we don't have a edge that generates this input already, create one; this makes us not abort if the input is missing, but instead will rebuild in that circumstance. </p>
 
-<p>Definition at line <a class="el" href="graph_8cc_source.html#l00425">425</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
+<p>Definition at line <a class="el" href="graph_8cc_source.html#l00445">445</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
 
-<p>References <a class="el" href="state_8cc_source.html#l00103">State::AddEdge()</a>, <a class="el" href="graph_8h_source.html#l00080">Node::in_edge()</a>, <a class="el" href="state_8h_source.html#l00085">State::kPhonyRule</a>, <a class="el" href="graph_8h_source.html#l00157">Edge::outputs_</a>, <a class="el" href="graph_8h_source.html#l00159">Edge::outputs_ready_</a>, <a class="el" href="graph_8h_source.html#l00081">Node::set_in_edge()</a>, and <a class="el" href="graph_8h_source.html#l00223">state_</a>.</p>
+<p>References <a class="el" href="state_8cc_source.html#l00105">State::AddEdge()</a>, <a class="el" href="graph_8h_source.html#l00080">Node::in_edge()</a>, <a class="el" href="state_8h_source.html#l00086">State::kPhonyRule</a>, <a class="el" href="graph_8h_source.html#l00163">Edge::outputs_</a>, <a class="el" href="graph_8h_source.html#l00165">Edge::outputs_ready_</a>, <a class="el" href="graph_8h_source.html#l00081">Node::set_in_edge()</a>, and <a class="el" href="graph_8h_source.html#l00230">state_</a>.</p>
 
-<p>Referenced by <a class="el" href="graph_8cc_source.html#l00341">LoadDepFile()</a>, and <a class="el" href="graph_8cc_source.html#l00390">LoadDepsFromLog()</a>.</p>
+<p>Referenced by <a class="el" href="graph_8cc_source.html#l00361">LoadDepFile()</a>, and <a class="el" href="graph_8cc_source.html#l00410">LoadDepsFromLog()</a>.</p>
 
 </div>
 </div>
@@ -173,7 +173,7 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="graph_8h_source.html#l00201">201</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
+<p>Definition at line <a class="el" href="graph_8h_source.html#l00208">208</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
 
 </div>
 </div>
@@ -211,11 +211,11 @@ Private Attributes</h2></td></tr>
 <p>Load implicit dependencies for <em>edge</em> from a depfile attribute. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>false on error (without filling <em>err</em> if info is just missing). </dd></dl>
 
-<p>Definition at line <a class="el" href="graph_8cc_source.html#l00341">341</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
+<p>Definition at line <a class="el" href="graph_8cc_source.html#l00361">361</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
 
-<p>References <a class="el" href="graph_8h_source.html#l00087">Node::AddOutEdge()</a>, <a class="el" href="string__piece_8h_source.html#l00045">StringPiece::AsString()</a>, <a class="el" href="util_8cc_source.html#l00087">CanonicalizePath()</a>, <a class="el" href="graph_8cc_source.html#l00425">CreatePhonyInEdge()</a>, <a class="el" href="graph_8h_source.html#l00224">disk_interface_</a>, <a class="el" href="debug__flags_8h_source.html#l00020">EXPLAIN</a>, <a class="el" href="state_8cc_source.html#l00112">State::GetNode()</a>, <a class="el" href="depfile__parser_8h_source.html#l00032">DepfileParser::ins_</a>, <a class="el" href="metrics_8h_source.html#l00085">METRIC_RECORD</a>, <a class="el" href="depfile__parser_8h_source.html#l00031">DepfileParser::out_</a>, <a class="el" href="graph_8h_source.html#l00157">Edge::outputs_</a>, <a class="el" href="depfile__parser_8cc_source.html#l00032">DepfileParser::Parse()</a>, <a class="el" href="graph_8h_source.html#l00073">Node::path()</a>, <a class="el" href="graph_8cc_source.html#l00417">PreallocateSpace()</a>, <a class="el" href="structDiskInterface.html#aed889f19b478039bd8d315fe965440ea">DiskInterface::ReadFile()</a>, and <a class="el" href="graph_8h_source.html#l00223">state_</a>.</p>
+<p>References <a class="el" href="graph_8h_source.html#l00087">Node::AddOutEdge()</a>, <a class="el" href="string__piece_8h_source.html#l00045">StringPiece::AsString()</a>, <a class="el" href="util_8cc_source.html#l00088">CanonicalizePath()</a>, <a class="el" href="graph_8cc_source.html#l00445">CreatePhonyInEdge()</a>, <a class="el" href="graph_8h_source.html#l00231">disk_interface_</a>, <a class="el" href="debug__flags_8h_source.html#l00020">EXPLAIN</a>, <a class="el" href="state_8cc_source.html#l00114">State::GetNode()</a>, <a class="el" href="depfile__parser_8h_source.html#l00032">DepfileParser::ins_</a>, <a class="el" href="metrics_8h_source.html#l00085">METRIC_RECORD</a>, <a class="el" href="depfile__parser_8h_source.html#l00031">DepfileParser::out_</a>, <a class="el" href="graph_8h_source.html#l00163">Edge::outputs_</a>, <a class="el" href="depfile__parser_8cc_source.html#l00032">DepfileParser::Parse()</a>, <a class="el" href="graph_8h_source.html#l00073">Node::path()</a>, <a class="el" href="graph_8cc_source.html#l00437">PreallocateSpace()</a>, <a class="el" href="structDiskInterface.html#aed889f19b478039bd8d315fe965440ea">DiskInterface::ReadFile()</a>, and <a class="el" href="graph_8h_source.html#l00230">state_</a>.</p>
 
-<p>Referenced by <a class="el" href="graph_8cc_source.html#l00328">LoadDeps()</a>.</p>
+<p>Referenced by <a class="el" href="graph_8cc_source.html#l00348">LoadDeps()</a>.</p>
 
 </div>
 </div>
@@ -247,9 +247,9 @@ Private Attributes</h2></td></tr>
 <p>Load implicit dependencies for <em>edge</em>. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>false on error (without filling <em>err</em> if info is just missing </dd></dl>
 
-<p>Definition at line <a class="el" href="graph_8cc_source.html#l00328">328</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
+<p>Definition at line <a class="el" href="graph_8cc_source.html#l00348">348</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
 
-<p>References <a class="el" href="graph_8cc_source.html#l00277">Edge::GetBinding()</a>, <a class="el" href="graph_8cc_source.html#l00341">LoadDepFile()</a>, and <a class="el" href="graph_8cc_source.html#l00390">LoadDepsFromLog()</a>.</p>
+<p>References <a class="el" href="graph_8cc_source.html#l00283">Edge::GetBinding()</a>, <a class="el" href="graph_8cc_source.html#l00292">Edge::GetUnescapedDepfile()</a>, <a class="el" href="graph_8cc_source.html#l00361">LoadDepFile()</a>, and <a class="el" href="graph_8cc_source.html#l00410">LoadDepsFromLog()</a>.</p>
 
 <p>Referenced by <a class="el" href="graph_8cc_source.html#l00060">DependencyScan::RecomputeDirty()</a>.</p>
 
@@ -283,11 +283,11 @@ Private Attributes</h2></td></tr>
 <p>Load implicit dependencies for <em>edge</em> from the <a class="el" href="structDepsLog.html" title="As build commands run they can output extra dependency information (e.g.">DepsLog</a>. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>false on error (without filling <em>err</em> if info is just missing). </dd></dl>
 
-<p>Definition at line <a class="el" href="graph_8cc_source.html#l00390">390</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
+<p>Definition at line <a class="el" href="graph_8cc_source.html#l00410">410</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
 
-<p>References <a class="el" href="graph_8h_source.html#l00087">Node::AddOutEdge()</a>, <a class="el" href="graph_8cc_source.html#l00425">CreatePhonyInEdge()</a>, <a class="el" href="graph_8h_source.html#l00225">deps_log_</a>, <a class="el" href="debug__flags_8h_source.html#l00020">EXPLAIN</a>, <a class="el" href="deps__log_8cc_source.html#l00295">DepsLog::GetDeps()</a>, <a class="el" href="graph_8h_source.html#l00074">Node::mtime()</a>, <a class="el" href="deps__log_8h_source.html#l00081">DepsLog::Deps::mtime</a>, <a class="el" href="deps__log_8h_source.html#l00082">DepsLog::Deps::node_count</a>, <a class="el" href="deps__log_8h_source.html#l00083">DepsLog::Deps::nodes</a>, <a class="el" href="graph_8h_source.html#l00157">Edge::outputs_</a>, <a class="el" href="graph_8h_source.html#l00073">Node::path()</a>, and <a class="el" href="graph_8cc_source.html#l00417">PreallocateSpace()</a>.</p>
+<p>References <a class="el" href="graph_8h_source.html#l00087">Node::AddOutEdge()</a>, <a class="el" href="graph_8cc_source.html#l00445">CreatePhonyInEdge()</a>, <a class="el" href="graph_8h_source.html#l00232">deps_log_</a>, <a class="el" href="debug__flags_8h_source.html#l00020">EXPLAIN</a>, <a class="el" href="deps__log_8cc_source.html#l00295">DepsLog::GetDeps()</a>, <a class="el" href="graph_8h_source.html#l00074">Node::mtime()</a>, <a class="el" href="deps__log_8h_source.html#l00081">DepsLog::Deps::mtime</a>, <a class="el" href="deps__log_8h_source.html#l00082">DepsLog::Deps::node_count</a>, <a class="el" href="deps__log_8h_source.html#l00083">DepsLog::Deps::nodes</a>, <a class="el" href="graph_8h_source.html#l00163">Edge::outputs_</a>, <a class="el" href="graph_8h_source.html#l00073">Node::path()</a>, and <a class="el" href="graph_8cc_source.html#l00437">PreallocateSpace()</a>.</p>
 
-<p>Referenced by <a class="el" href="graph_8cc_source.html#l00328">LoadDeps()</a>.</p>
+<p>Referenced by <a class="el" href="graph_8cc_source.html#l00348">LoadDeps()</a>.</p>
 
 </div>
 </div>
@@ -318,11 +318,11 @@ Private Attributes</h2></td></tr>
 
 <p>Preallocate <em>count</em> spaces in the input array on <em>edge</em>, returning an iterator pointing at the first new space. </p>
 
-<p>Definition at line <a class="el" href="graph_8cc_source.html#l00417">417</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
+<p>Definition at line <a class="el" href="graph_8cc_source.html#l00437">437</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
 
-<p>References <a class="el" href="graph_8h_source.html#l00175">Edge::implicit_deps_</a>, <a class="el" href="graph_8h_source.html#l00156">Edge::inputs_</a>, and <a class="el" href="graph_8h_source.html#l00176">Edge::order_only_deps_</a>.</p>
+<p>References <a class="el" href="graph_8h_source.html#l00181">Edge::implicit_deps_</a>, <a class="el" href="graph_8h_source.html#l00162">Edge::inputs_</a>, and <a class="el" href="graph_8h_source.html#l00182">Edge::order_only_deps_</a>.</p>
 
-<p>Referenced by <a class="el" href="graph_8cc_source.html#l00341">LoadDepFile()</a>, and <a class="el" href="graph_8cc_source.html#l00390">LoadDepsFromLog()</a>.</p>
+<p>Referenced by <a class="el" href="graph_8cc_source.html#l00361">LoadDepFile()</a>, and <a class="el" href="graph_8cc_source.html#l00410">LoadDepsFromLog()</a>.</p>
 
 </div>
 </div>
@@ -338,9 +338,9 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="graph_8h_source.html#l00225">225</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
+<p>Definition at line <a class="el" href="graph_8h_source.html#l00232">232</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
 
-<p>Referenced by <a class="el" href="graph_8cc_source.html#l00390">LoadDepsFromLog()</a>.</p>
+<p>Referenced by <a class="el" href="graph_8cc_source.html#l00410">LoadDepsFromLog()</a>.</p>
 
 </div>
 </div>
@@ -355,9 +355,9 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="graph_8h_source.html#l00224">224</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
+<p>Definition at line <a class="el" href="graph_8h_source.html#l00231">231</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
 
-<p>Referenced by <a class="el" href="graph_8cc_source.html#l00341">LoadDepFile()</a>.</p>
+<p>Referenced by <a class="el" href="graph_8cc_source.html#l00361">LoadDepFile()</a>.</p>
 
 </div>
 </div>
@@ -372,9 +372,9 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="graph_8h_source.html#l00223">223</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
+<p>Definition at line <a class="el" href="graph_8h_source.html#l00230">230</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
 
-<p>Referenced by <a class="el" href="graph_8cc_source.html#l00425">CreatePhonyInEdge()</a>, and <a class="el" href="graph_8cc_source.html#l00341">LoadDepFile()</a>.</p>
+<p>Referenced by <a class="el" href="graph_8cc_source.html#l00445">CreatePhonyInEdge()</a>, and <a class="el" href="graph_8cc_source.html#l00361">LoadDepFile()</a>.</p>
 
 </div>
 </div>
@@ -386,7 +386,7 @@ Private Attributes</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 12 2013 09:25:50 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 4 2014 09:13:00 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

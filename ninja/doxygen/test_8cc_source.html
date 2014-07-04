@@ -164,8 +164,8 @@
 <a name="l00105"></a>00105   <a class="code" href="structVirtualFileSystem.html#a50fdb459ed5484804ca1e82bdbb20bd4">files_created_</a>.insert(path);
 <a name="l00106"></a>00106 }
 <a name="l00107"></a>00107 
-<a name="l00108"></a><a class="code" href="structVirtualFileSystem.html#adb7c97119619c0d060579aaaf14c7847">00108</a> <a class="code" href="timestamp_8h.html#a364f6f32873dd70e259c971fc2e28b73">TimeStamp</a> <a class="code" href="structVirtualFileSystem.html#adb7c97119619c0d060579aaaf14c7847" title="stat() a file, returning the mtime, or 0 if missing and -1 on other errors.">VirtualFileSystem::Stat</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path) {
-<a name="l00109"></a>00109   FileMap::iterator i = <a class="code" href="structVirtualFileSystem.html#a8a2223cbff33bbd954f5d69edab57650">files_</a>.find(path);
+<a name="l00108"></a><a class="code" href="structVirtualFileSystem.html#a21576b9c44cb6c1649ab85381c0983fd">00108</a> <a class="code" href="timestamp_8h.html#a364f6f32873dd70e259c971fc2e28b73">TimeStamp</a> <a class="code" href="structVirtualFileSystem.html#a21576b9c44cb6c1649ab85381c0983fd" title="stat() a file, returning the mtime, or 0 if missing and -1 on other errors.">VirtualFileSystem::Stat</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path)<span class="keyword"> const </span>{
+<a name="l00109"></a>00109   FileMap::const_iterator i = <a class="code" href="structVirtualFileSystem.html#a8a2223cbff33bbd954f5d69edab57650">files_</a>.find(path);
 <a name="l00110"></a>00110   <span class="keywordflow">if</span> (i != <a class="code" href="structVirtualFileSystem.html#a8a2223cbff33bbd954f5d69edab57650">files_</a>.end())
 <a name="l00111"></a>00111     <span class="keywordflow">return</span> i-&gt;second.mtime;
 <a name="l00112"></a>00112   <span class="keywordflow">return</span> 0;
@@ -247,7 +247,7 @@
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 12 2013 09:25:50 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 4 2014 09:13:00 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

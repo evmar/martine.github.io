@@ -88,7 +88,7 @@
 <a name="l00029"></a>00029 
 <a name="l00030"></a><a class="code" href="structNode.html#a86d655a6441a755a3d13348029db3885">00030</a> <span class="keywordtype">bool</span> <a class="code" href="structNode.html#a86d655a6441a755a3d13348029db3885" title="Return true if the file exists (mtime_ got a value).">Node::Stat</a>(<a class="code" href="structDiskInterface.html" title="Interface for accessing the disk.">DiskInterface</a>* disk_interface) {
 <a name="l00031"></a>00031   <a class="code" href="metrics_8h.html#a7c19242938163dd11cedf62fdabd4ab6" title="The primary interface to metrics.">METRIC_RECORD</a>(<span class="stringliteral">&quot;node stat&quot;</span>);
-<a name="l00032"></a>00032   <a class="code" href="structNode.html#a2d5c6b4335bf522f94dd5a4450bb22b9" title="Possible values of mtime_:">mtime_</a> = disk_interface-&gt;<a class="code" href="structDiskInterface.html#ac99deecbc7f235272f0a8e308e7792d7" title="stat() a file, returning the mtime, or 0 if missing and -1 on other errors.">Stat</a>(<a class="code" href="structNode.html#a8f27a68eb51e5d750e8648b477f15acb">path_</a>);
+<a name="l00032"></a>00032   <a class="code" href="structNode.html#a2d5c6b4335bf522f94dd5a4450bb22b9" title="Possible values of mtime_:">mtime_</a> = disk_interface-&gt;<a class="code" href="structDiskInterface.html#a1095cf31175f95f005fc38b28683b0cb" title="stat() a file, returning the mtime, or 0 if missing and -1 on other errors.">Stat</a>(<a class="code" href="structNode.html#a8f27a68eb51e5d750e8648b477f15acb">path_</a>);
 <a name="l00033"></a>00033   <span class="keywordflow">return</span> <a class="code" href="structNode.html#a2d5c6b4335bf522f94dd5a4450bb22b9" title="Possible values of mtime_:">mtime_</a> &gt; 0;
 <a name="l00034"></a>00034 }
 <a name="l00035"></a>00035 
@@ -274,234 +274,254 @@
 <a name="l00215"></a>00215 <span class="comment"></span>
 <a name="l00216"></a>00216 <span class="comment">/// An Env for an Edge, providing $in and $out.</span>
 <a name="l00217"></a><a class="code" href="structEdgeEnv.html">00217</a> <span class="comment"></span><span class="keyword">struct </span><a class="code" href="structEdgeEnv.html" title="An Env for an Edge, providing $in and $out.">EdgeEnv</a> : <span class="keyword">public</span> <a class="code" href="structEnv.html" title="An interface for a scope for variable (e.g. &quot;$foo&quot;) lookups.">Env</a> {
-<a name="l00218"></a><a class="code" href="structEdgeEnv.html#a04299d9d3744d2106bce92ea52338feb">00218</a>   <span class="keyword">explicit</span> <a class="code" href="structEdgeEnv.html#a04299d9d3744d2106bce92ea52338feb">EdgeEnv</a>(<a class="code" href="structEdge.html" title="An edge in the dependency graph; links between Nodes using Rules.">Edge</a>* edge) : <a class="code" href="structEdgeEnv.html#a9cf14172d32813daa2e7e57e40230e60">edge_</a>(edge) {}
-<a name="l00219"></a>00219   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="structEdgeEnv.html#aa9c40e6440c932ac59bebefcd2e917bf">LookupVariable</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; var);
-<a name="l00220"></a>00220 <span class="comment"></span>
-<a name="l00221"></a>00221 <span class="comment">  /// Given a span of Nodes, construct a list of paths suitable for a command</span>
-<a name="l00222"></a>00222 <span class="comment">  /// line.</span>
-<a name="l00223"></a>00223 <span class="comment"></span>  <span class="keywordtype">string</span> <a class="code" href="structEdgeEnv.html#a3611d2dee62a757d097245cc51eb6283" title="Given a span of Nodes, construct a list of paths suitable for a command line.">MakePathList</a>(vector&lt;Node*&gt;::iterator begin,
-<a name="l00224"></a>00224                       vector&lt;Node*&gt;::iterator end,
-<a name="l00225"></a>00225                       <span class="keywordtype">char</span> sep);
-<a name="l00226"></a>00226 
-<a name="l00227"></a><a class="code" href="structEdgeEnv.html#a9cf14172d32813daa2e7e57e40230e60">00227</a>   <a class="code" href="structEdge.html" title="An edge in the dependency graph; links between Nodes using Rules.">Edge</a>* <a class="code" href="structEdgeEnv.html#a9cf14172d32813daa2e7e57e40230e60">edge_</a>;
-<a name="l00228"></a>00228 };
+<a name="l00218"></a><a class="code" href="structEdgeEnv.html#af5aeedc89db8f0cdbb072b104c7ba2efa735c02ecd79f01637c799a2973634f72">00218</a>   <span class="keyword">enum</span> <a class="code" href="structEdgeEnv.html#af5aeedc89db8f0cdbb072b104c7ba2ef">EscapeKind</a> { <a class="code" href="structEdgeEnv.html#af5aeedc89db8f0cdbb072b104c7ba2efa735c02ecd79f01637c799a2973634f72">kShellEscape</a>, <a class="code" href="structEdgeEnv.html#af5aeedc89db8f0cdbb072b104c7ba2efaa804a2af5f66c80476dadcd6d0237530">kDoNotEscape</a> };
+<a name="l00219"></a>00219 
+<a name="l00220"></a><a class="code" href="structEdgeEnv.html#ad4b9ab32700e9681ee16b1ca32de5993">00220</a>   <span class="keyword">explicit</span> <a class="code" href="structEdgeEnv.html#ad4b9ab32700e9681ee16b1ca32de5993">EdgeEnv</a>(<a class="code" href="structEdge.html" title="An edge in the dependency graph; links between Nodes using Rules.">Edge</a>* edge, <a class="code" href="structEdgeEnv.html#af5aeedc89db8f0cdbb072b104c7ba2ef">EscapeKind</a> escape)
+<a name="l00221"></a>00221       : <a class="code" href="structEdgeEnv.html#a9cf14172d32813daa2e7e57e40230e60">edge_</a>(edge), <a class="code" href="structEdgeEnv.html#ade0dae63fdec76a8d9d3040b99437c3e">escape_in_out_</a>(escape) {}
+<a name="l00222"></a>00222   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="structEdgeEnv.html#aa9c40e6440c932ac59bebefcd2e917bf">LookupVariable</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; var);
+<a name="l00223"></a>00223 <span class="comment"></span>
+<a name="l00224"></a>00224 <span class="comment">  /// Given a span of Nodes, construct a list of paths suitable for a command</span>
+<a name="l00225"></a>00225 <span class="comment">  /// line.</span>
+<a name="l00226"></a>00226 <span class="comment"></span>  <span class="keywordtype">string</span> <a class="code" href="structEdgeEnv.html#a3611d2dee62a757d097245cc51eb6283" title="Given a span of Nodes, construct a list of paths suitable for a command line.">MakePathList</a>(vector&lt;Node*&gt;::iterator begin,
+<a name="l00227"></a>00227                       vector&lt;Node*&gt;::iterator end,
+<a name="l00228"></a>00228                       <span class="keywordtype">char</span> sep);
 <a name="l00229"></a>00229 
-<a name="l00230"></a><a class="code" href="structEdgeEnv.html#aa9c40e6440c932ac59bebefcd2e917bf">00230</a> <span class="keywordtype">string</span> <a class="code" href="structEdgeEnv.html#aa9c40e6440c932ac59bebefcd2e917bf">EdgeEnv::LookupVariable</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; var) {
-<a name="l00231"></a>00231   <span class="keywordflow">if</span> (var == <span class="stringliteral">&quot;in&quot;</span> || var == <span class="stringliteral">&quot;in_newline&quot;</span>) {
-<a name="l00232"></a>00232     <span class="keywordtype">int</span> explicit_deps_count = <a class="code" href="structEdgeEnv.html#a9cf14172d32813daa2e7e57e40230e60">edge_</a>-&gt;<a class="code" href="structEdge.html#a4fd6b2daa2559765aaf2fed1de96f345">inputs_</a>.size() - <a class="code" href="structEdgeEnv.html#a9cf14172d32813daa2e7e57e40230e60">edge_</a>-&gt;<a class="code" href="structEdge.html#a4dcd12be59a0653c7beef3c37edcf4ed">implicit_deps_</a> -
-<a name="l00233"></a>00233       <a class="code" href="structEdgeEnv.html#a9cf14172d32813daa2e7e57e40230e60">edge_</a>-&gt;<a class="code" href="structEdge.html#a7adc7b047f6574167758c27d87d9b5f8">order_only_deps_</a>;
-<a name="l00234"></a>00234     <span class="keywordflow">return</span> <a class="code" href="structEdgeEnv.html#a3611d2dee62a757d097245cc51eb6283" title="Given a span of Nodes, construct a list of paths suitable for a command line.">MakePathList</a>(<a class="code" href="structEdgeEnv.html#a9cf14172d32813daa2e7e57e40230e60">edge_</a>-&gt;<a class="code" href="structEdge.html#a4fd6b2daa2559765aaf2fed1de96f345">inputs_</a>.begin(),
-<a name="l00235"></a>00235                         <a class="code" href="structEdgeEnv.html#a9cf14172d32813daa2e7e57e40230e60">edge_</a>-&gt;<a class="code" href="structEdge.html#a4fd6b2daa2559765aaf2fed1de96f345">inputs_</a>.begin() + explicit_deps_count,
-<a name="l00236"></a>00236                         var == <span class="stringliteral">&quot;in&quot;</span> ? <span class="charliteral">&#39; &#39;</span> : <span class="charliteral">&#39;\n&#39;</span>);
-<a name="l00237"></a>00237   } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (var == <span class="stringliteral">&quot;out&quot;</span>) {
-<a name="l00238"></a>00238     <span class="keywordflow">return</span> <a class="code" href="structEdgeEnv.html#a3611d2dee62a757d097245cc51eb6283" title="Given a span of Nodes, construct a list of paths suitable for a command line.">MakePathList</a>(<a class="code" href="structEdgeEnv.html#a9cf14172d32813daa2e7e57e40230e60">edge_</a>-&gt;<a class="code" href="structEdge.html#ac4ab5a6898d716f32683b63fafc65bb6">outputs_</a>.begin(),
-<a name="l00239"></a>00239                         <a class="code" href="structEdgeEnv.html#a9cf14172d32813daa2e7e57e40230e60">edge_</a>-&gt;<a class="code" href="structEdge.html#ac4ab5a6898d716f32683b63fafc65bb6">outputs_</a>.end(),
-<a name="l00240"></a>00240                         <span class="charliteral">&#39; &#39;</span>);
-<a name="l00241"></a>00241   }
-<a name="l00242"></a>00242 
-<a name="l00243"></a>00243   <span class="comment">// See notes on BindingEnv::LookupWithFallback.</span>
-<a name="l00244"></a>00244   <span class="keyword">const</span> <a class="code" href="structEvalString.html" title="A tokenized string that contains variable references.">EvalString</a>* eval = <a class="code" href="structEdgeEnv.html#a9cf14172d32813daa2e7e57e40230e60">edge_</a>-&gt;<a class="code" href="structEdge.html#a6553b57e59b77a3f8a4bf9b19c25d7f8">rule_</a>-&gt;<a class="code" href="structRule.html#afa57841cd156c7a449f89acb2c4faeb8">GetBinding</a>(var);
-<a name="l00245"></a>00245   <span class="keywordflow">return</span> <a class="code" href="structEdgeEnv.html#a9cf14172d32813daa2e7e57e40230e60">edge_</a>-&gt;<a class="code" href="structEdge.html#ac45836f73bc104304aad19e16cb7aa1a">env_</a>-&gt;<a class="code" href="structBindingEnv.html#ab866631fcbf9681786950c5377e1da84" title="This is tricky.">LookupWithFallback</a>(var, eval, <span class="keyword">this</span>);
-<a name="l00246"></a>00246 }
-<a name="l00247"></a>00247 
-<a name="l00248"></a><a class="code" href="structEdgeEnv.html#a3611d2dee62a757d097245cc51eb6283">00248</a> <span class="keywordtype">string</span> <a class="code" href="structEdgeEnv.html#a3611d2dee62a757d097245cc51eb6283" title="Given a span of Nodes, construct a list of paths suitable for a command line.">EdgeEnv::MakePathList</a>(vector&lt;Node*&gt;::iterator begin,
-<a name="l00249"></a>00249                              vector&lt;Node*&gt;::iterator end,
-<a name="l00250"></a>00250                              <span class="keywordtype">char</span> sep) {
-<a name="l00251"></a>00251   <span class="keywordtype">string</span> result;
-<a name="l00252"></a>00252   <span class="keywordflow">for</span> (vector&lt;Node*&gt;::iterator i = begin; i != end; ++i) {
-<a name="l00253"></a>00253     <span class="keywordflow">if</span> (!result.empty())
-<a name="l00254"></a>00254       result.push_back(sep);
-<a name="l00255"></a>00255     <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path = (*i)-&gt;path();
-<a name="l00256"></a>00256     <span class="keywordflow">if</span> (path.find(<span class="stringliteral">&quot; &quot;</span>) != string::npos) {
-<a name="l00257"></a>00257       result.append(<span class="stringliteral">&quot;\&quot;&quot;</span>);
-<a name="l00258"></a>00258       result.append(path);
-<a name="l00259"></a>00259       result.append(<span class="stringliteral">&quot;\&quot;&quot;</span>);
-<a name="l00260"></a>00260     } <span class="keywordflow">else</span> {
-<a name="l00261"></a>00261       result.append(path);
-<a name="l00262"></a>00262     }
-<a name="l00263"></a>00263   }
-<a name="l00264"></a>00264   <span class="keywordflow">return</span> result;
-<a name="l00265"></a>00265 }
-<a name="l00266"></a>00266 
-<a name="l00267"></a><a class="code" href="structEdge.html#ac4086e06c9982fbebdb9b1a5d52af3cd">00267</a> <span class="keywordtype">string</span> <a class="code" href="structEdge.html#ac4086e06c9982fbebdb9b1a5d52af3cd" title="Expand all variables in a command and return it as a string.">Edge::EvaluateCommand</a>(<span class="keywordtype">bool</span> incl_rsp_file) {
-<a name="l00268"></a>00268   <span class="keywordtype">string</span> command = <a class="code" href="structEdge.html#a4f495554a299524a951620f7b643d111">GetBinding</a>(<span class="stringliteral">&quot;command&quot;</span>);
-<a name="l00269"></a>00269   <span class="keywordflow">if</span> (incl_rsp_file) {
-<a name="l00270"></a>00270     <span class="keywordtype">string</span> rspfile_content = <a class="code" href="structEdge.html#a4f495554a299524a951620f7b643d111">GetBinding</a>(<span class="stringliteral">&quot;rspfile_content&quot;</span>);
-<a name="l00271"></a>00271     <span class="keywordflow">if</span> (!rspfile_content.empty())
-<a name="l00272"></a>00272       command += <span class="stringliteral">&quot;;rspfile=&quot;</span> + rspfile_content;
-<a name="l00273"></a>00273   }
-<a name="l00274"></a>00274   <span class="keywordflow">return</span> command;
-<a name="l00275"></a>00275 }
-<a name="l00276"></a>00276 
-<a name="l00277"></a><a class="code" href="structEdge.html#a4f495554a299524a951620f7b643d111">00277</a> <span class="keywordtype">string</span> <a class="code" href="structEdge.html#a4f495554a299524a951620f7b643d111">Edge::GetBinding</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; key) {
-<a name="l00278"></a>00278   <a class="code" href="structEdgeEnv.html" title="An Env for an Edge, providing $in and $out.">EdgeEnv</a> env(<span class="keyword">this</span>);
-<a name="l00279"></a>00279   <span class="keywordflow">return</span> env.<a class="code" href="structEdgeEnv.html#aa9c40e6440c932ac59bebefcd2e917bf">LookupVariable</a>(key);
-<a name="l00280"></a>00280 }
-<a name="l00281"></a>00281 
-<a name="l00282"></a><a class="code" href="structEdge.html#a23eef03702ce52f7fdf80a8e05e242d1">00282</a> <span class="keywordtype">bool</span> <a class="code" href="structEdge.html#a23eef03702ce52f7fdf80a8e05e242d1">Edge::GetBindingBool</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; key) {
-<a name="l00283"></a>00283   <span class="keywordflow">return</span> !<a class="code" href="structEdge.html#a4f495554a299524a951620f7b643d111">GetBinding</a>(key).empty();
-<a name="l00284"></a>00284 }
-<a name="l00285"></a>00285 
-<a name="l00286"></a><a class="code" href="structEdge.html#af904164977728b874359e3c07319be47">00286</a> <span class="keywordtype">void</span> <a class="code" href="structEdge.html#af904164977728b874359e3c07319be47">Edge::Dump</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* prefix)<span class="keyword"> const </span>{
-<a name="l00287"></a>00287   printf(<span class="stringliteral">&quot;%s[ &quot;</span>, prefix);
-<a name="l00288"></a>00288   <span class="keywordflow">for</span> (vector&lt;Node*&gt;::const_iterator i = <a class="code" href="structEdge.html#a4fd6b2daa2559765aaf2fed1de96f345">inputs_</a>.begin();
-<a name="l00289"></a>00289        i != <a class="code" href="structEdge.html#a4fd6b2daa2559765aaf2fed1de96f345">inputs_</a>.end() &amp;&amp; *i != NULL; ++i) {
-<a name="l00290"></a>00290     printf(<span class="stringliteral">&quot;%s &quot;</span>, (*i)-&gt;path().c_str());
-<a name="l00291"></a>00291   }
-<a name="l00292"></a>00292   printf(<span class="stringliteral">&quot;--%s-&gt; &quot;</span>, <a class="code" href="structEdge.html#a6553b57e59b77a3f8a4bf9b19c25d7f8">rule_</a>-&gt;<a class="code" href="structRule.html#a5f4c5466903b736836e62b105b03cb87">name</a>().c_str());
-<a name="l00293"></a>00293   <span class="keywordflow">for</span> (vector&lt;Node*&gt;::const_iterator i = <a class="code" href="structEdge.html#ac4ab5a6898d716f32683b63fafc65bb6">outputs_</a>.begin();
-<a name="l00294"></a>00294        i != <a class="code" href="structEdge.html#ac4ab5a6898d716f32683b63fafc65bb6">outputs_</a>.end() &amp;&amp; *i != NULL; ++i) {
-<a name="l00295"></a>00295     printf(<span class="stringliteral">&quot;%s &quot;</span>, (*i)-&gt;path().c_str());
-<a name="l00296"></a>00296   }
-<a name="l00297"></a>00297   <span class="keywordflow">if</span> (<a class="code" href="structEdge.html#a8d44bdcbfb086a1771d6e13f256620a8">pool_</a>) {
-<a name="l00298"></a>00298     <span class="keywordflow">if</span> (!<a class="code" href="structEdge.html#a8d44bdcbfb086a1771d6e13f256620a8">pool_</a>-&gt;<a class="code" href="structPool.html#a7565d8cb32bd057ebc4df40db1a1db75">name</a>().empty()) {
-<a name="l00299"></a>00299       printf(<span class="stringliteral">&quot;(in pool &#39;%s&#39;)&quot;</span>, <a class="code" href="structEdge.html#a8d44bdcbfb086a1771d6e13f256620a8">pool_</a>-&gt;<a class="code" href="structPool.html#a7565d8cb32bd057ebc4df40db1a1db75">name</a>().c_str());
-<a name="l00300"></a>00300     }
-<a name="l00301"></a>00301   } <span class="keywordflow">else</span> {
-<a name="l00302"></a>00302     printf(<span class="stringliteral">&quot;(null pool?)&quot;</span>);
-<a name="l00303"></a>00303   }
-<a name="l00304"></a>00304   printf(<span class="stringliteral">&quot;] 0x%p\n&quot;</span>, <span class="keyword">this</span>);
-<a name="l00305"></a>00305 }
-<a name="l00306"></a>00306 
-<a name="l00307"></a><a class="code" href="structEdge.html#aaf7a366d8ba8f127da58839af826d548">00307</a> <span class="keywordtype">bool</span> <a class="code" href="structEdge.html#aaf7a366d8ba8f127da58839af826d548">Edge::is_phony</a>()<span class="keyword"> const </span>{
-<a name="l00308"></a>00308   <span class="keywordflow">return</span> <a class="code" href="structEdge.html#a6553b57e59b77a3f8a4bf9b19c25d7f8">rule_</a> == &amp;<a class="code" href="structState.html#a9522a499bd62121a14e00a3016fa0599">State::kPhonyRule</a>;
-<a name="l00309"></a>00309 }
-<a name="l00310"></a>00310 
-<a name="l00311"></a><a class="code" href="structNode.html#a4c8556362cc4adfdfe7922c085307e27">00311</a> <span class="keywordtype">void</span> <a class="code" href="structNode.html#a4c8556362cc4adfdfe7922c085307e27">Node::Dump</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* prefix)<span class="keyword"> const </span>{
-<a name="l00312"></a>00312   printf(<span class="stringliteral">&quot;%s &lt;%s 0x%p&gt; mtime: %d%s, (:%s), &quot;</span>,
-<a name="l00313"></a>00313          prefix, <a class="code" href="structNode.html#a8530ccbc220a8fe1d50256c7ef4ee6d9">path</a>().c_str(), <span class="keyword">this</span>,
-<a name="l00314"></a>00314          <a class="code" href="structNode.html#ad338fa15807fdb8f2662e1c3fceb18ba">mtime</a>(), <a class="code" href="structNode.html#ad338fa15807fdb8f2662e1c3fceb18ba">mtime</a>() ? <span class="stringliteral">&quot;&quot;</span> : <span class="stringliteral">&quot; (:missing)&quot;</span>,
-<a name="l00315"></a>00315          <a class="code" href="structNode.html#a6e873ee67eebc1de8a67555cb649932b">dirty</a>() ? <span class="stringliteral">&quot; dirty&quot;</span> : <span class="stringliteral">&quot; clean&quot;</span>);
-<a name="l00316"></a>00316   <span class="keywordflow">if</span> (<a class="code" href="structNode.html#a450d70a4a4742d1b72c861eb67da4201">in_edge</a>()) {
-<a name="l00317"></a>00317     <a class="code" href="structNode.html#a450d70a4a4742d1b72c861eb67da4201">in_edge</a>()-&gt;<a class="code" href="structEdge.html#af904164977728b874359e3c07319be47">Dump</a>(<span class="stringliteral">&quot;in-edge: &quot;</span>);
-<a name="l00318"></a>00318   } <span class="keywordflow">else</span> {
-<a name="l00319"></a>00319     printf(<span class="stringliteral">&quot;no in-edge\n&quot;</span>);
-<a name="l00320"></a>00320   }
-<a name="l00321"></a>00321   printf(<span class="stringliteral">&quot; out edges:\n&quot;</span>);
-<a name="l00322"></a>00322   <span class="keywordflow">for</span> (vector&lt;Edge*&gt;::const_iterator e = <a class="code" href="structNode.html#ab23ddc9378428fba75fbc265f9555d82">out_edges</a>().begin();
-<a name="l00323"></a>00323        e != <a class="code" href="structNode.html#ab23ddc9378428fba75fbc265f9555d82">out_edges</a>().end() &amp;&amp; *e != NULL; ++e) {
-<a name="l00324"></a>00324     (*e)-&gt;Dump(<span class="stringliteral">&quot; +- &quot;</span>);
-<a name="l00325"></a>00325   }
-<a name="l00326"></a>00326 }
-<a name="l00327"></a>00327 
-<a name="l00328"></a><a class="code" href="structImplicitDepLoader.html#a66cdcc2cfccfd7b86c851007bf3c1b13">00328</a> <span class="keywordtype">bool</span> <a class="code" href="structImplicitDepLoader.html#a66cdcc2cfccfd7b86c851007bf3c1b13" title="Load implicit dependencies for edge.">ImplicitDepLoader::LoadDeps</a>(<a class="code" href="structEdge.html" title="An edge in the dependency graph; links between Nodes using Rules.">Edge</a>* edge, <span class="keywordtype">string</span>* err) {
-<a name="l00329"></a>00329   <span class="keywordtype">string</span> deps_type = edge-&gt;<a class="code" href="structEdge.html#a4f495554a299524a951620f7b643d111">GetBinding</a>(<span class="stringliteral">&quot;deps&quot;</span>);
-<a name="l00330"></a>00330   <span class="keywordflow">if</span> (!deps_type.empty())
-<a name="l00331"></a>00331     <span class="keywordflow">return</span> <a class="code" href="structImplicitDepLoader.html#a03bcc22d47ef3dc927f93a2bff86f895" title="Load implicit dependencies for edge from the DepsLog.">LoadDepsFromLog</a>(edge, err);
-<a name="l00332"></a>00332 
-<a name="l00333"></a>00333   <span class="keywordtype">string</span> depfile = edge-&gt;<a class="code" href="structEdge.html#a4f495554a299524a951620f7b643d111">GetBinding</a>(<span class="stringliteral">&quot;depfile&quot;</span>);
-<a name="l00334"></a>00334   <span class="keywordflow">if</span> (!depfile.empty())
-<a name="l00335"></a>00335     <span class="keywordflow">return</span> <a class="code" href="structImplicitDepLoader.html#a7173ceeb9b48be3ffd3527b2245abd7a" title="Load implicit dependencies for edge from a depfile attribute.">LoadDepFile</a>(edge, depfile, err);
-<a name="l00336"></a>00336 
-<a name="l00337"></a>00337   <span class="comment">// No deps to load.</span>
-<a name="l00338"></a>00338   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00339"></a>00339 }
-<a name="l00340"></a>00340 
-<a name="l00341"></a><a class="code" href="structImplicitDepLoader.html#a7173ceeb9b48be3ffd3527b2245abd7a">00341</a> <span class="keywordtype">bool</span> <a class="code" href="structImplicitDepLoader.html#a7173ceeb9b48be3ffd3527b2245abd7a" title="Load implicit dependencies for edge from a depfile attribute.">ImplicitDepLoader::LoadDepFile</a>(<a class="code" href="structEdge.html" title="An edge in the dependency graph; links between Nodes using Rules.">Edge</a>* edge, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path,
-<a name="l00342"></a>00342                                     <span class="keywordtype">string</span>* err) {
-<a name="l00343"></a>00343   <a class="code" href="metrics_8h.html#a7c19242938163dd11cedf62fdabd4ab6" title="The primary interface to metrics.">METRIC_RECORD</a>(<span class="stringliteral">&quot;depfile load&quot;</span>);
-<a name="l00344"></a>00344   <span class="keywordtype">string</span> content = <a class="code" href="structImplicitDepLoader.html#ab70b785ccb07bc9694be0130263f7380">disk_interface_</a>-&gt;<a class="code" href="structDiskInterface.html#aed889f19b478039bd8d315fe965440ea" title="Read a file to a string. Fill in |err| on error.">ReadFile</a>(path, err);
-<a name="l00345"></a>00345   <span class="keywordflow">if</span> (!err-&gt;empty()) {
-<a name="l00346"></a>00346     *err = <span class="stringliteral">&quot;loading &#39;&quot;</span> + path + <span class="stringliteral">&quot;&#39;: &quot;</span> + *err;
-<a name="l00347"></a>00347     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00348"></a>00348   }
-<a name="l00349"></a>00349   <span class="comment">// On a missing depfile: return false and empty *err.</span>
-<a name="l00350"></a>00350   <span class="keywordflow">if</span> (content.empty()) {
-<a name="l00351"></a>00351     <a class="code" href="debug__flags_8h.html#a334e8f1dd8a740e85baff782ec1012c6">EXPLAIN</a>(<span class="stringliteral">&quot;depfile &#39;%s&#39; is missing&quot;</span>, path.c_str());
-<a name="l00352"></a>00352     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00353"></a>00353   }
-<a name="l00354"></a>00354 
-<a name="l00355"></a>00355   <a class="code" href="structDepfileParser.html" title="Parser for the dependency information emitted by gcc&#39;s -M flags.">DepfileParser</a> depfile;
-<a name="l00356"></a>00356   <span class="keywordtype">string</span> depfile_err;
-<a name="l00357"></a>00357   <span class="keywordflow">if</span> (!depfile.<a class="code" href="structDepfileParser.html#ab00f64bc084aa068e5d03e13cf931ad7" title="Parse an input file.">Parse</a>(&amp;content, &amp;depfile_err)) {
-<a name="l00358"></a>00358     *err = path + <span class="stringliteral">&quot;: &quot;</span> + depfile_err;
-<a name="l00359"></a>00359     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00360"></a>00360   }
-<a name="l00361"></a>00361 
-<a name="l00362"></a>00362   <span class="comment">// Check that this depfile matches the edge&#39;s output.</span>
-<a name="l00363"></a>00363   <a class="code" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>* first_output = edge-&gt;<a class="code" href="structEdge.html#ac4ab5a6898d716f32683b63fafc65bb6">outputs_</a>[0];
-<a name="l00364"></a>00364   <a class="code" href="structStringPiece.html" title="StringPiece represents a slice of a string whose memory is managed externally.">StringPiece</a> opath = <a class="code" href="structStringPiece.html" title="StringPiece represents a slice of a string whose memory is managed externally.">StringPiece</a>(first_output-&gt;<a class="code" href="structNode.html#a8530ccbc220a8fe1d50256c7ef4ee6d9">path</a>());
-<a name="l00365"></a>00365   <span class="keywordflow">if</span> (opath != depfile.<a class="code" href="structDepfileParser.html#a7daf65c4239b0a261ec0df62c4d704f8">out_</a>) {
-<a name="l00366"></a>00366     *err = <span class="stringliteral">&quot;expected depfile &#39;&quot;</span> + path + <span class="stringliteral">&quot;&#39; to mention &#39;&quot;</span> +
-<a name="l00367"></a>00367         first_output-&gt;<a class="code" href="structNode.html#a8530ccbc220a8fe1d50256c7ef4ee6d9">path</a>() + <span class="stringliteral">&quot;&#39;, got &#39;&quot;</span> + depfile.<a class="code" href="structDepfileParser.html#a7daf65c4239b0a261ec0df62c4d704f8">out_</a>.<a class="code" href="structStringPiece.html#ae61eaf54a5cd334bcc476670684c2fc6" title="Convert the slice into a full-fledged std::string, copying the data into a new string.">AsString</a>() + <span class="stringliteral">&quot;&#39;&quot;</span>;
-<a name="l00368"></a>00368     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00369"></a>00369   }
-<a name="l00370"></a>00370 
-<a name="l00371"></a>00371   <span class="comment">// Preallocate space in edge-&gt;inputs_ to be filled in below.</span>
-<a name="l00372"></a>00372   vector&lt;Node*&gt;::iterator implicit_dep =
-<a name="l00373"></a>00373       <a class="code" href="structImplicitDepLoader.html#a15ec46bda4de60afad2b751b1bc2012f" title="Preallocate count spaces in the input array on edge, returning an iterator pointing at the first new ...">PreallocateSpace</a>(edge, depfile.<a class="code" href="structDepfileParser.html#af75600dcb6788f6a9f01bc515681ca00">ins_</a>.size());
+<a name="l00230"></a><a class="code" href="structEdgeEnv.html#a9cf14172d32813daa2e7e57e40230e60">00230</a>   <a class="code" href="structEdge.html" title="An edge in the dependency graph; links between Nodes using Rules.">Edge</a>* <a class="code" href="structEdgeEnv.html#a9cf14172d32813daa2e7e57e40230e60">edge_</a>;
+<a name="l00231"></a><a class="code" href="structEdgeEnv.html#ade0dae63fdec76a8d9d3040b99437c3e">00231</a>   <a class="code" href="structEdgeEnv.html#af5aeedc89db8f0cdbb072b104c7ba2ef">EscapeKind</a> <a class="code" href="structEdgeEnv.html#ade0dae63fdec76a8d9d3040b99437c3e">escape_in_out_</a>;
+<a name="l00232"></a>00232 };
+<a name="l00233"></a>00233 
+<a name="l00234"></a><a class="code" href="structEdgeEnv.html#aa9c40e6440c932ac59bebefcd2e917bf">00234</a> <span class="keywordtype">string</span> <a class="code" href="structEdgeEnv.html#aa9c40e6440c932ac59bebefcd2e917bf">EdgeEnv::LookupVariable</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; var) {
+<a name="l00235"></a>00235   <span class="keywordflow">if</span> (var == <span class="stringliteral">&quot;in&quot;</span> || var == <span class="stringliteral">&quot;in_newline&quot;</span>) {
+<a name="l00236"></a>00236     <span class="keywordtype">int</span> explicit_deps_count = <a class="code" href="structEdgeEnv.html#a9cf14172d32813daa2e7e57e40230e60">edge_</a>-&gt;<a class="code" href="structEdge.html#a4fd6b2daa2559765aaf2fed1de96f345">inputs_</a>.size() - <a class="code" href="structEdgeEnv.html#a9cf14172d32813daa2e7e57e40230e60">edge_</a>-&gt;<a class="code" href="structEdge.html#a4dcd12be59a0653c7beef3c37edcf4ed">implicit_deps_</a> -
+<a name="l00237"></a>00237       <a class="code" href="structEdgeEnv.html#a9cf14172d32813daa2e7e57e40230e60">edge_</a>-&gt;<a class="code" href="structEdge.html#a7adc7b047f6574167758c27d87d9b5f8">order_only_deps_</a>;
+<a name="l00238"></a>00238     <span class="keywordflow">return</span> <a class="code" href="structEdgeEnv.html#a3611d2dee62a757d097245cc51eb6283" title="Given a span of Nodes, construct a list of paths suitable for a command line.">MakePathList</a>(<a class="code" href="structEdgeEnv.html#a9cf14172d32813daa2e7e57e40230e60">edge_</a>-&gt;<a class="code" href="structEdge.html#a4fd6b2daa2559765aaf2fed1de96f345">inputs_</a>.begin(),
+<a name="l00239"></a>00239                         <a class="code" href="structEdgeEnv.html#a9cf14172d32813daa2e7e57e40230e60">edge_</a>-&gt;<a class="code" href="structEdge.html#a4fd6b2daa2559765aaf2fed1de96f345">inputs_</a>.begin() + explicit_deps_count,
+<a name="l00240"></a>00240                         var == <span class="stringliteral">&quot;in&quot;</span> ? <span class="charliteral">&#39; &#39;</span> : <span class="charliteral">&#39;\n&#39;</span>);
+<a name="l00241"></a>00241   } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (var == <span class="stringliteral">&quot;out&quot;</span>) {
+<a name="l00242"></a>00242     <span class="keywordflow">return</span> <a class="code" href="structEdgeEnv.html#a3611d2dee62a757d097245cc51eb6283" title="Given a span of Nodes, construct a list of paths suitable for a command line.">MakePathList</a>(<a class="code" href="structEdgeEnv.html#a9cf14172d32813daa2e7e57e40230e60">edge_</a>-&gt;<a class="code" href="structEdge.html#ac4ab5a6898d716f32683b63fafc65bb6">outputs_</a>.begin(),
+<a name="l00243"></a>00243                         <a class="code" href="structEdgeEnv.html#a9cf14172d32813daa2e7e57e40230e60">edge_</a>-&gt;<a class="code" href="structEdge.html#ac4ab5a6898d716f32683b63fafc65bb6">outputs_</a>.end(),
+<a name="l00244"></a>00244                         <span class="charliteral">&#39; &#39;</span>);
+<a name="l00245"></a>00245   }
+<a name="l00246"></a>00246 
+<a name="l00247"></a>00247   <span class="comment">// See notes on BindingEnv::LookupWithFallback.</span>
+<a name="l00248"></a>00248   <span class="keyword">const</span> <a class="code" href="structEvalString.html" title="A tokenized string that contains variable references.">EvalString</a>* eval = <a class="code" href="structEdgeEnv.html#a9cf14172d32813daa2e7e57e40230e60">edge_</a>-&gt;<a class="code" href="structEdge.html#a6553b57e59b77a3f8a4bf9b19c25d7f8">rule_</a>-&gt;<a class="code" href="structRule.html#afa57841cd156c7a449f89acb2c4faeb8">GetBinding</a>(var);
+<a name="l00249"></a>00249   <span class="keywordflow">return</span> <a class="code" href="structEdgeEnv.html#a9cf14172d32813daa2e7e57e40230e60">edge_</a>-&gt;<a class="code" href="structEdge.html#ac45836f73bc104304aad19e16cb7aa1a">env_</a>-&gt;<a class="code" href="structBindingEnv.html#ab866631fcbf9681786950c5377e1da84" title="This is tricky.">LookupWithFallback</a>(var, eval, <span class="keyword">this</span>);
+<a name="l00250"></a>00250 }
+<a name="l00251"></a>00251 
+<a name="l00252"></a><a class="code" href="structEdgeEnv.html#a3611d2dee62a757d097245cc51eb6283">00252</a> <span class="keywordtype">string</span> <a class="code" href="structEdgeEnv.html#a3611d2dee62a757d097245cc51eb6283" title="Given a span of Nodes, construct a list of paths suitable for a command line.">EdgeEnv::MakePathList</a>(vector&lt;Node*&gt;::iterator begin,
+<a name="l00253"></a>00253                              vector&lt;Node*&gt;::iterator end,
+<a name="l00254"></a>00254                              <span class="keywordtype">char</span> sep) {
+<a name="l00255"></a>00255   <span class="keywordtype">string</span> result;
+<a name="l00256"></a>00256   <span class="keywordflow">for</span> (vector&lt;Node*&gt;::iterator i = begin; i != end; ++i) {
+<a name="l00257"></a>00257     <span class="keywordflow">if</span> (!result.empty())
+<a name="l00258"></a>00258       result.push_back(sep);
+<a name="l00259"></a>00259     <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path = (*i)-&gt;path();
+<a name="l00260"></a>00260     <span class="keywordflow">if</span> (<a class="code" href="structEdgeEnv.html#ade0dae63fdec76a8d9d3040b99437c3e">escape_in_out_</a> == <a class="code" href="structEdgeEnv.html#af5aeedc89db8f0cdbb072b104c7ba2efa735c02ecd79f01637c799a2973634f72">kShellEscape</a>) {
+<a name="l00261"></a>00261 <span class="preprocessor">#if _WIN32</span>
+<a name="l00262"></a>00262 <span class="preprocessor"></span>      <a class="code" href="util_8cc.html#a147fcbfb98ba43b1cb5a4739bf0c7702">GetWin32EscapedString</a>(path, &amp;result);
+<a name="l00263"></a>00263 <span class="preprocessor">#else</span>
+<a name="l00264"></a>00264 <span class="preprocessor"></span>      <a class="code" href="util_8cc.html#a5d89d1621913641fab23969f8665d3d5" title="Appends |input| to |*result|, escaping according to the whims of either Bash, or Win32&#39;s CommandLineT...">GetShellEscapedString</a>(path, &amp;result);
+<a name="l00265"></a>00265 <span class="preprocessor">#endif</span>
+<a name="l00266"></a>00266 <span class="preprocessor"></span>    } <span class="keywordflow">else</span> {
+<a name="l00267"></a>00267       result.append(path);
+<a name="l00268"></a>00268     }
+<a name="l00269"></a>00269   }
+<a name="l00270"></a>00270   <span class="keywordflow">return</span> result;
+<a name="l00271"></a>00271 }
+<a name="l00272"></a>00272 
+<a name="l00273"></a><a class="code" href="structEdge.html#ac4086e06c9982fbebdb9b1a5d52af3cd">00273</a> <span class="keywordtype">string</span> <a class="code" href="structEdge.html#ac4086e06c9982fbebdb9b1a5d52af3cd" title="Expand all variables in a command and return it as a string.">Edge::EvaluateCommand</a>(<span class="keywordtype">bool</span> incl_rsp_file) {
+<a name="l00274"></a>00274   <span class="keywordtype">string</span> command = <a class="code" href="structEdge.html#a4f495554a299524a951620f7b643d111" title="Returns the shell-escaped value of |key|.">GetBinding</a>(<span class="stringliteral">&quot;command&quot;</span>);
+<a name="l00275"></a>00275   <span class="keywordflow">if</span> (incl_rsp_file) {
+<a name="l00276"></a>00276     <span class="keywordtype">string</span> rspfile_content = <a class="code" href="structEdge.html#a4f495554a299524a951620f7b643d111" title="Returns the shell-escaped value of |key|.">GetBinding</a>(<span class="stringliteral">&quot;rspfile_content&quot;</span>);
+<a name="l00277"></a>00277     <span class="keywordflow">if</span> (!rspfile_content.empty())
+<a name="l00278"></a>00278       command += <span class="stringliteral">&quot;;rspfile=&quot;</span> + rspfile_content;
+<a name="l00279"></a>00279   }
+<a name="l00280"></a>00280   <span class="keywordflow">return</span> command;
+<a name="l00281"></a>00281 }
+<a name="l00282"></a>00282 
+<a name="l00283"></a><a class="code" href="structEdge.html#a4f495554a299524a951620f7b643d111">00283</a> <span class="keywordtype">string</span> <a class="code" href="structEdge.html#a4f495554a299524a951620f7b643d111" title="Returns the shell-escaped value of |key|.">Edge::GetBinding</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; key) {
+<a name="l00284"></a>00284   <a class="code" href="structEdgeEnv.html" title="An Env for an Edge, providing $in and $out.">EdgeEnv</a> env(<span class="keyword">this</span>, <a class="code" href="structEdgeEnv.html#af5aeedc89db8f0cdbb072b104c7ba2efa735c02ecd79f01637c799a2973634f72">EdgeEnv::kShellEscape</a>);
+<a name="l00285"></a>00285   <span class="keywordflow">return</span> env.<a class="code" href="structEdgeEnv.html#aa9c40e6440c932ac59bebefcd2e917bf">LookupVariable</a>(key);
+<a name="l00286"></a>00286 }
+<a name="l00287"></a>00287 
+<a name="l00288"></a><a class="code" href="structEdge.html#a23eef03702ce52f7fdf80a8e05e242d1">00288</a> <span class="keywordtype">bool</span> <a class="code" href="structEdge.html#a23eef03702ce52f7fdf80a8e05e242d1">Edge::GetBindingBool</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; key) {
+<a name="l00289"></a>00289   <span class="keywordflow">return</span> !<a class="code" href="structEdge.html#a4f495554a299524a951620f7b643d111" title="Returns the shell-escaped value of |key|.">GetBinding</a>(key).empty();
+<a name="l00290"></a>00290 }
+<a name="l00291"></a>00291 
+<a name="l00292"></a><a class="code" href="structEdge.html#a327ebbb178acb1d05c454c806ba84c46">00292</a> <span class="keywordtype">string</span> <a class="code" href="structEdge.html#a327ebbb178acb1d05c454c806ba84c46" title="Like GetBinding(&quot;depfile&quot;), but without shell escaping.">Edge::GetUnescapedDepfile</a>() {
+<a name="l00293"></a>00293   <a class="code" href="structEdgeEnv.html" title="An Env for an Edge, providing $in and $out.">EdgeEnv</a> env(<span class="keyword">this</span>, <a class="code" href="structEdgeEnv.html#af5aeedc89db8f0cdbb072b104c7ba2efaa804a2af5f66c80476dadcd6d0237530">EdgeEnv::kDoNotEscape</a>);
+<a name="l00294"></a>00294   <span class="keywordflow">return</span> env.<a class="code" href="structEdgeEnv.html#aa9c40e6440c932ac59bebefcd2e917bf">LookupVariable</a>(<span class="stringliteral">&quot;depfile&quot;</span>);
+<a name="l00295"></a>00295 }
+<a name="l00296"></a>00296 
+<a name="l00297"></a><a class="code" href="structEdge.html#a70c8d93441468aa04296c29ff94cbcb9">00297</a> <span class="keywordtype">string</span> <a class="code" href="structEdge.html#a70c8d93441468aa04296c29ff94cbcb9" title="Like GetBinding(&quot;rspfile&quot;), but without shell escaping.">Edge::GetUnescapedRspfile</a>() {
+<a name="l00298"></a>00298   <a class="code" href="structEdgeEnv.html" title="An Env for an Edge, providing $in and $out.">EdgeEnv</a> env(<span class="keyword">this</span>, <a class="code" href="structEdgeEnv.html#af5aeedc89db8f0cdbb072b104c7ba2efaa804a2af5f66c80476dadcd6d0237530">EdgeEnv::kDoNotEscape</a>);
+<a name="l00299"></a>00299   <span class="keywordflow">return</span> env.<a class="code" href="structEdgeEnv.html#aa9c40e6440c932ac59bebefcd2e917bf">LookupVariable</a>(<span class="stringliteral">&quot;rspfile&quot;</span>);
+<a name="l00300"></a>00300 }
+<a name="l00301"></a>00301 
+<a name="l00302"></a><a class="code" href="structEdge.html#af904164977728b874359e3c07319be47">00302</a> <span class="keywordtype">void</span> <a class="code" href="structEdge.html#af904164977728b874359e3c07319be47">Edge::Dump</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* prefix)<span class="keyword"> const </span>{
+<a name="l00303"></a>00303   printf(<span class="stringliteral">&quot;%s[ &quot;</span>, prefix);
+<a name="l00304"></a>00304   <span class="keywordflow">for</span> (vector&lt;Node*&gt;::const_iterator i = <a class="code" href="structEdge.html#a4fd6b2daa2559765aaf2fed1de96f345">inputs_</a>.begin();
+<a name="l00305"></a>00305        i != <a class="code" href="structEdge.html#a4fd6b2daa2559765aaf2fed1de96f345">inputs_</a>.end() &amp;&amp; *i != NULL; ++i) {
+<a name="l00306"></a>00306     printf(<span class="stringliteral">&quot;%s &quot;</span>, (*i)-&gt;path().c_str());
+<a name="l00307"></a>00307   }
+<a name="l00308"></a>00308   printf(<span class="stringliteral">&quot;--%s-&gt; &quot;</span>, <a class="code" href="structEdge.html#a6553b57e59b77a3f8a4bf9b19c25d7f8">rule_</a>-&gt;<a class="code" href="structRule.html#a5f4c5466903b736836e62b105b03cb87">name</a>().c_str());
+<a name="l00309"></a>00309   <span class="keywordflow">for</span> (vector&lt;Node*&gt;::const_iterator i = <a class="code" href="structEdge.html#ac4ab5a6898d716f32683b63fafc65bb6">outputs_</a>.begin();
+<a name="l00310"></a>00310        i != <a class="code" href="structEdge.html#ac4ab5a6898d716f32683b63fafc65bb6">outputs_</a>.end() &amp;&amp; *i != NULL; ++i) {
+<a name="l00311"></a>00311     printf(<span class="stringliteral">&quot;%s &quot;</span>, (*i)-&gt;path().c_str());
+<a name="l00312"></a>00312   }
+<a name="l00313"></a>00313   <span class="keywordflow">if</span> (<a class="code" href="structEdge.html#a8d44bdcbfb086a1771d6e13f256620a8">pool_</a>) {
+<a name="l00314"></a>00314     <span class="keywordflow">if</span> (!<a class="code" href="structEdge.html#a8d44bdcbfb086a1771d6e13f256620a8">pool_</a>-&gt;<a class="code" href="structPool.html#a7565d8cb32bd057ebc4df40db1a1db75">name</a>().empty()) {
+<a name="l00315"></a>00315       printf(<span class="stringliteral">&quot;(in pool &#39;%s&#39;)&quot;</span>, <a class="code" href="structEdge.html#a8d44bdcbfb086a1771d6e13f256620a8">pool_</a>-&gt;<a class="code" href="structPool.html#a7565d8cb32bd057ebc4df40db1a1db75">name</a>().c_str());
+<a name="l00316"></a>00316     }
+<a name="l00317"></a>00317   } <span class="keywordflow">else</span> {
+<a name="l00318"></a>00318     printf(<span class="stringliteral">&quot;(null pool?)&quot;</span>);
+<a name="l00319"></a>00319   }
+<a name="l00320"></a>00320   printf(<span class="stringliteral">&quot;] 0x%p\n&quot;</span>, <span class="keyword">this</span>);
+<a name="l00321"></a>00321 }
+<a name="l00322"></a>00322 
+<a name="l00323"></a><a class="code" href="structEdge.html#aaf7a366d8ba8f127da58839af826d548">00323</a> <span class="keywordtype">bool</span> <a class="code" href="structEdge.html#aaf7a366d8ba8f127da58839af826d548">Edge::is_phony</a>()<span class="keyword"> const </span>{
+<a name="l00324"></a>00324   <span class="keywordflow">return</span> <a class="code" href="structEdge.html#a6553b57e59b77a3f8a4bf9b19c25d7f8">rule_</a> == &amp;<a class="code" href="structState.html#a9522a499bd62121a14e00a3016fa0599">State::kPhonyRule</a>;
+<a name="l00325"></a>00325 }
+<a name="l00326"></a>00326 
+<a name="l00327"></a><a class="code" href="structEdge.html#ade0ceb00f2eb88e99c7bcae5a07d37a1">00327</a> <span class="keywordtype">bool</span> <a class="code" href="structEdge.html#ade0ceb00f2eb88e99c7bcae5a07d37a1">Edge::use_console</a>()<span class="keyword"> const </span>{
+<a name="l00328"></a>00328   <span class="keywordflow">return</span> <a class="code" href="structEdge.html#a1557cf70503cf69a91b20ea9351e58d1">pool</a>() == &amp;<a class="code" href="structState.html#a1bfd2a655955c711d114b89e72115e75">State::kConsolePool</a>;
+<a name="l00329"></a>00329 }
+<a name="l00330"></a>00330 
+<a name="l00331"></a><a class="code" href="structNode.html#a4c8556362cc4adfdfe7922c085307e27">00331</a> <span class="keywordtype">void</span> <a class="code" href="structNode.html#a4c8556362cc4adfdfe7922c085307e27">Node::Dump</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* prefix)<span class="keyword"> const </span>{
+<a name="l00332"></a>00332   printf(<span class="stringliteral">&quot;%s &lt;%s 0x%p&gt; mtime: %d%s, (:%s), &quot;</span>,
+<a name="l00333"></a>00333          prefix, <a class="code" href="structNode.html#a8530ccbc220a8fe1d50256c7ef4ee6d9">path</a>().c_str(), <span class="keyword">this</span>,
+<a name="l00334"></a>00334          <a class="code" href="structNode.html#ad338fa15807fdb8f2662e1c3fceb18ba">mtime</a>(), <a class="code" href="structNode.html#ad338fa15807fdb8f2662e1c3fceb18ba">mtime</a>() ? <span class="stringliteral">&quot;&quot;</span> : <span class="stringliteral">&quot; (:missing)&quot;</span>,
+<a name="l00335"></a>00335          <a class="code" href="structNode.html#a6e873ee67eebc1de8a67555cb649932b">dirty</a>() ? <span class="stringliteral">&quot; dirty&quot;</span> : <span class="stringliteral">&quot; clean&quot;</span>);
+<a name="l00336"></a>00336   <span class="keywordflow">if</span> (<a class="code" href="structNode.html#a450d70a4a4742d1b72c861eb67da4201">in_edge</a>()) {
+<a name="l00337"></a>00337     <a class="code" href="structNode.html#a450d70a4a4742d1b72c861eb67da4201">in_edge</a>()-&gt;<a class="code" href="structEdge.html#af904164977728b874359e3c07319be47">Dump</a>(<span class="stringliteral">&quot;in-edge: &quot;</span>);
+<a name="l00338"></a>00338   } <span class="keywordflow">else</span> {
+<a name="l00339"></a>00339     printf(<span class="stringliteral">&quot;no in-edge\n&quot;</span>);
+<a name="l00340"></a>00340   }
+<a name="l00341"></a>00341   printf(<span class="stringliteral">&quot; out edges:\n&quot;</span>);
+<a name="l00342"></a>00342   <span class="keywordflow">for</span> (vector&lt;Edge*&gt;::const_iterator e = <a class="code" href="structNode.html#ab23ddc9378428fba75fbc265f9555d82">out_edges</a>().begin();
+<a name="l00343"></a>00343        e != <a class="code" href="structNode.html#ab23ddc9378428fba75fbc265f9555d82">out_edges</a>().end() &amp;&amp; *e != NULL; ++e) {
+<a name="l00344"></a>00344     (*e)-&gt;Dump(<span class="stringliteral">&quot; +- &quot;</span>);
+<a name="l00345"></a>00345   }
+<a name="l00346"></a>00346 }
+<a name="l00347"></a>00347 
+<a name="l00348"></a><a class="code" href="structImplicitDepLoader.html#a66cdcc2cfccfd7b86c851007bf3c1b13">00348</a> <span class="keywordtype">bool</span> <a class="code" href="structImplicitDepLoader.html#a66cdcc2cfccfd7b86c851007bf3c1b13" title="Load implicit dependencies for edge.">ImplicitDepLoader::LoadDeps</a>(<a class="code" href="structEdge.html" title="An edge in the dependency graph; links between Nodes using Rules.">Edge</a>* edge, <span class="keywordtype">string</span>* err) {
+<a name="l00349"></a>00349   <span class="keywordtype">string</span> deps_type = edge-&gt;<a class="code" href="structEdge.html#a4f495554a299524a951620f7b643d111" title="Returns the shell-escaped value of |key|.">GetBinding</a>(<span class="stringliteral">&quot;deps&quot;</span>);
+<a name="l00350"></a>00350   <span class="keywordflow">if</span> (!deps_type.empty())
+<a name="l00351"></a>00351     <span class="keywordflow">return</span> <a class="code" href="structImplicitDepLoader.html#a03bcc22d47ef3dc927f93a2bff86f895" title="Load implicit dependencies for edge from the DepsLog.">LoadDepsFromLog</a>(edge, err);
+<a name="l00352"></a>00352 
+<a name="l00353"></a>00353   <span class="keywordtype">string</span> depfile = edge-&gt;<a class="code" href="structEdge.html#a327ebbb178acb1d05c454c806ba84c46" title="Like GetBinding(&quot;depfile&quot;), but without shell escaping.">GetUnescapedDepfile</a>();
+<a name="l00354"></a>00354   <span class="keywordflow">if</span> (!depfile.empty())
+<a name="l00355"></a>00355     <span class="keywordflow">return</span> <a class="code" href="structImplicitDepLoader.html#a7173ceeb9b48be3ffd3527b2245abd7a" title="Load implicit dependencies for edge from a depfile attribute.">LoadDepFile</a>(edge, depfile, err);
+<a name="l00356"></a>00356 
+<a name="l00357"></a>00357   <span class="comment">// No deps to load.</span>
+<a name="l00358"></a>00358   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00359"></a>00359 }
+<a name="l00360"></a>00360 
+<a name="l00361"></a><a class="code" href="structImplicitDepLoader.html#a7173ceeb9b48be3ffd3527b2245abd7a">00361</a> <span class="keywordtype">bool</span> <a class="code" href="structImplicitDepLoader.html#a7173ceeb9b48be3ffd3527b2245abd7a" title="Load implicit dependencies for edge from a depfile attribute.">ImplicitDepLoader::LoadDepFile</a>(<a class="code" href="structEdge.html" title="An edge in the dependency graph; links between Nodes using Rules.">Edge</a>* edge, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path,
+<a name="l00362"></a>00362                                     <span class="keywordtype">string</span>* err) {
+<a name="l00363"></a>00363   <a class="code" href="metrics_8h.html#a7c19242938163dd11cedf62fdabd4ab6" title="The primary interface to metrics.">METRIC_RECORD</a>(<span class="stringliteral">&quot;depfile load&quot;</span>);
+<a name="l00364"></a>00364   <span class="keywordtype">string</span> content = <a class="code" href="structImplicitDepLoader.html#ab70b785ccb07bc9694be0130263f7380">disk_interface_</a>-&gt;<a class="code" href="structDiskInterface.html#aed889f19b478039bd8d315fe965440ea" title="Read a file to a string. Fill in |err| on error.">ReadFile</a>(path, err);
+<a name="l00365"></a>00365   <span class="keywordflow">if</span> (!err-&gt;empty()) {
+<a name="l00366"></a>00366     *err = <span class="stringliteral">&quot;loading &#39;&quot;</span> + path + <span class="stringliteral">&quot;&#39;: &quot;</span> + *err;
+<a name="l00367"></a>00367     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00368"></a>00368   }
+<a name="l00369"></a>00369   <span class="comment">// On a missing depfile: return false and empty *err.</span>
+<a name="l00370"></a>00370   <span class="keywordflow">if</span> (content.empty()) {
+<a name="l00371"></a>00371     <a class="code" href="debug__flags_8h.html#a334e8f1dd8a740e85baff782ec1012c6">EXPLAIN</a>(<span class="stringliteral">&quot;depfile &#39;%s&#39; is missing&quot;</span>, path.c_str());
+<a name="l00372"></a>00372     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00373"></a>00373   }
 <a name="l00374"></a>00374 
-<a name="l00375"></a>00375   <span class="comment">// Add all its in-edges.</span>
-<a name="l00376"></a>00376   <span class="keywordflow">for</span> (vector&lt;StringPiece&gt;::iterator i = depfile.<a class="code" href="structDepfileParser.html#af75600dcb6788f6a9f01bc515681ca00">ins_</a>.begin();
-<a name="l00377"></a>00377        i != depfile.<a class="code" href="structDepfileParser.html#af75600dcb6788f6a9f01bc515681ca00">ins_</a>.end(); ++i, ++implicit_dep) {
-<a name="l00378"></a>00378     <span class="keywordflow">if</span> (!<a class="code" href="util_8cc.html#abdb5937692c9c5a0fbe6cbbab7941414" title="Canonicalize a path like &quot;foo/../bar.h&quot; into just &quot;bar.h&quot;.">CanonicalizePath</a>(const_cast&lt;char*&gt;(i-&gt;str_), &amp;i-&gt;len_, err))
-<a name="l00379"></a>00379       <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00380"></a>00380 
-<a name="l00381"></a>00381     <a class="code" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>* node = <a class="code" href="structImplicitDepLoader.html#aaab15619cb43a09229bab3c9a58c6896">state_</a>-&gt;<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(*i);
-<a name="l00382"></a>00382     *implicit_dep = node;
-<a name="l00383"></a>00383     node-&gt;<a class="code" href="structNode.html#a6c9ffc806f7528ad52fbb074def272d2">AddOutEdge</a>(edge);
-<a name="l00384"></a>00384     <a class="code" href="structImplicitDepLoader.html#a984e413304371e8239f252ada4574f7c" title="If we don&#39;t have a edge that generates this input already, create one; this makes us not abort if the...">CreatePhonyInEdge</a>(node);
-<a name="l00385"></a>00385   }
-<a name="l00386"></a>00386 
-<a name="l00387"></a>00387   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00388"></a>00388 }
-<a name="l00389"></a>00389 
-<a name="l00390"></a><a class="code" href="structImplicitDepLoader.html#a03bcc22d47ef3dc927f93a2bff86f895">00390</a> <span class="keywordtype">bool</span> <a class="code" href="structImplicitDepLoader.html#a03bcc22d47ef3dc927f93a2bff86f895" title="Load implicit dependencies for edge from the DepsLog.">ImplicitDepLoader::LoadDepsFromLog</a>(<a class="code" href="structEdge.html" title="An edge in the dependency graph; links between Nodes using Rules.">Edge</a>* edge, <span class="keywordtype">string</span>* err) {
-<a name="l00391"></a>00391   <span class="comment">// NOTE: deps are only supported for single-target edges.</span>
-<a name="l00392"></a>00392   <a class="code" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>* output = edge-&gt;<a class="code" href="structEdge.html#ac4ab5a6898d716f32683b63fafc65bb6">outputs_</a>[0];
-<a name="l00393"></a>00393   <a class="code" href="structDepsLog_1_1Deps.html">DepsLog::Deps</a>* deps = <a class="code" href="structImplicitDepLoader.html#ab443a0081434600b2e72514210f0f568">deps_log_</a>-&gt;<a class="code" href="structDepsLog.html#a075043796f88d312004cf5ae74a53c4e">GetDeps</a>(output);
-<a name="l00394"></a>00394   <span class="keywordflow">if</span> (!deps) {
-<a name="l00395"></a>00395     <a class="code" href="debug__flags_8h.html#a334e8f1dd8a740e85baff782ec1012c6">EXPLAIN</a>(<span class="stringliteral">&quot;deps for &#39;%s&#39; are missing&quot;</span>, output-&gt;<a class="code" href="structNode.html#a8530ccbc220a8fe1d50256c7ef4ee6d9">path</a>().c_str());
-<a name="l00396"></a>00396     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00397"></a>00397   }
-<a name="l00398"></a>00398 
-<a name="l00399"></a>00399   <span class="comment">// Deps are invalid if the output is newer than the deps.</span>
-<a name="l00400"></a>00400   <span class="keywordflow">if</span> (output-&gt;<a class="code" href="structNode.html#ad338fa15807fdb8f2662e1c3fceb18ba">mtime</a>() &gt; deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#ae73ed4a9faede3332a47215b2a68a5dc">mtime</a>) {
-<a name="l00401"></a>00401     <a class="code" href="debug__flags_8h.html#a334e8f1dd8a740e85baff782ec1012c6">EXPLAIN</a>(<span class="stringliteral">&quot;stored deps info out of date for for &#39;%s&#39; (%d vs %d)&quot;</span>,
-<a name="l00402"></a>00402             output-&gt;<a class="code" href="structNode.html#a8530ccbc220a8fe1d50256c7ef4ee6d9">path</a>().c_str(), deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#ae73ed4a9faede3332a47215b2a68a5dc">mtime</a>, output-&gt;<a class="code" href="structNode.html#ad338fa15807fdb8f2662e1c3fceb18ba">mtime</a>());
-<a name="l00403"></a>00403     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00404"></a>00404   }
-<a name="l00405"></a>00405 
-<a name="l00406"></a>00406   vector&lt;Node*&gt;::iterator implicit_dep =
-<a name="l00407"></a>00407       <a class="code" href="structImplicitDepLoader.html#a15ec46bda4de60afad2b751b1bc2012f" title="Preallocate count spaces in the input array on edge, returning an iterator pointing at the first new ...">PreallocateSpace</a>(edge, deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#af59c987b02350a4dfcd24a5406624fdb">node_count</a>);
-<a name="l00408"></a>00408   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#af59c987b02350a4dfcd24a5406624fdb">node_count</a>; ++i, ++implicit_dep) {
-<a name="l00409"></a>00409     <a class="code" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>* node = deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#ab60b40fc0217ea187cdc60fb59ea27e8">nodes</a>[i];
-<a name="l00410"></a>00410     *implicit_dep = node;
-<a name="l00411"></a>00411     node-&gt;<a class="code" href="structNode.html#a6c9ffc806f7528ad52fbb074def272d2">AddOutEdge</a>(edge);
-<a name="l00412"></a>00412     <a class="code" href="structImplicitDepLoader.html#a984e413304371e8239f252ada4574f7c" title="If we don&#39;t have a edge that generates this input already, create one; this makes us not abort if the...">CreatePhonyInEdge</a>(node);
-<a name="l00413"></a>00413   }
-<a name="l00414"></a>00414   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00415"></a>00415 }
-<a name="l00416"></a>00416 
-<a name="l00417"></a><a class="code" href="structImplicitDepLoader.html#a15ec46bda4de60afad2b751b1bc2012f">00417</a> vector&lt;Node*&gt;::iterator <a class="code" href="structImplicitDepLoader.html#a15ec46bda4de60afad2b751b1bc2012f" title="Preallocate count spaces in the input array on edge, returning an iterator pointing at the first new ...">ImplicitDepLoader::PreallocateSpace</a>(<a class="code" href="structEdge.html" title="An edge in the dependency graph; links between Nodes using Rules.">Edge</a>* edge,
-<a name="l00418"></a>00418                                                             <span class="keywordtype">int</span> count) {
-<a name="l00419"></a>00419   edge-&gt;<a class="code" href="structEdge.html#a4fd6b2daa2559765aaf2fed1de96f345">inputs_</a>.insert(edge-&gt;<a class="code" href="structEdge.html#a4fd6b2daa2559765aaf2fed1de96f345">inputs_</a>.end() - edge-&gt;<a class="code" href="structEdge.html#a7adc7b047f6574167758c27d87d9b5f8">order_only_deps_</a>,
-<a name="l00420"></a>00420                        (size_t)count, 0);
-<a name="l00421"></a>00421   edge-&gt;<a class="code" href="structEdge.html#a4dcd12be59a0653c7beef3c37edcf4ed">implicit_deps_</a> += count;
-<a name="l00422"></a>00422   <span class="keywordflow">return</span> edge-&gt;<a class="code" href="structEdge.html#a4fd6b2daa2559765aaf2fed1de96f345">inputs_</a>.end() - edge-&gt;<a class="code" href="structEdge.html#a7adc7b047f6574167758c27d87d9b5f8">order_only_deps_</a> - count;
-<a name="l00423"></a>00423 }
-<a name="l00424"></a>00424 
-<a name="l00425"></a><a class="code" href="structImplicitDepLoader.html#a984e413304371e8239f252ada4574f7c">00425</a> <span class="keywordtype">void</span> <a class="code" href="structImplicitDepLoader.html#a984e413304371e8239f252ada4574f7c" title="If we don&#39;t have a edge that generates this input already, create one; this makes us not abort if the...">ImplicitDepLoader::CreatePhonyInEdge</a>(<a class="code" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>* node) {
-<a name="l00426"></a>00426   <span class="keywordflow">if</span> (node-&gt;<a class="code" href="structNode.html#a450d70a4a4742d1b72c861eb67da4201">in_edge</a>())
-<a name="l00427"></a>00427     <span class="keywordflow">return</span>;
-<a name="l00428"></a>00428 
-<a name="l00429"></a>00429   <a class="code" href="structEdge.html" title="An edge in the dependency graph; links between Nodes using Rules.">Edge</a>* phony_edge = <a class="code" href="structImplicitDepLoader.html#aaab15619cb43a09229bab3c9a58c6896">state_</a>-&gt;<a class="code" href="structState.html#a3e3a4a62a0e595451f649a5bf3ae0fe7">AddEdge</a>(&amp;<a class="code" href="structState.html#a9522a499bd62121a14e00a3016fa0599">State::kPhonyRule</a>);
-<a name="l00430"></a>00430   node-&gt;<a class="code" href="structNode.html#a0f7fe3f8e4be0a990fdc2648d7020abe">set_in_edge</a>(phony_edge);
-<a name="l00431"></a>00431   phony_edge-&gt;<a class="code" href="structEdge.html#ac4ab5a6898d716f32683b63fafc65bb6">outputs_</a>.push_back(node);
-<a name="l00432"></a>00432 
-<a name="l00433"></a>00433   <span class="comment">// RecomputeDirty might not be called for phony_edge if a previous call</span>
-<a name="l00434"></a>00434   <span class="comment">// to RecomputeDirty had caused the file to be stat&#39;ed.  Because previous</span>
-<a name="l00435"></a>00435   <span class="comment">// invocations of RecomputeDirty would have seen this node without an</span>
-<a name="l00436"></a>00436   <span class="comment">// input edge (and therefore ready), we have to set outputs_ready_ to true</span>
-<a name="l00437"></a>00437   <span class="comment">// to avoid a potential stuck build.  If we do call RecomputeDirty for</span>
-<a name="l00438"></a>00438   <span class="comment">// this node, it will simply set outputs_ready_ to the correct value.</span>
-<a name="l00439"></a>00439   phony_edge-&gt;<a class="code" href="structEdge.html#affddbfc0888b9af3c8b65449f9e54852">outputs_ready_</a> = <span class="keyword">true</span>;
-<a name="l00440"></a>00440 }
+<a name="l00375"></a>00375   <a class="code" href="structDepfileParser.html" title="Parser for the dependency information emitted by gcc&#39;s -M flags.">DepfileParser</a> depfile;
+<a name="l00376"></a>00376   <span class="keywordtype">string</span> depfile_err;
+<a name="l00377"></a>00377   <span class="keywordflow">if</span> (!depfile.<a class="code" href="structDepfileParser.html#ab00f64bc084aa068e5d03e13cf931ad7" title="Parse an input file.">Parse</a>(&amp;content, &amp;depfile_err)) {
+<a name="l00378"></a>00378     *err = path + <span class="stringliteral">&quot;: &quot;</span> + depfile_err;
+<a name="l00379"></a>00379     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00380"></a>00380   }
+<a name="l00381"></a>00381 
+<a name="l00382"></a>00382   <span class="comment">// Check that this depfile matches the edge&#39;s output.</span>
+<a name="l00383"></a>00383   <a class="code" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>* first_output = edge-&gt;<a class="code" href="structEdge.html#ac4ab5a6898d716f32683b63fafc65bb6">outputs_</a>[0];
+<a name="l00384"></a>00384   <a class="code" href="structStringPiece.html" title="StringPiece represents a slice of a string whose memory is managed externally.">StringPiece</a> opath = <a class="code" href="structStringPiece.html" title="StringPiece represents a slice of a string whose memory is managed externally.">StringPiece</a>(first_output-&gt;<a class="code" href="structNode.html#a8530ccbc220a8fe1d50256c7ef4ee6d9">path</a>());
+<a name="l00385"></a>00385   <span class="keywordflow">if</span> (opath != depfile.<a class="code" href="structDepfileParser.html#a7daf65c4239b0a261ec0df62c4d704f8">out_</a>) {
+<a name="l00386"></a>00386     *err = <span class="stringliteral">&quot;expected depfile &#39;&quot;</span> + path + <span class="stringliteral">&quot;&#39; to mention &#39;&quot;</span> +
+<a name="l00387"></a>00387         first_output-&gt;<a class="code" href="structNode.html#a8530ccbc220a8fe1d50256c7ef4ee6d9">path</a>() + <span class="stringliteral">&quot;&#39;, got &#39;&quot;</span> + depfile.<a class="code" href="structDepfileParser.html#a7daf65c4239b0a261ec0df62c4d704f8">out_</a>.<a class="code" href="structStringPiece.html#ae61eaf54a5cd334bcc476670684c2fc6" title="Convert the slice into a full-fledged std::string, copying the data into a new string.">AsString</a>() + <span class="stringliteral">&quot;&#39;&quot;</span>;
+<a name="l00388"></a>00388     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00389"></a>00389   }
+<a name="l00390"></a>00390 
+<a name="l00391"></a>00391   <span class="comment">// Preallocate space in edge-&gt;inputs_ to be filled in below.</span>
+<a name="l00392"></a>00392   vector&lt;Node*&gt;::iterator implicit_dep =
+<a name="l00393"></a>00393       <a class="code" href="structImplicitDepLoader.html#a15ec46bda4de60afad2b751b1bc2012f" title="Preallocate count spaces in the input array on edge, returning an iterator pointing at the first new ...">PreallocateSpace</a>(edge, depfile.<a class="code" href="structDepfileParser.html#af75600dcb6788f6a9f01bc515681ca00">ins_</a>.size());
+<a name="l00394"></a>00394 
+<a name="l00395"></a>00395   <span class="comment">// Add all its in-edges.</span>
+<a name="l00396"></a>00396   <span class="keywordflow">for</span> (vector&lt;StringPiece&gt;::iterator i = depfile.<a class="code" href="structDepfileParser.html#af75600dcb6788f6a9f01bc515681ca00">ins_</a>.begin();
+<a name="l00397"></a>00397        i != depfile.<a class="code" href="structDepfileParser.html#af75600dcb6788f6a9f01bc515681ca00">ins_</a>.end(); ++i, ++implicit_dep) {
+<a name="l00398"></a>00398     <span class="keywordflow">if</span> (!<a class="code" href="util_8cc.html#abdb5937692c9c5a0fbe6cbbab7941414" title="Canonicalize a path like &quot;foo/../bar.h&quot; into just &quot;bar.h&quot;.">CanonicalizePath</a>(const_cast&lt;char*&gt;(i-&gt;str_), &amp;i-&gt;len_, err))
+<a name="l00399"></a>00399       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00400"></a>00400 
+<a name="l00401"></a>00401     <a class="code" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>* node = <a class="code" href="structImplicitDepLoader.html#aaab15619cb43a09229bab3c9a58c6896">state_</a>-&gt;<a class="code" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a>(*i);
+<a name="l00402"></a>00402     *implicit_dep = node;
+<a name="l00403"></a>00403     node-&gt;<a class="code" href="structNode.html#a6c9ffc806f7528ad52fbb074def272d2">AddOutEdge</a>(edge);
+<a name="l00404"></a>00404     <a class="code" href="structImplicitDepLoader.html#a984e413304371e8239f252ada4574f7c" title="If we don&#39;t have a edge that generates this input already, create one; this makes us not abort if the...">CreatePhonyInEdge</a>(node);
+<a name="l00405"></a>00405   }
+<a name="l00406"></a>00406 
+<a name="l00407"></a>00407   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00408"></a>00408 }
+<a name="l00409"></a>00409 
+<a name="l00410"></a><a class="code" href="structImplicitDepLoader.html#a03bcc22d47ef3dc927f93a2bff86f895">00410</a> <span class="keywordtype">bool</span> <a class="code" href="structImplicitDepLoader.html#a03bcc22d47ef3dc927f93a2bff86f895" title="Load implicit dependencies for edge from the DepsLog.">ImplicitDepLoader::LoadDepsFromLog</a>(<a class="code" href="structEdge.html" title="An edge in the dependency graph; links between Nodes using Rules.">Edge</a>* edge, <span class="keywordtype">string</span>* err) {
+<a name="l00411"></a>00411   <span class="comment">// NOTE: deps are only supported for single-target edges.</span>
+<a name="l00412"></a>00412   <a class="code" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>* output = edge-&gt;<a class="code" href="structEdge.html#ac4ab5a6898d716f32683b63fafc65bb6">outputs_</a>[0];
+<a name="l00413"></a>00413   <a class="code" href="structDepsLog_1_1Deps.html">DepsLog::Deps</a>* deps = <a class="code" href="structImplicitDepLoader.html#ab443a0081434600b2e72514210f0f568">deps_log_</a>-&gt;<a class="code" href="structDepsLog.html#a075043796f88d312004cf5ae74a53c4e">GetDeps</a>(output);
+<a name="l00414"></a>00414   <span class="keywordflow">if</span> (!deps) {
+<a name="l00415"></a>00415     <a class="code" href="debug__flags_8h.html#a334e8f1dd8a740e85baff782ec1012c6">EXPLAIN</a>(<span class="stringliteral">&quot;deps for &#39;%s&#39; are missing&quot;</span>, output-&gt;<a class="code" href="structNode.html#a8530ccbc220a8fe1d50256c7ef4ee6d9">path</a>().c_str());
+<a name="l00416"></a>00416     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00417"></a>00417   }
+<a name="l00418"></a>00418 
+<a name="l00419"></a>00419   <span class="comment">// Deps are invalid if the output is newer than the deps.</span>
+<a name="l00420"></a>00420   <span class="keywordflow">if</span> (output-&gt;<a class="code" href="structNode.html#ad338fa15807fdb8f2662e1c3fceb18ba">mtime</a>() &gt; deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#ae73ed4a9faede3332a47215b2a68a5dc">mtime</a>) {
+<a name="l00421"></a>00421     <a class="code" href="debug__flags_8h.html#a334e8f1dd8a740e85baff782ec1012c6">EXPLAIN</a>(<span class="stringliteral">&quot;stored deps info out of date for for &#39;%s&#39; (%d vs %d)&quot;</span>,
+<a name="l00422"></a>00422             output-&gt;<a class="code" href="structNode.html#a8530ccbc220a8fe1d50256c7ef4ee6d9">path</a>().c_str(), deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#ae73ed4a9faede3332a47215b2a68a5dc">mtime</a>, output-&gt;<a class="code" href="structNode.html#ad338fa15807fdb8f2662e1c3fceb18ba">mtime</a>());
+<a name="l00423"></a>00423     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00424"></a>00424   }
+<a name="l00425"></a>00425 
+<a name="l00426"></a>00426   vector&lt;Node*&gt;::iterator implicit_dep =
+<a name="l00427"></a>00427       <a class="code" href="structImplicitDepLoader.html#a15ec46bda4de60afad2b751b1bc2012f" title="Preallocate count spaces in the input array on edge, returning an iterator pointing at the first new ...">PreallocateSpace</a>(edge, deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#af59c987b02350a4dfcd24a5406624fdb">node_count</a>);
+<a name="l00428"></a>00428   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#af59c987b02350a4dfcd24a5406624fdb">node_count</a>; ++i, ++implicit_dep) {
+<a name="l00429"></a>00429     <a class="code" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>* node = deps-&gt;<a class="code" href="structDepsLog_1_1Deps.html#ab60b40fc0217ea187cdc60fb59ea27e8">nodes</a>[i];
+<a name="l00430"></a>00430     *implicit_dep = node;
+<a name="l00431"></a>00431     node-&gt;<a class="code" href="structNode.html#a6c9ffc806f7528ad52fbb074def272d2">AddOutEdge</a>(edge);
+<a name="l00432"></a>00432     <a class="code" href="structImplicitDepLoader.html#a984e413304371e8239f252ada4574f7c" title="If we don&#39;t have a edge that generates this input already, create one; this makes us not abort if the...">CreatePhonyInEdge</a>(node);
+<a name="l00433"></a>00433   }
+<a name="l00434"></a>00434   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00435"></a>00435 }
+<a name="l00436"></a>00436 
+<a name="l00437"></a><a class="code" href="structImplicitDepLoader.html#a15ec46bda4de60afad2b751b1bc2012f">00437</a> vector&lt;Node*&gt;::iterator <a class="code" href="structImplicitDepLoader.html#a15ec46bda4de60afad2b751b1bc2012f" title="Preallocate count spaces in the input array on edge, returning an iterator pointing at the first new ...">ImplicitDepLoader::PreallocateSpace</a>(<a class="code" href="structEdge.html" title="An edge in the dependency graph; links between Nodes using Rules.">Edge</a>* edge,
+<a name="l00438"></a>00438                                                             <span class="keywordtype">int</span> count) {
+<a name="l00439"></a>00439   edge-&gt;<a class="code" href="structEdge.html#a4fd6b2daa2559765aaf2fed1de96f345">inputs_</a>.insert(edge-&gt;<a class="code" href="structEdge.html#a4fd6b2daa2559765aaf2fed1de96f345">inputs_</a>.end() - edge-&gt;<a class="code" href="structEdge.html#a7adc7b047f6574167758c27d87d9b5f8">order_only_deps_</a>,
+<a name="l00440"></a>00440                        (size_t)count, 0);
+<a name="l00441"></a>00441   edge-&gt;<a class="code" href="structEdge.html#a4dcd12be59a0653c7beef3c37edcf4ed">implicit_deps_</a> += count;
+<a name="l00442"></a>00442   <span class="keywordflow">return</span> edge-&gt;<a class="code" href="structEdge.html#a4fd6b2daa2559765aaf2fed1de96f345">inputs_</a>.end() - edge-&gt;<a class="code" href="structEdge.html#a7adc7b047f6574167758c27d87d9b5f8">order_only_deps_</a> - count;
+<a name="l00443"></a>00443 }
+<a name="l00444"></a>00444 
+<a name="l00445"></a><a class="code" href="structImplicitDepLoader.html#a984e413304371e8239f252ada4574f7c">00445</a> <span class="keywordtype">void</span> <a class="code" href="structImplicitDepLoader.html#a984e413304371e8239f252ada4574f7c" title="If we don&#39;t have a edge that generates this input already, create one; this makes us not abort if the...">ImplicitDepLoader::CreatePhonyInEdge</a>(<a class="code" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>* node) {
+<a name="l00446"></a>00446   <span class="keywordflow">if</span> (node-&gt;<a class="code" href="structNode.html#a450d70a4a4742d1b72c861eb67da4201">in_edge</a>())
+<a name="l00447"></a>00447     <span class="keywordflow">return</span>;
+<a name="l00448"></a>00448 
+<a name="l00449"></a>00449   <a class="code" href="structEdge.html" title="An edge in the dependency graph; links between Nodes using Rules.">Edge</a>* phony_edge = <a class="code" href="structImplicitDepLoader.html#aaab15619cb43a09229bab3c9a58c6896">state_</a>-&gt;<a class="code" href="structState.html#a3e3a4a62a0e595451f649a5bf3ae0fe7">AddEdge</a>(&amp;<a class="code" href="structState.html#a9522a499bd62121a14e00a3016fa0599">State::kPhonyRule</a>);
+<a name="l00450"></a>00450   node-&gt;<a class="code" href="structNode.html#a0f7fe3f8e4be0a990fdc2648d7020abe">set_in_edge</a>(phony_edge);
+<a name="l00451"></a>00451   phony_edge-&gt;<a class="code" href="structEdge.html#ac4ab5a6898d716f32683b63fafc65bb6">outputs_</a>.push_back(node);
+<a name="l00452"></a>00452 
+<a name="l00453"></a>00453   <span class="comment">// RecomputeDirty might not be called for phony_edge if a previous call</span>
+<a name="l00454"></a>00454   <span class="comment">// to RecomputeDirty had caused the file to be stat&#39;ed.  Because previous</span>
+<a name="l00455"></a>00455   <span class="comment">// invocations of RecomputeDirty would have seen this node without an</span>
+<a name="l00456"></a>00456   <span class="comment">// input edge (and therefore ready), we have to set outputs_ready_ to true</span>
+<a name="l00457"></a>00457   <span class="comment">// to avoid a potential stuck build.  If we do call RecomputeDirty for</span>
+<a name="l00458"></a>00458   <span class="comment">// this node, it will simply set outputs_ready_ to the correct value.</span>
+<a name="l00459"></a>00459   phony_edge-&gt;<a class="code" href="structEdge.html#affddbfc0888b9af3c8b65449f9e54852">outputs_ready_</a> = <span class="keyword">true</span>;
+<a name="l00460"></a>00460 }
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 12 2013 09:25:49 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 4 2014 09:13:00 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

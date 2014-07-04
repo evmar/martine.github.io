@@ -107,146 +107,147 @@
 <a name="l00048"></a>00048 }
 <a name="l00049"></a>00049 
 <a name="l00050"></a>00050 <span class="comment">// static</span>
-<a name="l00051"></a><a class="code" href="structCLParser.html#a7c4f992d80a88581b25bb48c84db4364">00051</a> <span class="keywordtype">string</span> <a class="code" href="structCLParser.html#a7c4f992d80a88581b25bb48c84db4364" title="Parse a line of cl.exe output and extract /showIncludes info.">CLParser::FilterShowIncludes</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; line) {
-<a name="l00052"></a>00052   <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span> kMagicPrefix[] = <span class="stringliteral">&quot;Note: including file: &quot;</span>;
-<a name="l00053"></a>00053   <span class="keyword">const</span> <span class="keywordtype">char</span>* in = line.c_str();
-<a name="l00054"></a>00054   <span class="keyword">const</span> <span class="keywordtype">char</span>* end = in + line.size();
-<a name="l00055"></a>00055 
-<a name="l00056"></a>00056   <span class="keywordflow">if</span> (end - in &gt; (<span class="keywordtype">int</span>)<span class="keyword">sizeof</span>(kMagicPrefix) - 1 &amp;&amp;
-<a name="l00057"></a>00057       memcmp(in, kMagicPrefix, <span class="keyword">sizeof</span>(kMagicPrefix) - 1) == 0) {
-<a name="l00058"></a>00058     in += <span class="keyword">sizeof</span>(kMagicPrefix) - 1;
-<a name="l00059"></a>00059     <span class="keywordflow">while</span> (*in == <span class="charliteral">&#39; &#39;</span>)
-<a name="l00060"></a>00060       ++in;
-<a name="l00061"></a>00061     <span class="keywordflow">return</span> line.substr(in - line.c_str());
-<a name="l00062"></a>00062   }
-<a name="l00063"></a>00063   <span class="keywordflow">return</span> <span class="stringliteral">&quot;&quot;</span>;
-<a name="l00064"></a>00064 }
-<a name="l00065"></a>00065 
-<a name="l00066"></a>00066 <span class="comment">// static</span>
-<a name="l00067"></a><a class="code" href="structCLParser.html#a6a36a893fc2f8e9a8b9914ccc27afd49">00067</a> <span class="keywordtype">bool</span> <a class="code" href="structCLParser.html#a6a36a893fc2f8e9a8b9914ccc27afd49" title="Return true if a mentioned include file is a system path.">CLParser::IsSystemInclude</a>(<span class="keywordtype">string</span> path) {
-<a name="l00068"></a>00068   transform(path.begin(), path.end(), path.begin(), ::tolower);
-<a name="l00069"></a>00069   <span class="comment">// TODO: this is a heuristic, perhaps there&#39;s a better way?</span>
-<a name="l00070"></a>00070   <span class="keywordflow">return</span> (path.find(<span class="stringliteral">&quot;program files&quot;</span>) != string::npos ||
-<a name="l00071"></a>00071           path.find(<span class="stringliteral">&quot;microsoft visual studio&quot;</span>) != string::npos);
-<a name="l00072"></a>00072 }
-<a name="l00073"></a>00073 
-<a name="l00074"></a>00074 <span class="comment">// static</span>
-<a name="l00075"></a><a class="code" href="structCLParser.html#a9e815fc99c4c0e69149dfa2b02a0e687">00075</a> <span class="keywordtype">bool</span> <a class="code" href="structCLParser.html#a9e815fc99c4c0e69149dfa2b02a0e687" title="Parse a line of cl.exe output and return true if it looks like it&#39;s printing an input filename...">CLParser::FilterInputFilename</a>(<span class="keywordtype">string</span> line) {
-<a name="l00076"></a>00076   transform(line.begin(), line.end(), line.begin(), ::tolower);
-<a name="l00077"></a>00077   <span class="comment">// TODO: other extensions, like .asm?</span>
-<a name="l00078"></a>00078   <span class="keywordflow">return</span> EndsWith(line, <span class="stringliteral">&quot;.c&quot;</span>) ||
-<a name="l00079"></a>00079       EndsWith(line, <span class="stringliteral">&quot;.cc&quot;</span>) ||
-<a name="l00080"></a>00080       EndsWith(line, <span class="stringliteral">&quot;.cxx&quot;</span>) ||
-<a name="l00081"></a>00081       EndsWith(line, <span class="stringliteral">&quot;.cpp&quot;</span>);
-<a name="l00082"></a>00082 }
-<a name="l00083"></a>00083 
-<a name="l00084"></a><a class="code" href="structCLParser.html#a00befbd4fc7b45090b1985e96ea4ba02">00084</a> <span class="keywordtype">string</span> <a class="code" href="structCLParser.html#a00befbd4fc7b45090b1985e96ea4ba02" title="Parse the full output of cl, returning the output (if any) that should printed.">CLParser::Parse</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; output) {
-<a name="l00085"></a>00085   <span class="keywordtype">string</span> filtered_output;
-<a name="l00086"></a>00086 
-<a name="l00087"></a>00087   <span class="comment">// Loop over all lines in the output to process them.</span>
-<a name="l00088"></a>00088   <span class="keywordtype">size_t</span> start = 0;
-<a name="l00089"></a>00089   <span class="keywordflow">while</span> (start &lt; output.size()) {
-<a name="l00090"></a>00090     <span class="keywordtype">size_t</span> end = output.find_first_of(<span class="stringliteral">&quot;\r\n&quot;</span>, start);
-<a name="l00091"></a>00091     <span class="keywordflow">if</span> (end == string::npos)
-<a name="l00092"></a>00092       end = output.size();
-<a name="l00093"></a>00093     <span class="keywordtype">string</span> line = output.substr(start, end - start);
-<a name="l00094"></a>00094 
-<a name="l00095"></a>00095     <span class="keywordtype">string</span> include = <a class="code" href="structCLParser.html#a7c4f992d80a88581b25bb48c84db4364" title="Parse a line of cl.exe output and extract /showIncludes info.">FilterShowIncludes</a>(line);
-<a name="l00096"></a>00096     <span class="keywordflow">if</span> (!include.empty()) {
-<a name="l00097"></a>00097       include = <a class="code" href="structIncludesNormalize.html#a8dafb93f3dbdf39aabe0a5fe5390604a" title="Normalize by fixing slashes style, fixing redundant .">IncludesNormalize::Normalize</a>(include, NULL);
-<a name="l00098"></a>00098       <span class="keywordflow">if</span> (!<a class="code" href="structCLParser.html#a6a36a893fc2f8e9a8b9914ccc27afd49" title="Return true if a mentioned include file is a system path.">IsSystemInclude</a>(include))
-<a name="l00099"></a>00099         <a class="code" href="structCLParser.html#a772a95d9eb98502582d85f968c836ea5">includes_</a>.insert(include);
-<a name="l00100"></a>00100     } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="structCLParser.html#a9e815fc99c4c0e69149dfa2b02a0e687" title="Parse a line of cl.exe output and return true if it looks like it&#39;s printing an input filename...">FilterInputFilename</a>(line)) {
-<a name="l00101"></a>00101       <span class="comment">// Drop it.</span>
-<a name="l00102"></a>00102       <span class="comment">// TODO: if we support compiling multiple output files in a single</span>
-<a name="l00103"></a>00103       <span class="comment">// cl.exe invocation, we should stash the filename.</span>
-<a name="l00104"></a>00104     } <span class="keywordflow">else</span> {
-<a name="l00105"></a>00105       filtered_output.append(line);
-<a name="l00106"></a>00106       filtered_output.append(<span class="stringliteral">&quot;\n&quot;</span>);
-<a name="l00107"></a>00107     }
-<a name="l00108"></a>00108 
-<a name="l00109"></a>00109     <span class="keywordflow">if</span> (end &lt; output.size() &amp;&amp; output[end] == <span class="charliteral">&#39;\r&#39;</span>)
-<a name="l00110"></a>00110       ++end;
-<a name="l00111"></a>00111     <span class="keywordflow">if</span> (end &lt; output.size() &amp;&amp; output[end] == <span class="charliteral">&#39;\n&#39;</span>)
-<a name="l00112"></a>00112       ++end;
-<a name="l00113"></a>00113     start = end;
-<a name="l00114"></a>00114   }
-<a name="l00115"></a>00115 
-<a name="l00116"></a>00116   <span class="keywordflow">return</span> filtered_output;
-<a name="l00117"></a>00117 }
-<a name="l00118"></a>00118 
-<a name="l00119"></a><a class="code" href="structCLWrapper.html#a5e11f246c0f1b9dd491b377a92b56ceb">00119</a> <span class="keywordtype">int</span> <a class="code" href="structCLWrapper.html#a5e11f246c0f1b9dd491b377a92b56ceb" title="Start a process and gather its raw output.">CLWrapper::Run</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; command, <span class="keywordtype">string</span>* output) {
-<a name="l00120"></a>00120   SECURITY_ATTRIBUTES security_attributes = {};
-<a name="l00121"></a>00121   security_attributes.nLength = <span class="keyword">sizeof</span>(SECURITY_ATTRIBUTES);
-<a name="l00122"></a>00122   security_attributes.bInheritHandle = TRUE;
-<a name="l00123"></a>00123 
-<a name="l00124"></a>00124   <span class="comment">// Must be inheritable so subprocesses can dup to children.</span>
-<a name="l00125"></a>00125   <a class="code" href="minidump-win32_8cc.html#a80271737d50feb2e2d81a211d97d677b">HANDLE</a> nul = CreateFile(<span class="stringliteral">&quot;NUL&quot;</span>, GENERIC_READ,
-<a name="l00126"></a>00126                           FILE_SHARE_READ | FILE_SHARE_WRITE |
-<a name="l00127"></a>00127                           FILE_SHARE_DELETE,
-<a name="l00128"></a>00128                           &amp;security_attributes, OPEN_EXISTING, 0, NULL);
-<a name="l00129"></a>00129   <span class="keywordflow">if</span> (nul == INVALID_HANDLE_VALUE)
-<a name="l00130"></a>00130     <a class="code" href="util_8cc.html#ad98ec6fb76f27b3d5a805cdad742df92" title="Log a fatal message and exit.">Fatal</a>(<span class="stringliteral">&quot;couldn&#39;t open nul&quot;</span>);
-<a name="l00131"></a>00131 
-<a name="l00132"></a>00132   <a class="code" href="minidump-win32_8cc.html#a80271737d50feb2e2d81a211d97d677b">HANDLE</a> stdout_read, stdout_write;
-<a name="l00133"></a>00133   <span class="keywordflow">if</span> (!CreatePipe(&amp;stdout_read, &amp;stdout_write, &amp;security_attributes, 0))
-<a name="l00134"></a>00134     Win32Fatal(<span class="stringliteral">&quot;CreatePipe&quot;</span>);
-<a name="l00135"></a>00135 
-<a name="l00136"></a>00136   <span class="keywordflow">if</span> (!SetHandleInformation(stdout_read, HANDLE_FLAG_INHERIT, 0))
-<a name="l00137"></a>00137     Win32Fatal(<span class="stringliteral">&quot;SetHandleInformation&quot;</span>);
-<a name="l00138"></a>00138 
-<a name="l00139"></a>00139   PROCESS_INFORMATION process_info = {};
-<a name="l00140"></a>00140   STARTUPINFO startup_info = {};
-<a name="l00141"></a>00141   startup_info.cb = <span class="keyword">sizeof</span>(STARTUPINFO);
-<a name="l00142"></a>00142   startup_info.hStdInput = nul;
-<a name="l00143"></a>00143   startup_info.hStdError = stdout_write;
-<a name="l00144"></a>00144   startup_info.hStdOutput = stdout_write;
-<a name="l00145"></a>00145   startup_info.dwFlags |= STARTF_USESTDHANDLES;
-<a name="l00146"></a>00146 
-<a name="l00147"></a>00147   <span class="keywordflow">if</span> (!CreateProcessA(NULL, (<span class="keywordtype">char</span>*)command.c_str(), NULL, NULL,
-<a name="l00148"></a>00148                       <span class="comment">/* inherit handles */</span> TRUE, 0,
-<a name="l00149"></a>00149                       <a class="code" href="structCLWrapper.html#a383b28c057951ec7579a3ac76618c718">env_block_</a>, NULL,
-<a name="l00150"></a>00150                       &amp;startup_info, &amp;process_info)) {
-<a name="l00151"></a>00151     Win32Fatal(<span class="stringliteral">&quot;CreateProcess&quot;</span>);
-<a name="l00152"></a>00152   }
-<a name="l00153"></a>00153 
-<a name="l00154"></a>00154   <span class="keywordflow">if</span> (!CloseHandle(nul) ||
-<a name="l00155"></a>00155       !CloseHandle(stdout_write)) {
-<a name="l00156"></a>00156     Win32Fatal(<span class="stringliteral">&quot;CloseHandle&quot;</span>);
-<a name="l00157"></a>00157   }
-<a name="l00158"></a>00158 
-<a name="l00159"></a>00159   <span class="comment">// Read all output of the subprocess.</span>
-<a name="l00160"></a>00160   <a class="code" href="minidump-win32_8cc.html#a976e4ee8a5d560b950e63ebcf583c773">DWORD</a> read_len = 1;
-<a name="l00161"></a>00161   <span class="keywordflow">while</span> (read_len) {
-<a name="l00162"></a>00162     <span class="keywordtype">char</span> buf[64 &lt;&lt; 10];
-<a name="l00163"></a>00163     read_len = 0;
-<a name="l00164"></a>00164     <span class="keywordflow">if</span> (!::<a class="code" href="util_8cc.html#afa2642aae4af8af879417889a5e8f4f5" title="Read a file to a string (in text mode: with CRLF conversion on Windows).">ReadFile</a>(stdout_read, buf, <span class="keyword">sizeof</span>(buf), &amp;read_len, NULL) &amp;&amp;
-<a name="l00165"></a>00165         GetLastError() != ERROR_BROKEN_PIPE) {
-<a name="l00166"></a>00166       Win32Fatal(<span class="stringliteral">&quot;ReadFile&quot;</span>);
-<a name="l00167"></a>00167     }
-<a name="l00168"></a>00168     output-&gt;append(buf, read_len);
-<a name="l00169"></a>00169   }
-<a name="l00170"></a>00170 
-<a name="l00171"></a>00171   <span class="comment">// Wait for it to exit and grab its exit code.</span>
-<a name="l00172"></a>00172   <span class="keywordflow">if</span> (WaitForSingleObject(process_info.hProcess, INFINITE) == WAIT_FAILED)
-<a name="l00173"></a>00173     Win32Fatal(<span class="stringliteral">&quot;WaitForSingleObject&quot;</span>);
-<a name="l00174"></a>00174   <a class="code" href="minidump-win32_8cc.html#a976e4ee8a5d560b950e63ebcf583c773">DWORD</a> exit_code = 0;
-<a name="l00175"></a>00175   <span class="keywordflow">if</span> (!GetExitCodeProcess(process_info.hProcess, &amp;exit_code))
-<a name="l00176"></a>00176     Win32Fatal(<span class="stringliteral">&quot;GetExitCodeProcess&quot;</span>);
-<a name="l00177"></a>00177 
-<a name="l00178"></a>00178   <span class="keywordflow">if</span> (!CloseHandle(stdout_read) ||
-<a name="l00179"></a>00179       !CloseHandle(process_info.hProcess) ||
-<a name="l00180"></a>00180       !CloseHandle(process_info.hThread)) {
-<a name="l00181"></a>00181     Win32Fatal(<span class="stringliteral">&quot;CloseHandle&quot;</span>);
-<a name="l00182"></a>00182   }
-<a name="l00183"></a>00183 
-<a name="l00184"></a>00184   <span class="keywordflow">return</span> exit_code;
-<a name="l00185"></a>00185 }
+<a name="l00051"></a><a class="code" href="structCLParser.html#a1367b95724c75f733778e3011dd614f2">00051</a> <span class="keywordtype">string</span> <a class="code" href="structCLParser.html#a1367b95724c75f733778e3011dd614f2" title="Parse a line of cl.exe output and extract /showIncludes info.">CLParser::FilterShowIncludes</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; line,
+<a name="l00052"></a>00052                                     <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; deps_prefix) {
+<a name="l00053"></a>00053   <span class="keyword">const</span> <span class="keywordtype">string</span> kDepsPrefixEnglish = <span class="stringliteral">&quot;Note: including file: &quot;</span>;
+<a name="l00054"></a>00054   <span class="keyword">const</span> <span class="keywordtype">char</span>* in = line.c_str();
+<a name="l00055"></a>00055   <span class="keyword">const</span> <span class="keywordtype">char</span>* end = in + line.size();
+<a name="l00056"></a>00056   <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; prefix = deps_prefix.empty() ? kDepsPrefixEnglish : deps_prefix;
+<a name="l00057"></a>00057   <span class="keywordflow">if</span> (end - in &gt; (<span class="keywordtype">int</span>)prefix.size() &amp;&amp;
+<a name="l00058"></a>00058       memcmp(in, prefix.c_str(), (int)prefix.size()) == 0) {
+<a name="l00059"></a>00059     in += prefix.size();
+<a name="l00060"></a>00060     <span class="keywordflow">while</span> (*in == <span class="charliteral">&#39; &#39;</span>)
+<a name="l00061"></a>00061       ++in;
+<a name="l00062"></a>00062     <span class="keywordflow">return</span> line.substr(in - line.c_str());
+<a name="l00063"></a>00063   }
+<a name="l00064"></a>00064   <span class="keywordflow">return</span> <span class="stringliteral">&quot;&quot;</span>;
+<a name="l00065"></a>00065 }
+<a name="l00066"></a>00066 
+<a name="l00067"></a>00067 <span class="comment">// static</span>
+<a name="l00068"></a><a class="code" href="structCLParser.html#a6a36a893fc2f8e9a8b9914ccc27afd49">00068</a> <span class="keywordtype">bool</span> <a class="code" href="structCLParser.html#a6a36a893fc2f8e9a8b9914ccc27afd49" title="Return true if a mentioned include file is a system path.">CLParser::IsSystemInclude</a>(<span class="keywordtype">string</span> path) {
+<a name="l00069"></a>00069   transform(path.begin(), path.end(), path.begin(), ::tolower);
+<a name="l00070"></a>00070   <span class="comment">// TODO: this is a heuristic, perhaps there&#39;s a better way?</span>
+<a name="l00071"></a>00071   <span class="keywordflow">return</span> (path.find(<span class="stringliteral">&quot;program files&quot;</span>) != string::npos ||
+<a name="l00072"></a>00072           path.find(<span class="stringliteral">&quot;microsoft visual studio&quot;</span>) != string::npos);
+<a name="l00073"></a>00073 }
+<a name="l00074"></a>00074 
+<a name="l00075"></a>00075 <span class="comment">// static</span>
+<a name="l00076"></a><a class="code" href="structCLParser.html#a9e815fc99c4c0e69149dfa2b02a0e687">00076</a> <span class="keywordtype">bool</span> <a class="code" href="structCLParser.html#a9e815fc99c4c0e69149dfa2b02a0e687" title="Parse a line of cl.exe output and return true if it looks like it&#39;s printing an input filename...">CLParser::FilterInputFilename</a>(<span class="keywordtype">string</span> line) {
+<a name="l00077"></a>00077   transform(line.begin(), line.end(), line.begin(), ::tolower);
+<a name="l00078"></a>00078   <span class="comment">// TODO: other extensions, like .asm?</span>
+<a name="l00079"></a>00079   <span class="keywordflow">return</span> EndsWith(line, <span class="stringliteral">&quot;.c&quot;</span>) ||
+<a name="l00080"></a>00080       EndsWith(line, <span class="stringliteral">&quot;.cc&quot;</span>) ||
+<a name="l00081"></a>00081       EndsWith(line, <span class="stringliteral">&quot;.cxx&quot;</span>) ||
+<a name="l00082"></a>00082       EndsWith(line, <span class="stringliteral">&quot;.cpp&quot;</span>);
+<a name="l00083"></a>00083 }
+<a name="l00084"></a>00084 
+<a name="l00085"></a><a class="code" href="structCLParser.html#a4f374d6ed6eeba338560c98e210bdbe0">00085</a> <span class="keywordtype">string</span> <a class="code" href="structCLParser.html#a4f374d6ed6eeba338560c98e210bdbe0" title="Parse the full output of cl, returning the output (if any) that should printed.">CLParser::Parse</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; output, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; deps_prefix) {
+<a name="l00086"></a>00086   <span class="keywordtype">string</span> filtered_output;
+<a name="l00087"></a>00087 
+<a name="l00088"></a>00088   <span class="comment">// Loop over all lines in the output to process them.</span>
+<a name="l00089"></a>00089   <span class="keywordtype">size_t</span> start = 0;
+<a name="l00090"></a>00090   <span class="keywordflow">while</span> (start &lt; output.size()) {
+<a name="l00091"></a>00091     <span class="keywordtype">size_t</span> end = output.find_first_of(<span class="stringliteral">&quot;\r\n&quot;</span>, start);
+<a name="l00092"></a>00092     <span class="keywordflow">if</span> (end == string::npos)
+<a name="l00093"></a>00093       end = output.size();
+<a name="l00094"></a>00094     <span class="keywordtype">string</span> line = output.substr(start, end - start);
+<a name="l00095"></a>00095 
+<a name="l00096"></a>00096     <span class="keywordtype">string</span> include = <a class="code" href="structCLParser.html#a1367b95724c75f733778e3011dd614f2" title="Parse a line of cl.exe output and extract /showIncludes info.">FilterShowIncludes</a>(line, deps_prefix);
+<a name="l00097"></a>00097     <span class="keywordflow">if</span> (!include.empty()) {
+<a name="l00098"></a>00098       include = <a class="code" href="structIncludesNormalize.html#a8dafb93f3dbdf39aabe0a5fe5390604a" title="Normalize by fixing slashes style, fixing redundant .">IncludesNormalize::Normalize</a>(include, NULL);
+<a name="l00099"></a>00099       <span class="keywordflow">if</span> (!<a class="code" href="structCLParser.html#a6a36a893fc2f8e9a8b9914ccc27afd49" title="Return true if a mentioned include file is a system path.">IsSystemInclude</a>(include))
+<a name="l00100"></a>00100         <a class="code" href="structCLParser.html#a772a95d9eb98502582d85f968c836ea5">includes_</a>.insert(include);
+<a name="l00101"></a>00101     } <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="structCLParser.html#a9e815fc99c4c0e69149dfa2b02a0e687" title="Parse a line of cl.exe output and return true if it looks like it&#39;s printing an input filename...">FilterInputFilename</a>(line)) {
+<a name="l00102"></a>00102       <span class="comment">// Drop it.</span>
+<a name="l00103"></a>00103       <span class="comment">// TODO: if we support compiling multiple output files in a single</span>
+<a name="l00104"></a>00104       <span class="comment">// cl.exe invocation, we should stash the filename.</span>
+<a name="l00105"></a>00105     } <span class="keywordflow">else</span> {
+<a name="l00106"></a>00106       filtered_output.append(line);
+<a name="l00107"></a>00107       filtered_output.append(<span class="stringliteral">&quot;\n&quot;</span>);
+<a name="l00108"></a>00108     }
+<a name="l00109"></a>00109 
+<a name="l00110"></a>00110     <span class="keywordflow">if</span> (end &lt; output.size() &amp;&amp; output[end] == <span class="charliteral">&#39;\r&#39;</span>)
+<a name="l00111"></a>00111       ++end;
+<a name="l00112"></a>00112     <span class="keywordflow">if</span> (end &lt; output.size() &amp;&amp; output[end] == <span class="charliteral">&#39;\n&#39;</span>)
+<a name="l00113"></a>00113       ++end;
+<a name="l00114"></a>00114     start = end;
+<a name="l00115"></a>00115   }
+<a name="l00116"></a>00116 
+<a name="l00117"></a>00117   <span class="keywordflow">return</span> filtered_output;
+<a name="l00118"></a>00118 }
+<a name="l00119"></a>00119 
+<a name="l00120"></a><a class="code" href="structCLWrapper.html#a5e11f246c0f1b9dd491b377a92b56ceb">00120</a> <span class="keywordtype">int</span> <a class="code" href="structCLWrapper.html#a5e11f246c0f1b9dd491b377a92b56ceb" title="Start a process and gather its raw output.">CLWrapper::Run</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; command, <span class="keywordtype">string</span>* output) {
+<a name="l00121"></a>00121   SECURITY_ATTRIBUTES security_attributes = {};
+<a name="l00122"></a>00122   security_attributes.nLength = <span class="keyword">sizeof</span>(SECURITY_ATTRIBUTES);
+<a name="l00123"></a>00123   security_attributes.bInheritHandle = TRUE;
+<a name="l00124"></a>00124 
+<a name="l00125"></a>00125   <span class="comment">// Must be inheritable so subprocesses can dup to children.</span>
+<a name="l00126"></a>00126   <a class="code" href="minidump-win32_8cc.html#a80271737d50feb2e2d81a211d97d677b">HANDLE</a> nul = CreateFile(<span class="stringliteral">&quot;NUL&quot;</span>, GENERIC_READ,
+<a name="l00127"></a>00127                           FILE_SHARE_READ | FILE_SHARE_WRITE |
+<a name="l00128"></a>00128                           FILE_SHARE_DELETE,
+<a name="l00129"></a>00129                           &amp;security_attributes, OPEN_EXISTING, 0, NULL);
+<a name="l00130"></a>00130   <span class="keywordflow">if</span> (nul == INVALID_HANDLE_VALUE)
+<a name="l00131"></a>00131     <a class="code" href="util_8cc.html#ad98ec6fb76f27b3d5a805cdad742df92" title="Log a fatal message and exit.">Fatal</a>(<span class="stringliteral">&quot;couldn&#39;t open nul&quot;</span>);
+<a name="l00132"></a>00132 
+<a name="l00133"></a>00133   <a class="code" href="minidump-win32_8cc.html#a80271737d50feb2e2d81a211d97d677b">HANDLE</a> stdout_read, stdout_write;
+<a name="l00134"></a>00134   <span class="keywordflow">if</span> (!CreatePipe(&amp;stdout_read, &amp;stdout_write, &amp;security_attributes, 0))
+<a name="l00135"></a>00135     Win32Fatal(<span class="stringliteral">&quot;CreatePipe&quot;</span>);
+<a name="l00136"></a>00136 
+<a name="l00137"></a>00137   <span class="keywordflow">if</span> (!SetHandleInformation(stdout_read, HANDLE_FLAG_INHERIT, 0))
+<a name="l00138"></a>00138     Win32Fatal(<span class="stringliteral">&quot;SetHandleInformation&quot;</span>);
+<a name="l00139"></a>00139 
+<a name="l00140"></a>00140   PROCESS_INFORMATION process_info = {};
+<a name="l00141"></a>00141   STARTUPINFO startup_info = {};
+<a name="l00142"></a>00142   startup_info.cb = <span class="keyword">sizeof</span>(STARTUPINFO);
+<a name="l00143"></a>00143   startup_info.hStdInput = nul;
+<a name="l00144"></a>00144   startup_info.hStdError = ::GetStdHandle(STD_ERROR_HANDLE);
+<a name="l00145"></a>00145   startup_info.hStdOutput = stdout_write;
+<a name="l00146"></a>00146   startup_info.dwFlags |= STARTF_USESTDHANDLES;
+<a name="l00147"></a>00147 
+<a name="l00148"></a>00148   <span class="keywordflow">if</span> (!CreateProcessA(NULL, (<span class="keywordtype">char</span>*)command.c_str(), NULL, NULL,
+<a name="l00149"></a>00149                       <span class="comment">/* inherit handles */</span> TRUE, 0,
+<a name="l00150"></a>00150                       <a class="code" href="structCLWrapper.html#a383b28c057951ec7579a3ac76618c718">env_block_</a>, NULL,
+<a name="l00151"></a>00151                       &amp;startup_info, &amp;process_info)) {
+<a name="l00152"></a>00152     Win32Fatal(<span class="stringliteral">&quot;CreateProcess&quot;</span>);
+<a name="l00153"></a>00153   }
+<a name="l00154"></a>00154 
+<a name="l00155"></a>00155   <span class="keywordflow">if</span> (!CloseHandle(nul) ||
+<a name="l00156"></a>00156       !CloseHandle(stdout_write)) {
+<a name="l00157"></a>00157     Win32Fatal(<span class="stringliteral">&quot;CloseHandle&quot;</span>);
+<a name="l00158"></a>00158   }
+<a name="l00159"></a>00159 
+<a name="l00160"></a>00160   <span class="comment">// Read all output of the subprocess.</span>
+<a name="l00161"></a>00161   <a class="code" href="minidump-win32_8cc.html#a976e4ee8a5d560b950e63ebcf583c773">DWORD</a> read_len = 1;
+<a name="l00162"></a>00162   <span class="keywordflow">while</span> (read_len) {
+<a name="l00163"></a>00163     <span class="keywordtype">char</span> buf[64 &lt;&lt; 10];
+<a name="l00164"></a>00164     read_len = 0;
+<a name="l00165"></a>00165     <span class="keywordflow">if</span> (!::<a class="code" href="util_8cc.html#afa2642aae4af8af879417889a5e8f4f5" title="Read a file to a string (in text mode: with CRLF conversion on Windows).">ReadFile</a>(stdout_read, buf, <span class="keyword">sizeof</span>(buf), &amp;read_len, NULL) &amp;&amp;
+<a name="l00166"></a>00166         GetLastError() != ERROR_BROKEN_PIPE) {
+<a name="l00167"></a>00167       Win32Fatal(<span class="stringliteral">&quot;ReadFile&quot;</span>);
+<a name="l00168"></a>00168     }
+<a name="l00169"></a>00169     output-&gt;append(buf, read_len);
+<a name="l00170"></a>00170   }
+<a name="l00171"></a>00171 
+<a name="l00172"></a>00172   <span class="comment">// Wait for it to exit and grab its exit code.</span>
+<a name="l00173"></a>00173   <span class="keywordflow">if</span> (WaitForSingleObject(process_info.hProcess, INFINITE) == WAIT_FAILED)
+<a name="l00174"></a>00174     Win32Fatal(<span class="stringliteral">&quot;WaitForSingleObject&quot;</span>);
+<a name="l00175"></a>00175   <a class="code" href="minidump-win32_8cc.html#a976e4ee8a5d560b950e63ebcf583c773">DWORD</a> exit_code = 0;
+<a name="l00176"></a>00176   <span class="keywordflow">if</span> (!GetExitCodeProcess(process_info.hProcess, &amp;exit_code))
+<a name="l00177"></a>00177     Win32Fatal(<span class="stringliteral">&quot;GetExitCodeProcess&quot;</span>);
+<a name="l00178"></a>00178 
+<a name="l00179"></a>00179   <span class="keywordflow">if</span> (!CloseHandle(stdout_read) ||
+<a name="l00180"></a>00180       !CloseHandle(process_info.hProcess) ||
+<a name="l00181"></a>00181       !CloseHandle(process_info.hThread)) {
+<a name="l00182"></a>00182     Win32Fatal(<span class="stringliteral">&quot;CloseHandle&quot;</span>);
+<a name="l00183"></a>00183   }
+<a name="l00184"></a>00184 
+<a name="l00185"></a>00185   <span class="keywordflow">return</span> exit_code;
+<a name="l00186"></a>00186 }
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 12 2013 09:25:49 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 4 2014 09:13:00 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

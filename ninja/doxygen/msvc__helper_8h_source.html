@@ -86,44 +86,45 @@
 <a name="l00027"></a>00027 <span class="comment">  /// Parse a line of cl.exe output and extract /showIncludes info.</span>
 <a name="l00028"></a>00028 <span class="comment">  /// If a dependency is extracted, returns a nonempty string.</span>
 <a name="l00029"></a>00029 <span class="comment">  /// Exposed for testing.</span>
-<a name="l00030"></a>00030 <span class="comment"></span>  <span class="keyword">static</span> <span class="keywordtype">string</span> FilterShowIncludes(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; line);
-<a name="l00031"></a>00031 <span class="comment"></span>
-<a name="l00032"></a>00032 <span class="comment">  /// Return true if a mentioned include file is a system path.</span>
-<a name="l00033"></a>00033 <span class="comment">  /// Filtering these out reduces dependency information considerably.</span>
-<a name="l00034"></a>00034 <span class="comment"></span>  <span class="keyword">static</span> <span class="keywordtype">bool</span> IsSystemInclude(<span class="keywordtype">string</span> path);
-<a name="l00035"></a>00035 <span class="comment"></span>
-<a name="l00036"></a>00036 <span class="comment">  /// Parse a line of cl.exe output and return true if it looks like</span>
-<a name="l00037"></a>00037 <span class="comment">  /// it&#39;s printing an input filename.  This is a heuristic but it appears</span>
-<a name="l00038"></a>00038 <span class="comment">  /// to be the best we can do.</span>
-<a name="l00039"></a>00039 <span class="comment">  /// Exposed for testing.</span>
-<a name="l00040"></a>00040 <span class="comment"></span>  <span class="keyword">static</span> <span class="keywordtype">bool</span> FilterInputFilename(<span class="keywordtype">string</span> line);
-<a name="l00041"></a>00041 <span class="comment"></span>
-<a name="l00042"></a>00042 <span class="comment">  /// Parse the full output of cl, returning the output (if any) that</span>
-<a name="l00043"></a>00043 <span class="comment">  /// should printed.</span>
-<a name="l00044"></a>00044 <span class="comment"></span>  <span class="keywordtype">string</span> Parse(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; output);
-<a name="l00045"></a>00045 
-<a name="l00046"></a><a class="code" href="structCLParser.html#a772a95d9eb98502582d85f968c836ea5">00046</a>   set&lt;string&gt; <a class="code" href="structCLParser.html#a772a95d9eb98502582d85f968c836ea5">includes_</a>;
-<a name="l00047"></a>00047 };
-<a name="l00048"></a>00048 <span class="comment"></span>
-<a name="l00049"></a>00049 <span class="comment">/// Wraps a synchronous execution of a CL subprocess.</span>
-<a name="l00050"></a><a class="code" href="structCLWrapper.html">00050</a> <span class="comment"></span><span class="keyword">struct </span><a class="code" href="structCLWrapper.html" title="Wraps a synchronous execution of a CL subprocess.">CLWrapper</a> {
-<a name="l00051"></a><a class="code" href="structCLWrapper.html#a4f1f01691267f50cb4e42453572d11a1">00051</a>   <a class="code" href="structCLWrapper.html#a4f1f01691267f50cb4e42453572d11a1">CLWrapper</a>() : env_block_(NULL) {}
-<a name="l00052"></a>00052 <span class="comment"></span>
-<a name="l00053"></a>00053 <span class="comment">  /// Set the environment block (as suitable for CreateProcess) to be used</span>
-<a name="l00054"></a>00054 <span class="comment">  /// by Run().</span>
-<a name="l00055"></a><a class="code" href="structCLWrapper.html#af33715b81c86f13894321539553908fa">00055</a> <span class="comment"></span>  <span class="keywordtype">void</span> <a class="code" href="structCLWrapper.html#af33715b81c86f13894321539553908fa" title="Set the environment block (as suitable for CreateProcess) to be used by Run().">SetEnvBlock</a>(<span class="keywordtype">void</span>* env_block) { env_block_ = env_block; }
-<a name="l00056"></a>00056 <span class="comment"></span>
-<a name="l00057"></a>00057 <span class="comment">  /// Start a process and gather its raw output.  Returns its exit code.</span>
-<a name="l00058"></a>00058 <span class="comment">  /// Crashes (calls Fatal()) on error.</span>
-<a name="l00059"></a>00059 <span class="comment"></span>  <span class="keywordtype">int</span> Run(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; command, <span class="keywordtype">string</span>* output);
-<a name="l00060"></a>00060 
-<a name="l00061"></a><a class="code" href="structCLWrapper.html#a383b28c057951ec7579a3ac76618c718">00061</a>   <span class="keywordtype">void</span>* <a class="code" href="structCLWrapper.html#a383b28c057951ec7579a3ac76618c718">env_block_</a>;
-<a name="l00062"></a>00062 };
+<a name="l00030"></a>00030 <span class="comment"></span>  <span class="keyword">static</span> <span class="keywordtype">string</span> FilterShowIncludes(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; line,
+<a name="l00031"></a>00031                                    <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; deps_prefix);
+<a name="l00032"></a>00032 <span class="comment"></span>
+<a name="l00033"></a>00033 <span class="comment">  /// Return true if a mentioned include file is a system path.</span>
+<a name="l00034"></a>00034 <span class="comment">  /// Filtering these out reduces dependency information considerably.</span>
+<a name="l00035"></a>00035 <span class="comment"></span>  <span class="keyword">static</span> <span class="keywordtype">bool</span> IsSystemInclude(<span class="keywordtype">string</span> path);
+<a name="l00036"></a>00036 <span class="comment"></span>
+<a name="l00037"></a>00037 <span class="comment">  /// Parse a line of cl.exe output and return true if it looks like</span>
+<a name="l00038"></a>00038 <span class="comment">  /// it&#39;s printing an input filename.  This is a heuristic but it appears</span>
+<a name="l00039"></a>00039 <span class="comment">  /// to be the best we can do.</span>
+<a name="l00040"></a>00040 <span class="comment">  /// Exposed for testing.</span>
+<a name="l00041"></a>00041 <span class="comment"></span>  <span class="keyword">static</span> <span class="keywordtype">bool</span> FilterInputFilename(<span class="keywordtype">string</span> line);
+<a name="l00042"></a>00042 <span class="comment"></span>
+<a name="l00043"></a>00043 <span class="comment">  /// Parse the full output of cl, returning the output (if any) that</span>
+<a name="l00044"></a>00044 <span class="comment">  /// should printed.</span>
+<a name="l00045"></a>00045 <span class="comment"></span>  <span class="keywordtype">string</span> Parse(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; output, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; deps_prefix);
+<a name="l00046"></a>00046 
+<a name="l00047"></a><a class="code" href="structCLParser.html#a772a95d9eb98502582d85f968c836ea5">00047</a>   set&lt;string&gt; <a class="code" href="structCLParser.html#a772a95d9eb98502582d85f968c836ea5">includes_</a>;
+<a name="l00048"></a>00048 };
+<a name="l00049"></a>00049 <span class="comment"></span>
+<a name="l00050"></a>00050 <span class="comment">/// Wraps a synchronous execution of a CL subprocess.</span>
+<a name="l00051"></a><a class="code" href="structCLWrapper.html">00051</a> <span class="comment"></span><span class="keyword">struct </span><a class="code" href="structCLWrapper.html" title="Wraps a synchronous execution of a CL subprocess.">CLWrapper</a> {
+<a name="l00052"></a><a class="code" href="structCLWrapper.html#a4f1f01691267f50cb4e42453572d11a1">00052</a>   <a class="code" href="structCLWrapper.html#a4f1f01691267f50cb4e42453572d11a1">CLWrapper</a>() : env_block_(NULL) {}
+<a name="l00053"></a>00053 <span class="comment"></span>
+<a name="l00054"></a>00054 <span class="comment">  /// Set the environment block (as suitable for CreateProcess) to be used</span>
+<a name="l00055"></a>00055 <span class="comment">  /// by Run().</span>
+<a name="l00056"></a><a class="code" href="structCLWrapper.html#af33715b81c86f13894321539553908fa">00056</a> <span class="comment"></span>  <span class="keywordtype">void</span> <a class="code" href="structCLWrapper.html#af33715b81c86f13894321539553908fa" title="Set the environment block (as suitable for CreateProcess) to be used by Run().">SetEnvBlock</a>(<span class="keywordtype">void</span>* env_block) { env_block_ = env_block; }
+<a name="l00057"></a>00057 <span class="comment"></span>
+<a name="l00058"></a>00058 <span class="comment">  /// Start a process and gather its raw output.  Returns its exit code.</span>
+<a name="l00059"></a>00059 <span class="comment">  /// Crashes (calls Fatal()) on error.</span>
+<a name="l00060"></a>00060 <span class="comment"></span>  <span class="keywordtype">int</span> Run(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; command, <span class="keywordtype">string</span>* output);
+<a name="l00061"></a>00061 
+<a name="l00062"></a><a class="code" href="structCLWrapper.html#a383b28c057951ec7579a3ac76618c718">00062</a>   <span class="keywordtype">void</span>* <a class="code" href="structCLWrapper.html#a383b28c057951ec7579a3ac76618c718">env_block_</a>;
+<a name="l00063"></a>00063 };
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 12 2013 09:25:49 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 4 2014 09:13:00 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

@@ -34,7 +34,7 @@ div.chapter {
 p {
     margin-top: 0;
 }
-</style></head><body><div lang="en" class="book" title="Ninja"><div class="titlepage"><div><div><h1 class="title"><a name="idp148000"></a>Ninja</h1></div><div><div class="author"><h3 class="author"><span class="firstname">Evan</span> <span class="surname">Martin</span></h3><code class="email">&lt;<a class="email" href="mailto:martine@danga.com">martine@danga.com</a>&gt;</code></div></div><div><div class="revhistory"><table border="1" width="100%" summary="Revision history"><tr><th align="left" valign="top" colspan="3"><b>Revision History</b></th></tr><tr><td align="left">Revision 1.4.0</td><td align="left">September 2013</td><td align="left">EM</td></tr></table></div></div></div><hr></div><div class="toc"><ul><li><span class="chapter"><a href="#_introduction">Introduction</a></span><ul><li><span class="section"><a href="#_philosophical_overview">Philosophical overview</a></span></li><li><span class="section"><a href="#_design_goals">Design goals</a></span></li><li><span class="section"><a href="#_comparison_to_make">Comparison to Make</a></span></li></ul></li><li><span class="chapter"><a href="#_using_ninja_for_your_project">Using Ninja for your project</a></span><ul><li><span class="section"><a href="#_running_ninja">Running Ninja</a></span></li><li><span class="section"><a href="#_environment_variables">Environment variables</a></span></li><li><span class="section"><a href="#_extra_tools">Extra tools</a></span></li></ul></li><li><span class="chapter"><a href="#_writing_your_own_ninja_files">Writing your own Ninja files</a></span><ul><li><span class="section"><a href="#_conceptual_overview">Conceptual overview</a></span></li><li><span class="section"><a href="#_syntax_example">Syntax example</a></span></li><li><span class="section"><a href="#_variables">Variables</a></span></li><li><span class="section"><a href="#_rules">Rules</a></span></li><li><span class="section"><a href="#_build_statements">Build statements</a></span></li><li><span class="section"><a href="#_generating_ninja_files_from_code">Generating Ninja files from code</a></span></li></ul></li><li><span class="chapter"><a href="#_more_details">More details</a></span><ul><li><span class="section"><a href="#_the_literal_phony_literal_rule">The <code class="literal">phony</code> rule</a></span></li><li><span class="section"><a href="#_default_target_statements">Default target statements</a></span></li><li><span class="section"><a href="#ref_log">The Ninja log</a></span></li><li><span class="section"><a href="#ref_versioning">Version compatibility</a></span></li><li><span class="section"><a href="#ref_headers">C/C++ header dependencies</a></span><ul><li><span class="section"><a href="#_depfile">depfile</a></span></li><li><span class="section"><a href="#_deps">deps</a></span></li></ul></li><li><span class="section"><a href="#ref_pool">Pools</a></span></li></ul></li><li><span class="chapter"><a href="#_ninja_file_reference">Ninja file reference</a></span><ul><li><span class="section"><a href="#_lexical_syntax">Lexical syntax</a></span></li><li><span class="section"><a href="#ref_toplevel">Top-level variables</a></span></li><li><span class="section"><a href="#ref_rule">Rule variables</a></span></li><li><span class="section"><a href="#ref_dependencies">Build dependencies</a></span></li><li><span class="section"><a href="#_variable_expansion">Variable expansion</a></span></li><li><span class="section"><a href="#ref_scope">Evaluation and scoping</a></span></li></ul></li></ul></div><div class="chapter" title="Introduction"><div class="titlepage"><div><div><h2 class="title"><a name="_introduction"></a>Introduction</h2></div></div></div><p>Ninja is yet another build system.  It takes as input the
+</style></head><body><div lang="en" class="book" title="Ninja"><div class="titlepage"><div><div><h1 class="title"><a name="idp24991744"></a>Ninja</h1></div><div><div class="author"><h3 class="author"><span class="firstname">Evan</span> <span class="surname">Martin</span></h3><code class="email">&lt;<a class="email" href="mailto:martine@danga.com">martine@danga.com</a>&gt;</code></div></div><div><div class="revhistory"><table border="1" width="100%" summary="Revision history"><tr><th align="left" valign="top" colspan="3"><b>Revision History</b></th></tr><tr><td align="left">Revision 1.5.1</td><td align="left">June 2014</td><td align="left">EM</td></tr></table></div></div></div><hr></div><div class="toc"><ul><li><span class="chapter"><a href="#_introduction">Introduction</a></span><ul><li><span class="section"><a href="#_philosophical_overview">Philosophical overview</a></span></li><li><span class="section"><a href="#_design_goals">Design goals</a></span></li><li><span class="section"><a href="#_comparison_to_make">Comparison to Make</a></span></li></ul></li><li><span class="chapter"><a href="#_using_ninja_for_your_project">Using Ninja for your project</a></span><ul><li><span class="section"><a href="#_running_ninja">Running Ninja</a></span></li><li><span class="section"><a href="#_environment_variables">Environment variables</a></span></li><li><span class="section"><a href="#_extra_tools">Extra tools</a></span></li></ul></li><li><span class="chapter"><a href="#_writing_your_own_ninja_files">Writing your own Ninja files</a></span><ul><li><span class="section"><a href="#_conceptual_overview">Conceptual overview</a></span></li><li><span class="section"><a href="#_syntax_example">Syntax example</a></span></li><li><span class="section"><a href="#_variables">Variables</a></span></li><li><span class="section"><a href="#_rules">Rules</a></span></li><li><span class="section"><a href="#_build_statements">Build statements</a></span></li><li><span class="section"><a href="#_generating_ninja_files_from_code">Generating Ninja files from code</a></span></li></ul></li><li><span class="chapter"><a href="#_more_details">More details</a></span><ul><li><span class="section"><a href="#_the_literal_phony_literal_rule">The <code class="literal">phony</code> rule</a></span></li><li><span class="section"><a href="#_default_target_statements">Default target statements</a></span></li><li><span class="section"><a href="#ref_log">The Ninja log</a></span></li><li><span class="section"><a href="#ref_versioning">Version compatibility</a></span></li><li><span class="section"><a href="#ref_headers">C/C++ header dependencies</a></span><ul><li><span class="section"><a href="#_depfile">depfile</a></span></li><li><span class="section"><a href="#_deps">deps</a></span></li></ul></li><li><span class="section"><a href="#ref_pool">Pools</a></span><ul><li><span class="section"><a href="#_the_literal_console_literal_pool">The <code class="literal">console</code> pool</a></span></li></ul></li></ul></li><li><span class="chapter"><a href="#_ninja_file_reference">Ninja file reference</a></span><ul><li><span class="section"><a href="#_lexical_syntax">Lexical syntax</a></span></li><li><span class="section"><a href="#ref_toplevel">Top-level variables</a></span></li><li><span class="section"><a href="#ref_rule">Rule variables</a></span></li><li><span class="section"><a href="#ref_dependencies">Build dependencies</a></span></li><li><span class="section"><a href="#_variable_expansion">Variable expansion</a></span></li><li><span class="section"><a href="#ref_scope">Evaluation and scoping</a></span></li></ul></li></ul></div><div class="chapter" title="Introduction"><div class="titlepage"><div><div><h2 class="title"><a name="_introduction"></a>Introduction</h2></div></div></div><p>Ninja is yet another build system.  It takes as input the
 interdependencies of files (typically source code and output
 executables) and orchestrates building them, <span class="emphasis"><em>quickly</em></span>.</p><p>Ninja joins a sea of other build systems.  Its distinguishing goal is
 to be fast.  It is born from
@@ -437,8 +437,12 @@ database.</p><p>Ninja supports this processing in two forms.</p><div class="orde
    <a class="ulink" href="http://msdn.microsoft.com/en-us/library/hdkef6tk(v=vs.90).aspx" target="_top"><code class="literal">/showIncludes</code>
    flag</a>.  Briefly, this means the tool outputs specially-formatted lines
    to its stdout.  Ninja then filters these lines from the displayed
-   output.  No <code class="literal">depfile</code> attribute is necessary.
-</p><pre class="screen">rule cc
+   output.  No <code class="literal">depfile</code> attribute is necessary, but the localized string
+   in front of the the header file path. For instance
+   `msvc_deps_prefix = Note: including file: `
+   for a English Visual Studio (the default). Should be globally defined.
+</p><pre class="screen">msvc_deps_prefix = Note: including file:
+rule cc
   deps = msvc
   command = cl /showIncludes -c $in /Fo$out</pre></li></ol></div></div></div><div class="section" title="Pools"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="ref_pool"></a>Pools</h2></div></div></div><p><span class="emphasis"><em>Available since Ninja 1.1.</em></span></p><p>Pools allow you to allocate one or more rules or edges a finite number
 of concurrent jobs which is more tightly restricted than the default
@@ -477,7 +481,14 @@ build other.exe: link input.obj
 build heavy_object1.obj: cc heavy_obj1.cc
   pool = heavy_object_pool
 build heavy_object2.obj: cc heavy_obj2.cc
-  pool = heavy_object_pool</pre></div></div><div class="chapter" title="Ninja file reference"><div class="titlepage"><div><div><h2 class="title"><a name="_ninja_file_reference"></a>Ninja file reference</h2></div></div></div><p>A file is a series of declarations.  A declaration can be one of:</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+  pool = heavy_object_pool</pre><div class="section" title="The console pool"><div class="titlepage"><div><div><h3 class="title"><a name="_the_literal_console_literal_pool"></a>The <code class="literal">console</code> pool</h3></div></div></div><p><span class="emphasis"><em>Available since Ninja 1.5.</em></span></p><p>There exists a pre-defined pool named <code class="literal">console</code> with a depth of 1. It has
+the special property that any task in the pool has direct access to the
+standard input, output and error streams provided to Ninja, which are
+normally connected to the user’s console (hence the name) but could be
+redirected. This can be useful for interactive tasks or long-running tasks
+which produce status updates on the console (such as test suites).</p><p>While a task in the <code class="literal">console</code> pool is running, Ninja’s regular output (such
+as progress status and output from concurrent tasks) is buffered until
+it completes.</p></div></div></div><div class="chapter" title="Ninja file reference"><div class="titlepage"><div><div><h2 class="title"><a name="_ninja_file_reference"></a>Ninja file reference</h2></div></div></div><p>A file is a series of declarations.  A declaration can be one of:</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
 A rule declaration, which begins with <code class="literal">rule <span class="emphasis"><em>rulename</em></span></code>, and
    then has a series of indented lines defining variables.
 </li><li class="listitem">
@@ -603,6 +614,12 @@ path to an optional <code class="literal">Makefile</code> that contains extra
    <a class="link" href="#ref_headers" title="C/C++ header dependencies">the full discussion</a>.  The generated database is
    stored as <code class="literal">.ninja_deps</code> in the <code class="literal">builddir</code>, see <a class="link" href="#ref_toplevel" title="Top-level variables">the    discussion of <code class="literal">builddir</code></a>.
 </dd><dt><span class="term">
+<code class="literal">msvc_deps_prefix</code>
+</span></dt><dd>
+<span class="emphasis"><em>(Available since Ninja 1.5.)</em></span> defines the string
+  which should be stripped from msvc’s /showIncludes output. Only
+  needed when <code class="literal">deps = msvc</code> and no English Visual Studio version is used.
+</dd><dt><span class="term">
 <code class="literal">description</code>
 </span></dt><dd>
 a short description of the command, used to pretty-print
@@ -620,9 +637,9 @@ if present, specifies that this rule is used to
 </dd><dt><span class="term">
 <code class="literal">in</code>
 </span></dt><dd>
-the shell-quoted space-separated list of files provided as
-  inputs to the build line referencing this <code class="literal">rule</code>.  (<code class="literal">$in</code> is provided
-  solely for convenience; if you need some subset or variant of this
+the space-separated list of files provided as inputs to the build line
+  referencing this <code class="literal">rule</code>, shell-quoted if it appears in commands.  (<code class="literal">$in</code> is
+  provided solely for convenience; if you need some subset or variant of this
   list of files, just construct a new variable with that list and use
   that instead.)
 </dd><dt><span class="term">
@@ -635,8 +652,8 @@ the same as <code class="literal">$in</code> except that multiple inputs are
 </dd><dt><span class="term">
 <code class="literal">out</code>
 </span></dt><dd>
-the shell-quoted space-separated list of files provided as
-  outputs to the build line referencing this <code class="literal">rule</code>.
+the space-separated list of files provided as outputs to the build line
+  referencing this <code class="literal">rule</code>, shell-quoted if it appears in commands.
 </dd><dt><span class="term">
 <code class="literal">restat</code>
 </span></dt><dd>

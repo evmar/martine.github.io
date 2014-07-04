@@ -83,6 +83,7 @@
       <li><a href="#index_r"><span>r</span></a></li>
       <li><a href="#index_s"><span>s</span></a></li>
       <li><a href="#index_t"><span>t</span></a></li>
+      <li><a href="#index_u"><span>u</span></a></li>
       <li><a href="#index_v"><span>v</span></a></li>
       <li><a href="#index_w"><span>w</span></a></li>
     </ul>
@@ -136,12 +137,15 @@
 : <a class="el" href="structFakeCommandRunner.html#ac93b111db7e0b7e056bab35f7435244c">FakeCommandRunner</a>
 </li>
 <li>config_
-: <a class="el" href="structBuildTest.html#adbf3fa7b00240708b88705af5f0eb5bb">BuildTest</a>
-, <a class="el" href="structRealCommandRunner.html#aeece9d778b4cd826f377f33e9c25f53f">RealCommandRunner</a>
+: <a class="el" href="structRealCommandRunner.html#aeece9d778b4cd826f377f33e9c25f53f">RealCommandRunner</a>
+, <a class="el" href="structBuildTest.html#adbf3fa7b00240708b88705af5f0eb5bb">BuildTest</a>
 , <a class="el" href="structBuilder.html#a982b2b7e9d5a7fcc3bf1082b1dfa8c7a">Builder</a>
 , <a class="el" href="structBuildStatus.html#accbad5074966766fd07e53117223fe35">BuildStatus</a>
 , <a class="el" href="structCleanTest.html#a361d70919a53fecdea9123a349275f55">CleanTest</a>
 , <a class="el" href="structCleaner.html#a061286ab1f16948224de40fcf042fd8a">Cleaner</a>
+</li>
+<li>console_locked_
+: <a class="el" href="structLinePrinter.html#a2a63e7af653f2d4f0cbea8ffa1e88235">LinePrinter</a>
 </li>
 <li>contents
 : <a class="el" href="structVirtualFileSystem_1_1Entry.html#a13ebd3f2eca71653563308338a7107bc">VirtualFileSystem::Entry</a>
@@ -215,11 +219,14 @@
 : <a class="el" href="structBuildLog.html#af537a7382a1d904e6c5522055e45cd36">BuildLog</a>
 </li>
 <li>env_
-: <a class="el" href="structEdge.html#ac45836f73bc104304aad19e16cb7aa1a">Edge</a>
-, <a class="el" href="structManifestParser.html#a0dbb40eddd53ef84a018cb2de667fcb1">ManifestParser</a>
+: <a class="el" href="structManifestParser.html#a0dbb40eddd53ef84a018cb2de667fcb1">ManifestParser</a>
+, <a class="el" href="structEdge.html#ac45836f73bc104304aad19e16cb7aa1a">Edge</a>
 </li>
 <li>env_block_
 : <a class="el" href="structCLWrapper.html#a383b28c057951ec7579a3ac76618c718">CLWrapper</a>
+</li>
+<li>escape_in_out_
+: <a class="el" href="structEdgeEnv.html#ade0dae63fdec76a8d9d3040b99437c3e">EdgeEnv</a>
 </li>
 </ul>
 
@@ -316,6 +323,9 @@
 
 
 <h3><a class="anchor" id="index_k"></a>- k -</h3><ul>
+<li>kConsolePool
+: <a class="el" href="structState.html#a1bfd2a655955c711d114b89e72115e75">State</a>
+</li>
 <li>kDefaultPool
 : <a class="el" href="structState.html#a52ef5a6c1a831f6677114321364a44d6">State</a>
 </li>
@@ -341,11 +351,17 @@
 <li>lexer_
 : <a class="el" href="structManifestParser.html#a07bee06cdcecc02029c51fc86b51a141">ManifestParser</a>
 </li>
+<li>line_buffer_
+: <a class="el" href="structLinePrinter.html#a015279ac89a05545ff5ac1fc1e002b3c">LinePrinter</a>
+</li>
 <li>line_end_
 : <a class="el" href="structLineReader.html#a809b226aacf2ed0d7aaeca6d0ae2bd4a">LineReader</a>
 </li>
 <li>line_start_
 : <a class="el" href="structLineReader.html#a36a8e5157977201734978cef8eff14dc">LineReader</a>
+</li>
+<li>line_type_
+: <a class="el" href="structLinePrinter.html#ad362b4a3f321c2dd39bc1f356fc65dd6">LinePrinter</a>
 </li>
 <li>log_file_
 : <a class="el" href="structBuildLog.html#a5fd4ee55ca61796e6d9aecaac2855cba">BuildLog</a>
@@ -426,6 +442,9 @@
 <li>output
 : <a class="el" href="structBuildLog_1_1LogEntry.html#ab83065a7478526bcb4c5b2544b5f078a">BuildLog::LogEntry</a>
 , <a class="el" href="structCommandRunner_1_1Result.html#aaf9cc90fe396b53c2b817f8cb4f0200a">CommandRunner::Result</a>
+</li>
+<li>output_buffer_
+: <a class="el" href="structLinePrinter.html#acade00d205f0cabdaa35ae43eee44486">LinePrinter</a>
 </li>
 <li>outputs_
 : <a class="el" href="structEdge.html#ac4ab5a6898d716f32683b63fafc65bb6">Edge</a>
@@ -602,6 +621,13 @@
 </ul>
 
 
+<h3><a class="anchor" id="index_u"></a>- u -</h3><ul>
+<li>use_console_
+: <a class="el" href="structSubprocess.html#ab2eb7e77b88e8af4f5efc5e4046834f9">Subprocess</a>
+</li>
+</ul>
+
+
 <h3><a class="anchor" id="index_v"></a>- v -</h3><ul>
 <li>val
 : <a class="el" href="structGETOPT__LONG__OPTION__T.html#a0fa4f83e6a883e7acd8e6a373413ecf2">GETOPT_LONG_OPTION_T</a>
@@ -630,7 +656,7 @@
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 12 2013 09:25:50 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 4 2014 09:13:01 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

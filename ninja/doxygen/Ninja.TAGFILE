@@ -98,6 +98,7 @@
     <includes id="timestamp_8h" name="timestamp.h" local="yes" imported="no">timestamp.h</includes>
     <includes id="util_8h" name="util.h" local="yes" imported="no">util.h</includes>
     <class kind="struct">BuildLog</class>
+    <class kind="struct">BuildLogUser</class>
     <class kind="struct">BuildLog::LogEntry</class>
   </compound>
   <compound kind="file">
@@ -110,6 +111,7 @@
     <includes id="state_8h" name="state.h" local="yes" imported="no">state.h</includes>
     <includes id="util_8h" name="util.h" local="yes" imported="no">util.h</includes>
     <includes id="metrics_8h" name="metrics.h" local="yes" imported="no">metrics.h</includes>
+    <class kind="struct">NoDeadPaths</class>
     <member kind="function">
       <type>int</type>
       <name>main</name>
@@ -196,6 +198,13 @@
       <anchorfile>build__test_8cc.html</anchorfile>
       <anchor>ae56ad52732566d3f3671bc2ca3800772</anchor>
       <arglist>(PlanTest, PoolWithDepthOne)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>TEST_F</name>
+      <anchorfile>build__test_8cc.html</anchorfile>
+      <anchor>a81c8add2852054c273bd49a166a99f0c</anchor>
+      <arglist>(PlanTest, ConsolePool)</arglist>
     </member>
     <member kind="function">
       <type></type>
@@ -505,6 +514,13 @@
       <anchor>a8d040593dff5c2ce4abda77ec51cd58e</anchor>
       <arglist>(BuildWithDepsLogTest, RestatMissingDepfileDepslog)</arglist>
     </member>
+    <member kind="function">
+      <type></type>
+      <name>TEST_F</name>
+      <anchorfile>build__test_8cc.html</anchorfile>
+      <anchor>a39d84911421f1bd9e891aae73acdc728</anchor>
+      <arglist>(BuildTest, Console)</arglist>
+    </member>
   </compound>
   <compound kind="file">
     <name>canon_perftest.cc</name>
@@ -650,11 +666,25 @@
       <anchor>a55ce4d655e0160d4640317ad106fee9a</anchor>
       <arglist>(CleanTest, CleanPhony)</arglist>
     </member>
+    <member kind="function">
+      <type></type>
+      <name>TEST_F</name>
+      <anchorfile>clean__test_8cc.html</anchorfile>
+      <anchor>ae051ae9d586ce4c2da38b157d9155667</anchor>
+      <arglist>(CleanTest, CleanDepFileAndRspFileWithSpaces)</arglist>
+    </member>
   </compound>
   <compound kind="file">
     <name>debug_flags.cc</name>
     <path>/home/evanm/projects/ninja/src/</path>
     <filename>debug__flags_8cc</filename>
+    <member kind="variable">
+      <type>bool</type>
+      <name>g_experimental_statcache</name>
+      <anchorfile>debug__flags_8cc.html</anchorfile>
+      <anchor>a658844d6e894dbaf835d98051a45e62c</anchor>
+      <arglist></arglist>
+    </member>
     <member kind="variable">
       <type>bool</type>
       <name>g_explaining</name>
@@ -680,6 +710,13 @@
       <anchorfile>debug__flags_8h.html</anchorfile>
       <anchor>a334e8f1dd8a740e85baff782ec1012c6</anchor>
       <arglist>(fmt,...)</arglist>
+    </member>
+    <member kind="variable">
+      <type>bool</type>
+      <name>g_experimental_statcache</name>
+      <anchorfile>debug__flags_8h.html</anchorfile>
+      <anchor>a658844d6e894dbaf835d98051a45e62c</anchor>
+      <arglist></arglist>
     </member>
     <member kind="variable">
       <type>bool</type>
@@ -716,6 +753,21 @@
     <includes id="depfile__parser_8h" name="depfile_parser.h" local="yes" imported="no">depfile_parser.h</includes>
   </compound>
   <compound kind="file">
+    <name>depfile_parser_perftest.cc</name>
+    <path>/home/evanm/projects/ninja/src/</path>
+    <filename>depfile__parser__perftest_8cc</filename>
+    <includes id="depfile__parser_8h" name="depfile_parser.h" local="yes" imported="no">depfile_parser.h</includes>
+    <includes id="util_8h" name="util.h" local="yes" imported="no">util.h</includes>
+    <includes id="metrics_8h" name="metrics.h" local="yes" imported="no">metrics.h</includes>
+    <member kind="function">
+      <type>int</type>
+      <name>main</name>
+      <anchorfile>depfile__parser__perftest_8cc.html</anchorfile>
+      <anchor>a0ddf1224851353fc92bfbff6f499fa97</anchor>
+      <arglist>(int argc, char *argv[])</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
     <name>depfile_parser_test.cc</name>
     <path>/home/evanm/projects/ninja/src/</path>
     <filename>depfile__parser__test_8cc</filename>
@@ -741,6 +793,13 @@
       <anchorfile>depfile__parser__test_8cc.html</anchorfile>
       <anchor>a0e86f2bd29472f7decaed6c34ed54ae9</anchor>
       <arglist>(DepfileParserTest, Continuation)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>TEST_F</name>
+      <anchorfile>depfile__parser__test_8cc.html</anchorfile>
+      <anchor>a45071150560c6f2e8c3fe7d7d48fe789</anchor>
+      <arglist>(DepfileParserTest, CarriageReturnContinuation)</arglist>
     </member>
     <member kind="function">
       <type></type>
@@ -1133,8 +1192,8 @@
       <type></type>
       <name>TEST_F</name>
       <anchorfile>graph__test_8cc.html</anchorfile>
-      <anchor>a3ce7b34bbff6b1cfcca4d07443ccb0f2</anchor>
-      <arglist>(GraphTest, VarInOutQuoteSpaces)</arglist>
+      <anchor>a1e70689714609ae5d42e4d6c9a9b4cec</anchor>
+      <arglist>(GraphTest, VarInOutPathEscaping)</arglist>
     </member>
     <member kind="function">
       <type></type>
@@ -1419,6 +1478,40 @@
     <class kind="struct">ManifestParser</class>
   </compound>
   <compound kind="file">
+    <name>manifest_parser_perftest.cc</name>
+    <path>/home/evanm/projects/ninja/src/</path>
+    <filename>manifest__parser__perftest_8cc</filename>
+    <includes id="getopt_8h" name="getopt.h" local="no" imported="no">getopt.h</includes>
+    <includes id="disk__interface_8h" name="disk_interface.h" local="yes" imported="no">disk_interface.h</includes>
+    <includes id="graph_8h" name="graph.h" local="yes" imported="no">graph.h</includes>
+    <includes id="manifest__parser_8h" name="manifest_parser.h" local="yes" imported="no">manifest_parser.h</includes>
+    <includes id="metrics_8h" name="metrics.h" local="yes" imported="no">metrics.h</includes>
+    <includes id="state_8h" name="state.h" local="yes" imported="no">state.h</includes>
+    <includes id="util_8h" name="util.h" local="yes" imported="no">util.h</includes>
+    <class kind="struct">RealFileReader</class>
+    <member kind="function">
+      <type>int</type>
+      <name>LoadManifests</name>
+      <anchorfile>manifest__parser__perftest_8cc.html</anchorfile>
+      <anchor>a40595c8e2fbd976436296b930045b243</anchor>
+      <arglist>(bool measure_command_evaluation)</arglist>
+    </member>
+    <member kind="function">
+      <type>int</type>
+      <name>main</name>
+      <anchorfile>manifest__parser__perftest_8cc.html</anchorfile>
+      <anchor>a0ddf1224851353fc92bfbff6f499fa97</anchor>
+      <arglist>(int argc, char *argv[])</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>WriteFakeManifests</name>
+      <anchorfile>manifest__parser__perftest_8cc.html</anchorfile>
+      <anchor>a37a41c3060514191cf22fe5d708f773d</anchor>
+      <arglist>(const string &amp;dir)</arglist>
+    </member>
+  </compound>
+  <compound kind="file">
     <name>manifest_parser_test.cc</name>
     <path>/home/evanm/projects/ninja/src/</path>
     <filename>manifest__parser__test_8cc</filename>
@@ -1593,6 +1686,13 @@
       <anchorfile>manifest__parser__test_8cc.html</anchorfile>
       <anchor>a981e63c0429538780d0ebad85efa7364</anchor>
       <arglist>(ParserTest, MissingSubNinja)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>TEST_F</name>
+      <anchorfile>manifest__parser__test_8cc.html</anchorfile>
+      <anchor>a75800a70e073c969c19485e042cafa40</anchor>
+      <arglist>(ParserTest, DuplicateRuleInDifferentSubninjas)</arglist>
     </member>
     <member kind="function">
       <type></type>
@@ -1879,6 +1979,13 @@
       <anchor>a26a859ad0b8a55b333b30446a6104011</anchor>
       <arglist>(MSVCHelperTest, EnvBlock)</arglist>
     </member>
+    <member kind="function">
+      <type></type>
+      <name>TEST</name>
+      <anchorfile>msvc__helper__test_8cc.html</anchorfile>
+      <anchor>abbbfd10f3c61893955d399a3c4359f6b</anchor>
+      <arglist>(MSVCHelperTest, NoReadOfStderr)</arglist>
+    </member>
   </compound>
   <compound kind="file">
     <name>ninja.cc</name>
@@ -1926,21 +2033,6 @@
       <anchorfile>ninja__test_8cc.html</anchorfile>
       <anchor>a92981a46cfd763852a9cb7343fa140a2</anchor>
       <arglist>(const char *format,...)</arglist>
-    </member>
-  </compound>
-  <compound kind="file">
-    <name>parser_perftest.cc</name>
-    <path>/home/evanm/projects/ninja/src/</path>
-    <filename>parser__perftest_8cc</filename>
-    <includes id="depfile__parser_8h" name="depfile_parser.h" local="yes" imported="no">depfile_parser.h</includes>
-    <includes id="util_8h" name="util.h" local="yes" imported="no">util.h</includes>
-    <includes id="metrics_8h" name="metrics.h" local="yes" imported="no">metrics.h</includes>
-    <member kind="function">
-      <type>int</type>
-      <name>main</name>
-      <anchorfile>parser__perftest_8cc.html</anchorfile>
-      <anchor>a0ddf1224851353fc92bfbff6f499fa97</anchor>
-      <arglist>(int argc, char *argv[])</arglist>
     </member>
   </compound>
   <compound kind="file">
@@ -2030,6 +2122,13 @@
       <anchorfile>subprocess__test_8cc.html</anchorfile>
       <anchor>a11b360c2b8d984f7bd219a3c0b4ec802</anchor>
       <arglist>(SubprocessTest, InterruptParent)</arglist>
+    </member>
+    <member kind="function">
+      <type></type>
+      <name>TEST_F</name>
+      <anchorfile>subprocess__test_8cc.html</anchorfile>
+      <anchor>adcfaad16d9f04763363b072bb0754f2d</anchor>
+      <arglist>(SubprocessTest, Console)</arglist>
     </member>
     <member kind="function">
       <type></type>
@@ -2177,6 +2276,34 @@
       <anchor>a03a03c74e8b71b7ab09b1af533dc253f</anchor>
       <arglist>()</arglist>
     </member>
+    <member kind="function">
+      <type>void</type>
+      <name>GetShellEscapedString</name>
+      <anchorfile>util_8cc.html</anchorfile>
+      <anchor>a5d89d1621913641fab23969f8665d3d5</anchor>
+      <arglist>(const string &amp;input, string *result)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>GetWin32EscapedString</name>
+      <anchorfile>util_8cc.html</anchorfile>
+      <anchor>a147fcbfb98ba43b1cb5a4739bf0c7702</anchor>
+      <arglist>(const string &amp;input, string *result)</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static bool</type>
+      <name>IsKnownShellSafeCharacter</name>
+      <anchorfile>util_8cc.html</anchorfile>
+      <anchor>a38e7f4f3b273c116d16ab33e6a065fa2</anchor>
+      <arglist>(char ch)</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static bool</type>
+      <name>IsKnownWin32SafeCharacter</name>
+      <anchorfile>util_8cc.html</anchorfile>
+      <anchor>a4316c8580a35e3bedd6e76bba3343b58</anchor>
+      <arglist>(char ch)</arglist>
+    </member>
     <member kind="function" static="yes">
       <type>static bool</type>
       <name>islatinalpha</name>
@@ -2211,6 +2338,20 @@
       <anchorfile>util_8cc.html</anchorfile>
       <anchor>ad214b089117a607f2d7855404befab82</anchor>
       <arglist>(const string &amp;text, const vector&lt; const char * &gt; &amp;words)</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static bool</type>
+      <name>StringNeedsShellEscaping</name>
+      <anchorfile>util_8cc.html</anchorfile>
+      <anchor>a3ecae07db3444ba89a9c421fda0e657d</anchor>
+      <arglist>(const string &amp;input)</arglist>
+    </member>
+    <member kind="function" static="yes">
+      <type>static bool</type>
+      <name>StringNeedsWin32Escaping</name>
+      <anchorfile>util_8cc.html</anchorfile>
+      <anchor>ab86d152a35ccd032649973e01b79f606</anchor>
+      <arglist>(const string &amp;input)</arglist>
     </member>
     <member kind="function">
       <type>string</type>
@@ -2293,6 +2434,20 @@
       <anchorfile>util_8h.html</anchorfile>
       <anchor>a03a03c74e8b71b7ab09b1af533dc253f</anchor>
       <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>GetShellEscapedString</name>
+      <anchorfile>util_8h.html</anchorfile>
+      <anchor>a5d89d1621913641fab23969f8665d3d5</anchor>
+      <arglist>(const string &amp;input, string *result)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>GetWin32EscapedString</name>
+      <anchorfile>util_8h.html</anchorfile>
+      <anchor>a147fcbfb98ba43b1cb5a4739bf0c7702</anchor>
+      <arglist>(const string &amp;input, string *result)</arglist>
     </member>
     <member kind="function">
       <type>int</type>
@@ -2622,6 +2777,13 @@
       <anchor>a73a86246aefb2b8aeed71ac6979f37f3</anchor>
       <arglist>(const string &amp;path)</arglist>
     </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual bool</type>
+      <name>IsPathDead</name>
+      <anchorfile>structBuildTest.html</anchorfile>
+      <anchor>a5c3c1c08918ca44732d95f0ee92c965d</anchor>
+      <arglist>(StringPiece s) const </arglist>
+    </member>
     <member kind="function">
       <type>BuildConfig</type>
       <name>MakeConfig</name>
@@ -2812,8 +2974,8 @@
       <type>bool</type>
       <name>ExtractDeps</name>
       <anchorfile>structBuilder.html</anchorfile>
-      <anchor>adda0c101d4aa206fb1bede2e0fb132f4</anchor>
-      <arglist>(CommandRunner::Result *result, const string &amp;deps_type, vector&lt; Node * &gt; *deps_nodes, string *err)</arglist>
+      <anchor>a1d1da3f88460e22b7f58aeaf1ad74b85</anchor>
+      <arglist>(CommandRunner::Result *result, const string &amp;deps_type, const string &amp;deps_prefix, vector&lt; Node * &gt; *deps_nodes, string *err)</arglist>
     </member>
     <member kind="function" protection="private">
       <type>void</type>
@@ -2887,15 +3049,15 @@
       <type>bool</type>
       <name>OpenForWrite</name>
       <anchorfile>structBuildLog.html</anchorfile>
-      <anchor>a08a600782d1b1c8369b8437d9d9c4264</anchor>
-      <arglist>(const string &amp;path, string *err)</arglist>
+      <anchor>a4d345335c0495d843bd906305cc95ef9</anchor>
+      <arglist>(const string &amp;path, const BuildLogUser &amp;user, string *err)</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
       <name>Recompact</name>
       <anchorfile>structBuildLog.html</anchorfile>
-      <anchor>a864e5ac4b1d5239ae808b38ab3aeeb41</anchor>
-      <arglist>(const string &amp;path, string *err)</arglist>
+      <anchor>a27cb04969d1497d5e3f66981a6b639e1</anchor>
+      <arglist>(const string &amp;path, const BuildLogUser &amp;user, string *err)</arglist>
     </member>
     <member kind="function">
       <type>bool</type>
@@ -3005,6 +3167,17 @@
       <anchorfile>structBuildLog_1_1LogEntry.html</anchorfile>
       <anchor>a2ba1f4c7b480857f4b54be8ff28db9fc</anchor>
       <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>BuildLogUser</name>
+    <filename>structBuildLogUser.html</filename>
+    <member kind="function" virtualness="pure">
+      <type>virtual bool</type>
+      <name>IsPathDead</name>
+      <anchorfile>structBuildLogUser.html</anchorfile>
+      <anchor>a4d0f24aa0363aa050c1f338e064a8cac</anchor>
+      <arglist>(StringPiece s) const =0</arglist>
     </member>
   </compound>
   <compound kind="struct">
@@ -3270,6 +3443,7 @@
     <name>BuildTest</name>
     <filename>structBuildTest.html</filename>
     <base>StateTestWithBuiltinRules</base>
+    <base>BuildLogUser</base>
     <member kind="function">
       <type>void</type>
       <name>AddCatRule</name>
@@ -3297,6 +3471,13 @@
       <anchorfile>structStateTestWithBuiltinRules.html</anchorfile>
       <anchor>a73a86246aefb2b8aeed71ac6979f37f3</anchor>
       <arglist>(const string &amp;path)</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual bool</type>
+      <name>IsPathDead</name>
+      <anchorfile>structBuildTest.html</anchorfile>
+      <anchor>a5c3c1c08918ca44732d95f0ee92c965d</anchor>
+      <arglist>(StringPiece s) const </arglist>
     </member>
     <member kind="function">
       <type>BuildConfig</type>
@@ -3400,6 +3581,13 @@
       <anchorfile>structStateTestWithBuiltinRules.html</anchorfile>
       <anchor>a73a86246aefb2b8aeed71ac6979f37f3</anchor>
       <arglist>(const string &amp;path)</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual bool</type>
+      <name>IsPathDead</name>
+      <anchorfile>structBuildTest.html</anchorfile>
+      <anchor>a5c3c1c08918ca44732d95f0ee92c965d</anchor>
+      <arglist>(StringPiece s) const </arglist>
     </member>
     <member kind="function">
       <type>BuildConfig</type>
@@ -3510,6 +3698,13 @@
       <anchorfile>structStateTestWithBuiltinRules.html</anchorfile>
       <anchor>a73a86246aefb2b8aeed71ac6979f37f3</anchor>
       <arglist>(const string &amp;path)</arglist>
+    </member>
+    <member kind="function" virtualness="virtual">
+      <type>virtual bool</type>
+      <name>IsPathDead</name>
+      <anchorfile>structBuildTest.html</anchorfile>
+      <anchor>a5c3c1c08918ca44732d95f0ee92c965d</anchor>
+      <arglist>(StringPiece s) const </arglist>
     </member>
     <member kind="function">
       <type>BuildConfig</type>
@@ -3843,8 +4038,8 @@
       <type>string</type>
       <name>Parse</name>
       <anchorfile>structCLParser.html</anchorfile>
-      <anchor>a00befbd4fc7b45090b1985e96ea4ba02</anchor>
-      <arglist>(const string &amp;output)</arglist>
+      <anchor>a4f374d6ed6eeba338560c98e210bdbe0</anchor>
+      <arglist>(const string &amp;output, const string &amp;deps_prefix)</arglist>
     </member>
     <member kind="function" static="yes">
       <type>static bool</type>
@@ -3857,8 +4052,8 @@
       <type>static string</type>
       <name>FilterShowIncludes</name>
       <anchorfile>structCLParser.html</anchorfile>
-      <anchor>a7c4f992d80a88581b25bb48c84db4364</anchor>
-      <arglist>(const string &amp;line)</arglist>
+      <anchor>a1367b95724c75f733778e3011dd614f2</anchor>
+      <arglist>(const string &amp;line, const string &amp;deps_prefix)</arglist>
     </member>
     <member kind="function" static="yes">
       <type>static bool</type>
@@ -4151,6 +4346,13 @@
     </member>
     <member kind="function">
       <type>bool</type>
+      <name>IsDepsEntryLiveFor</name>
+      <anchorfile>structDepsLog.html</anchorfile>
+      <anchor>a3d91b6caef537ba9d9b50ecbf09cd4a5</anchor>
+      <arglist>(Node *node)</arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
       <name>Load</name>
       <anchorfile>structDepsLog.html</anchorfile>
       <anchor>a698004cf8030703ddf6b19f8ab7bd50e</anchor>
@@ -4322,8 +4524,8 @@
       <type>virtual TimeStamp</type>
       <name>Stat</name>
       <anchorfile>structDiskInterface.html</anchorfile>
-      <anchor>ac99deecbc7f235272f0a8e308e7792d7</anchor>
-      <arglist>(const string &amp;path)=0</arglist>
+      <anchor>a1095cf31175f95f005fc38b28683b0cb</anchor>
+      <arglist>(const string &amp;path) const =0</arglist>
     </member>
     <member kind="function" virtualness="pure">
       <type>virtual bool</type>
@@ -4386,6 +4588,20 @@
       <arglist>(const string &amp;key)</arglist>
     </member>
     <member kind="function">
+      <type>string</type>
+      <name>GetUnescapedDepfile</name>
+      <anchorfile>structEdge.html</anchorfile>
+      <anchor>a327ebbb178acb1d05c454c806ba84c46</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
+      <type>string</type>
+      <name>GetUnescapedRspfile</name>
+      <anchorfile>structEdge.html</anchorfile>
+      <anchor>a70c8d93441468aa04296c29ff94cbcb9</anchor>
+      <arglist>()</arglist>
+    </member>
+    <member kind="function">
       <type>bool</type>
       <name>is_implicit</name>
       <anchorfile>structEdge.html</anchorfile>
@@ -4425,6 +4641,13 @@
       <name>rule</name>
       <anchorfile>structEdge.html</anchorfile>
       <anchor>a3a65de0e14a559db9ebc0e60faa7d664</anchor>
+      <arglist>() const </arglist>
+    </member>
+    <member kind="function">
+      <type>bool</type>
+      <name>use_console</name>
+      <anchorfile>structEdge.html</anchorfile>
+      <anchor>ade0ceb00f2eb88e99c7bcae5a07d37a1</anchor>
       <arglist>() const </arglist>
     </member>
     <member kind="function">
@@ -4502,12 +4725,30 @@
     <name>EdgeEnv</name>
     <filename>structEdgeEnv.html</filename>
     <base>Env</base>
+    <member kind="enumeration">
+      <name>EscapeKind</name>
+      <anchorfile>structEdgeEnv.html</anchorfile>
+      <anchor>af5aeedc89db8f0cdbb072b104c7ba2ef</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>kShellEscape</name>
+      <anchorfile>structEdgeEnv.html</anchorfile>
+      <anchor>af5aeedc89db8f0cdbb072b104c7ba2efa735c02ecd79f01637c799a2973634f72</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="enumvalue">
+      <name>kDoNotEscape</name>
+      <anchorfile>structEdgeEnv.html</anchorfile>
+      <anchor>af5aeedc89db8f0cdbb072b104c7ba2efaa804a2af5f66c80476dadcd6d0237530</anchor>
+      <arglist></arglist>
+    </member>
     <member kind="function">
       <type></type>
       <name>EdgeEnv</name>
       <anchorfile>structEdgeEnv.html</anchorfile>
-      <anchor>a04299d9d3744d2106bce92ea52338feb</anchor>
-      <arglist>(Edge *edge)</arglist>
+      <anchor>ad4b9ab32700e9681ee16b1ca32de5993</anchor>
+      <arglist>(Edge *edge, EscapeKind escape)</arglist>
     </member>
     <member kind="function" virtualness="virtual">
       <type>virtual string</type>
@@ -4528,6 +4769,13 @@
       <name>edge_</name>
       <anchorfile>structEdgeEnv.html</anchorfile>
       <anchor>a9cf14172d32813daa2e7e57e40230e60</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable">
+      <type>EscapeKind</type>
+      <name>escape_in_out_</name>
+      <anchorfile>structEdgeEnv.html</anchorfile>
+      <anchor>ade0dae63fdec76a8d9d3040b99437c3e</anchor>
       <arglist></arglist>
     </member>
   </compound>
@@ -5308,11 +5556,53 @@
       <anchor>a0992dd6ef3dbe9aab0595ea98bcd15e5</anchor>
       <arglist>(bool smart)</arglist>
     </member>
+    <member kind="function">
+      <type>void</type>
+      <name>SetConsoleLocked</name>
+      <anchorfile>structLinePrinter.html</anchorfile>
+      <anchor>a38acb5f22d9a84a0a86da6e0ba861a35</anchor>
+      <arglist>(bool locked)</arglist>
+    </member>
+    <member kind="function" protection="private">
+      <type>void</type>
+      <name>PrintOrBuffer</name>
+      <anchorfile>structLinePrinter.html</anchorfile>
+      <anchor>a05f503456976587d2f243521966d5dfc</anchor>
+      <arglist>(const char *data, size_t size)</arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>console_locked_</name>
+      <anchorfile>structLinePrinter.html</anchorfile>
+      <anchor>a2a63e7af653f2d4f0cbea8ffa1e88235</anchor>
+      <arglist></arglist>
+    </member>
     <member kind="variable" protection="private">
       <type>bool</type>
       <name>have_blank_line_</name>
       <anchorfile>structLinePrinter.html</anchorfile>
       <anchor>a2e0a97433a4555e10e8d93c3ae2ea1d4</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>string</type>
+      <name>line_buffer_</name>
+      <anchorfile>structLinePrinter.html</anchorfile>
+      <anchor>a015279ac89a05545ff5ac1fc1e002b3c</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>LineType</type>
+      <name>line_type_</name>
+      <anchorfile>structLinePrinter.html</anchorfile>
+      <anchor>ad362b4a3f321c2dd39bc1f356fc65dd6</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" protection="private">
+      <type>string</type>
+      <name>output_buffer_</name>
+      <anchorfile>structLinePrinter.html</anchorfile>
+      <anchor>acade00d205f0cabdaa35ae43eee44486</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" protection="private">
@@ -5734,6 +6024,18 @@
     </member>
   </compound>
   <compound kind="struct">
+    <name>NoDeadPaths</name>
+    <filename>structNoDeadPaths.html</filename>
+    <base>BuildLogUser</base>
+    <member kind="function" virtualness="virtual">
+      <type>virtual bool</type>
+      <name>IsPathDead</name>
+      <anchorfile>structNoDeadPaths.html</anchorfile>
+      <anchor>a8d4da134866bd2e4393bcc2c6e35faaa</anchor>
+      <arglist>(StringPiece) const </arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
     <name>ParserTest</name>
     <filename>structParserTest.html</filename>
     <base>ManifestParser::FileReader</base>
@@ -5920,6 +6222,13 @@
       <anchorfile>structStateTestWithBuiltinRules.html</anchorfile>
       <anchor>a73a86246aefb2b8aeed71ac6979f37f3</anchor>
       <arglist>(const string &amp;path)</arglist>
+    </member>
+    <member kind="function">
+      <type>void</type>
+      <name>TestPoolWithDepthOne</name>
+      <anchorfile>structPlanTest.html</anchorfile>
+      <anchor>a4f869c9bc4ec3cf7e873df25a1e38704</anchor>
+      <arglist>(const char *test_case)</arglist>
     </member>
     <member kind="variable">
       <type>Plan</type>
@@ -6131,6 +6440,13 @@
     <name>RealDiskInterface</name>
     <filename>structRealDiskInterface.html</filename>
     <base>DiskInterface</base>
+    <member kind="function">
+      <type>void</type>
+      <name>AllowStatCache</name>
+      <anchorfile>structRealDiskInterface.html</anchorfile>
+      <anchor>a5d65ad648f4104dc051b7968409722a1</anchor>
+      <arglist>(bool allow)</arglist>
+    </member>
     <member kind="function" virtualness="virtual">
       <type>virtual bool</type>
       <name>MakeDir</name>
@@ -6170,8 +6486,8 @@
       <type>virtual TimeStamp</type>
       <name>Stat</name>
       <anchorfile>structRealDiskInterface.html</anchorfile>
-      <anchor>a9c8fe8b0dc4ca004f0b2f41743c96f2a</anchor>
-      <arglist>(const string &amp;path)</arglist>
+      <anchor>af9a98eca935f55943728ecf3d4447c72</anchor>
+      <arglist>(const string &amp;path) const </arglist>
     </member>
     <member kind="function" virtualness="virtual">
       <type>virtual bool</type>
@@ -6193,6 +6509,19 @@
       <anchorfile>structRealDiskInterface.html</anchorfile>
       <anchor>a9b7e7955cfaed1b9591892464b77876b</anchor>
       <arglist></arglist>
+    </member>
+  </compound>
+  <compound kind="struct">
+    <name>RealFileReader</name>
+    <filename>structRealFileReader.html</filename>
+    <base>ManifestParser::FileReader</base>
+    <base>ManifestParser::FileReader</base>
+    <member kind="function" virtualness="virtual">
+      <type>virtual bool</type>
+      <name>ReadFile</name>
+      <anchorfile>structRealFileReader.html</anchorfile>
+      <anchor>adade798308a0ebcd2ac8849d1cbf1929</anchor>
+      <arglist>(const string &amp;path, string *content, string *err)</arglist>
     </member>
   </compound>
   <compound kind="struct">
@@ -6403,8 +6732,8 @@
       <type>Node *</type>
       <name>LookupNode</name>
       <anchorfile>structState.html</anchorfile>
-      <anchor>a76435f4f2516b38c28c731a7bac862e7</anchor>
-      <arglist>(StringPiece path)</arglist>
+      <anchor>a9b89c1d3065f1c2100d16a41c1602ac5</anchor>
+      <arglist>(StringPiece path) const </arglist>
     </member>
     <member kind="function">
       <type>Pool *</type>
@@ -6488,6 +6817,13 @@
       <name>rules_</name>
       <anchorfile>structState.html</anchorfile>
       <anchor>a7853ca22a4a26bea1ea0e2b10a033e4a</anchor>
+      <arglist></arglist>
+    </member>
+    <member kind="variable" static="yes">
+      <type>static Pool</type>
+      <name>kConsolePool</name>
+      <anchorfile>structState.html</anchorfile>
+      <anchor>a1bfd2a655955c711d114b89e72115e75</anchor>
       <arglist></arglist>
     </member>
     <member kind="variable" static="yes">
@@ -6692,8 +7028,8 @@
       <type></type>
       <name>Subprocess</name>
       <anchorfile>structSubprocess.html</anchorfile>
-      <anchor>a7261c6dd5c9826ea9c72f0f79dc5ad2a</anchor>
-      <arglist>()</arglist>
+      <anchor>a9fe3fa3b9089c81bb62cd8f12eb4e67d</anchor>
+      <arglist>(bool use_console)</arglist>
     </member>
     <member kind="variable" protection="private">
       <type>string</type>
@@ -6716,6 +7052,13 @@
       <anchor>af675690a04bd28e55685e35cd345c5b6</anchor>
       <arglist></arglist>
     </member>
+    <member kind="variable" protection="private">
+      <type>bool</type>
+      <name>use_console_</name>
+      <anchorfile>structSubprocess.html</anchorfile>
+      <anchor>ab2eb7e77b88e8af4f5efc5e4046834f9</anchor>
+      <arglist></arglist>
+    </member>
     <member kind="friend" protection="private">
       <type>friend struct</type>
       <name>SubprocessSet</name>
@@ -6731,8 +7074,8 @@
       <type>Subprocess *</type>
       <name>Add</name>
       <anchorfile>structSubprocessSet.html</anchorfile>
-      <anchor>a0fea01f81a2ef66bcb85547cf69defac</anchor>
-      <arglist>(const string &amp;command)</arglist>
+      <anchor>a5f72fd727c938652e3a175d040cc4be1</anchor>
+      <arglist>(const string &amp;command, bool use_console=false)</arglist>
     </member>
     <member kind="function">
       <type>void</type>
@@ -6863,8 +7206,8 @@
       <type>virtual TimeStamp</type>
       <name>Stat</name>
       <anchorfile>structVirtualFileSystem.html</anchorfile>
-      <anchor>adb7c97119619c0d060579aaaf14c7847</anchor>
-      <arglist>(const string &amp;path)</arglist>
+      <anchor>a21576b9c44cb6c1649ab85381c0983fd</anchor>
+      <arglist>(const string &amp;path) const </arglist>
     </member>
     <member kind="function">
       <type>int</type>

@@ -13,9 +13,10 @@
 <area shape="rect" id="node35" href="$graph_8cc.html" title="graph.cc" alt="" coords="1228,83,1300,112"/>
 <area shape="rect" id="node38" href="$graphviz_8cc.html" title="graphviz.cc" alt="" coords="1324,83,1412,112"/>
 <area shape="rect" id="node40" href="$manifest__parser_8cc.html" title="manifest_parser.cc" alt="" coords="1436,83,1570,112"/>
-<area shape="rect" id="node42" href="$manifest__parser__test_8cc.html" title="manifest_parser_test.cc" alt="" coords="1594,83,1756,112"/>
-<area shape="rect" id="node45" href="$state_8cc.html" title="state.cc" alt="" coords="1780,83,1850,112"/>
-<area shape="rect" id="node47" href="$state__test_8cc.html" title="state_test.cc" alt="" coords="1874,83,1972,112"/>
+<area shape="rect" id="node42" href="$manifest__parser__perftest_8cc.html" title="manifest_parser_perftest.cc" alt="" coords="1594,83,1778,112"/>
+<area shape="rect" id="node44" href="$manifest__parser__test_8cc.html" title="manifest_parser_test.cc" alt="" coords="1802,83,1964,112"/>
+<area shape="rect" id="node47" href="$state_8cc.html" title="state.cc" alt="" coords="1988,83,2058,112"/>
+<area shape="rect" id="node49" href="$state__test_8cc.html" title="state_test.cc" alt="" coords="2082,83,2180,112"/>
 <area shape="rect" id="node11" href="$clean_8h.html" title="clean.h" alt="" coords="399,160,463,189"/>
 <area shape="rect" id="node15" href="$clean__test_8cc.html" title="clean_test.cc" alt="" coords="328,237,427,267"/>
 </map>

@@ -355,94 +355,95 @@
 <a name="l00296"></a>00296   <span class="keywordflow">if</span> (!<a class="code" href="structManifestParser.html#a47bb8051c40f9faa1aaa9efac96a1aaf" title="If the next token is not expected, produce an error string saying &quot;expectd foo, got bar&quot;...">ExpectToken</a>(<a class="code" href="structLexer.html#a1d27830295ba22502fc32203898f2f6ba2a107138c47076a5528f93c581142fd6">Lexer::NEWLINE</a>, err))
 <a name="l00297"></a>00297     <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00298"></a>00298 
-<a name="l00299"></a>00299   <span class="comment">// XXX scoped_ptr to handle error case.</span>
-<a name="l00300"></a>00300   <a class="code" href="structBindingEnv.html" title="An Env which contains a mapping of variables to values as well as a pointer to a parent scope...">BindingEnv</a>* env = <span class="keyword">new</span> <a class="code" href="structBindingEnv.html" title="An Env which contains a mapping of variables to values as well as a pointer to a parent scope...">BindingEnv</a>(<a class="code" href="structManifestParser.html#a0dbb40eddd53ef84a018cb2de667fcb1">env_</a>);
-<a name="l00301"></a>00301 
-<a name="l00302"></a>00302   <span class="keywordflow">while</span> (<a class="code" href="structManifestParser.html#a07bee06cdcecc02029c51fc86b51a141">lexer_</a>.<a class="code" href="structLexer.html#a221a8e5ba1a80c71b857e5e1c5aa6101" title="If the next token is token, read it and return true.">PeekToken</a>(<a class="code" href="structLexer.html#a1d27830295ba22502fc32203898f2f6ba8965222c54df658e95974d2ca0c94698">Lexer::INDENT</a>)) {
+<a name="l00299"></a>00299   <span class="comment">// Bindings on edges are rare, so allocate per-edge envs only when needed.</span>
+<a name="l00300"></a>00300   <span class="keywordtype">bool</span> hasIdent = <a class="code" href="structManifestParser.html#a07bee06cdcecc02029c51fc86b51a141">lexer_</a>.<a class="code" href="structLexer.html#a221a8e5ba1a80c71b857e5e1c5aa6101" title="If the next token is token, read it and return true.">PeekToken</a>(<a class="code" href="structLexer.html#a1d27830295ba22502fc32203898f2f6ba8965222c54df658e95974d2ca0c94698">Lexer::INDENT</a>);
+<a name="l00301"></a>00301   <a class="code" href="structBindingEnv.html" title="An Env which contains a mapping of variables to values as well as a pointer to a parent scope...">BindingEnv</a>* env = hasIdent ? <span class="keyword">new</span> <a class="code" href="structBindingEnv.html" title="An Env which contains a mapping of variables to values as well as a pointer to a parent scope...">BindingEnv</a>(<a class="code" href="structManifestParser.html#a0dbb40eddd53ef84a018cb2de667fcb1">env_</a>) : <a class="code" href="structManifestParser.html#a0dbb40eddd53ef84a018cb2de667fcb1">env_</a>;
+<a name="l00302"></a>00302   <span class="keywordflow">while</span> (hasIdent) {
 <a name="l00303"></a>00303     <span class="keywordtype">string</span> key;
 <a name="l00304"></a>00304     <a class="code" href="structEvalString.html" title="A tokenized string that contains variable references.">EvalString</a> val;
 <a name="l00305"></a>00305     <span class="keywordflow">if</span> (!<a class="code" href="structManifestParser.html#a1f9dffe49fc2952d99355b22d4442c05">ParseLet</a>(&amp;key, &amp;val, err))
 <a name="l00306"></a>00306       <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00307"></a>00307 
 <a name="l00308"></a>00308     env-&gt;<a class="code" href="structBindingEnv.html#a211325035c6b322fc3df25f3b943fb66">AddBinding</a>(key, val.<a class="code" href="structEvalString.html#a6a8e12404fd1ee3f425992edf3876118">Evaluate</a>(<a class="code" href="structManifestParser.html#a0dbb40eddd53ef84a018cb2de667fcb1">env_</a>));
-<a name="l00309"></a>00309   }
-<a name="l00310"></a>00310 
-<a name="l00311"></a>00311   <a class="code" href="structEdge.html" title="An edge in the dependency graph; links between Nodes using Rules.">Edge</a>* edge = <a class="code" href="structManifestParser.html#ad7b8cc26b5900c465a38106f8d92bbe0">state_</a>-&gt;<a class="code" href="structState.html#a3e3a4a62a0e595451f649a5bf3ae0fe7">AddEdge</a>(rule);
-<a name="l00312"></a>00312   edge-&gt;<a class="code" href="structEdge.html#ac45836f73bc104304aad19e16cb7aa1a">env_</a> = env;
-<a name="l00313"></a>00313 
-<a name="l00314"></a>00314   <span class="keywordtype">string</span> pool_name = edge-&gt;<a class="code" href="structEdge.html#a4f495554a299524a951620f7b643d111">GetBinding</a>(<span class="stringliteral">&quot;pool&quot;</span>);
-<a name="l00315"></a>00315   <span class="keywordflow">if</span> (!pool_name.empty()) {
-<a name="l00316"></a>00316     <a class="code" href="structPool.html" title="A pool for delayed edges.">Pool</a>* pool = <a class="code" href="structManifestParser.html#ad7b8cc26b5900c465a38106f8d92bbe0">state_</a>-&gt;<a class="code" href="structState.html#af0c244d916af2ad290131ba85c15bf3f">LookupPool</a>(pool_name);
-<a name="l00317"></a>00317     <span class="keywordflow">if</span> (pool == NULL)
-<a name="l00318"></a>00318       <span class="keywordflow">return</span> <a class="code" href="structManifestParser.html#a07bee06cdcecc02029c51fc86b51a141">lexer_</a>.<a class="code" href="structLexer.html#ab26f01f469a8195ea553a6df50180c8d" title="Construct an error message with context.">Error</a>(<span class="stringliteral">&quot;unknown pool name &#39;&quot;</span> + pool_name + <span class="stringliteral">&quot;&#39;&quot;</span>, err);
-<a name="l00319"></a>00319     edge-&gt;<a class="code" href="structEdge.html#a8d44bdcbfb086a1771d6e13f256620a8">pool_</a> = pool;
-<a name="l00320"></a>00320   }
-<a name="l00321"></a>00321 
-<a name="l00322"></a>00322   <span class="keywordflow">for</span> (vector&lt;EvalString&gt;::iterator i = ins.begin(); i != ins.end(); ++i) {
-<a name="l00323"></a>00323     <span class="keywordtype">string</span> path = i-&gt;Evaluate(env);
-<a name="l00324"></a>00324     <span class="keywordtype">string</span> path_err;
-<a name="l00325"></a>00325     <span class="keywordflow">if</span> (!<a class="code" href="util_8cc.html#abdb5937692c9c5a0fbe6cbbab7941414" title="Canonicalize a path like &quot;foo/../bar.h&quot; into just &quot;bar.h&quot;.">CanonicalizePath</a>(&amp;path, &amp;path_err))
-<a name="l00326"></a>00326       <span class="keywordflow">return</span> <a class="code" href="structManifestParser.html#a07bee06cdcecc02029c51fc86b51a141">lexer_</a>.<a class="code" href="structLexer.html#ab26f01f469a8195ea553a6df50180c8d" title="Construct an error message with context.">Error</a>(path_err, err);
-<a name="l00327"></a>00327     <a class="code" href="structManifestParser.html#ad7b8cc26b5900c465a38106f8d92bbe0">state_</a>-&gt;<a class="code" href="structState.html#a2a6968e7d8c0b0d8040ede1fb3fce0fe">AddIn</a>(edge, path);
-<a name="l00328"></a>00328   }
-<a name="l00329"></a>00329   <span class="keywordflow">for</span> (vector&lt;EvalString&gt;::iterator i = outs.begin(); i != outs.end(); ++i) {
-<a name="l00330"></a>00330     <span class="keywordtype">string</span> path = i-&gt;Evaluate(env);
-<a name="l00331"></a>00331     <span class="keywordtype">string</span> path_err;
-<a name="l00332"></a>00332     <span class="keywordflow">if</span> (!<a class="code" href="util_8cc.html#abdb5937692c9c5a0fbe6cbbab7941414" title="Canonicalize a path like &quot;foo/../bar.h&quot; into just &quot;bar.h&quot;.">CanonicalizePath</a>(&amp;path, &amp;path_err))
-<a name="l00333"></a>00333       <span class="keywordflow">return</span> <a class="code" href="structManifestParser.html#a07bee06cdcecc02029c51fc86b51a141">lexer_</a>.<a class="code" href="structLexer.html#ab26f01f469a8195ea553a6df50180c8d" title="Construct an error message with context.">Error</a>(path_err, err);
-<a name="l00334"></a>00334     <a class="code" href="structManifestParser.html#ad7b8cc26b5900c465a38106f8d92bbe0">state_</a>-&gt;<a class="code" href="structState.html#afb586554e60317a16e2488b5f6faf86e">AddOut</a>(edge, path);
-<a name="l00335"></a>00335   }
-<a name="l00336"></a>00336   edge-&gt;<a class="code" href="structEdge.html#a4dcd12be59a0653c7beef3c37edcf4ed">implicit_deps_</a> = implicit;
-<a name="l00337"></a>00337   edge-&gt;<a class="code" href="structEdge.html#a7adc7b047f6574167758c27d87d9b5f8">order_only_deps_</a> = order_only;
-<a name="l00338"></a>00338 
-<a name="l00339"></a>00339   <span class="comment">// Multiple outputs aren&#39;t (yet?) supported with depslog.</span>
-<a name="l00340"></a>00340   <span class="keywordtype">string</span> deps_type = edge-&gt;<a class="code" href="structEdge.html#a4f495554a299524a951620f7b643d111">GetBinding</a>(<span class="stringliteral">&quot;deps&quot;</span>);
-<a name="l00341"></a>00341   <span class="keywordflow">if</span> (!deps_type.empty() &amp;&amp; edge-&gt;<a class="code" href="structEdge.html#ac4ab5a6898d716f32683b63fafc65bb6">outputs_</a>.size() &gt; 1) {
-<a name="l00342"></a>00342     <span class="keywordflow">return</span> <a class="code" href="structManifestParser.html#a07bee06cdcecc02029c51fc86b51a141">lexer_</a>.<a class="code" href="structLexer.html#ab26f01f469a8195ea553a6df50180c8d" title="Construct an error message with context.">Error</a>(<span class="stringliteral">&quot;multiple outputs aren&#39;t (yet?) supported by depslog; &quot;</span>
-<a name="l00343"></a>00343                         <span class="stringliteral">&quot;bring this up on the mailing list if it affects you&quot;</span>,
-<a name="l00344"></a>00344                         err);
-<a name="l00345"></a>00345   }
-<a name="l00346"></a>00346 
-<a name="l00347"></a>00347   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00348"></a>00348 }
-<a name="l00349"></a>00349 
-<a name="l00350"></a><a class="code" href="structManifestParser.html#a2f07fb296ccd47ccc56a7abdaa011f80">00350</a> <span class="keywordtype">bool</span> <a class="code" href="structManifestParser.html#a2f07fb296ccd47ccc56a7abdaa011f80" title="Parse either a &#39;subninja&#39; or &#39;include&#39; line.">ManifestParser::ParseFileInclude</a>(<span class="keywordtype">bool</span> new_scope, <span class="keywordtype">string</span>* err) {
-<a name="l00351"></a>00351   <a class="code" href="structEvalString.html" title="A tokenized string that contains variable references.">EvalString</a> eval;
-<a name="l00352"></a>00352   <span class="keywordflow">if</span> (!<a class="code" href="structManifestParser.html#a07bee06cdcecc02029c51fc86b51a141">lexer_</a>.<a class="code" href="structLexer.html#adf4cd5d2fb7e449b3e8027edd48e710d" title="Read a path (complete with $escapes).">ReadPath</a>(&amp;eval, err))
-<a name="l00353"></a>00353     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00354"></a>00354   <span class="keywordtype">string</span> path = eval.<a class="code" href="structEvalString.html#a6a8e12404fd1ee3f425992edf3876118">Evaluate</a>(<a class="code" href="structManifestParser.html#a0dbb40eddd53ef84a018cb2de667fcb1">env_</a>);
-<a name="l00355"></a>00355 
-<a name="l00356"></a>00356   <a class="code" href="structManifestParser.html" title="Parses .ninja files.">ManifestParser</a> subparser(<a class="code" href="structManifestParser.html#ad7b8cc26b5900c465a38106f8d92bbe0">state_</a>, <a class="code" href="structManifestParser.html#a2b634534e045a7e2b1576cbd70e9dc9d">file_reader_</a>);
-<a name="l00357"></a>00357   <span class="keywordflow">if</span> (new_scope) {
-<a name="l00358"></a>00358     subparser.<a class="code" href="structManifestParser.html#a0dbb40eddd53ef84a018cb2de667fcb1">env_</a> = <span class="keyword">new</span> <a class="code" href="structBindingEnv.html" title="An Env which contains a mapping of variables to values as well as a pointer to a parent scope...">BindingEnv</a>(<a class="code" href="structManifestParser.html#a0dbb40eddd53ef84a018cb2de667fcb1">env_</a>);
-<a name="l00359"></a>00359   } <span class="keywordflow">else</span> {
-<a name="l00360"></a>00360     subparser.<a class="code" href="structManifestParser.html#a0dbb40eddd53ef84a018cb2de667fcb1">env_</a> = <a class="code" href="structManifestParser.html#a0dbb40eddd53ef84a018cb2de667fcb1">env_</a>;
-<a name="l00361"></a>00361   }
-<a name="l00362"></a>00362 
-<a name="l00363"></a>00363   <span class="keywordflow">if</span> (!subparser.<a class="code" href="structManifestParser.html#a35a83550c50666738a8984a5f00308be" title="Load and parse a file.">Load</a>(path, err, &amp;<a class="code" href="structManifestParser.html#a07bee06cdcecc02029c51fc86b51a141">lexer_</a>))
-<a name="l00364"></a>00364     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00365"></a>00365 
-<a name="l00366"></a>00366   <span class="keywordflow">if</span> (!<a class="code" href="structManifestParser.html#a47bb8051c40f9faa1aaa9efac96a1aaf" title="If the next token is not expected, produce an error string saying &quot;expectd foo, got bar&quot;...">ExpectToken</a>(<a class="code" href="structLexer.html#a1d27830295ba22502fc32203898f2f6ba2a107138c47076a5528f93c581142fd6">Lexer::NEWLINE</a>, err))
-<a name="l00367"></a>00367     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00368"></a>00368 
-<a name="l00369"></a>00369   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00370"></a>00370 }
-<a name="l00371"></a>00371 
-<a name="l00372"></a><a class="code" href="structManifestParser.html#a47bb8051c40f9faa1aaa9efac96a1aaf">00372</a> <span class="keywordtype">bool</span> <a class="code" href="structManifestParser.html#a47bb8051c40f9faa1aaa9efac96a1aaf" title="If the next token is not expected, produce an error string saying &quot;expectd foo, got bar&quot;...">ManifestParser::ExpectToken</a>(<a class="code" href="structLexer.html#a1d27830295ba22502fc32203898f2f6b">Lexer::Token</a> expected, <span class="keywordtype">string</span>* err) {
-<a name="l00373"></a>00373   <a class="code" href="structLexer.html#a1d27830295ba22502fc32203898f2f6b">Lexer::Token</a> token = <a class="code" href="structManifestParser.html#a07bee06cdcecc02029c51fc86b51a141">lexer_</a>.<a class="code" href="structLexer.html#ac1cfe16a9d3c61feadadee2425818718" title="Read a Token from the Token enum.">ReadToken</a>();
-<a name="l00374"></a>00374   <span class="keywordflow">if</span> (token != expected) {
-<a name="l00375"></a>00375     <span class="keywordtype">string</span> message = string(<span class="stringliteral">&quot;expected &quot;</span>) + <a class="code" href="structLexer.html#a16a661190b2ed887c50f25b113129612" title="Return a human-readable form of a token, used in error messages.">Lexer::TokenName</a>(expected);
-<a name="l00376"></a>00376     message += string(<span class="stringliteral">&quot;, got &quot;</span>) + <a class="code" href="structLexer.html#a16a661190b2ed887c50f25b113129612" title="Return a human-readable form of a token, used in error messages.">Lexer::TokenName</a>(token);
-<a name="l00377"></a>00377     message += <a class="code" href="structLexer.html#ac93fc3ad882cf738fa73ff195802f817" title="Return a human-readable token hint, used in error messages.">Lexer::TokenErrorHint</a>(expected);
-<a name="l00378"></a>00378     <span class="keywordflow">return</span> <a class="code" href="structManifestParser.html#a07bee06cdcecc02029c51fc86b51a141">lexer_</a>.<a class="code" href="structLexer.html#ab26f01f469a8195ea553a6df50180c8d" title="Construct an error message with context.">Error</a>(message, err);
-<a name="l00379"></a>00379   }
-<a name="l00380"></a>00380   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00381"></a>00381 }
+<a name="l00309"></a>00309     hasIdent = <a class="code" href="structManifestParser.html#a07bee06cdcecc02029c51fc86b51a141">lexer_</a>.<a class="code" href="structLexer.html#a221a8e5ba1a80c71b857e5e1c5aa6101" title="If the next token is token, read it and return true.">PeekToken</a>(<a class="code" href="structLexer.html#a1d27830295ba22502fc32203898f2f6ba8965222c54df658e95974d2ca0c94698">Lexer::INDENT</a>);
+<a name="l00310"></a>00310   }
+<a name="l00311"></a>00311 
+<a name="l00312"></a>00312   <a class="code" href="structEdge.html" title="An edge in the dependency graph; links between Nodes using Rules.">Edge</a>* edge = <a class="code" href="structManifestParser.html#ad7b8cc26b5900c465a38106f8d92bbe0">state_</a>-&gt;<a class="code" href="structState.html#a3e3a4a62a0e595451f649a5bf3ae0fe7">AddEdge</a>(rule);
+<a name="l00313"></a>00313   edge-&gt;<a class="code" href="structEdge.html#ac45836f73bc104304aad19e16cb7aa1a">env_</a> = env;
+<a name="l00314"></a>00314 
+<a name="l00315"></a>00315   <span class="keywordtype">string</span> pool_name = edge-&gt;<a class="code" href="structEdge.html#a4f495554a299524a951620f7b643d111" title="Returns the shell-escaped value of |key|.">GetBinding</a>(<span class="stringliteral">&quot;pool&quot;</span>);
+<a name="l00316"></a>00316   <span class="keywordflow">if</span> (!pool_name.empty()) {
+<a name="l00317"></a>00317     <a class="code" href="structPool.html" title="A pool for delayed edges.">Pool</a>* pool = <a class="code" href="structManifestParser.html#ad7b8cc26b5900c465a38106f8d92bbe0">state_</a>-&gt;<a class="code" href="structState.html#af0c244d916af2ad290131ba85c15bf3f">LookupPool</a>(pool_name);
+<a name="l00318"></a>00318     <span class="keywordflow">if</span> (pool == NULL)
+<a name="l00319"></a>00319       <span class="keywordflow">return</span> <a class="code" href="structManifestParser.html#a07bee06cdcecc02029c51fc86b51a141">lexer_</a>.<a class="code" href="structLexer.html#ab26f01f469a8195ea553a6df50180c8d" title="Construct an error message with context.">Error</a>(<span class="stringliteral">&quot;unknown pool name &#39;&quot;</span> + pool_name + <span class="stringliteral">&quot;&#39;&quot;</span>, err);
+<a name="l00320"></a>00320     edge-&gt;<a class="code" href="structEdge.html#a8d44bdcbfb086a1771d6e13f256620a8">pool_</a> = pool;
+<a name="l00321"></a>00321   }
+<a name="l00322"></a>00322 
+<a name="l00323"></a>00323   <span class="keywordflow">for</span> (vector&lt;EvalString&gt;::iterator i = ins.begin(); i != ins.end(); ++i) {
+<a name="l00324"></a>00324     <span class="keywordtype">string</span> path = i-&gt;Evaluate(env);
+<a name="l00325"></a>00325     <span class="keywordtype">string</span> path_err;
+<a name="l00326"></a>00326     <span class="keywordflow">if</span> (!<a class="code" href="util_8cc.html#abdb5937692c9c5a0fbe6cbbab7941414" title="Canonicalize a path like &quot;foo/../bar.h&quot; into just &quot;bar.h&quot;.">CanonicalizePath</a>(&amp;path, &amp;path_err))
+<a name="l00327"></a>00327       <span class="keywordflow">return</span> <a class="code" href="structManifestParser.html#a07bee06cdcecc02029c51fc86b51a141">lexer_</a>.<a class="code" href="structLexer.html#ab26f01f469a8195ea553a6df50180c8d" title="Construct an error message with context.">Error</a>(path_err, err);
+<a name="l00328"></a>00328     <a class="code" href="structManifestParser.html#ad7b8cc26b5900c465a38106f8d92bbe0">state_</a>-&gt;<a class="code" href="structState.html#a2a6968e7d8c0b0d8040ede1fb3fce0fe">AddIn</a>(edge, path);
+<a name="l00329"></a>00329   }
+<a name="l00330"></a>00330   <span class="keywordflow">for</span> (vector&lt;EvalString&gt;::iterator i = outs.begin(); i != outs.end(); ++i) {
+<a name="l00331"></a>00331     <span class="keywordtype">string</span> path = i-&gt;Evaluate(env);
+<a name="l00332"></a>00332     <span class="keywordtype">string</span> path_err;
+<a name="l00333"></a>00333     <span class="keywordflow">if</span> (!<a class="code" href="util_8cc.html#abdb5937692c9c5a0fbe6cbbab7941414" title="Canonicalize a path like &quot;foo/../bar.h&quot; into just &quot;bar.h&quot;.">CanonicalizePath</a>(&amp;path, &amp;path_err))
+<a name="l00334"></a>00334       <span class="keywordflow">return</span> <a class="code" href="structManifestParser.html#a07bee06cdcecc02029c51fc86b51a141">lexer_</a>.<a class="code" href="structLexer.html#ab26f01f469a8195ea553a6df50180c8d" title="Construct an error message with context.">Error</a>(path_err, err);
+<a name="l00335"></a>00335     <a class="code" href="structManifestParser.html#ad7b8cc26b5900c465a38106f8d92bbe0">state_</a>-&gt;<a class="code" href="structState.html#afb586554e60317a16e2488b5f6faf86e">AddOut</a>(edge, path);
+<a name="l00336"></a>00336   }
+<a name="l00337"></a>00337   edge-&gt;<a class="code" href="structEdge.html#a4dcd12be59a0653c7beef3c37edcf4ed">implicit_deps_</a> = implicit;
+<a name="l00338"></a>00338   edge-&gt;<a class="code" href="structEdge.html#a7adc7b047f6574167758c27d87d9b5f8">order_only_deps_</a> = order_only;
+<a name="l00339"></a>00339 
+<a name="l00340"></a>00340   <span class="comment">// Multiple outputs aren&#39;t (yet?) supported with depslog.</span>
+<a name="l00341"></a>00341   <span class="keywordtype">string</span> deps_type = edge-&gt;<a class="code" href="structEdge.html#a4f495554a299524a951620f7b643d111" title="Returns the shell-escaped value of |key|.">GetBinding</a>(<span class="stringliteral">&quot;deps&quot;</span>);
+<a name="l00342"></a>00342   <span class="keywordflow">if</span> (!deps_type.empty() &amp;&amp; edge-&gt;<a class="code" href="structEdge.html#ac4ab5a6898d716f32683b63fafc65bb6">outputs_</a>.size() &gt; 1) {
+<a name="l00343"></a>00343     <span class="keywordflow">return</span> <a class="code" href="structManifestParser.html#a07bee06cdcecc02029c51fc86b51a141">lexer_</a>.<a class="code" href="structLexer.html#ab26f01f469a8195ea553a6df50180c8d" title="Construct an error message with context.">Error</a>(<span class="stringliteral">&quot;multiple outputs aren&#39;t (yet?) supported by depslog; &quot;</span>
+<a name="l00344"></a>00344                         <span class="stringliteral">&quot;bring this up on the mailing list if it affects you&quot;</span>,
+<a name="l00345"></a>00345                         err);
+<a name="l00346"></a>00346   }
+<a name="l00347"></a>00347 
+<a name="l00348"></a>00348   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00349"></a>00349 }
+<a name="l00350"></a>00350 
+<a name="l00351"></a><a class="code" href="structManifestParser.html#a2f07fb296ccd47ccc56a7abdaa011f80">00351</a> <span class="keywordtype">bool</span> <a class="code" href="structManifestParser.html#a2f07fb296ccd47ccc56a7abdaa011f80" title="Parse either a &#39;subninja&#39; or &#39;include&#39; line.">ManifestParser::ParseFileInclude</a>(<span class="keywordtype">bool</span> new_scope, <span class="keywordtype">string</span>* err) {
+<a name="l00352"></a>00352   <a class="code" href="structEvalString.html" title="A tokenized string that contains variable references.">EvalString</a> eval;
+<a name="l00353"></a>00353   <span class="keywordflow">if</span> (!<a class="code" href="structManifestParser.html#a07bee06cdcecc02029c51fc86b51a141">lexer_</a>.<a class="code" href="structLexer.html#adf4cd5d2fb7e449b3e8027edd48e710d" title="Read a path (complete with $escapes).">ReadPath</a>(&amp;eval, err))
+<a name="l00354"></a>00354     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00355"></a>00355   <span class="keywordtype">string</span> path = eval.<a class="code" href="structEvalString.html#a6a8e12404fd1ee3f425992edf3876118">Evaluate</a>(<a class="code" href="structManifestParser.html#a0dbb40eddd53ef84a018cb2de667fcb1">env_</a>);
+<a name="l00356"></a>00356 
+<a name="l00357"></a>00357   <a class="code" href="structManifestParser.html" title="Parses .ninja files.">ManifestParser</a> subparser(<a class="code" href="structManifestParser.html#ad7b8cc26b5900c465a38106f8d92bbe0">state_</a>, <a class="code" href="structManifestParser.html#a2b634534e045a7e2b1576cbd70e9dc9d">file_reader_</a>);
+<a name="l00358"></a>00358   <span class="keywordflow">if</span> (new_scope) {
+<a name="l00359"></a>00359     subparser.<a class="code" href="structManifestParser.html#a0dbb40eddd53ef84a018cb2de667fcb1">env_</a> = <span class="keyword">new</span> <a class="code" href="structBindingEnv.html" title="An Env which contains a mapping of variables to values as well as a pointer to a parent scope...">BindingEnv</a>(<a class="code" href="structManifestParser.html#a0dbb40eddd53ef84a018cb2de667fcb1">env_</a>);
+<a name="l00360"></a>00360   } <span class="keywordflow">else</span> {
+<a name="l00361"></a>00361     subparser.<a class="code" href="structManifestParser.html#a0dbb40eddd53ef84a018cb2de667fcb1">env_</a> = <a class="code" href="structManifestParser.html#a0dbb40eddd53ef84a018cb2de667fcb1">env_</a>;
+<a name="l00362"></a>00362   }
+<a name="l00363"></a>00363 
+<a name="l00364"></a>00364   <span class="keywordflow">if</span> (!subparser.<a class="code" href="structManifestParser.html#a35a83550c50666738a8984a5f00308be" title="Load and parse a file.">Load</a>(path, err, &amp;<a class="code" href="structManifestParser.html#a07bee06cdcecc02029c51fc86b51a141">lexer_</a>))
+<a name="l00365"></a>00365     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00366"></a>00366 
+<a name="l00367"></a>00367   <span class="keywordflow">if</span> (!<a class="code" href="structManifestParser.html#a47bb8051c40f9faa1aaa9efac96a1aaf" title="If the next token is not expected, produce an error string saying &quot;expectd foo, got bar&quot;...">ExpectToken</a>(<a class="code" href="structLexer.html#a1d27830295ba22502fc32203898f2f6ba2a107138c47076a5528f93c581142fd6">Lexer::NEWLINE</a>, err))
+<a name="l00368"></a>00368     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00369"></a>00369 
+<a name="l00370"></a>00370   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00371"></a>00371 }
+<a name="l00372"></a>00372 
+<a name="l00373"></a><a class="code" href="structManifestParser.html#a47bb8051c40f9faa1aaa9efac96a1aaf">00373</a> <span class="keywordtype">bool</span> <a class="code" href="structManifestParser.html#a47bb8051c40f9faa1aaa9efac96a1aaf" title="If the next token is not expected, produce an error string saying &quot;expectd foo, got bar&quot;...">ManifestParser::ExpectToken</a>(<a class="code" href="structLexer.html#a1d27830295ba22502fc32203898f2f6b">Lexer::Token</a> expected, <span class="keywordtype">string</span>* err) {
+<a name="l00374"></a>00374   <a class="code" href="structLexer.html#a1d27830295ba22502fc32203898f2f6b">Lexer::Token</a> token = <a class="code" href="structManifestParser.html#a07bee06cdcecc02029c51fc86b51a141">lexer_</a>.<a class="code" href="structLexer.html#ac1cfe16a9d3c61feadadee2425818718" title="Read a Token from the Token enum.">ReadToken</a>();
+<a name="l00375"></a>00375   <span class="keywordflow">if</span> (token != expected) {
+<a name="l00376"></a>00376     <span class="keywordtype">string</span> message = string(<span class="stringliteral">&quot;expected &quot;</span>) + <a class="code" href="structLexer.html#a16a661190b2ed887c50f25b113129612" title="Return a human-readable form of a token, used in error messages.">Lexer::TokenName</a>(expected);
+<a name="l00377"></a>00377     message += string(<span class="stringliteral">&quot;, got &quot;</span>) + <a class="code" href="structLexer.html#a16a661190b2ed887c50f25b113129612" title="Return a human-readable form of a token, used in error messages.">Lexer::TokenName</a>(token);
+<a name="l00378"></a>00378     message += <a class="code" href="structLexer.html#ac93fc3ad882cf738fa73ff195802f817" title="Return a human-readable token hint, used in error messages.">Lexer::TokenErrorHint</a>(expected);
+<a name="l00379"></a>00379     <span class="keywordflow">return</span> <a class="code" href="structManifestParser.html#a07bee06cdcecc02029c51fc86b51a141">lexer_</a>.<a class="code" href="structLexer.html#ab26f01f469a8195ea553a6df50180c8d" title="Construct an error message with context.">Error</a>(message, err);
+<a name="l00380"></a>00380   }
+<a name="l00381"></a>00381   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00382"></a>00382 }
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 12 2013 09:25:49 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 4 2014 09:13:00 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

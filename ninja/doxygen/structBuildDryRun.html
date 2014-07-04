@@ -67,7 +67,7 @@ Inheritance diagram for BuildDryRun:</div>
 <div class="dyncontent">
 <div class="center"><img src="structBuildDryRun__inherit__graph.png" border="0" usemap="#BuildDryRun_inherit__map" alt="Inheritance graph"/></div>
 <map name="BuildDryRun_inherit__map" id="BuildDryRun_inherit__map">
-<area shape="rect" id="node2" href="structBuildWithLogTest.html" title="BuildWithLogTest" alt="" coords="31,160,156,189"/><area shape="rect" id="node4" href="structBuildTest.html" title="BuildTest" alt="" coords="55,83,132,112"/><area shape="rect" id="node6" href="structStateTestWithBuiltinRules.html" title="A base test fixture that includes a State object with a builtin &quot;cat&quot; rule." alt="" coords="5,5,181,35"/></map>
+<area shape="rect" id="node2" href="structBuildWithLogTest.html" title="BuildWithLogTest" alt="" coords="111,160,236,189"/><area shape="rect" id="node4" href="structBuildTest.html" title="BuildTest" alt="" coords="135,83,212,112"/><area shape="rect" id="node6" href="structStateTestWithBuiltinRules.html" title="A base test fixture that includes a State object with a builtin &quot;cat&quot; rule." alt="" coords="5,5,181,35"/><area shape="rect" id="node8" href="structBuildLogUser.html" title="Can answer questions about the manifest for the BuildLog." alt="" coords="205,5,304,35"/></map>
 <center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 
 <p><a href="structBuildDryRun-members.html">List of all members.</a></p>
@@ -80,6 +80,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBuildTest.html#a5c99bd787d394a683cbc696db30b47dd">Dirty</a> (const string &amp;path)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structNode.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structStateTestWithBuiltinRules.html#a73a86246aefb2b8aeed71ac6979f37f3">GetNode</a> (const string &amp;path)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Short way to get a <a class="el" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a> by its path from state_.  <a href="#a73a86246aefb2b8aeed71ac6979f37f3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBuildTest.html#a5c3c1c08918ca44732d95f0ee92c965d">IsPathDead</a> (<a class="el" href="structStringPiece.html">StringPiece</a> s) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Return if a given output no longer part of the build manifest.  <a href="#a5c3c1c08918ca44732d95f0ee92c965d"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structBuildConfig.html">BuildConfig</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBuildTest.html#a591bffbbff3975fb44ce22f16ae4427e">MakeConfig</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structBuildTest.html#ad27d56c5529e734f05ed58a9d2dd5e53">RebuildTarget</a> (const string &amp;target, const char *manifest, const char *log_path=NULL, const char *deps_path=NULL)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Rebuild target in the 'working tree' (fs_).  <a href="#ad27d56c5529e734f05ed58a9d2dd5e53"></a><br/></td></tr>
@@ -96,7 +98,7 @@ Public Attributes</h2></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock">
-<p>Definition at line <a class="el" href="build__test_8cc_source.html#l01234">1234</a> of file <a class="el" href="build__test_8cc_source.html">build_test.cc</a>.</p>
+<p>Definition at line <a class="el" href="build__test_8cc_source.html#l01262">1262</a> of file <a class="el" href="build__test_8cc_source.html">build_test.cc</a>.</p>
 </div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="aa60bea1f4939ecaeafdb8ccd5315c6a7"></a><!-- doxytag: member="BuildDryRun::BuildDryRun" ref="aa60bea1f4939ecaeafdb8ccd5315c6a7" args="()" -->
 <div class="memitem">
@@ -112,9 +114,9 @@ Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="build__test_8cc_source.html#l01235">1235</a> of file <a class="el" href="build__test_8cc_source.html">build_test.cc</a>.</p>
+<p>Definition at line <a class="el" href="build__test_8cc_source.html#l01263">1263</a> of file <a class="el" href="build__test_8cc_source.html">build_test.cc</a>.</p>
 
-<p>References <a class="el" href="build__test_8cc_source.html#l00454">BuildTest::config_</a>, and <a class="el" href="build_8h_source.html#l00134">BuildConfig::dry_run</a>.</p>
+<p>References <a class="el" href="build__test_8cc_source.html#l00471">BuildTest::config_</a>, and <a class="el" href="build_8h_source.html#l00134">BuildConfig::dry_run</a>.</p>
 
 </div>
 </div>
@@ -141,7 +143,7 @@ Public Attributes</h2></td></tr>
 
 <p>References <a class="el" href="test_8cc_source.html#l00090">AssertParse()</a>.</p>
 
-<p>Referenced by <a class="el" href="build__test_8cc_source.html#l00462">BuildTest::RebuildTarget()</a>, and <a class="el" href="test_8cc_source.html#l00076">StateTestWithBuiltinRules::StateTestWithBuiltinRules()</a>.</p>
+<p>Referenced by <a class="el" href="build__test_8cc_source.html#l00479">BuildTest::RebuildTarget()</a>, and <a class="el" href="test_8cc_source.html#l00076">StateTestWithBuiltinRules::StateTestWithBuiltinRules()</a>.</p>
 
 </div>
 </div>
@@ -160,7 +162,7 @@ Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="build__test_8cc_source.html#l00559">559</a> of file <a class="el" href="build__test_8cc_source.html">build_test.cc</a>.</p>
+<p>Definition at line <a class="el" href="build__test_8cc_source.html#l00587">587</a> of file <a class="el" href="build__test_8cc_source.html">build_test.cc</a>.</p>
 
 <p>References <a class="el" href="test_8cc_source.html#l00086">StateTestWithBuiltinRules::GetNode()</a>, <a class="el" href="graph_8h_source.html#l00080">Node::in_edge()</a>, <a class="el" href="graph_8h_source.html#l00078">Node::MarkDirty()</a>, and <a class="el" href="graph_8h_source.html#l00061">Node::MarkMissing()</a>.</p>
 
@@ -185,9 +187,33 @@ Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="test_8cc_source.html#l00086">86</a> of file <a class="el" href="test_8cc_source.html">test.cc</a>.</p>
 
-<p>References <a class="el" href="state_8cc_source.html#l00112">State::GetNode()</a>, and <a class="el" href="test_8h_source.html#l00040">StateTestWithBuiltinRules::state_</a>.</p>
+<p>References <a class="el" href="state_8cc_source.html#l00114">State::GetNode()</a>, and <a class="el" href="test_8h_source.html#l00040">StateTestWithBuiltinRules::state_</a>.</p>
 
-<p>Referenced by <a class="el" href="build__test_8cc_source.html#l00559">BuildTest::Dirty()</a>.</p>
+<p>Referenced by <a class="el" href="build__test_8cc_source.html#l00587">BuildTest::Dirty()</a>, and <a class="el" href="build__test_8cc_source.html#l00202">PlanTest::TestPoolWithDepthOne()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5c3c1c08918ca44732d95f0ee92c965d"></a><!-- doxytag: member="BuildDryRun::IsPathDead" ref="a5c3c1c08918ca44732d95f0ee92c965d" args="(StringPiece s) const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual bool <a class="el" href="structBuildTest.html#a5c3c1c08918ca44732d95f0ee92c965d">BuildTest::IsPathDead</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structStringPiece.html">StringPiece</a>&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td> const<code> [inline, virtual, inherited]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Return if a given output no longer part of the build manifest. </p>
+<p>This is only called during recompaction and doesn't have to be fast. </p>
+
+<p>Implements <a class="el" href="structBuildLogUser.html#a4d0f24aa0363aa050c1f338e064a8cac">BuildLogUser</a>.</p>
+
+<p>Definition at line <a class="el" href="build__test_8cc_source.html#l00453">453</a> of file <a class="el" href="build__test_8cc_source.html">build_test.cc</a>.</p>
 
 </div>
 </div>
@@ -205,7 +231,7 @@ Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="build__test_8cc_source.html#l00448">448</a> of file <a class="el" href="build__test_8cc_source.html">build_test.cc</a>.</p>
+<p>Definition at line <a class="el" href="build__test_8cc_source.html#l00465">465</a> of file <a class="el" href="build__test_8cc_source.html">build_test.cc</a>.</p>
 
 <p>References <a class="el" href="build_8h_source.html#l00130">BuildConfig::QUIET</a>, and <a class="el" href="build_8h_source.html#l00133">BuildConfig::verbosity</a>.</p>
 
@@ -251,9 +277,9 @@ Public Attributes</h2></td></tr>
 <p>Rebuild target in the 'working tree' (fs_). </p>
 <p><a class="el" href="structState.html" title="Global state (file status, loaded rules) for a single run.">State</a> of command_runner_ and logs contents (if specified) ARE MODIFIED. Handy to check for NOOP builds, and higher-level rebuild tests. </p>
 
-<p>Definition at line <a class="el" href="build__test_8cc_source.html#l00462">462</a> of file <a class="el" href="build__test_8cc_source.html">build_test.cc</a>.</p>
+<p>Definition at line <a class="el" href="build__test_8cc_source.html#l00479">479</a> of file <a class="el" href="build__test_8cc_source.html">build_test.cc</a>.</p>
 
-<p>References <a class="el" href="test_8cc_source.html#l00080">StateTestWithBuiltinRules::AddCatRule()</a>, <a class="el" href="build_8cc_source.html#l00558">Builder::AddTarget()</a>, <a class="el" href="build_8cc_source.html#l00584">Builder::AlreadyUpToDate()</a>, <a class="el" href="test_8cc_source.html#l00090">AssertParse()</a>, <a class="el" href="build_8cc_source.html#l00588">Builder::Build()</a>, <a class="el" href="build_8h_source.html#l00179">Builder::command_runner_</a>, <a class="el" href="build__test_8cc_source.html#l00455">BuildTest::command_runner_</a>, <a class="el" href="build__test_8cc_source.html#l00410">FakeCommandRunner::commands_ran_</a>, <a class="el" href="build__test_8cc_source.html#l00454">BuildTest::config_</a>, <a class="el" href="build__test_8cc_source.html#l00456">BuildTest::fs_</a>, <a class="el" href="build__log_8cc_source.html#l00224">BuildLog::Load()</a>, <a class="el" href="deps__log_8cc_source.html#l00164">DepsLog::Load()</a>, <a class="el" href="build__log_8cc_source.html#l00111">BuildLog::OpenForWrite()</a>, and <a class="el" href="deps__log_8cc_source.html#l00043">DepsLog::OpenForWrite()</a>.</p>
+<p>References <a class="el" href="test_8cc_source.html#l00080">StateTestWithBuiltinRules::AddCatRule()</a>, <a class="el" href="build_8cc_source.html#l00565">Builder::AddTarget()</a>, <a class="el" href="build_8cc_source.html#l00591">Builder::AlreadyUpToDate()</a>, <a class="el" href="test_8cc_source.html#l00090">AssertParse()</a>, <a class="el" href="build_8cc_source.html#l00595">Builder::Build()</a>, <a class="el" href="build_8h_source.html#l00179">Builder::command_runner_</a>, <a class="el" href="build__test_8cc_source.html#l00472">BuildTest::command_runner_</a>, <a class="el" href="build__test_8cc_source.html#l00425">FakeCommandRunner::commands_ran_</a>, <a class="el" href="build__test_8cc_source.html#l00471">BuildTest::config_</a>, <a class="el" href="build__test_8cc_source.html#l00473">BuildTest::fs_</a>, <a class="el" href="build__log_8cc_source.html#l00225">BuildLog::Load()</a>, <a class="el" href="deps__log_8cc_source.html#l00164">DepsLog::Load()</a>, <a class="el" href="build__log_8cc_source.html#l00111">BuildLog::OpenForWrite()</a>, and <a class="el" href="deps__log_8cc_source.html#l00043">DepsLog::OpenForWrite()</a>.</p>
 
 </div>
 </div>
@@ -273,9 +299,9 @@ Public Attributes</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="structBuildWithDepsLogTest.html#a29da158e1452c8f75e7f98f17e7a35e9">BuildWithDepsLogTest</a>.</p>
 
-<p>Definition at line <a class="el" href="build__test_8cc_source.html#l00421">421</a> of file <a class="el" href="build__test_8cc_source.html">build_test.cc</a>.</p>
+<p>Definition at line <a class="el" href="build__test_8cc_source.html#l00436">436</a> of file <a class="el" href="build__test_8cc_source.html">build_test.cc</a>.</p>
 
-<p>References <a class="el" href="test_8cc_source.html#l00090">AssertParse()</a>, <a class="el" href="build__test_8cc_source.html#l00457">BuildTest::builder_</a>, <a class="el" href="build_8h_source.html#l00179">Builder::command_runner_</a>, <a class="el" href="build__test_8cc_source.html#l00455">BuildTest::command_runner_</a>, <a class="el" href="test_8cc_source.html#l00101">VirtualFileSystem::Create()</a>, <a class="el" href="build__test_8cc_source.html#l00456">BuildTest::fs_</a>, and <a class="el" href="test_8h_source.html#l00040">StateTestWithBuiltinRules::state_</a>.</p>
+<p>References <a class="el" href="test_8cc_source.html#l00090">AssertParse()</a>, <a class="el" href="build__test_8cc_source.html#l00474">BuildTest::builder_</a>, <a class="el" href="build_8h_source.html#l00179">Builder::command_runner_</a>, <a class="el" href="build__test_8cc_source.html#l00472">BuildTest::command_runner_</a>, <a class="el" href="test_8cc_source.html#l00101">VirtualFileSystem::Create()</a>, <a class="el" href="build__test_8cc_source.html#l00473">BuildTest::fs_</a>, and <a class="el" href="test_8h_source.html#l00040">StateTestWithBuiltinRules::state_</a>.</p>
 
 </div>
 </div>
@@ -291,9 +317,9 @@ Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="build__test_8cc_source.html#l01007">1007</a> of file <a class="el" href="build__test_8cc_source.html">build_test.cc</a>.</p>
+<p>Definition at line <a class="el" href="build__test_8cc_source.html#l01035">1035</a> of file <a class="el" href="build__test_8cc_source.html">build_test.cc</a>.</p>
 
-<p>Referenced by <a class="el" href="build__test_8cc_source.html#l01003">BuildWithLogTest::BuildWithLogTest()</a>.</p>
+<p>Referenced by <a class="el" href="build__test_8cc_source.html#l01031">BuildWithLogTest::BuildWithLogTest()</a>.</p>
 
 </div>
 </div>
@@ -310,9 +336,9 @@ Public Attributes</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="structBuildWithDepsLogTest.html#a02db0bea559a528f2da6d91e96df2e0e">BuildWithDepsLogTest</a>.</p>
 
-<p>Definition at line <a class="el" href="build__test_8cc_source.html#l00457">457</a> of file <a class="el" href="build__test_8cc_source.html">build_test.cc</a>.</p>
+<p>Definition at line <a class="el" href="build__test_8cc_source.html#l00474">474</a> of file <a class="el" href="build__test_8cc_source.html">build_test.cc</a>.</p>
 
-<p>Referenced by <a class="el" href="build__test_8cc_source.html#l01003">BuildWithLogTest::BuildWithLogTest()</a>, <a class="el" href="build__test_8cc_source.html#l00421">BuildTest::SetUp()</a>, and <a class="el" href="build__test_8cc_source.html#l00434">BuildTest::~BuildTest()</a>.</p>
+<p>Referenced by <a class="el" href="build__test_8cc_source.html#l01031">BuildWithLogTest::BuildWithLogTest()</a>, <a class="el" href="build__test_8cc_source.html#l00436">BuildTest::SetUp()</a>, and <a class="el" href="build__test_8cc_source.html#l00449">BuildTest::~BuildTest()</a>.</p>
 
 </div>
 </div>
@@ -327,9 +353,9 @@ Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="build__test_8cc_source.html#l00455">455</a> of file <a class="el" href="build__test_8cc_source.html">build_test.cc</a>.</p>
+<p>Definition at line <a class="el" href="build__test_8cc_source.html#l00472">472</a> of file <a class="el" href="build__test_8cc_source.html">build_test.cc</a>.</p>
 
-<p>Referenced by <a class="el" href="build__test_8cc_source.html#l00462">BuildTest::RebuildTarget()</a>, and <a class="el" href="build__test_8cc_source.html#l00421">BuildTest::SetUp()</a>.</p>
+<p>Referenced by <a class="el" href="build__test_8cc_source.html#l00479">BuildTest::RebuildTarget()</a>, and <a class="el" href="build__test_8cc_source.html#l00436">BuildTest::SetUp()</a>.</p>
 
 </div>
 </div>
@@ -344,9 +370,9 @@ Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="build__test_8cc_source.html#l00454">454</a> of file <a class="el" href="build__test_8cc_source.html">build_test.cc</a>.</p>
+<p>Definition at line <a class="el" href="build__test_8cc_source.html#l00471">471</a> of file <a class="el" href="build__test_8cc_source.html">build_test.cc</a>.</p>
 
-<p>Referenced by <a class="el" href="build__test_8cc_source.html#l01235">BuildDryRun()</a>, and <a class="el" href="build__test_8cc_source.html#l00462">BuildTest::RebuildTarget()</a>.</p>
+<p>Referenced by <a class="el" href="build__test_8cc_source.html#l01263">BuildDryRun()</a>, and <a class="el" href="build__test_8cc_source.html#l00479">BuildTest::RebuildTarget()</a>.</p>
 
 </div>
 </div>
@@ -361,9 +387,9 @@ Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="build__test_8cc_source.html#l00456">456</a> of file <a class="el" href="build__test_8cc_source.html">build_test.cc</a>.</p>
+<p>Definition at line <a class="el" href="build__test_8cc_source.html#l00473">473</a> of file <a class="el" href="build__test_8cc_source.html">build_test.cc</a>.</p>
 
-<p>Referenced by <a class="el" href="build__test_8cc_source.html#l00462">BuildTest::RebuildTarget()</a>, and <a class="el" href="build__test_8cc_source.html#l00421">BuildTest::SetUp()</a>.</p>
+<p>Referenced by <a class="el" href="build__test_8cc_source.html#l00479">BuildTest::RebuildTarget()</a>, and <a class="el" href="build__test_8cc_source.html#l00436">BuildTest::SetUp()</a>.</p>
 
 </div>
 </div>
@@ -380,7 +406,7 @@ Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="test_8h_source.html#l00040">40</a> of file <a class="el" href="test_8h_source.html">test.h</a>.</p>
 
-<p>Referenced by <a class="el" href="test_8cc_source.html#l00086">StateTestWithBuiltinRules::GetNode()</a>, <a class="el" href="build__test_8cc_source.html#l00421">BuildTest::SetUp()</a>, and <a class="el" href="test_8cc_source.html#l00076">StateTestWithBuiltinRules::StateTestWithBuiltinRules()</a>.</p>
+<p>Referenced by <a class="el" href="test_8cc_source.html#l00086">StateTestWithBuiltinRules::GetNode()</a>, <a class="el" href="build__test_8cc_source.html#l00436">BuildTest::SetUp()</a>, <a class="el" href="test_8cc_source.html#l00076">StateTestWithBuiltinRules::StateTestWithBuiltinRules()</a>, and <a class="el" href="build__test_8cc_source.html#l00202">PlanTest::TestPoolWithDepthOne()</a>.</p>
 
 </div>
 </div>
@@ -395,7 +421,7 @@ Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="build__test_8cc_source.html#l00459">459</a> of file <a class="el" href="build__test_8cc_source.html">build_test.cc</a>.</p>
+<p>Definition at line <a class="el" href="build__test_8cc_source.html#l00476">476</a> of file <a class="el" href="build__test_8cc_source.html">build_test.cc</a>.</p>
 
 </div>
 </div>
@@ -406,7 +432,7 @@ Public Attributes</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 12 2013 09:25:50 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 4 2014 09:13:00 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

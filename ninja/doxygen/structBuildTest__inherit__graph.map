@@ -1,6 +1,7 @@
 <map id="G" name="G">
-<area shape="rect" id="node5" href="$structBuildWithDepsLogTest.html" title="Tests of builds involving deps logs necessarily must span multiple builds." alt="" coords="5,160,160,189"/>
-<area shape="rect" id="node7" href="$structBuildWithLogTest.html" title="BuildWithLogTest" alt="" coords="184,160,309,189"/>
-<area shape="rect" id="node2" href="$structStateTestWithBuiltinRules.html" title="A base test fixture that includes a State object with a builtin &quot;cat&quot; rule." alt="" coords="76,5,252,35"/>
-<area shape="rect" id="node9" href="$structBuildDryRun.html" title="BuildDryRun" alt="" coords="199,237,295,267"/>
+<area shape="rect" id="node7" href="$structBuildWithDepsLogTest.html" title="Tests of builds involving deps logs necessarily must span multiple builds." alt="" coords="15,160,169,189"/>
+<area shape="rect" id="node9" href="$structBuildWithLogTest.html" title="BuildWithLogTest" alt="" coords="193,160,319,189"/>
+<area shape="rect" id="node2" href="$structStateTestWithBuiltinRules.html" title="A base test fixture that includes a State object with a builtin &quot;cat&quot; rule." alt="" coords="5,5,181,35"/>
+<area shape="rect" id="node4" href="$structBuildLogUser.html" title="Can answer questions about the manifest for the BuildLog." alt="" coords="205,5,304,35"/>
+<area shape="rect" id="node11" href="$structBuildDryRun.html" title="BuildDryRun" alt="" coords="208,237,304,267"/>
 </map>

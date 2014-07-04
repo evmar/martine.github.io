@@ -87,125 +87,130 @@
 <a name="l00028"></a>00028 <span class="preprocessor"></span>
 <a name="l00029"></a><a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">00029</a> <span class="keyword">const</span> <span class="keywordtype">char</span> <a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>[] = <span class="stringliteral">&quot;BuildLogPerfTest-tempfile&quot;</span>;
 <a name="l00030"></a>00030 
-<a name="l00031"></a><a class="code" href="build__log__perftest_8cc.html#ad57cd9f8683273b577960bb8ed19717a">00031</a> <span class="keywordtype">bool</span> <a class="code" href="build__log__perftest_8cc.html#ad57cd9f8683273b577960bb8ed19717a">WriteTestData</a>(<span class="keywordtype">string</span>* err) {
-<a name="l00032"></a>00032   <a class="code" href="structBuildLog.html" title="Store a log of every command ran for every build.">BuildLog</a> log;
-<a name="l00033"></a>00033 
-<a name="l00034"></a>00034   <span class="keywordflow">if</span> (!log.<a class="code" href="structBuildLog.html#a08a600782d1b1c8369b8437d9d9c4264">OpenForWrite</a>(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, err))
-<a name="l00035"></a>00035     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00036"></a>00036 
-<a name="l00037"></a>00037   <span class="comment">/*</span>
-<a name="l00038"></a>00038 <span class="comment">  A histogram of command lengths in chromium. For example, 407 builds,</span>
-<a name="l00039"></a>00039 <span class="comment">  1.4% of all builds, had commands longer than 32 bytes but shorter than 64.</span>
-<a name="l00040"></a>00040 <span class="comment">       32    407   1.4%</span>
-<a name="l00041"></a>00041 <span class="comment">       64    183   0.6%</span>
-<a name="l00042"></a>00042 <span class="comment">      128   1461   5.1%</span>
-<a name="l00043"></a>00043 <span class="comment">      256    791   2.8%</span>
-<a name="l00044"></a>00044 <span class="comment">      512   1314   4.6%</span>
-<a name="l00045"></a>00045 <span class="comment">     1024   6114  21.3%</span>
-<a name="l00046"></a>00046 <span class="comment">     2048  11759  41.0%</span>
-<a name="l00047"></a>00047 <span class="comment">     4096   2056   7.2%</span>
-<a name="l00048"></a>00048 <span class="comment">     8192   4567  15.9%</span>
-<a name="l00049"></a>00049 <span class="comment">    16384     13   0.0%</span>
-<a name="l00050"></a>00050 <span class="comment">    32768      4   0.0%</span>
-<a name="l00051"></a>00051 <span class="comment">    65536      5   0.0%</span>
-<a name="l00052"></a>00052 <span class="comment">  The average command length is 4.1 kB and there were 28674 commands in total,</span>
-<a name="l00053"></a>00053 <span class="comment">  which makes for a total log size of ~120 MB (also counting output filenames).</span>
-<a name="l00054"></a>00054 <span class="comment"></span>
-<a name="l00055"></a>00055 <span class="comment">  Based on this, write 30000 many 4 kB long command lines.</span>
-<a name="l00056"></a>00056 <span class="comment">  */</span>
-<a name="l00057"></a>00057 
-<a name="l00058"></a>00058   <span class="comment">// ManifestParser is the only object allowed to create Rules.</span>
-<a name="l00059"></a>00059   <span class="keyword">const</span> <span class="keywordtype">size_t</span> kRuleSize = 4000;
-<a name="l00060"></a>00060   <span class="keywordtype">string</span> long_rule_command = <span class="stringliteral">&quot;gcc &quot;</span>;
-<a name="l00061"></a>00061   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; long_rule_command.size() &lt; kRuleSize; ++i) {
-<a name="l00062"></a>00062     <span class="keywordtype">char</span> buf[80];
-<a name="l00063"></a>00063     sprintf(buf, <span class="stringliteral">&quot;-I../../and/arbitrary/but/fairly/long/path/suffixed/%d &quot;</span>, i);
-<a name="l00064"></a>00064     long_rule_command += buf;
-<a name="l00065"></a>00065   }
-<a name="l00066"></a>00066   long_rule_command += <span class="stringliteral">&quot;$in -o $out\n&quot;</span>;
-<a name="l00067"></a>00067 
-<a name="l00068"></a>00068   <a class="code" href="structState.html" title="Global state (file status, loaded rules) for a single run.">State</a> state;
-<a name="l00069"></a>00069   <a class="code" href="structManifestParser.html" title="Parses .ninja files.">ManifestParser</a> parser(&amp;state, NULL);
-<a name="l00070"></a>00070   <span class="keywordflow">if</span> (!parser.<a class="code" href="structManifestParser.html#acf584c7557f4ecbf35f65484db87d7c4" title="Parse a text string of input. Used by tests.">ParseTest</a>(<span class="stringliteral">&quot;rule cxx\n  command = &quot;</span> + long_rule_command, err))
-<a name="l00071"></a>00071     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00031"></a><a class="code" href="structNoDeadPaths.html">00031</a> <span class="keyword">struct </span><a class="code" href="structNoDeadPaths.html">NoDeadPaths</a> : <span class="keyword">public</span> <a class="code" href="structBuildLogUser.html" title="Can answer questions about the manifest for the BuildLog.">BuildLogUser</a> {
+<a name="l00032"></a><a class="code" href="structNoDeadPaths.html#a8d4da134866bd2e4393bcc2c6e35faaa">00032</a>   <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code" href="structNoDeadPaths.html#a8d4da134866bd2e4393bcc2c6e35faaa" title="Return if a given output no longer part of the build manifest.">IsPathDead</a>(<a class="code" href="structStringPiece.html" title="StringPiece represents a slice of a string whose memory is managed externally.">StringPiece</a>)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <span class="keyword">false</span>; }
+<a name="l00033"></a>00033 };
+<a name="l00034"></a>00034 
+<a name="l00035"></a><a class="code" href="build__log__perftest_8cc.html#ad57cd9f8683273b577960bb8ed19717a">00035</a> <span class="keywordtype">bool</span> <a class="code" href="build__log__perftest_8cc.html#ad57cd9f8683273b577960bb8ed19717a">WriteTestData</a>(<span class="keywordtype">string</span>* err) {
+<a name="l00036"></a>00036   <a class="code" href="structBuildLog.html" title="Store a log of every command ran for every build.">BuildLog</a> log;
+<a name="l00037"></a>00037 
+<a name="l00038"></a>00038   <a class="code" href="structNoDeadPaths.html">NoDeadPaths</a> no_dead_paths;
+<a name="l00039"></a>00039   <span class="keywordflow">if</span> (!log.<a class="code" href="structBuildLog.html#a4d345335c0495d843bd906305cc95ef9">OpenForWrite</a>(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, no_dead_paths, err))
+<a name="l00040"></a>00040     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00041"></a>00041 
+<a name="l00042"></a>00042   <span class="comment">/*</span>
+<a name="l00043"></a>00043 <span class="comment">  A histogram of command lengths in chromium. For example, 407 builds,</span>
+<a name="l00044"></a>00044 <span class="comment">  1.4% of all builds, had commands longer than 32 bytes but shorter than 64.</span>
+<a name="l00045"></a>00045 <span class="comment">       32    407   1.4%</span>
+<a name="l00046"></a>00046 <span class="comment">       64    183   0.6%</span>
+<a name="l00047"></a>00047 <span class="comment">      128   1461   5.1%</span>
+<a name="l00048"></a>00048 <span class="comment">      256    791   2.8%</span>
+<a name="l00049"></a>00049 <span class="comment">      512   1314   4.6%</span>
+<a name="l00050"></a>00050 <span class="comment">     1024   6114  21.3%</span>
+<a name="l00051"></a>00051 <span class="comment">     2048  11759  41.0%</span>
+<a name="l00052"></a>00052 <span class="comment">     4096   2056   7.2%</span>
+<a name="l00053"></a>00053 <span class="comment">     8192   4567  15.9%</span>
+<a name="l00054"></a>00054 <span class="comment">    16384     13   0.0%</span>
+<a name="l00055"></a>00055 <span class="comment">    32768      4   0.0%</span>
+<a name="l00056"></a>00056 <span class="comment">    65536      5   0.0%</span>
+<a name="l00057"></a>00057 <span class="comment">  The average command length is 4.1 kB and there were 28674 commands in total,</span>
+<a name="l00058"></a>00058 <span class="comment">  which makes for a total log size of ~120 MB (also counting output filenames).</span>
+<a name="l00059"></a>00059 <span class="comment"></span>
+<a name="l00060"></a>00060 <span class="comment">  Based on this, write 30000 many 4 kB long command lines.</span>
+<a name="l00061"></a>00061 <span class="comment">  */</span>
+<a name="l00062"></a>00062 
+<a name="l00063"></a>00063   <span class="comment">// ManifestParser is the only object allowed to create Rules.</span>
+<a name="l00064"></a>00064   <span class="keyword">const</span> <span class="keywordtype">size_t</span> kRuleSize = 4000;
+<a name="l00065"></a>00065   <span class="keywordtype">string</span> long_rule_command = <span class="stringliteral">&quot;gcc &quot;</span>;
+<a name="l00066"></a>00066   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; long_rule_command.size() &lt; kRuleSize; ++i) {
+<a name="l00067"></a>00067     <span class="keywordtype">char</span> buf[80];
+<a name="l00068"></a>00068     sprintf(buf, <span class="stringliteral">&quot;-I../../and/arbitrary/but/fairly/long/path/suffixed/%d &quot;</span>, i);
+<a name="l00069"></a>00069     long_rule_command += buf;
+<a name="l00070"></a>00070   }
+<a name="l00071"></a>00071   long_rule_command += <span class="stringliteral">&quot;$in -o $out\n&quot;</span>;
 <a name="l00072"></a>00072 
-<a name="l00073"></a>00073   <span class="comment">// Create build edges. Using ManifestParser is as fast as using the State api</span>
-<a name="l00074"></a>00074   <span class="comment">// for edge creation, so just use that.</span>
-<a name="l00075"></a>00075   <span class="keyword">const</span> <span class="keywordtype">int</span> kNumCommands = 30000;
-<a name="l00076"></a>00076   <span class="keywordtype">string</span> build_rules;
-<a name="l00077"></a>00077   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; kNumCommands; ++i) {
-<a name="l00078"></a>00078     <span class="keywordtype">char</span> buf[80];
-<a name="l00079"></a>00079     sprintf(buf, <span class="stringliteral">&quot;build input%d.o: cxx input%d.cc\n&quot;</span>, i, i);
-<a name="l00080"></a>00080     build_rules += buf;
-<a name="l00081"></a>00081   }
-<a name="l00082"></a>00082 
-<a name="l00083"></a>00083   <span class="keywordflow">if</span> (!parser.<a class="code" href="structManifestParser.html#acf584c7557f4ecbf35f65484db87d7c4" title="Parse a text string of input. Used by tests.">ParseTest</a>(build_rules, err))
-<a name="l00084"></a>00084     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00085"></a>00085 
-<a name="l00086"></a>00086   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; kNumCommands; ++i) {
-<a name="l00087"></a>00087     log.<a class="code" href="structBuildLog.html#a0f6053fff49c2044bbfb0b6293d31d9f">RecordCommand</a>(state.<a class="code" href="structState.html#ab0f23f5026709fcb48d83e93d4bbed97" title="All the edges of the graph.">edges_</a>[i],
-<a name="l00088"></a>00088                       <span class="comment">/*start_time=*/</span>100 * i,
-<a name="l00089"></a>00089                       <span class="comment">/*end_time=*/</span>100 * i + 1,
-<a name="l00090"></a>00090                       <span class="comment">/*restat_mtime=*/</span>0);
-<a name="l00091"></a>00091   }
-<a name="l00092"></a>00092 
-<a name="l00093"></a>00093   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00094"></a>00094 }
-<a name="l00095"></a>00095 
-<a name="l00096"></a><a class="code" href="build__log__perftest_8cc.html#ae66f6b31b5ad750f1fe042a706a4e3d4">00096</a> <span class="keywordtype">int</span> <a class="code" href="build__log__perftest_8cc.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a>() {
-<a name="l00097"></a>00097   vector&lt;int&gt; times;
-<a name="l00098"></a>00098   <span class="keywordtype">string</span> err;
-<a name="l00099"></a>00099 
-<a name="l00100"></a>00100   <span class="keywordflow">if</span> (!<a class="code" href="build__log__perftest_8cc.html#ad57cd9f8683273b577960bb8ed19717a">WriteTestData</a>(&amp;err)) {
-<a name="l00101"></a>00101     fprintf(stderr, <span class="stringliteral">&quot;Failed to write test data: %s\n&quot;</span>, err.c_str());
-<a name="l00102"></a>00102     <span class="keywordflow">return</span> 1;
-<a name="l00103"></a>00103   }
+<a name="l00073"></a>00073   <a class="code" href="structState.html" title="Global state (file status, loaded rules) for a single run.">State</a> state;
+<a name="l00074"></a>00074   <a class="code" href="structManifestParser.html" title="Parses .ninja files.">ManifestParser</a> parser(&amp;state, NULL);
+<a name="l00075"></a>00075   <span class="keywordflow">if</span> (!parser.<a class="code" href="structManifestParser.html#acf584c7557f4ecbf35f65484db87d7c4" title="Parse a text string of input. Used by tests.">ParseTest</a>(<span class="stringliteral">&quot;rule cxx\n  command = &quot;</span> + long_rule_command, err))
+<a name="l00076"></a>00076     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00077"></a>00077 
+<a name="l00078"></a>00078   <span class="comment">// Create build edges. Using ManifestParser is as fast as using the State api</span>
+<a name="l00079"></a>00079   <span class="comment">// for edge creation, so just use that.</span>
+<a name="l00080"></a>00080   <span class="keyword">const</span> <span class="keywordtype">int</span> kNumCommands = 30000;
+<a name="l00081"></a>00081   <span class="keywordtype">string</span> build_rules;
+<a name="l00082"></a>00082   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; kNumCommands; ++i) {
+<a name="l00083"></a>00083     <span class="keywordtype">char</span> buf[80];
+<a name="l00084"></a>00084     sprintf(buf, <span class="stringliteral">&quot;build input%d.o: cxx input%d.cc\n&quot;</span>, i, i);
+<a name="l00085"></a>00085     build_rules += buf;
+<a name="l00086"></a>00086   }
+<a name="l00087"></a>00087 
+<a name="l00088"></a>00088   <span class="keywordflow">if</span> (!parser.<a class="code" href="structManifestParser.html#acf584c7557f4ecbf35f65484db87d7c4" title="Parse a text string of input. Used by tests.">ParseTest</a>(build_rules, err))
+<a name="l00089"></a>00089     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00090"></a>00090 
+<a name="l00091"></a>00091   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; kNumCommands; ++i) {
+<a name="l00092"></a>00092     log.<a class="code" href="structBuildLog.html#a0f6053fff49c2044bbfb0b6293d31d9f">RecordCommand</a>(state.<a class="code" href="structState.html#ab0f23f5026709fcb48d83e93d4bbed97" title="All the edges of the graph.">edges_</a>[i],
+<a name="l00093"></a>00093                       <span class="comment">/*start_time=*/</span>100 * i,
+<a name="l00094"></a>00094                       <span class="comment">/*end_time=*/</span>100 * i + 1,
+<a name="l00095"></a>00095                       <span class="comment">/*restat_mtime=*/</span>0);
+<a name="l00096"></a>00096   }
+<a name="l00097"></a>00097 
+<a name="l00098"></a>00098   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00099"></a>00099 }
+<a name="l00100"></a>00100 
+<a name="l00101"></a><a class="code" href="build__log__perftest_8cc.html#ae66f6b31b5ad750f1fe042a706a4e3d4">00101</a> <span class="keywordtype">int</span> <a class="code" href="build__log__perftest_8cc.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a>() {
+<a name="l00102"></a>00102   vector&lt;int&gt; times;
+<a name="l00103"></a>00103   <span class="keywordtype">string</span> err;
 <a name="l00104"></a>00104 
-<a name="l00105"></a>00105   {
-<a name="l00106"></a>00106     <span class="comment">// Read once to warm up disk cache.</span>
-<a name="l00107"></a>00107     <a class="code" href="structBuildLog.html" title="Store a log of every command ran for every build.">BuildLog</a> log;
-<a name="l00108"></a>00108     <span class="keywordflow">if</span> (!log.<a class="code" href="structBuildLog.html#a0e7f4786ae2aee38095cd7eeed87af73" title="Load the on-disk log.">Load</a>(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, &amp;err)) {
-<a name="l00109"></a>00109       fprintf(stderr, <span class="stringliteral">&quot;Failed to read test data: %s\n&quot;</span>, err.c_str());
-<a name="l00110"></a>00110       <span class="keywordflow">return</span> 1;
-<a name="l00111"></a>00111     }
-<a name="l00112"></a>00112   }
-<a name="l00113"></a>00113   <span class="keyword">const</span> <span class="keywordtype">int</span> kNumRepetitions = 5;
-<a name="l00114"></a>00114   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; kNumRepetitions; ++i) {
-<a name="l00115"></a>00115     <a class="code" href="win32port_8h.html#adec1df1b8b51cb32b77e5b86fff46471" title="A 64-bit integer type.">int64_t</a> start = <a class="code" href="metrics_8cc.html#a139d0fe6387b9e230a9b8bb12d9b43b9" title="Get the current time as relative to some epoch.">GetTimeMillis</a>();
-<a name="l00116"></a>00116     <a class="code" href="structBuildLog.html" title="Store a log of every command ran for every build.">BuildLog</a> log;
-<a name="l00117"></a>00117     <span class="keywordflow">if</span> (!log.<a class="code" href="structBuildLog.html#a0e7f4786ae2aee38095cd7eeed87af73" title="Load the on-disk log.">Load</a>(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, &amp;err)) {
-<a name="l00118"></a>00118       fprintf(stderr, <span class="stringliteral">&quot;Failed to read test data: %s\n&quot;</span>, err.c_str());
-<a name="l00119"></a>00119       <span class="keywordflow">return</span> 1;
-<a name="l00120"></a>00120     }
-<a name="l00121"></a>00121     <span class="keywordtype">int</span> delta = (int)(<a class="code" href="metrics_8cc.html#a139d0fe6387b9e230a9b8bb12d9b43b9" title="Get the current time as relative to some epoch.">GetTimeMillis</a>() - start);
-<a name="l00122"></a>00122     printf(<span class="stringliteral">&quot;%dms\n&quot;</span>, delta);
-<a name="l00123"></a>00123     times.push_back(delta);
-<a name="l00124"></a>00124   }
-<a name="l00125"></a>00125 
-<a name="l00126"></a>00126   <span class="keywordtype">int</span> min = times[0];
-<a name="l00127"></a>00127   <span class="keywordtype">int</span> max = times[0];
-<a name="l00128"></a>00128   <span class="keywordtype">float</span> total = 0;
-<a name="l00129"></a>00129   <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; times.size(); ++i) {
-<a name="l00130"></a>00130     total += times[i];
-<a name="l00131"></a>00131     <span class="keywordflow">if</span> (times[i] &lt; min)
-<a name="l00132"></a>00132       min = times[i];
-<a name="l00133"></a>00133     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (times[i] &gt; max)
-<a name="l00134"></a>00134       max = times[i];
-<a name="l00135"></a>00135   }
-<a name="l00136"></a>00136 
-<a name="l00137"></a>00137   printf(<span class="stringliteral">&quot;min %dms  max %dms  avg %.1fms\n&quot;</span>,
-<a name="l00138"></a>00138          min, max, total / times.size());
-<a name="l00139"></a>00139 
-<a name="l00140"></a>00140   unlink(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>);
+<a name="l00105"></a>00105   <span class="keywordflow">if</span> (!<a class="code" href="build__log__perftest_8cc.html#ad57cd9f8683273b577960bb8ed19717a">WriteTestData</a>(&amp;err)) {
+<a name="l00106"></a>00106     fprintf(stderr, <span class="stringliteral">&quot;Failed to write test data: %s\n&quot;</span>, err.c_str());
+<a name="l00107"></a>00107     <span class="keywordflow">return</span> 1;
+<a name="l00108"></a>00108   }
+<a name="l00109"></a>00109 
+<a name="l00110"></a>00110   {
+<a name="l00111"></a>00111     <span class="comment">// Read once to warm up disk cache.</span>
+<a name="l00112"></a>00112     <a class="code" href="structBuildLog.html" title="Store a log of every command ran for every build.">BuildLog</a> log;
+<a name="l00113"></a>00113     <span class="keywordflow">if</span> (!log.<a class="code" href="structBuildLog.html#a0e7f4786ae2aee38095cd7eeed87af73" title="Load the on-disk log.">Load</a>(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, &amp;err)) {
+<a name="l00114"></a>00114       fprintf(stderr, <span class="stringliteral">&quot;Failed to read test data: %s\n&quot;</span>, err.c_str());
+<a name="l00115"></a>00115       <span class="keywordflow">return</span> 1;
+<a name="l00116"></a>00116     }
+<a name="l00117"></a>00117   }
+<a name="l00118"></a>00118   <span class="keyword">const</span> <span class="keywordtype">int</span> kNumRepetitions = 5;
+<a name="l00119"></a>00119   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; kNumRepetitions; ++i) {
+<a name="l00120"></a>00120     <a class="code" href="win32port_8h.html#adec1df1b8b51cb32b77e5b86fff46471" title="A 64-bit integer type.">int64_t</a> start = <a class="code" href="metrics_8cc.html#a139d0fe6387b9e230a9b8bb12d9b43b9" title="Get the current time as relative to some epoch.">GetTimeMillis</a>();
+<a name="l00121"></a>00121     <a class="code" href="structBuildLog.html" title="Store a log of every command ran for every build.">BuildLog</a> log;
+<a name="l00122"></a>00122     <span class="keywordflow">if</span> (!log.<a class="code" href="structBuildLog.html#a0e7f4786ae2aee38095cd7eeed87af73" title="Load the on-disk log.">Load</a>(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>, &amp;err)) {
+<a name="l00123"></a>00123       fprintf(stderr, <span class="stringliteral">&quot;Failed to read test data: %s\n&quot;</span>, err.c_str());
+<a name="l00124"></a>00124       <span class="keywordflow">return</span> 1;
+<a name="l00125"></a>00125     }
+<a name="l00126"></a>00126     <span class="keywordtype">int</span> delta = (int)(<a class="code" href="metrics_8cc.html#a139d0fe6387b9e230a9b8bb12d9b43b9" title="Get the current time as relative to some epoch.">GetTimeMillis</a>() - start);
+<a name="l00127"></a>00127     printf(<span class="stringliteral">&quot;%dms\n&quot;</span>, delta);
+<a name="l00128"></a>00128     times.push_back(delta);
+<a name="l00129"></a>00129   }
+<a name="l00130"></a>00130 
+<a name="l00131"></a>00131   <span class="keywordtype">int</span> min = times[0];
+<a name="l00132"></a>00132   <span class="keywordtype">int</span> max = times[0];
+<a name="l00133"></a>00133   <span class="keywordtype">float</span> total = 0;
+<a name="l00134"></a>00134   <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; times.size(); ++i) {
+<a name="l00135"></a>00135     total += times[i];
+<a name="l00136"></a>00136     <span class="keywordflow">if</span> (times[i] &lt; min)
+<a name="l00137"></a>00137       min = times[i];
+<a name="l00138"></a>00138     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (times[i] &gt; max)
+<a name="l00139"></a>00139       max = times[i];
+<a name="l00140"></a>00140   }
 <a name="l00141"></a>00141 
-<a name="l00142"></a>00142   <span class="keywordflow">return</span> 0;
-<a name="l00143"></a>00143 }
+<a name="l00142"></a>00142   printf(<span class="stringliteral">&quot;min %dms  max %dms  avg %.1fms\n&quot;</span>,
+<a name="l00143"></a>00143          min, max, total / times.size());
 <a name="l00144"></a>00144 
+<a name="l00145"></a>00145   unlink(<a class="code" href="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481">kTestFilename</a>);
+<a name="l00146"></a>00146 
+<a name="l00147"></a>00147   <span class="keywordflow">return</span> 0;
+<a name="l00148"></a>00148 }
+<a name="l00149"></a>00149 
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 12 2013 09:25:49 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 4 2014 09:13:00 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

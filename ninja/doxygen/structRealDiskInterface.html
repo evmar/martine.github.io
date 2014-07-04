@@ -79,6 +79,8 @@ Inheritance diagram for RealDiskInterface:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRealDiskInterface.html#a5d65ad648f4104dc051b7968409722a1">AllowStatCache</a> (bool allow)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether stat information can be cached. Only has an effect on Windows.  <a href="#a5d65ad648f4104dc051b7968409722a1"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRealDiskInterface.html#acf868fd64fcb5dff9cc9741bd2e5575e">MakeDir</a> (const string &amp;path)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a directory, returning false on failure.  <a href="#acf868fd64fcb5dff9cc9741bd2e5575e"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structDiskInterface.html#a7fae01dae68b95facad54b0bc233d279">MakeDirs</a> (const string &amp;path)</td></tr>
@@ -88,8 +90,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRealDiskInterface.html#ac1b01e685fc9981d391c3be3d9a30894">RealDiskInterface</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRealDiskInterface.html#a95db458a6793ec41ae8727c76d11475a">RemoveFile</a> (const string &amp;path)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove the file named <em>path</em>.  <a href="#a95db458a6793ec41ae8727c76d11475a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="timestamp_8h.html#a364f6f32873dd70e259c971fc2e28b73">TimeStamp</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRealDiskInterface.html#a9c8fe8b0dc4ca004f0b2f41743c96f2a">Stat</a> (const string &amp;path)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">stat() a file, returning the mtime, or 0 if missing and -1 on other errors.  <a href="#a9c8fe8b0dc4ca004f0b2f41743c96f2a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="timestamp_8h.html#a364f6f32873dd70e259c971fc2e28b73">TimeStamp</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRealDiskInterface.html#af9a98eca935f55943728ecf3d4447c72">Stat</a> (const string &amp;path) const </td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">stat() a file, returning the mtime, or 0 if missing and -1 on other errors.  <a href="#af9a98eca935f55943728ecf3d4447c72"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRealDiskInterface.html#a0bd82c99c8838d65ae6ab1c0bbf94fe9">WriteFile</a> (const string &amp;path, const string &amp;contents)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a file, with the specified name and contents Returns true on success, false on failure.  <a href="#a0bd82c99c8838d65ae6ab1c0bbf94fe9"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structRealDiskInterface.html#a9f702e2142f8227cc6cfdb682208bd85">~RealDiskInterface</a> ()</td></tr>
@@ -101,7 +103,7 @@ Public Attributes</h2></td></tr>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Implementation of <a class="el" href="structDiskInterface.html" title="Interface for accessing the disk.">DiskInterface</a> that actually hits the disk. </p>
 
-<p>Definition at line <a class="el" href="disk__interface_8h_source.html#l00057">57</a> of file <a class="el" href="disk__interface_8h_source.html">disk_interface.h</a>.</p>
+<p>Definition at line <a class="el" href="disk__interface_8h_source.html#l00058">58</a> of file <a class="el" href="disk__interface_8h_source.html">disk_interface.h</a>.</p>
 </div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="ac1b01e685fc9981d391c3be3d9a30894"></a><!-- doxytag: member="RealDiskInterface::RealDiskInterface" ref="ac1b01e685fc9981d391c3be3d9a30894" args="()" -->
 <div class="memitem">
@@ -117,7 +119,7 @@ Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="disk__interface_8h_source.html#l00058">58</a> of file <a class="el" href="disk__interface_8h_source.html">disk_interface.h</a>.</p>
+<p>Definition at line <a class="el" href="disk__interface_8h_source.html#l00059">59</a> of file <a class="el" href="disk__interface_8h_source.html">disk_interface.h</a>.</p>
 
 </div>
 </div>
@@ -135,11 +137,32 @@ Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="disk__interface_8h_source.html#l00059">59</a> of file <a class="el" href="disk__interface_8h_source.html">disk_interface.h</a>.</p>
+<p>Definition at line <a class="el" href="disk__interface_8h_source.html#l00064">64</a> of file <a class="el" href="disk__interface_8h_source.html">disk_interface.h</a>.</p>
 
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a5d65ad648f4104dc051b7968409722a1"></a><!-- doxytag: member="RealDiskInterface::AllowStatCache" ref="a5d65ad648f4104dc051b7968409722a1" args="(bool allow)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="structRealDiskInterface.html#a5d65ad648f4104dc051b7968409722a1">RealDiskInterface::AllowStatCache</a> </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>allow</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Whether stat information can be cached. Only has an effect on Windows. </p>
+
+<p>Definition at line <a class="el" href="disk__interface_8cc_source.html#l00256">256</a> of file <a class="el" href="disk__interface_8cc_source.html">disk_interface.cc</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="acf868fd64fcb5dff9cc9741bd2e5575e"></a><!-- doxytag: member="RealDiskInterface::MakeDir" ref="acf868fd64fcb5dff9cc9741bd2e5575e" args="(const string &amp;path)" -->
 <div class="memitem">
 <div class="memproto">
@@ -159,9 +182,9 @@ Public Attributes</h2></td></tr>
 
 <p>Implements <a class="el" href="structDiskInterface.html#abf89f5cfce3c775997e7b40607107779">DiskInterface</a>.</p>
 
-<p>Definition at line <a class="el" href="disk__interface_8cc_source.html#l00147">147</a> of file <a class="el" href="disk__interface_8cc_source.html">disk_interface.cc</a>.</p>
+<p>Definition at line <a class="el" href="disk__interface_8cc_source.html#l00221">221</a> of file <a class="el" href="disk__interface_8cc_source.html">disk_interface.cc</a>.</p>
 
-<p>References <a class="el" href="util_8cc_source.html#l00078">Error()</a>.</p>
+<p>References <a class="el" href="util_8cc_source.html#l00079">Error()</a>.</p>
 
 </div>
 </div>
@@ -182,11 +205,9 @@ Public Attributes</h2></td></tr>
 
 <p>Create all the parent directories for path; like mkdir -p `basename path`. </p>
 
-<p>Definition at line <a class="el" href="disk__interface_8cc_source.html#l00059">59</a> of file <a class="el" href="disk__interface_8cc_source.html">disk_interface.cc</a>.</p>
+<p>Definition at line <a class="el" href="disk__interface_8cc_source.html#l00134">134</a> of file <a class="el" href="disk__interface_8cc_source.html">disk_interface.cc</a>.</p>
 
-<p>References <a class="el" href="structDiskInterface.html#abf89f5cfce3c775997e7b40607107779">DiskInterface::MakeDir()</a>, and <a class="el" href="structDiskInterface.html#ac99deecbc7f235272f0a8e308e7792d7">DiskInterface::Stat()</a>.</p>
-
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00672">Builder::StartEdge()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00682">Builder::StartEdge()</a>.</p>
 
 </div>
 </div>
@@ -219,7 +240,9 @@ Public Attributes</h2></td></tr>
 
 <p>Implements <a class="el" href="structDiskInterface.html#aed889f19b478039bd8d315fe965440ea">DiskInterface</a>.</p>
 
-<p>Definition at line <a class="el" href="disk__interface_8cc_source.html#l00155">155</a> of file <a class="el" href="disk__interface_8cc_source.html">disk_interface.cc</a>.</p>
+<p>Definition at line <a class="el" href="disk__interface_8cc_source.html#l00232">232</a> of file <a class="el" href="disk__interface_8cc_source.html">disk_interface.cc</a>.</p>
+
+<p>References <a class="el" href="util_8cc_source.html#l00282">ReadFile()</a>.</p>
 
 </div>
 </div>
@@ -244,22 +267,22 @@ Public Attributes</h2></td></tr>
 
 <p>Implements <a class="el" href="structDiskInterface.html#ad7442b7e0b10e0737c56667d967e9f76">DiskInterface</a>.</p>
 
-<p>Definition at line <a class="el" href="disk__interface_8cc_source.html#l00165">165</a> of file <a class="el" href="disk__interface_8cc_source.html">disk_interface.cc</a>.</p>
+<p>Definition at line <a class="el" href="disk__interface_8cc_source.html#l00242">242</a> of file <a class="el" href="disk__interface_8cc_source.html">disk_interface.cc</a>.</p>
 
-<p>References <a class="el" href="util_8cc_source.html#l00078">Error()</a>.</p>
+<p>References <a class="el" href="util_8cc_source.html#l00079">Error()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a9c8fe8b0dc4ca004f0b2f41743c96f2a"></a><!-- doxytag: member="RealDiskInterface::Stat" ref="a9c8fe8b0dc4ca004f0b2f41743c96f2a" args="(const string &amp;path)" -->
+<a class="anchor" id="af9a98eca935f55943728ecf3d4447c72"></a><!-- doxytag: member="RealDiskInterface::Stat" ref="af9a98eca935f55943728ecf3d4447c72" args="(const string &amp;path) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="timestamp_8h.html#a364f6f32873dd70e259c971fc2e28b73">TimeStamp</a> <a class="el" href="structRealDiskInterface.html#a9c8fe8b0dc4ca004f0b2f41743c96f2a">RealDiskInterface::Stat</a> </td>
+          <td class="memname"><a class="el" href="timestamp_8h.html#a364f6f32873dd70e259c971fc2e28b73">TimeStamp</a> <a class="el" href="structRealDiskInterface.html#af9a98eca935f55943728ecf3d4447c72">RealDiskInterface::Stat</a> </td>
           <td>(</td>
           <td class="paramtype">const string &amp;&#160;</td>
           <td class="paramname"><em>path</em></td><td>)</td>
-          <td><code> [virtual]</code></td>
+          <td> const<code> [virtual]</code></td>
         </tr>
       </table>
 </div>
@@ -267,11 +290,13 @@ Public Attributes</h2></td></tr>
 
 <p>stat() a file, returning the mtime, or 0 if missing and -1 on other errors. </p>
 
-<p>Implements <a class="el" href="structDiskInterface.html#ac99deecbc7f235272f0a8e308e7792d7">DiskInterface</a>.</p>
+<p>Implements <a class="el" href="structDiskInterface.html#a1095cf31175f95f005fc38b28683b0cb">DiskInterface</a>.</p>
 
-<p>Definition at line <a class="el" href="disk__interface_8cc_source.html#l00078">78</a> of file <a class="el" href="disk__interface_8cc_source.html">disk_interface.cc</a>.</p>
+<p>Definition at line <a class="el" href="disk__interface_8cc_source.html#l00153">153</a> of file <a class="el" href="disk__interface_8cc_source.html">disk_interface.cc</a>.</p>
 
-<p>References <a class="el" href="util_8cc_source.html#l00078">Error()</a>, and <a class="el" href="disk__interface_8h_source.html#l00067">quiet_</a>.</p>
+<p>References <a class="el" href="util_8cc_source.html#l00079">Error()</a>.</p>
+
+<p>Referenced by <a class="el" href="manifest__parser__perftest_8cc_source.html#l00045">WriteFakeManifests()</a>.</p>
 
 </div>
 </div>
@@ -304,9 +329,9 @@ Public Attributes</h2></td></tr>
 
 <p>Implements <a class="el" href="structDiskInterface.html#afcfaed359bb8ba121bba9838c02c2483">DiskInterface</a>.</p>
 
-<p>Definition at line <a class="el" href="disk__interface_8cc_source.html#l00123">123</a> of file <a class="el" href="disk__interface_8cc_source.html">disk_interface.cc</a>.</p>
+<p>Definition at line <a class="el" href="disk__interface_8cc_source.html#l00197">197</a> of file <a class="el" href="disk__interface_8cc_source.html">disk_interface.cc</a>.</p>
 
-<p>References <a class="el" href="util_8cc_source.html#l00078">Error()</a>.</p>
+<p>References <a class="el" href="util_8cc_source.html#l00079">Error()</a>.</p>
 
 </div>
 </div>
@@ -324,9 +349,7 @@ Public Attributes</h2></td></tr>
 
 <p>Whether to print on errors. Used to make a test quieter. </p>
 
-<p>Definition at line <a class="el" href="disk__interface_8h_source.html#l00067">67</a> of file <a class="el" href="disk__interface_8h_source.html">disk_interface.h</a>.</p>
-
-<p>Referenced by <a class="el" href="disk__interface_8cc_source.html#l00078">Stat()</a>.</p>
+<p>Definition at line <a class="el" href="disk__interface_8h_source.html#l00072">72</a> of file <a class="el" href="disk__interface_8h_source.html">disk_interface.h</a>.</p>
 
 </div>
 </div>
@@ -338,7 +361,7 @@ Public Attributes</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 12 2013 09:25:50 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 4 2014 09:13:00 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

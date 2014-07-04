@@ -84,70 +84,77 @@
 <a name="l00025"></a>00025 
 <a name="l00026"></a>00026 <span class="keyword">struct </span><a class="code" href="structEdge.html" title="An edge in the dependency graph; links between Nodes using Rules.">Edge</a>;
 <a name="l00027"></a>00027 <span class="comment"></span>
-<a name="l00028"></a>00028 <span class="comment">/// Store a log of every command ran for every build.</span>
-<a name="l00029"></a>00029 <span class="comment">/// It has a few uses:</span>
-<a name="l00030"></a>00030 <span class="comment">///</span>
-<a name="l00031"></a>00031 <span class="comment">/// 1) (hashes of) command lines for existing output files, so we know</span>
-<a name="l00032"></a>00032 <span class="comment">///    when we need to rebuild due to the command changing</span>
-<a name="l00033"></a>00033 <span class="comment">/// 2) timing information, perhaps for generating reports</span>
-<a name="l00034"></a>00034 <span class="comment">/// 3) restat information</span>
-<a name="l00035"></a><a class="code" href="structBuildLog.html">00035</a> <span class="comment"></span><span class="keyword">struct </span><a class="code" href="structBuildLog.html" title="Store a log of every command ran for every build.">BuildLog</a> {
-<a name="l00036"></a>00036   <a class="code" href="structBuildLog.html" title="Store a log of every command ran for every build.">BuildLog</a>();
-<a name="l00037"></a>00037   ~<a class="code" href="structBuildLog.html" title="Store a log of every command ran for every build.">BuildLog</a>();
-<a name="l00038"></a>00038 
-<a name="l00039"></a>00039   <span class="keywordtype">bool</span> OpenForWrite(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path, <span class="keywordtype">string</span>* err);
-<a name="l00040"></a>00040   <span class="keywordtype">bool</span> RecordCommand(<a class="code" href="structEdge.html" title="An edge in the dependency graph; links between Nodes using Rules.">Edge</a>* edge, <span class="keywordtype">int</span> start_time, <span class="keywordtype">int</span> end_time,
-<a name="l00041"></a>00041                      <a class="code" href="timestamp_8h.html#a364f6f32873dd70e259c971fc2e28b73">TimeStamp</a> restat_mtime = 0);
-<a name="l00042"></a>00042   <span class="keywordtype">void</span> Close();
-<a name="l00043"></a>00043 <span class="comment"></span>
-<a name="l00044"></a>00044 <span class="comment">  /// Load the on-disk log.</span>
-<a name="l00045"></a>00045 <span class="comment"></span>  <span class="keywordtype">bool</span> Load(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path, <span class="keywordtype">string</span>* err);
-<a name="l00046"></a>00046 
-<a name="l00047"></a><a class="code" href="structBuildLog_1_1LogEntry.html">00047</a>   <span class="keyword">struct </span><a class="code" href="structBuildLog_1_1LogEntry.html">LogEntry</a> {
-<a name="l00048"></a><a class="code" href="structBuildLog_1_1LogEntry.html#ab83065a7478526bcb4c5b2544b5f078a">00048</a>     <span class="keywordtype">string</span> <a class="code" href="structBuildLog_1_1LogEntry.html#ab83065a7478526bcb4c5b2544b5f078a">output</a>;
-<a name="l00049"></a><a class="code" href="structBuildLog_1_1LogEntry.html#a63b46f6a3f2b4abde94d8da03ace6fe5">00049</a>     <a class="code" href="win32port_8h.html#aaa5d1cd013383c889537491c3cfd9aad">uint64_t</a> <a class="code" href="structBuildLog_1_1LogEntry.html#a63b46f6a3f2b4abde94d8da03ace6fe5">command_hash</a>;
-<a name="l00050"></a><a class="code" href="structBuildLog_1_1LogEntry.html#a2ba1f4c7b480857f4b54be8ff28db9fc">00050</a>     <span class="keywordtype">int</span> <a class="code" href="structBuildLog_1_1LogEntry.html#a2ba1f4c7b480857f4b54be8ff28db9fc">start_time</a>;
-<a name="l00051"></a><a class="code" href="structBuildLog_1_1LogEntry.html#a8c9d71c8162925f8fe519543d3fb1416">00051</a>     <span class="keywordtype">int</span> <a class="code" href="structBuildLog_1_1LogEntry.html#a8c9d71c8162925f8fe519543d3fb1416">end_time</a>;
-<a name="l00052"></a><a class="code" href="structBuildLog_1_1LogEntry.html#a53e61192b91f9ac323d507ca624eb9e2">00052</a>     <a class="code" href="timestamp_8h.html#a364f6f32873dd70e259c971fc2e28b73">TimeStamp</a> <a class="code" href="structBuildLog_1_1LogEntry.html#a53e61192b91f9ac323d507ca624eb9e2">restat_mtime</a>;
+<a name="l00028"></a>00028 <span class="comment">/// Can answer questions about the manifest for the BuildLog.</span>
+<a name="l00029"></a><a class="code" href="structBuildLogUser.html">00029</a> <span class="comment"></span><span class="keyword">struct </span><a class="code" href="structBuildLogUser.html" title="Can answer questions about the manifest for the BuildLog.">BuildLogUser</a> {<span class="comment"></span>
+<a name="l00030"></a>00030 <span class="comment">  /// Return if a given output no longer part of the build manifest.</span>
+<a name="l00031"></a>00031 <span class="comment">  /// This is only called during recompaction and doesn&#39;t have to be fast.</span>
+<a name="l00032"></a>00032 <span class="comment"></span>  <span class="keyword">virtual</span> <span class="keywordtype">bool</span> IsPathDead(<a class="code" href="structStringPiece.html" title="StringPiece represents a slice of a string whose memory is managed externally.">StringPiece</a> s) <span class="keyword">const</span> = 0;
+<a name="l00033"></a>00033 };
+<a name="l00034"></a>00034 <span class="comment"></span>
+<a name="l00035"></a>00035 <span class="comment">/// Store a log of every command ran for every build.</span>
+<a name="l00036"></a>00036 <span class="comment">/// It has a few uses:</span>
+<a name="l00037"></a>00037 <span class="comment">///</span>
+<a name="l00038"></a>00038 <span class="comment">/// 1) (hashes of) command lines for existing output files, so we know</span>
+<a name="l00039"></a>00039 <span class="comment">///    when we need to rebuild due to the command changing</span>
+<a name="l00040"></a>00040 <span class="comment">/// 2) timing information, perhaps for generating reports</span>
+<a name="l00041"></a>00041 <span class="comment">/// 3) restat information</span>
+<a name="l00042"></a><a class="code" href="structBuildLog.html">00042</a> <span class="comment"></span><span class="keyword">struct </span><a class="code" href="structBuildLog.html" title="Store a log of every command ran for every build.">BuildLog</a> {
+<a name="l00043"></a>00043   <a class="code" href="structBuildLog.html" title="Store a log of every command ran for every build.">BuildLog</a>();
+<a name="l00044"></a>00044   ~<a class="code" href="structBuildLog.html" title="Store a log of every command ran for every build.">BuildLog</a>();
+<a name="l00045"></a>00045 
+<a name="l00046"></a>00046   <span class="keywordtype">bool</span> OpenForWrite(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path, <span class="keyword">const</span> <a class="code" href="structBuildLogUser.html" title="Can answer questions about the manifest for the BuildLog.">BuildLogUser</a>&amp; user, <span class="keywordtype">string</span>* err);
+<a name="l00047"></a>00047   <span class="keywordtype">bool</span> RecordCommand(<a class="code" href="structEdge.html" title="An edge in the dependency graph; links between Nodes using Rules.">Edge</a>* edge, <span class="keywordtype">int</span> start_time, <span class="keywordtype">int</span> end_time,
+<a name="l00048"></a>00048                      <a class="code" href="timestamp_8h.html#a364f6f32873dd70e259c971fc2e28b73">TimeStamp</a> restat_mtime = 0);
+<a name="l00049"></a>00049   <span class="keywordtype">void</span> Close();
+<a name="l00050"></a>00050 <span class="comment"></span>
+<a name="l00051"></a>00051 <span class="comment">  /// Load the on-disk log.</span>
+<a name="l00052"></a>00052 <span class="comment"></span>  <span class="keywordtype">bool</span> Load(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path, <span class="keywordtype">string</span>* err);
 <a name="l00053"></a>00053 
-<a name="l00054"></a>00054     <span class="keyword">static</span> <a class="code" href="win32port_8h.html#aaa5d1cd013383c889537491c3cfd9aad">uint64_t</a> HashCommand(<a class="code" href="structStringPiece.html" title="StringPiece represents a slice of a string whose memory is managed externally.">StringPiece</a> command);
-<a name="l00055"></a>00055 
-<a name="l00056"></a>00056     <span class="comment">// Used by tests.</span>
-<a name="l00057"></a><a class="code" href="structBuildLog_1_1LogEntry.html#afe5b06b8135336c86d91f56c8423f74b">00057</a>     <span class="keywordtype">bool</span> <a class="code" href="structBuildLog_1_1LogEntry.html#afe5b06b8135336c86d91f56c8423f74b">operator==</a>(<span class="keyword">const</span> <a class="code" href="structBuildLog_1_1LogEntry.html">LogEntry</a>&amp; o) {
-<a name="l00058"></a>00058       <span class="keywordflow">return</span> output == o.<a class="code" href="structBuildLog_1_1LogEntry.html#ab83065a7478526bcb4c5b2544b5f078a">output</a> &amp;&amp; command_hash == o.<a class="code" href="structBuildLog_1_1LogEntry.html#a63b46f6a3f2b4abde94d8da03ace6fe5">command_hash</a> &amp;&amp;
-<a name="l00059"></a>00059           start_time == o.<a class="code" href="structBuildLog_1_1LogEntry.html#a2ba1f4c7b480857f4b54be8ff28db9fc">start_time</a> &amp;&amp; end_time == o.<a class="code" href="structBuildLog_1_1LogEntry.html#a8c9d71c8162925f8fe519543d3fb1416">end_time</a> &amp;&amp;
-<a name="l00060"></a>00060           restat_mtime == o.<a class="code" href="structBuildLog_1_1LogEntry.html#a53e61192b91f9ac323d507ca624eb9e2">restat_mtime</a>;
-<a name="l00061"></a>00061     }
+<a name="l00054"></a><a class="code" href="structBuildLog_1_1LogEntry.html">00054</a>   <span class="keyword">struct </span><a class="code" href="structBuildLog_1_1LogEntry.html">LogEntry</a> {
+<a name="l00055"></a><a class="code" href="structBuildLog_1_1LogEntry.html#ab83065a7478526bcb4c5b2544b5f078a">00055</a>     <span class="keywordtype">string</span> <a class="code" href="structBuildLog_1_1LogEntry.html#ab83065a7478526bcb4c5b2544b5f078a">output</a>;
+<a name="l00056"></a><a class="code" href="structBuildLog_1_1LogEntry.html#a63b46f6a3f2b4abde94d8da03ace6fe5">00056</a>     <a class="code" href="win32port_8h.html#aaa5d1cd013383c889537491c3cfd9aad">uint64_t</a> <a class="code" href="structBuildLog_1_1LogEntry.html#a63b46f6a3f2b4abde94d8da03ace6fe5">command_hash</a>;
+<a name="l00057"></a><a class="code" href="structBuildLog_1_1LogEntry.html#a2ba1f4c7b480857f4b54be8ff28db9fc">00057</a>     <span class="keywordtype">int</span> <a class="code" href="structBuildLog_1_1LogEntry.html#a2ba1f4c7b480857f4b54be8ff28db9fc">start_time</a>;
+<a name="l00058"></a><a class="code" href="structBuildLog_1_1LogEntry.html#a8c9d71c8162925f8fe519543d3fb1416">00058</a>     <span class="keywordtype">int</span> <a class="code" href="structBuildLog_1_1LogEntry.html#a8c9d71c8162925f8fe519543d3fb1416">end_time</a>;
+<a name="l00059"></a><a class="code" href="structBuildLog_1_1LogEntry.html#a53e61192b91f9ac323d507ca624eb9e2">00059</a>     <a class="code" href="timestamp_8h.html#a364f6f32873dd70e259c971fc2e28b73">TimeStamp</a> <a class="code" href="structBuildLog_1_1LogEntry.html#a53e61192b91f9ac323d507ca624eb9e2">restat_mtime</a>;
+<a name="l00060"></a>00060 
+<a name="l00061"></a>00061     <span class="keyword">static</span> <a class="code" href="win32port_8h.html#aaa5d1cd013383c889537491c3cfd9aad">uint64_t</a> HashCommand(<a class="code" href="structStringPiece.html" title="StringPiece represents a slice of a string whose memory is managed externally.">StringPiece</a> command);
 <a name="l00062"></a>00062 
-<a name="l00063"></a>00063     <span class="keyword">explicit</span> <a class="code" href="structBuildLog_1_1LogEntry.html">LogEntry</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; output);
-<a name="l00064"></a>00064     <a class="code" href="structBuildLog_1_1LogEntry.html">LogEntry</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; output, <a class="code" href="win32port_8h.html#aaa5d1cd013383c889537491c3cfd9aad">uint64_t</a> command_hash,
-<a name="l00065"></a>00065              <span class="keywordtype">int</span> start_time, <span class="keywordtype">int</span> end_time, <a class="code" href="timestamp_8h.html#a364f6f32873dd70e259c971fc2e28b73">TimeStamp</a> restat_mtime);
-<a name="l00066"></a>00066   };
-<a name="l00067"></a>00067 <span class="comment"></span>
-<a name="l00068"></a>00068 <span class="comment">  /// Lookup a previously-run command by its output path.</span>
-<a name="l00069"></a>00069 <span class="comment"></span>  LogEntry* LookupByOutput(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path);
-<a name="l00070"></a>00070 <span class="comment"></span>
-<a name="l00071"></a>00071 <span class="comment">  /// Serialize an entry into a log file.</span>
-<a name="l00072"></a>00072 <span class="comment"></span>  <span class="keywordtype">bool</span> WriteEntry(FILE* f, <span class="keyword">const</span> LogEntry&amp; entry);
-<a name="l00073"></a>00073 <span class="comment"></span>
-<a name="l00074"></a>00074 <span class="comment">  /// Rewrite the known log entries, throwing away old data.</span>
-<a name="l00075"></a>00075 <span class="comment"></span>  <span class="keywordtype">bool</span> Recompact(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path, <span class="keywordtype">string</span>* err);
-<a name="l00076"></a>00076 
-<a name="l00077"></a><a class="code" href="structBuildLog.html#a2c035db06262912249057dd122a86833">00077</a>   <span class="keyword">typedef</span> <a class="code" href="structExternalStringHashMap.html" title="A template for hash_maps keyed by a StringPiece whose string is owned externally (typically by the va...">ExternalStringHashMap&lt;LogEntry*&gt;::Type</a> <a class="code" href="structBuildLog.html#a2c035db06262912249057dd122a86833">Entries</a>;
-<a name="l00078"></a><a class="code" href="structBuildLog.html#aeed1beb5b39306e0a77dc6b8da16f580">00078</a>   <span class="keyword">const</span> <a class="code" href="structBuildLog.html#a2c035db06262912249057dd122a86833">Entries</a>&amp; <a class="code" href="structBuildLog.html#aeed1beb5b39306e0a77dc6b8da16f580">entries</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> entries_; }
-<a name="l00079"></a>00079 
-<a name="l00080"></a>00080  <span class="keyword">private</span>:
-<a name="l00081"></a><a class="code" href="structBuildLog.html#af537a7382a1d904e6c5522055e45cd36">00081</a>   <a class="code" href="structBuildLog.html#a2c035db06262912249057dd122a86833">Entries</a> <a class="code" href="structBuildLog.html#af537a7382a1d904e6c5522055e45cd36">entries_</a>;
-<a name="l00082"></a><a class="code" href="structBuildLog.html#a5fd4ee55ca61796e6d9aecaac2855cba">00082</a>   FILE* <a class="code" href="structBuildLog.html#a5fd4ee55ca61796e6d9aecaac2855cba">log_file_</a>;
-<a name="l00083"></a><a class="code" href="structBuildLog.html#ab3726d9da8e8ae709671c6e6f3518773">00083</a>   <span class="keywordtype">bool</span> <a class="code" href="structBuildLog.html#ab3726d9da8e8ae709671c6e6f3518773">needs_recompaction_</a>;
-<a name="l00084"></a>00084 };
-<a name="l00085"></a>00085 
-<a name="l00086"></a>00086 <span class="preprocessor">#endif // NINJA_BUILD_LOG_H_</span>
+<a name="l00063"></a>00063     <span class="comment">// Used by tests.</span>
+<a name="l00064"></a><a class="code" href="structBuildLog_1_1LogEntry.html#afe5b06b8135336c86d91f56c8423f74b">00064</a>     <span class="keywordtype">bool</span> <a class="code" href="structBuildLog_1_1LogEntry.html#afe5b06b8135336c86d91f56c8423f74b">operator==</a>(<span class="keyword">const</span> <a class="code" href="structBuildLog_1_1LogEntry.html">LogEntry</a>&amp; o) {
+<a name="l00065"></a>00065       <span class="keywordflow">return</span> output == o.<a class="code" href="structBuildLog_1_1LogEntry.html#ab83065a7478526bcb4c5b2544b5f078a">output</a> &amp;&amp; command_hash == o.<a class="code" href="structBuildLog_1_1LogEntry.html#a63b46f6a3f2b4abde94d8da03ace6fe5">command_hash</a> &amp;&amp;
+<a name="l00066"></a>00066           start_time == o.<a class="code" href="structBuildLog_1_1LogEntry.html#a2ba1f4c7b480857f4b54be8ff28db9fc">start_time</a> &amp;&amp; end_time == o.<a class="code" href="structBuildLog_1_1LogEntry.html#a8c9d71c8162925f8fe519543d3fb1416">end_time</a> &amp;&amp;
+<a name="l00067"></a>00067           restat_mtime == o.<a class="code" href="structBuildLog_1_1LogEntry.html#a53e61192b91f9ac323d507ca624eb9e2">restat_mtime</a>;
+<a name="l00068"></a>00068     }
+<a name="l00069"></a>00069 
+<a name="l00070"></a>00070     <span class="keyword">explicit</span> <a class="code" href="structBuildLog_1_1LogEntry.html">LogEntry</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; output);
+<a name="l00071"></a>00071     <a class="code" href="structBuildLog_1_1LogEntry.html">LogEntry</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; output, <a class="code" href="win32port_8h.html#aaa5d1cd013383c889537491c3cfd9aad">uint64_t</a> command_hash,
+<a name="l00072"></a>00072              <span class="keywordtype">int</span> start_time, <span class="keywordtype">int</span> end_time, <a class="code" href="timestamp_8h.html#a364f6f32873dd70e259c971fc2e28b73">TimeStamp</a> restat_mtime);
+<a name="l00073"></a>00073   };
+<a name="l00074"></a>00074 <span class="comment"></span>
+<a name="l00075"></a>00075 <span class="comment">  /// Lookup a previously-run command by its output path.</span>
+<a name="l00076"></a>00076 <span class="comment"></span>  LogEntry* LookupByOutput(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path);
+<a name="l00077"></a>00077 <span class="comment"></span>
+<a name="l00078"></a>00078 <span class="comment">  /// Serialize an entry into a log file.</span>
+<a name="l00079"></a>00079 <span class="comment"></span>  <span class="keywordtype">bool</span> WriteEntry(FILE* f, <span class="keyword">const</span> LogEntry&amp; entry);
+<a name="l00080"></a>00080 <span class="comment"></span>
+<a name="l00081"></a>00081 <span class="comment">  /// Rewrite the known log entries, throwing away old data.</span>
+<a name="l00082"></a>00082 <span class="comment"></span>  <span class="keywordtype">bool</span> Recompact(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path, <span class="keyword">const</span> <a class="code" href="structBuildLogUser.html" title="Can answer questions about the manifest for the BuildLog.">BuildLogUser</a>&amp; user, <span class="keywordtype">string</span>* err);
+<a name="l00083"></a>00083 
+<a name="l00084"></a><a class="code" href="structBuildLog.html#a2c035db06262912249057dd122a86833">00084</a>   <span class="keyword">typedef</span> <a class="code" href="structExternalStringHashMap.html" title="A template for hash_maps keyed by a StringPiece whose string is owned externally (typically by the va...">ExternalStringHashMap&lt;LogEntry*&gt;::Type</a> <a class="code" href="structBuildLog.html#a2c035db06262912249057dd122a86833">Entries</a>;
+<a name="l00085"></a><a class="code" href="structBuildLog.html#aeed1beb5b39306e0a77dc6b8da16f580">00085</a>   <span class="keyword">const</span> <a class="code" href="structBuildLog.html#a2c035db06262912249057dd122a86833">Entries</a>&amp; <a class="code" href="structBuildLog.html#aeed1beb5b39306e0a77dc6b8da16f580">entries</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> entries_; }
+<a name="l00086"></a>00086 
+<a name="l00087"></a>00087  <span class="keyword">private</span>:
+<a name="l00088"></a><a class="code" href="structBuildLog.html#af537a7382a1d904e6c5522055e45cd36">00088</a>   <a class="code" href="structBuildLog.html#a2c035db06262912249057dd122a86833">Entries</a> <a class="code" href="structBuildLog.html#af537a7382a1d904e6c5522055e45cd36">entries_</a>;
+<a name="l00089"></a><a class="code" href="structBuildLog.html#a5fd4ee55ca61796e6d9aecaac2855cba">00089</a>   FILE* <a class="code" href="structBuildLog.html#a5fd4ee55ca61796e6d9aecaac2855cba">log_file_</a>;
+<a name="l00090"></a><a class="code" href="structBuildLog.html#ab3726d9da8e8ae709671c6e6f3518773">00090</a>   <span class="keywordtype">bool</span> <a class="code" href="structBuildLog.html#ab3726d9da8e8ae709671c6e6f3518773">needs_recompaction_</a>;
+<a name="l00091"></a>00091 };
+<a name="l00092"></a>00092 
+<a name="l00093"></a>00093 <span class="preprocessor">#endif // NINJA_BUILD_LOG_H_</span>
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 12 2013 09:25:49 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 4 2014 09:13:00 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

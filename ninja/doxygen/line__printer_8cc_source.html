@@ -85,7 +85,7 @@
 <a name="l00026"></a>00026 <span class="preprocessor"></span>
 <a name="l00027"></a>00027 <span class="preprocessor">#include &quot;<a class="code" href="util_8h.html">util.h</a>&quot;</span>
 <a name="l00028"></a>00028 
-<a name="l00029"></a><a class="code" href="structLinePrinter.html#a0424b5f6191eb3514f6365a70f8a103c">00029</a> <a class="code" href="structLinePrinter.html#a0424b5f6191eb3514f6365a70f8a103c">LinePrinter::LinePrinter</a>() : have_blank_line_(true) {
+<a name="l00029"></a><a class="code" href="structLinePrinter.html#a0424b5f6191eb3514f6365a70f8a103c">00029</a> <a class="code" href="structLinePrinter.html#a0424b5f6191eb3514f6365a70f8a103c">LinePrinter::LinePrinter</a>() : have_blank_line_(true), console_locked_(false) {
 <a name="l00030"></a>00030 <span class="preprocessor">#ifndef _WIN32</span>
 <a name="l00031"></a>00031 <span class="preprocessor"></span>  <span class="keyword">const</span> <span class="keywordtype">char</span>* term = getenv(<span class="stringliteral">&quot;TERM&quot;</span>);
 <a name="l00032"></a>00032   <a class="code" href="structLinePrinter.html#a0e2c3f54e0f44153ceef6d5d93a9d22f" title="Whether we can do fancy terminal control codes.">smart_terminal_</a> = isatty(1) &amp;&amp; term &amp;&amp; string(term) != <span class="stringliteral">&quot;dumb&quot;</span>;
@@ -102,79 +102,118 @@
 <a name="l00043"></a>00043 <span class="preprocessor"></span>}
 <a name="l00044"></a>00044 
 <a name="l00045"></a><a class="code" href="structLinePrinter.html#aa9f64b574d547d32748d2517e21beea5">00045</a> <span class="keywordtype">void</span> <a class="code" href="structLinePrinter.html#aa9f64b574d547d32748d2517e21beea5" title="Overprints the current line.">LinePrinter::Print</a>(<span class="keywordtype">string</span> to_print, <a class="code" href="structLinePrinter.html#a99f22ad59aa1bca1165da568c97c3d58">LineType</a> type) {
-<a name="l00046"></a>00046 <span class="preprocessor">#ifdef _WIN32</span>
-<a name="l00047"></a>00047 <span class="preprocessor"></span>  CONSOLE_SCREEN_BUFFER_INFO csbi;
-<a name="l00048"></a>00048   GetConsoleScreenBufferInfo(console_, &amp;csbi);
-<a name="l00049"></a>00049 <span class="preprocessor">#endif</span>
-<a name="l00050"></a>00050 <span class="preprocessor"></span>
-<a name="l00051"></a>00051   <span class="keywordflow">if</span> (<a class="code" href="structLinePrinter.html#a0e2c3f54e0f44153ceef6d5d93a9d22f" title="Whether we can do fancy terminal control codes.">smart_terminal_</a>) {
-<a name="l00052"></a>00052 <span class="preprocessor">#ifndef _WIN32</span>
-<a name="l00053"></a>00053 <span class="preprocessor"></span>    printf(<span class="stringliteral">&quot;\r&quot;</span>);  <span class="comment">// Print over previous line, if any.</span>
-<a name="l00054"></a>00054 <span class="preprocessor">#else</span>
-<a name="l00055"></a>00055 <span class="preprocessor"></span>    csbi.dwCursorPosition.X = 0;
-<a name="l00056"></a>00056     SetConsoleCursorPosition(console_, csbi.dwCursorPosition);
-<a name="l00057"></a>00057 <span class="preprocessor">#endif</span>
-<a name="l00058"></a>00058 <span class="preprocessor"></span>  }
-<a name="l00059"></a>00059 
-<a name="l00060"></a>00060   <span class="keywordflow">if</span> (<a class="code" href="structLinePrinter.html#a0e2c3f54e0f44153ceef6d5d93a9d22f" title="Whether we can do fancy terminal control codes.">smart_terminal_</a> &amp;&amp; type == <a class="code" href="structLinePrinter.html#a99f22ad59aa1bca1165da568c97c3d58abf44d7c12a55615f6b9c93cb937befcb">ELIDE</a>) {
-<a name="l00061"></a>00061 <span class="preprocessor">#ifdef _WIN32</span>
-<a name="l00062"></a>00062 <span class="preprocessor"></span>    <span class="comment">// Don&#39;t use the full width or console will move to next line.</span>
-<a name="l00063"></a>00063     <span class="keywordtype">size_t</span> width = <span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(csbi.dwSize.X) - 1;
-<a name="l00064"></a>00064     to_print = <a class="code" href="util_8cc.html#ac8e2d9b3b582b06d8c2ecd55cf22d512" title="Elide the given string str with &#39;...&#39; in the middle if the length exceeds width.">ElideMiddle</a>(to_print, width);
-<a name="l00065"></a>00065     <span class="comment">// We don&#39;t want to have the cursor spamming back and forth, so</span>
-<a name="l00066"></a>00066     <span class="comment">// use WriteConsoleOutput instead which updates the contents of</span>
-<a name="l00067"></a>00067     <span class="comment">// the buffer, but doesn&#39;t move the cursor position.</span>
-<a name="l00068"></a>00068     GetConsoleScreenBufferInfo(console_, &amp;csbi);
-<a name="l00069"></a>00069     COORD buf_size = { csbi.dwSize.X, 1 };
-<a name="l00070"></a>00070     COORD zero_zero = { 0, 0 };
-<a name="l00071"></a>00071     SMALL_RECT target = {
-<a name="l00072"></a>00072       csbi.dwCursorPosition.X, csbi.dwCursorPosition.Y,
-<a name="l00073"></a>00073       <span class="keyword">static_cast&lt;</span>SHORT<span class="keyword">&gt;</span>(csbi.dwCursorPosition.X + csbi.dwSize.X - 1),
-<a name="l00074"></a>00074       csbi.dwCursorPosition.Y
-<a name="l00075"></a>00075     };
-<a name="l00076"></a>00076     CHAR_INFO* char_data = <span class="keyword">new</span> CHAR_INFO[csbi.dwSize.X];
-<a name="l00077"></a>00077     memset(char_data, 0, <span class="keyword">sizeof</span>(CHAR_INFO) * csbi.dwSize.X);
-<a name="l00078"></a>00078     <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; csbi.dwSize.X; ++i) {
-<a name="l00079"></a>00079       char_data[i].Char.AsciiChar = <span class="charliteral">&#39; &#39;</span>;
-<a name="l00080"></a>00080       char_data[i].Attributes = csbi.wAttributes;
-<a name="l00081"></a>00081     }
-<a name="l00082"></a>00082     <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; to_print.size(); ++i)
-<a name="l00083"></a>00083       char_data[i].Char.AsciiChar = to_print[i];
-<a name="l00084"></a>00084     WriteConsoleOutput(console_, char_data, buf_size, zero_zero, &amp;target);
-<a name="l00085"></a>00085     <span class="keyword">delete</span>[] char_data;
-<a name="l00086"></a>00086 <span class="preprocessor">#else</span>
-<a name="l00087"></a>00087 <span class="preprocessor"></span>    <span class="comment">// Limit output to width of the terminal if provided so we don&#39;t cause</span>
-<a name="l00088"></a>00088     <span class="comment">// line-wrapping.</span>
-<a name="l00089"></a>00089     winsize size;
-<a name="l00090"></a>00090     <span class="keywordflow">if</span> ((ioctl(0, TIOCGWINSZ, &amp;size) == 0) &amp;&amp; size.ws_col) {
-<a name="l00091"></a>00091       to_print = <a class="code" href="util_8cc.html#ac8e2d9b3b582b06d8c2ecd55cf22d512" title="Elide the given string str with &#39;...&#39; in the middle if the length exceeds width.">ElideMiddle</a>(to_print, size.ws_col);
-<a name="l00092"></a>00092     }
-<a name="l00093"></a>00093     printf(<span class="stringliteral">&quot;%s&quot;</span>, to_print.c_str());
-<a name="l00094"></a>00094     printf(<span class="stringliteral">&quot;\x1B[K&quot;</span>);  <span class="comment">// Clear to end of line.</span>
-<a name="l00095"></a>00095     fflush(stdout);
-<a name="l00096"></a>00096 <span class="preprocessor">#endif</span>
-<a name="l00097"></a>00097 <span class="preprocessor"></span>
-<a name="l00098"></a>00098     <a class="code" href="structLinePrinter.html#a2e0a97433a4555e10e8d93c3ae2ea1d4" title="Whether the caret is at the beginning of a blank line.">have_blank_line_</a> = <span class="keyword">false</span>;
-<a name="l00099"></a>00099   } <span class="keywordflow">else</span> {
-<a name="l00100"></a>00100     printf(<span class="stringliteral">&quot;%s\n&quot;</span>, to_print.c_str());
-<a name="l00101"></a>00101   }
-<a name="l00102"></a>00102 }
-<a name="l00103"></a>00103 
-<a name="l00104"></a><a class="code" href="structLinePrinter.html#a5c7e10eb69b0f8b39fe4ba92079e72f6">00104</a> <span class="keywordtype">void</span> <a class="code" href="structLinePrinter.html#a5c7e10eb69b0f8b39fe4ba92079e72f6" title="Prints a string on a new line, not overprinting previous output.">LinePrinter::PrintOnNewLine</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; to_print) {
-<a name="l00105"></a>00105   <span class="keywordflow">if</span> (!<a class="code" href="structLinePrinter.html#a2e0a97433a4555e10e8d93c3ae2ea1d4" title="Whether the caret is at the beginning of a blank line.">have_blank_line_</a>)
-<a name="l00106"></a>00106     printf(<span class="stringliteral">&quot;\n&quot;</span>);
-<a name="l00107"></a>00107   <span class="keywordflow">if</span> (!to_print.empty()) {
-<a name="l00108"></a>00108     <span class="comment">// Avoid printf and C strings, since the actual output might contain null</span>
-<a name="l00109"></a>00109     <span class="comment">// bytes like UTF-16 does (yuck).</span>
-<a name="l00110"></a>00110     fwrite(&amp;to_print[0], <span class="keyword">sizeof</span>(<span class="keywordtype">char</span>), to_print.size(), stdout);
-<a name="l00111"></a>00111   }
-<a name="l00112"></a>00112   <a class="code" href="structLinePrinter.html#a2e0a97433a4555e10e8d93c3ae2ea1d4" title="Whether the caret is at the beginning of a blank line.">have_blank_line_</a> = to_print.empty() || *to_print.rbegin() == <span class="charliteral">&#39;\n&#39;</span>;
-<a name="l00113"></a>00113 }
+<a name="l00046"></a>00046   <span class="keywordflow">if</span> (<a class="code" href="structLinePrinter.html#a2a63e7af653f2d4f0cbea8ffa1e88235" title="Whether console is locked.">console_locked_</a>) {
+<a name="l00047"></a>00047     <a class="code" href="structLinePrinter.html#a015279ac89a05545ff5ac1fc1e002b3c" title="Buffered current line while console is locked.">line_buffer_</a> = to_print;
+<a name="l00048"></a>00048     <a class="code" href="structLinePrinter.html#ad362b4a3f321c2dd39bc1f356fc65dd6" title="Buffered line type while console is locked.">line_type_</a> = type;
+<a name="l00049"></a>00049     <span class="keywordflow">return</span>;
+<a name="l00050"></a>00050   }
+<a name="l00051"></a>00051 
+<a name="l00052"></a>00052 <span class="preprocessor">#ifdef _WIN32</span>
+<a name="l00053"></a>00053 <span class="preprocessor"></span>  CONSOLE_SCREEN_BUFFER_INFO csbi;
+<a name="l00054"></a>00054   GetConsoleScreenBufferInfo(console_, &amp;csbi);
+<a name="l00055"></a>00055 <span class="preprocessor">#endif</span>
+<a name="l00056"></a>00056 <span class="preprocessor"></span>
+<a name="l00057"></a>00057   <span class="keywordflow">if</span> (<a class="code" href="structLinePrinter.html#a0e2c3f54e0f44153ceef6d5d93a9d22f" title="Whether we can do fancy terminal control codes.">smart_terminal_</a>) {
+<a name="l00058"></a>00058 <span class="preprocessor">#ifndef _WIN32</span>
+<a name="l00059"></a>00059 <span class="preprocessor"></span>    printf(<span class="stringliteral">&quot;\r&quot;</span>);  <span class="comment">// Print over previous line, if any.</span>
+<a name="l00060"></a>00060 <span class="preprocessor">#else</span>
+<a name="l00061"></a>00061 <span class="preprocessor"></span>    csbi.dwCursorPosition.X = 0;
+<a name="l00062"></a>00062     SetConsoleCursorPosition(console_, csbi.dwCursorPosition);
+<a name="l00063"></a>00063 <span class="preprocessor">#endif</span>
+<a name="l00064"></a>00064 <span class="preprocessor"></span>  }
+<a name="l00065"></a>00065 
+<a name="l00066"></a>00066   <span class="keywordflow">if</span> (<a class="code" href="structLinePrinter.html#a0e2c3f54e0f44153ceef6d5d93a9d22f" title="Whether we can do fancy terminal control codes.">smart_terminal_</a> &amp;&amp; type == <a class="code" href="structLinePrinter.html#a99f22ad59aa1bca1165da568c97c3d58abf44d7c12a55615f6b9c93cb937befcb">ELIDE</a>) {
+<a name="l00067"></a>00067 <span class="preprocessor">#ifdef _WIN32</span>
+<a name="l00068"></a>00068 <span class="preprocessor"></span>    <span class="comment">// Don&#39;t use the full width or console will move to next line.</span>
+<a name="l00069"></a>00069     <span class="keywordtype">size_t</span> width = <span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(csbi.dwSize.X) - 1;
+<a name="l00070"></a>00070     to_print = <a class="code" href="util_8cc.html#ac8e2d9b3b582b06d8c2ecd55cf22d512" title="Elide the given string str with &#39;...&#39; in the middle if the length exceeds width.">ElideMiddle</a>(to_print, width);
+<a name="l00071"></a>00071     <span class="comment">// We don&#39;t want to have the cursor spamming back and forth, so</span>
+<a name="l00072"></a>00072     <span class="comment">// use WriteConsoleOutput instead which updates the contents of</span>
+<a name="l00073"></a>00073     <span class="comment">// the buffer, but doesn&#39;t move the cursor position.</span>
+<a name="l00074"></a>00074     GetConsoleScreenBufferInfo(console_, &amp;csbi);
+<a name="l00075"></a>00075     COORD buf_size = { csbi.dwSize.X, 1 };
+<a name="l00076"></a>00076     COORD zero_zero = { 0, 0 };
+<a name="l00077"></a>00077     SMALL_RECT target = {
+<a name="l00078"></a>00078       csbi.dwCursorPosition.X, csbi.dwCursorPosition.Y,
+<a name="l00079"></a>00079       <span class="keyword">static_cast&lt;</span>SHORT<span class="keyword">&gt;</span>(csbi.dwCursorPosition.X + csbi.dwSize.X - 1),
+<a name="l00080"></a>00080       csbi.dwCursorPosition.Y
+<a name="l00081"></a>00081     };
+<a name="l00082"></a>00082     CHAR_INFO* char_data = <span class="keyword">new</span> CHAR_INFO[csbi.dwSize.X];
+<a name="l00083"></a>00083     memset(char_data, 0, <span class="keyword">sizeof</span>(CHAR_INFO) * csbi.dwSize.X);
+<a name="l00084"></a>00084     <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; csbi.dwSize.X; ++i) {
+<a name="l00085"></a>00085       char_data[i].Char.AsciiChar = <span class="charliteral">&#39; &#39;</span>;
+<a name="l00086"></a>00086       char_data[i].Attributes = csbi.wAttributes;
+<a name="l00087"></a>00087     }
+<a name="l00088"></a>00088     <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; to_print.size(); ++i)
+<a name="l00089"></a>00089       char_data[i].Char.AsciiChar = to_print[i];
+<a name="l00090"></a>00090     WriteConsoleOutput(console_, char_data, buf_size, zero_zero, &amp;target);
+<a name="l00091"></a>00091     <span class="keyword">delete</span>[] char_data;
+<a name="l00092"></a>00092 <span class="preprocessor">#else</span>
+<a name="l00093"></a>00093 <span class="preprocessor"></span>    <span class="comment">// Limit output to width of the terminal if provided so we don&#39;t cause</span>
+<a name="l00094"></a>00094     <span class="comment">// line-wrapping.</span>
+<a name="l00095"></a>00095     winsize size;
+<a name="l00096"></a>00096     <span class="keywordflow">if</span> ((ioctl(0, TIOCGWINSZ, &amp;size) == 0) &amp;&amp; size.ws_col) {
+<a name="l00097"></a>00097       to_print = <a class="code" href="util_8cc.html#ac8e2d9b3b582b06d8c2ecd55cf22d512" title="Elide the given string str with &#39;...&#39; in the middle if the length exceeds width.">ElideMiddle</a>(to_print, size.ws_col);
+<a name="l00098"></a>00098     }
+<a name="l00099"></a>00099     printf(<span class="stringliteral">&quot;%s&quot;</span>, to_print.c_str());
+<a name="l00100"></a>00100     printf(<span class="stringliteral">&quot;\x1B[K&quot;</span>);  <span class="comment">// Clear to end of line.</span>
+<a name="l00101"></a>00101     fflush(stdout);
+<a name="l00102"></a>00102 <span class="preprocessor">#endif</span>
+<a name="l00103"></a>00103 <span class="preprocessor"></span>
+<a name="l00104"></a>00104     <a class="code" href="structLinePrinter.html#a2e0a97433a4555e10e8d93c3ae2ea1d4" title="Whether the caret is at the beginning of a blank line.">have_blank_line_</a> = <span class="keyword">false</span>;
+<a name="l00105"></a>00105   } <span class="keywordflow">else</span> {
+<a name="l00106"></a>00106     printf(<span class="stringliteral">&quot;%s\n&quot;</span>, to_print.c_str());
+<a name="l00107"></a>00107   }
+<a name="l00108"></a>00108 }
+<a name="l00109"></a>00109 
+<a name="l00110"></a><a class="code" href="structLinePrinter.html#a05f503456976587d2f243521966d5dfc">00110</a> <span class="keywordtype">void</span> <a class="code" href="structLinePrinter.html#a05f503456976587d2f243521966d5dfc" title="Print the given data to the console, or buffer it if it is locked.">LinePrinter::PrintOrBuffer</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* data, <span class="keywordtype">size_t</span> size) {
+<a name="l00111"></a>00111   <span class="keywordflow">if</span> (<a class="code" href="structLinePrinter.html#a2a63e7af653f2d4f0cbea8ffa1e88235" title="Whether console is locked.">console_locked_</a>) {
+<a name="l00112"></a>00112     <a class="code" href="structLinePrinter.html#acade00d205f0cabdaa35ae43eee44486" title="Buffered console output while console is locked.">output_buffer_</a>.append(data, size);
+<a name="l00113"></a>00113   } <span class="keywordflow">else</span> {
+<a name="l00114"></a>00114     <span class="comment">// Avoid printf and C strings, since the actual output might contain null</span>
+<a name="l00115"></a>00115     <span class="comment">// bytes like UTF-16 does (yuck).</span>
+<a name="l00116"></a>00116     fwrite(data, 1, size, stdout);
+<a name="l00117"></a>00117   }
+<a name="l00118"></a>00118 }
+<a name="l00119"></a>00119 
+<a name="l00120"></a><a class="code" href="structLinePrinter.html#a5c7e10eb69b0f8b39fe4ba92079e72f6">00120</a> <span class="keywordtype">void</span> <a class="code" href="structLinePrinter.html#a5c7e10eb69b0f8b39fe4ba92079e72f6" title="Prints a string on a new line, not overprinting previous output.">LinePrinter::PrintOnNewLine</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; to_print) {
+<a name="l00121"></a>00121   <span class="keywordflow">if</span> (<a class="code" href="structLinePrinter.html#a2a63e7af653f2d4f0cbea8ffa1e88235" title="Whether console is locked.">console_locked_</a> &amp;&amp; !<a class="code" href="structLinePrinter.html#a015279ac89a05545ff5ac1fc1e002b3c" title="Buffered current line while console is locked.">line_buffer_</a>.empty()) {
+<a name="l00122"></a>00122     <a class="code" href="structLinePrinter.html#acade00d205f0cabdaa35ae43eee44486" title="Buffered console output while console is locked.">output_buffer_</a>.append(<a class="code" href="structLinePrinter.html#a015279ac89a05545ff5ac1fc1e002b3c" title="Buffered current line while console is locked.">line_buffer_</a>);
+<a name="l00123"></a>00123     <a class="code" href="structLinePrinter.html#acade00d205f0cabdaa35ae43eee44486" title="Buffered console output while console is locked.">output_buffer_</a>.append(1, <span class="charliteral">&#39;\n&#39;</span>);
+<a name="l00124"></a>00124     <a class="code" href="structLinePrinter.html#a015279ac89a05545ff5ac1fc1e002b3c" title="Buffered current line while console is locked.">line_buffer_</a>.clear();
+<a name="l00125"></a>00125   }
+<a name="l00126"></a>00126   <span class="keywordflow">if</span> (!<a class="code" href="structLinePrinter.html#a2e0a97433a4555e10e8d93c3ae2ea1d4" title="Whether the caret is at the beginning of a blank line.">have_blank_line_</a>) {
+<a name="l00127"></a>00127     <a class="code" href="structLinePrinter.html#a05f503456976587d2f243521966d5dfc" title="Print the given data to the console, or buffer it if it is locked.">PrintOrBuffer</a>(<span class="stringliteral">&quot;\n&quot;</span>, 1);
+<a name="l00128"></a>00128   }
+<a name="l00129"></a>00129   <span class="keywordflow">if</span> (!to_print.empty()) {
+<a name="l00130"></a>00130     <a class="code" href="structLinePrinter.html#a05f503456976587d2f243521966d5dfc" title="Print the given data to the console, or buffer it if it is locked.">PrintOrBuffer</a>(&amp;to_print[0], to_print.size());
+<a name="l00131"></a>00131   }
+<a name="l00132"></a>00132   <a class="code" href="structLinePrinter.html#a2e0a97433a4555e10e8d93c3ae2ea1d4" title="Whether the caret is at the beginning of a blank line.">have_blank_line_</a> = to_print.empty() || *to_print.rbegin() == <span class="charliteral">&#39;\n&#39;</span>;
+<a name="l00133"></a>00133 }
+<a name="l00134"></a>00134 
+<a name="l00135"></a><a class="code" href="structLinePrinter.html#a38acb5f22d9a84a0a86da6e0ba861a35">00135</a> <span class="keywordtype">void</span> <a class="code" href="structLinePrinter.html#a38acb5f22d9a84a0a86da6e0ba861a35" title="Lock or unlock the console.">LinePrinter::SetConsoleLocked</a>(<span class="keywordtype">bool</span> locked) {
+<a name="l00136"></a>00136   <span class="keywordflow">if</span> (locked == <a class="code" href="structLinePrinter.html#a2a63e7af653f2d4f0cbea8ffa1e88235" title="Whether console is locked.">console_locked_</a>)
+<a name="l00137"></a>00137     <span class="keywordflow">return</span>;
+<a name="l00138"></a>00138 
+<a name="l00139"></a>00139   <span class="keywordflow">if</span> (locked)
+<a name="l00140"></a>00140     <a class="code" href="structLinePrinter.html#a5c7e10eb69b0f8b39fe4ba92079e72f6" title="Prints a string on a new line, not overprinting previous output.">PrintOnNewLine</a>(<span class="stringliteral">&quot;&quot;</span>);
+<a name="l00141"></a>00141 
+<a name="l00142"></a>00142   <a class="code" href="structLinePrinter.html#a2a63e7af653f2d4f0cbea8ffa1e88235" title="Whether console is locked.">console_locked_</a> = locked;
+<a name="l00143"></a>00143 
+<a name="l00144"></a>00144   <span class="keywordflow">if</span> (!locked) {
+<a name="l00145"></a>00145     <a class="code" href="structLinePrinter.html#a5c7e10eb69b0f8b39fe4ba92079e72f6" title="Prints a string on a new line, not overprinting previous output.">PrintOnNewLine</a>(<a class="code" href="structLinePrinter.html#acade00d205f0cabdaa35ae43eee44486" title="Buffered console output while console is locked.">output_buffer_</a>);
+<a name="l00146"></a>00146     <span class="keywordflow">if</span> (!<a class="code" href="structLinePrinter.html#a015279ac89a05545ff5ac1fc1e002b3c" title="Buffered current line while console is locked.">line_buffer_</a>.empty()) {
+<a name="l00147"></a>00147       <a class="code" href="structLinePrinter.html#aa9f64b574d547d32748d2517e21beea5" title="Overprints the current line.">Print</a>(<a class="code" href="structLinePrinter.html#a015279ac89a05545ff5ac1fc1e002b3c" title="Buffered current line while console is locked.">line_buffer_</a>, <a class="code" href="structLinePrinter.html#ad362b4a3f321c2dd39bc1f356fc65dd6" title="Buffered line type while console is locked.">line_type_</a>);
+<a name="l00148"></a>00148     }
+<a name="l00149"></a>00149     <a class="code" href="structLinePrinter.html#acade00d205f0cabdaa35ae43eee44486" title="Buffered console output while console is locked.">output_buffer_</a>.clear();
+<a name="l00150"></a>00150     <a class="code" href="structLinePrinter.html#a015279ac89a05545ff5ac1fc1e002b3c" title="Buffered current line while console is locked.">line_buffer_</a>.clear();
+<a name="l00151"></a>00151   }
+<a name="l00152"></a>00152 }
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 12 2013 09:25:49 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 4 2014 09:13:00 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

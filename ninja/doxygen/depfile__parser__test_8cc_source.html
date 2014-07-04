@@ -117,90 +117,105 @@
 <a name="l00058"></a>00058   EXPECT_EQ(2u, parser_.ins_.size());
 <a name="l00059"></a>00059 }
 <a name="l00060"></a>00060 
-<a name="l00061"></a><a class="code" href="depfile__parser__test_8cc.html#a09bba3a33e5a712ac0c5451ca1639235">00061</a> <a class="code" href="build__test_8cc.html#aa2d4879a1416ae4b4db00986d0b091eb">TEST_F</a>(<a class="code" href="structDepfileParserTest.html">DepfileParserTest</a>, BackSlashes) {
+<a name="l00061"></a><a class="code" href="depfile__parser__test_8cc.html#a45071150560c6f2e8c3fe7d7d48fe789">00061</a> <a class="code" href="build__test_8cc.html#aa2d4879a1416ae4b4db00986d0b091eb">TEST_F</a>(<a class="code" href="structDepfileParserTest.html">DepfileParserTest</a>, CarriageReturnContinuation) {
 <a name="l00062"></a>00062   <span class="keywordtype">string</span> err;
 <a name="l00063"></a>00063   EXPECT_TRUE(Parse(
-<a name="l00064"></a>00064 <span class="stringliteral">&quot;Project\\Dir\\Build\\Release8\\Foo\\Foo.res : \\\n&quot;</span>
-<a name="l00065"></a>00065 <span class="stringliteral">&quot;  Dir\\Library\\Foo.rc \\\n&quot;</span>
-<a name="l00066"></a>00066 <span class="stringliteral">&quot;  Dir\\Library\\Version\\Bar.h \\\n&quot;</span>
-<a name="l00067"></a>00067 <span class="stringliteral">&quot;  Dir\\Library\\Foo.ico \\\n&quot;</span>
-<a name="l00068"></a>00068 <span class="stringliteral">&quot;  Project\\Thing\\Bar.tlb \\\n&quot;</span>,
-<a name="l00069"></a>00069       &amp;err));
-<a name="l00070"></a>00070   ASSERT_EQ(<span class="stringliteral">&quot;&quot;</span>, err);
-<a name="l00071"></a>00071   EXPECT_EQ(<span class="stringliteral">&quot;Project\\Dir\\Build\\Release8\\Foo\\Foo.res&quot;</span>,
-<a name="l00072"></a>00072             parser_.out_.AsString());
-<a name="l00073"></a>00073   EXPECT_EQ(4u, parser_.ins_.size());
-<a name="l00074"></a>00074 }
-<a name="l00075"></a>00075 
-<a name="l00076"></a><a class="code" href="depfile__parser__test_8cc.html#ae0eb55fa0040b00256ec7710258671eb">00076</a> <a class="code" href="build__test_8cc.html#aa2d4879a1416ae4b4db00986d0b091eb">TEST_F</a>(<a class="code" href="structDepfileParserTest.html">DepfileParserTest</a>, Spaces) {
-<a name="l00077"></a>00077   <span class="keywordtype">string</span> err;
-<a name="l00078"></a>00078   EXPECT_TRUE(Parse(
-<a name="l00079"></a>00079 <span class="stringliteral">&quot;a\\ bc\\ def:   a\\ b c d&quot;</span>,
+<a name="l00064"></a>00064 <span class="stringliteral">&quot;foo.o: \\\r\n&quot;</span>
+<a name="l00065"></a>00065 <span class="stringliteral">&quot;  bar.h baz.h\r\n&quot;</span>,
+<a name="l00066"></a>00066       &amp;err));
+<a name="l00067"></a>00067   ASSERT_EQ(<span class="stringliteral">&quot;&quot;</span>, err);
+<a name="l00068"></a>00068   EXPECT_EQ(<span class="stringliteral">&quot;foo.o&quot;</span>, parser_.out_.AsString());
+<a name="l00069"></a>00069   EXPECT_EQ(2u, parser_.ins_.size());
+<a name="l00070"></a>00070 }
+<a name="l00071"></a>00071 
+<a name="l00072"></a><a class="code" href="depfile__parser__test_8cc.html#a09bba3a33e5a712ac0c5451ca1639235">00072</a> <a class="code" href="build__test_8cc.html#aa2d4879a1416ae4b4db00986d0b091eb">TEST_F</a>(<a class="code" href="structDepfileParserTest.html">DepfileParserTest</a>, BackSlashes) {
+<a name="l00073"></a>00073   <span class="keywordtype">string</span> err;
+<a name="l00074"></a>00074   EXPECT_TRUE(Parse(
+<a name="l00075"></a>00075 <span class="stringliteral">&quot;Project\\Dir\\Build\\Release8\\Foo\\Foo.res : \\\n&quot;</span>
+<a name="l00076"></a>00076 <span class="stringliteral">&quot;  Dir\\Library\\Foo.rc \\\n&quot;</span>
+<a name="l00077"></a>00077 <span class="stringliteral">&quot;  Dir\\Library\\Version\\Bar.h \\\n&quot;</span>
+<a name="l00078"></a>00078 <span class="stringliteral">&quot;  Dir\\Library\\Foo.ico \\\n&quot;</span>
+<a name="l00079"></a>00079 <span class="stringliteral">&quot;  Project\\Thing\\Bar.tlb \\\n&quot;</span>,
 <a name="l00080"></a>00080       &amp;err));
 <a name="l00081"></a>00081   ASSERT_EQ(<span class="stringliteral">&quot;&quot;</span>, err);
-<a name="l00082"></a>00082   EXPECT_EQ(<span class="stringliteral">&quot;a bc def&quot;</span>,
+<a name="l00082"></a>00082   EXPECT_EQ(<span class="stringliteral">&quot;Project\\Dir\\Build\\Release8\\Foo\\Foo.res&quot;</span>,
 <a name="l00083"></a>00083             parser_.out_.AsString());
-<a name="l00084"></a>00084   ASSERT_EQ(3u, parser_.ins_.size());
-<a name="l00085"></a>00085   EXPECT_EQ(<span class="stringliteral">&quot;a b&quot;</span>,
-<a name="l00086"></a>00086             parser_.ins_[0].AsString());
-<a name="l00087"></a>00087   EXPECT_EQ(<span class="stringliteral">&quot;c&quot;</span>,
-<a name="l00088"></a>00088             parser_.ins_[1].AsString());
-<a name="l00089"></a>00089   EXPECT_EQ(<span class="stringliteral">&quot;d&quot;</span>,
-<a name="l00090"></a>00090             parser_.ins_[2].AsString());
-<a name="l00091"></a>00091 }
-<a name="l00092"></a>00092 
-<a name="l00093"></a><a class="code" href="depfile__parser__test_8cc.html#acc2e431a9864f366bfb325e026097ad0">00093</a> <a class="code" href="build__test_8cc.html#aa2d4879a1416ae4b4db00986d0b091eb">TEST_F</a>(<a class="code" href="structDepfileParserTest.html">DepfileParserTest</a>, Escapes) {
-<a name="l00094"></a>00094   <span class="comment">// Put backslashes before a variety of characters, see which ones make</span>
-<a name="l00095"></a>00095   <span class="comment">// it through.</span>
-<a name="l00096"></a>00096   <span class="keywordtype">string</span> err;
-<a name="l00097"></a>00097   EXPECT_TRUE(Parse(
-<a name="l00098"></a>00098 <span class="stringliteral">&quot;\\!\\@\\#$$\\%\\^\\&amp;\\\\&quot;</span>,
-<a name="l00099"></a>00099       &amp;err));
-<a name="l00100"></a>00100   ASSERT_EQ(<span class="stringliteral">&quot;&quot;</span>, err);
-<a name="l00101"></a>00101   EXPECT_EQ(<span class="stringliteral">&quot;\\!\\@#$\\%\\^\\&amp;\\&quot;</span>,
-<a name="l00102"></a>00102             parser_.out_.AsString());
-<a name="l00103"></a>00103   ASSERT_EQ(0u, parser_.ins_.size());
-<a name="l00104"></a>00104 }
-<a name="l00105"></a>00105 
-<a name="l00106"></a><a class="code" href="depfile__parser__test_8cc.html#a47aa6d3fdf793299de1f035ba8995fc1">00106</a> <a class="code" href="build__test_8cc.html#aa2d4879a1416ae4b4db00986d0b091eb">TEST_F</a>(<a class="code" href="structDepfileParserTest.html">DepfileParserTest</a>, SpecialChars) {
-<a name="l00107"></a>00107   <span class="comment">// See filenames like istreambuf.iterator_op!= in</span>
-<a name="l00108"></a>00108   <span class="comment">// https://github.com/google/libcxx/tree/master/test/iterators/stream.iterators/istreambuf.iterator/</span>
-<a name="l00109"></a>00109   <span class="keywordtype">string</span> err;
-<a name="l00110"></a>00110   EXPECT_TRUE(Parse(
-<a name="l00111"></a>00111 <span class="stringliteral">&quot;C:/Program\\ Files\\ (x86)/Microsoft\\ crtdefs.h: \n&quot;</span>
-<a name="l00112"></a>00112 <span class="stringliteral">&quot; en@quot.header~ t+t-x!=1&quot;</span>,
-<a name="l00113"></a>00113       &amp;err));
-<a name="l00114"></a>00114   ASSERT_EQ(<span class="stringliteral">&quot;&quot;</span>, err);
-<a name="l00115"></a>00115   EXPECT_EQ(<span class="stringliteral">&quot;C:/Program Files (x86)/Microsoft crtdefs.h&quot;</span>,
-<a name="l00116"></a>00116             parser_.out_.AsString());
-<a name="l00117"></a>00117   ASSERT_EQ(2u, parser_.ins_.size());
-<a name="l00118"></a>00118   EXPECT_EQ(<span class="stringliteral">&quot;en@quot.header~&quot;</span>,
-<a name="l00119"></a>00119             parser_.ins_[0].AsString());
-<a name="l00120"></a>00120   EXPECT_EQ(<span class="stringliteral">&quot;t+t-x!=1&quot;</span>,
-<a name="l00121"></a>00121             parser_.ins_[1].AsString());
-<a name="l00122"></a>00122 }
-<a name="l00123"></a>00123 
-<a name="l00124"></a><a class="code" href="depfile__parser__test_8cc.html#a9e0a7c7081762ca8c1c90fc257209994">00124</a> <a class="code" href="build__test_8cc.html#aa2d4879a1416ae4b4db00986d0b091eb">TEST_F</a>(<a class="code" href="structDepfileParserTest.html">DepfileParserTest</a>, UnifyMultipleOutputs) {
-<a name="l00125"></a>00125   <span class="comment">// check that multiple duplicate targets are properly unified</span>
-<a name="l00126"></a>00126   <span class="keywordtype">string</span> err;
-<a name="l00127"></a>00127   EXPECT_TRUE(Parse(<span class="stringliteral">&quot;foo foo: x y z&quot;</span>, &amp;err));
-<a name="l00128"></a>00128   ASSERT_EQ(parser_.out_.AsString(), <span class="stringliteral">&quot;foo&quot;</span>);
-<a name="l00129"></a>00129   ASSERT_EQ(parser_.ins_.size(), 3u);
-<a name="l00130"></a>00130   EXPECT_EQ(<span class="stringliteral">&quot;x&quot;</span>, parser_.ins_[0].AsString());
-<a name="l00131"></a>00131   EXPECT_EQ(<span class="stringliteral">&quot;y&quot;</span>, parser_.ins_[1].AsString());
-<a name="l00132"></a>00132   EXPECT_EQ(<span class="stringliteral">&quot;z&quot;</span>, parser_.ins_[2].AsString());
-<a name="l00133"></a>00133 }
-<a name="l00134"></a>00134 
-<a name="l00135"></a><a class="code" href="depfile__parser__test_8cc.html#a02e1a98d90f9c7725f57b297ee9f7831">00135</a> <a class="code" href="build__test_8cc.html#aa2d4879a1416ae4b4db00986d0b091eb">TEST_F</a>(<a class="code" href="structDepfileParserTest.html">DepfileParserTest</a>, RejectMultipleDifferentOutputs) {
-<a name="l00136"></a>00136   <span class="comment">// check that multiple different outputs are rejected by the parser</span>
-<a name="l00137"></a>00137   <span class="keywordtype">string</span> err;
-<a name="l00138"></a>00138   EXPECT_FALSE(Parse(<span class="stringliteral">&quot;foo bar: x y z&quot;</span>, &amp;err));
-<a name="l00139"></a>00139 }
+<a name="l00084"></a>00084   EXPECT_EQ(4u, parser_.ins_.size());
+<a name="l00085"></a>00085 }
+<a name="l00086"></a>00086 
+<a name="l00087"></a><a class="code" href="depfile__parser__test_8cc.html#ae0eb55fa0040b00256ec7710258671eb">00087</a> <a class="code" href="build__test_8cc.html#aa2d4879a1416ae4b4db00986d0b091eb">TEST_F</a>(<a class="code" href="structDepfileParserTest.html">DepfileParserTest</a>, Spaces) {
+<a name="l00088"></a>00088   <span class="keywordtype">string</span> err;
+<a name="l00089"></a>00089   EXPECT_TRUE(Parse(
+<a name="l00090"></a>00090 <span class="stringliteral">&quot;a\\ bc\\ def:   a\\ b c d&quot;</span>,
+<a name="l00091"></a>00091       &amp;err));
+<a name="l00092"></a>00092   ASSERT_EQ(<span class="stringliteral">&quot;&quot;</span>, err);
+<a name="l00093"></a>00093   EXPECT_EQ(<span class="stringliteral">&quot;a bc def&quot;</span>,
+<a name="l00094"></a>00094             parser_.out_.AsString());
+<a name="l00095"></a>00095   ASSERT_EQ(3u, parser_.ins_.size());
+<a name="l00096"></a>00096   EXPECT_EQ(<span class="stringliteral">&quot;a b&quot;</span>,
+<a name="l00097"></a>00097             parser_.ins_[0].AsString());
+<a name="l00098"></a>00098   EXPECT_EQ(<span class="stringliteral">&quot;c&quot;</span>,
+<a name="l00099"></a>00099             parser_.ins_[1].AsString());
+<a name="l00100"></a>00100   EXPECT_EQ(<span class="stringliteral">&quot;d&quot;</span>,
+<a name="l00101"></a>00101             parser_.ins_[2].AsString());
+<a name="l00102"></a>00102 }
+<a name="l00103"></a>00103 
+<a name="l00104"></a><a class="code" href="depfile__parser__test_8cc.html#acc2e431a9864f366bfb325e026097ad0">00104</a> <a class="code" href="build__test_8cc.html#aa2d4879a1416ae4b4db00986d0b091eb">TEST_F</a>(<a class="code" href="structDepfileParserTest.html">DepfileParserTest</a>, Escapes) {
+<a name="l00105"></a>00105   <span class="comment">// Put backslashes before a variety of characters, see which ones make</span>
+<a name="l00106"></a>00106   <span class="comment">// it through.</span>
+<a name="l00107"></a>00107   <span class="keywordtype">string</span> err;
+<a name="l00108"></a>00108   EXPECT_TRUE(Parse(
+<a name="l00109"></a>00109 <span class="stringliteral">&quot;\\!\\@\\#$$\\%\\^\\&amp;\\\\&quot;</span>,
+<a name="l00110"></a>00110       &amp;err));
+<a name="l00111"></a>00111   ASSERT_EQ(<span class="stringliteral">&quot;&quot;</span>, err);
+<a name="l00112"></a>00112   EXPECT_EQ(<span class="stringliteral">&quot;\\!\\@#$\\%\\^\\&amp;\\&quot;</span>,
+<a name="l00113"></a>00113             parser_.out_.AsString());
+<a name="l00114"></a>00114   ASSERT_EQ(0u, parser_.ins_.size());
+<a name="l00115"></a>00115 }
+<a name="l00116"></a>00116 
+<a name="l00117"></a><a class="code" href="depfile__parser__test_8cc.html#a47aa6d3fdf793299de1f035ba8995fc1">00117</a> <a class="code" href="build__test_8cc.html#aa2d4879a1416ae4b4db00986d0b091eb">TEST_F</a>(<a class="code" href="structDepfileParserTest.html">DepfileParserTest</a>, SpecialChars) {
+<a name="l00118"></a>00118   <span class="comment">// See filenames like istreambuf.iterator_op!= in</span>
+<a name="l00119"></a>00119   <span class="comment">// https://github.com/google/libcxx/tree/master/test/iterators/stream.iterators/istreambuf.iterator/</span>
+<a name="l00120"></a>00120   <span class="keywordtype">string</span> err;
+<a name="l00121"></a>00121   EXPECT_TRUE(Parse(
+<a name="l00122"></a>00122 <span class="stringliteral">&quot;C:/Program\\ Files\\ (x86)/Microsoft\\ crtdefs.h: \n&quot;</span>
+<a name="l00123"></a>00123 <span class="stringliteral">&quot; en@quot.header~ t+t-x!=1 \n&quot;</span>
+<a name="l00124"></a>00124 <span class="stringliteral">&quot; openldap/slapd.d/cn=config/cn=schema/cn={0}core.ldif&quot;</span>,
+<a name="l00125"></a>00125       &amp;err));
+<a name="l00126"></a>00126   ASSERT_EQ(<span class="stringliteral">&quot;&quot;</span>, err);
+<a name="l00127"></a>00127   EXPECT_EQ(<span class="stringliteral">&quot;C:/Program Files (x86)/Microsoft crtdefs.h&quot;</span>,
+<a name="l00128"></a>00128             parser_.out_.AsString());
+<a name="l00129"></a>00129   ASSERT_EQ(3u, parser_.ins_.size());
+<a name="l00130"></a>00130   EXPECT_EQ(<span class="stringliteral">&quot;en@quot.header~&quot;</span>,
+<a name="l00131"></a>00131             parser_.ins_[0].AsString());
+<a name="l00132"></a>00132   EXPECT_EQ(<span class="stringliteral">&quot;t+t-x!=1&quot;</span>,
+<a name="l00133"></a>00133             parser_.ins_[1].AsString());
+<a name="l00134"></a>00134   EXPECT_EQ(<span class="stringliteral">&quot;openldap/slapd.d/cn=config/cn=schema/cn={0}core.ldif&quot;</span>,
+<a name="l00135"></a>00135             parser_.ins_[2].AsString());
+<a name="l00136"></a>00136 }
+<a name="l00137"></a>00137 
+<a name="l00138"></a><a class="code" href="depfile__parser__test_8cc.html#a9e0a7c7081762ca8c1c90fc257209994">00138</a> <a class="code" href="build__test_8cc.html#aa2d4879a1416ae4b4db00986d0b091eb">TEST_F</a>(<a class="code" href="structDepfileParserTest.html">DepfileParserTest</a>, UnifyMultipleOutputs) {
+<a name="l00139"></a>00139   <span class="comment">// check that multiple duplicate targets are properly unified</span>
+<a name="l00140"></a>00140   <span class="keywordtype">string</span> err;
+<a name="l00141"></a>00141   EXPECT_TRUE(Parse(<span class="stringliteral">&quot;foo foo: x y z&quot;</span>, &amp;err));
+<a name="l00142"></a>00142   ASSERT_EQ(parser_.out_.AsString(), <span class="stringliteral">&quot;foo&quot;</span>);
+<a name="l00143"></a>00143   ASSERT_EQ(parser_.ins_.size(), 3u);
+<a name="l00144"></a>00144   EXPECT_EQ(<span class="stringliteral">&quot;x&quot;</span>, parser_.ins_[0].AsString());
+<a name="l00145"></a>00145   EXPECT_EQ(<span class="stringliteral">&quot;y&quot;</span>, parser_.ins_[1].AsString());
+<a name="l00146"></a>00146   EXPECT_EQ(<span class="stringliteral">&quot;z&quot;</span>, parser_.ins_[2].AsString());
+<a name="l00147"></a>00147 }
+<a name="l00148"></a>00148 
+<a name="l00149"></a><a class="code" href="depfile__parser__test_8cc.html#a02e1a98d90f9c7725f57b297ee9f7831">00149</a> <a class="code" href="build__test_8cc.html#aa2d4879a1416ae4b4db00986d0b091eb">TEST_F</a>(<a class="code" href="structDepfileParserTest.html">DepfileParserTest</a>, RejectMultipleDifferentOutputs) {
+<a name="l00150"></a>00150   <span class="comment">// check that multiple different outputs are rejected by the parser</span>
+<a name="l00151"></a>00151   <span class="keywordtype">string</span> err;
+<a name="l00152"></a>00152   EXPECT_FALSE(Parse(<span class="stringliteral">&quot;foo bar: x y z&quot;</span>, &amp;err));
+<a name="l00153"></a>00153   ASSERT_EQ(<span class="stringliteral">&quot;depfile has multiple output paths&quot;</span>, err);
+<a name="l00154"></a>00154 }
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 12 2013 09:25:49 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 4 2014 09:13:00 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

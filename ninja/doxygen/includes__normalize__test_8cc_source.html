@@ -97,7 +97,7 @@
 <a name="l00038"></a>00038 }  <span class="comment">// namespace</span>
 <a name="l00039"></a>00039 
 <a name="l00040"></a><a class="code" href="includes__normalize__test_8cc.html#a784464de0baf6a379666cfdeb0bd235e">00040</a> <a class="code" href="edit__distance__test_8cc.html#acc15124a049279589669c052c0f26149">TEST</a>(<a class="code" href="structIncludesNormalize.html" title="Utility functions for normalizing include paths on Windows.">IncludesNormalize</a>, WithRelative) {
-<a name="l00041"></a>00041   <span class="keywordtype">string</span> currentdir = <a class="code" href="structIncludesNormalize.html#aeb82c00359415b8ad6d33056e10b9410">IncludesNormalize::ToLower</a>(GetCurDir());
+<a name="l00041"></a>00041   <span class="keywordtype">string</span> currentdir = GetCurDir();
 <a name="l00042"></a>00042   EXPECT_EQ(<span class="stringliteral">&quot;c&quot;</span>, <a class="code" href="structIncludesNormalize.html#a8dafb93f3dbdf39aabe0a5fe5390604a" title="Normalize by fixing slashes style, fixing redundant .">IncludesNormalize::Normalize</a>(<span class="stringliteral">&quot;a/b/c&quot;</span>, <span class="stringliteral">&quot;a/b&quot;</span>));
 <a name="l00043"></a>00043   EXPECT_EQ(<span class="stringliteral">&quot;a&quot;</span>, <a class="code" href="structIncludesNormalize.html#a8dafb93f3dbdf39aabe0a5fe5390604a" title="Normalize by fixing slashes style, fixing redundant .">IncludesNormalize::Normalize</a>(<a class="code" href="structIncludesNormalize.html#a324a92d846f08239426297eb710ab6f5">IncludesNormalize::AbsPath</a>(<span class="stringliteral">&quot;a&quot;</span>),
 <a name="l00044"></a>00044                                               NULL));
@@ -165,7 +165,7 @@
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 12 2013 09:25:49 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 4 2014 09:13:00 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

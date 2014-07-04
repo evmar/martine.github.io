@@ -89,7 +89,7 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structState.html#af849053c8ba18467e230483fc9e3ae61">Dump</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Dump the nodes and Pools (useful for debugging).  <a href="#af849053c8ba18467e230483fc9e3ae61"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structNode.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structState.html#a56b8860c41946bdda3f08809ec9f7e5e">GetNode</a> (<a class="el" href="structStringPiece.html">StringPiece</a> path)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structNode.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structState.html#a76435f4f2516b38c28c731a7bac862e7">LookupNode</a> (<a class="el" href="structStringPiece.html">StringPiece</a> path)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structNode.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structState.html#a9b89c1d3065f1c2100d16a41c1602ac5">LookupNode</a> (<a class="el" href="structStringPiece.html">StringPiece</a> path) const </td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structPool.html">Pool</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structState.html#af0c244d916af2ad290131ba85c15bf3f">LookupPool</a> (const string &amp;pool_name)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structRule.html">Rule</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structState.html#abe8dfcbd700a01cb0e28f730055bf14c">LookupRule</a> (const string &amp;rule_name)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structState.html#af0e2f344aff3b2a500637fe62d30bba2">Reset</a> ()</td></tr>
@@ -110,6 +110,7 @@ Public Attributes</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">All the rules used in the graph.  <a href="#a7853ca22a4a26bea1ea0e2b10a033e4a"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structPool.html">Pool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structState.html#a1bfd2a655955c711d114b89e72115e75">kConsolePool</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static <a class="el" href="structPool.html">Pool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structState.html#a52ef5a6c1a831f6677114321364a44d6">kDefaultPool</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static const <a class="el" href="structRule.html">Rule</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structState.html#a9522a499bd62121a14e00a3016fa0599">kPhonyRule</a></td></tr>
 </table>
@@ -131,7 +132,7 @@ Static Public Attributes</h2></td></tr>
 
 <p>Mapping of path -&gt; <a class="el" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>. </p>
 
-<p>Definition at line <a class="el" href="state_8h_source.html#l00118">118</a> of file <a class="el" href="state_8h_source.html">state.h</a>.</p>
+<p>Definition at line <a class="el" href="state_8h_source.html#l00119">119</a> of file <a class="el" href="state_8h_source.html">state.h</a>.</p>
 
 </div>
 </div>
@@ -150,9 +151,9 @@ Static Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="state_8cc_source.html#l00074">74</a> of file <a class="el" href="state_8cc_source.html">state.cc</a>.</p>
+<p>Definition at line <a class="el" href="state_8cc_source.html#l00075">75</a> of file <a class="el" href="state_8cc_source.html">state.cc</a>.</p>
 
-<p>References <a class="el" href="state_8cc_source.html#l00091">AddPool()</a>, <a class="el" href="state_8cc_source.html#l00079">AddRule()</a>, <a class="el" href="state_8h_source.html#l00084">kDefaultPool</a>, and <a class="el" href="state_8h_source.html#l00085">kPhonyRule</a>.</p>
+<p>References <a class="el" href="state_8cc_source.html#l00093">AddPool()</a>, <a class="el" href="state_8cc_source.html#l00081">AddRule()</a>, <a class="el" href="state_8h_source.html#l00085">kConsolePool</a>, <a class="el" href="state_8h_source.html#l00084">kDefaultPool</a>, and <a class="el" href="state_8h_source.html#l00086">kPhonyRule</a>.</p>
 
 </div>
 </div>
@@ -182,9 +183,9 @@ Static Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="state_8cc_source.html#l00164">164</a> of file <a class="el" href="state_8cc_source.html">state.cc</a>.</p>
+<p>Definition at line <a class="el" href="state_8cc_source.html#l00166">166</a> of file <a class="el" href="state_8cc_source.html">state.cc</a>.</p>
 
-<p>References <a class="el" href="string__piece_8h_source.html#l00045">StringPiece::AsString()</a>, <a class="el" href="state_8h_source.html#l00131">defaults_</a>, and <a class="el" href="state_8cc_source.html#l00121">LookupNode()</a>.</p>
+<p>References <a class="el" href="string__piece_8h_source.html#l00045">StringPiece::AsString()</a>, <a class="el" href="state_8h_source.html#l00132">defaults_</a>, and <a class="el" href="state_8cc_source.html#l00123">LookupNode()</a>.</p>
 
 <p>Referenced by <a class="el" href="manifest__parser_8cc_source.html#l00202">ManifestParser::ParseDefault()</a>.</p>
 
@@ -205,11 +206,11 @@ Static Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="state_8cc_source.html#l00103">103</a> of file <a class="el" href="state_8cc_source.html">state.cc</a>.</p>
+<p>Definition at line <a class="el" href="state_8cc_source.html#l00105">105</a> of file <a class="el" href="state_8cc_source.html">state.cc</a>.</p>
 
-<p>References <a class="el" href="state_8h_source.html#l00130">bindings_</a>, <a class="el" href="state_8h_source.html#l00128">edges_</a>, <a class="el" href="graph_8h_source.html#l00158">Edge::env_</a>, <a class="el" href="state_8h_source.html#l00084">kDefaultPool</a>, <a class="el" href="graph_8h_source.html#l00155">Edge::pool_</a>, and <a class="el" href="graph_8h_source.html#l00154">Edge::rule_</a>.</p>
+<p>References <a class="el" href="state_8h_source.html#l00131">bindings_</a>, <a class="el" href="state_8h_source.html#l00129">edges_</a>, <a class="el" href="graph_8h_source.html#l00164">Edge::env_</a>, <a class="el" href="state_8h_source.html#l00084">kDefaultPool</a>, <a class="el" href="graph_8h_source.html#l00161">Edge::pool_</a>, and <a class="el" href="graph_8h_source.html#l00160">Edge::rule_</a>.</p>
 
-<p>Referenced by <a class="el" href="graph_8cc_source.html#l00425">ImplicitDepLoader::CreatePhonyInEdge()</a>, and <a class="el" href="manifest__parser_8cc_source.html#l00228">ManifestParser::ParseEdge()</a>.</p>
+<p>Referenced by <a class="el" href="graph_8cc_source.html#l00445">ImplicitDepLoader::CreatePhonyInEdge()</a>, and <a class="el" href="manifest__parser_8cc_source.html#l00228">ManifestParser::ParseEdge()</a>.</p>
 
 </div>
 </div>
@@ -238,9 +239,9 @@ Static Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="state_8cc_source.html#l00146">146</a> of file <a class="el" href="state_8cc_source.html">state.cc</a>.</p>
+<p>Definition at line <a class="el" href="state_8cc_source.html#l00148">148</a> of file <a class="el" href="state_8cc_source.html">state.cc</a>.</p>
 
-<p>References <a class="el" href="graph_8h_source.html#l00087">Node::AddOutEdge()</a>, <a class="el" href="state_8cc_source.html#l00112">GetNode()</a>, and <a class="el" href="graph_8h_source.html#l00156">Edge::inputs_</a>.</p>
+<p>References <a class="el" href="graph_8h_source.html#l00087">Node::AddOutEdge()</a>, <a class="el" href="state_8cc_source.html#l00114">GetNode()</a>, and <a class="el" href="graph_8h_source.html#l00162">Edge::inputs_</a>.</p>
 
 <p>Referenced by <a class="el" href="manifest__parser_8cc_source.html#l00228">ManifestParser::ParseEdge()</a>.</p>
 
@@ -271,9 +272,9 @@ Static Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="state_8cc_source.html#l00152">152</a> of file <a class="el" href="state_8cc_source.html">state.cc</a>.</p>
+<p>Definition at line <a class="el" href="state_8cc_source.html#l00154">154</a> of file <a class="el" href="state_8cc_source.html">state.cc</a>.</p>
 
-<p>References <a class="el" href="string__piece_8h_source.html#l00045">StringPiece::AsString()</a>, <a class="el" href="state_8cc_source.html#l00112">GetNode()</a>, <a class="el" href="graph_8h_source.html#l00080">Node::in_edge()</a>, <a class="el" href="graph_8h_source.html#l00157">Edge::outputs_</a>, <a class="el" href="graph_8h_source.html#l00081">Node::set_in_edge()</a>, and <a class="el" href="util_8cc_source.html#l00069">Warning()</a>.</p>
+<p>References <a class="el" href="string__piece_8h_source.html#l00045">StringPiece::AsString()</a>, <a class="el" href="state_8cc_source.html#l00114">GetNode()</a>, <a class="el" href="graph_8h_source.html#l00080">Node::in_edge()</a>, <a class="el" href="graph_8h_source.html#l00163">Edge::outputs_</a>, <a class="el" href="graph_8h_source.html#l00081">Node::set_in_edge()</a>, and <a class="el" href="util_8cc_source.html#l00070">Warning()</a>.</p>
 
 <p>Referenced by <a class="el" href="manifest__parser_8cc_source.html#l00228">ManifestParser::ParseEdge()</a>.</p>
 
@@ -294,11 +295,11 @@ Static Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="state_8cc_source.html#l00091">91</a> of file <a class="el" href="state_8cc_source.html">state.cc</a>.</p>
+<p>Definition at line <a class="el" href="state_8cc_source.html#l00093">93</a> of file <a class="el" href="state_8cc_source.html">state.cc</a>.</p>
 
-<p>References <a class="el" href="state_8cc_source.html#l00096">LookupPool()</a>, <a class="el" href="state_8h_source.html#l00046">Pool::name()</a>, and <a class="el" href="state_8h_source.html#l00125">pools_</a>.</p>
+<p>References <a class="el" href="state_8cc_source.html#l00098">LookupPool()</a>, <a class="el" href="state_8h_source.html#l00046">Pool::name()</a>, and <a class="el" href="state_8h_source.html#l00126">pools_</a>.</p>
 
-<p>Referenced by <a class="el" href="manifest__parser_8cc_source.html#l00114">ManifestParser::ParsePool()</a>, and <a class="el" href="state_8cc_source.html#l00074">State()</a>.</p>
+<p>Referenced by <a class="el" href="manifest__parser_8cc_source.html#l00114">ManifestParser::ParsePool()</a>, and <a class="el" href="state_8cc_source.html#l00075">State()</a>.</p>
 
 </div>
 </div>
@@ -317,11 +318,11 @@ Static Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="state_8cc_source.html#l00079">79</a> of file <a class="el" href="state_8cc_source.html">state.cc</a>.</p>
+<p>Definition at line <a class="el" href="state_8cc_source.html#l00081">81</a> of file <a class="el" href="state_8cc_source.html">state.cc</a>.</p>
 
-<p>References <a class="el" href="state_8cc_source.html#l00084">LookupRule()</a>, <a class="el" href="graph_8h_source.html#l00119">Rule::name()</a>, and <a class="el" href="state_8h_source.html#l00122">rules_</a>.</p>
+<p>References <a class="el" href="state_8cc_source.html#l00086">LookupRule()</a>, <a class="el" href="graph_8h_source.html#l00119">Rule::name()</a>, and <a class="el" href="state_8h_source.html#l00123">rules_</a>.</p>
 
-<p>Referenced by <a class="el" href="manifest__parser_8cc_source.html#l00151">ManifestParser::ParseRule()</a>, and <a class="el" href="state_8cc_source.html#l00074">State()</a>.</p>
+<p>Referenced by <a class="el" href="manifest__parser_8cc_source.html#l00151">ManifestParser::ParseRule()</a>, and <a class="el" href="state_8cc_source.html#l00075">State()</a>.</p>
 
 </div>
 </div>
@@ -340,9 +341,9 @@ Static Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="state_8cc_source.html#l00192">192</a> of file <a class="el" href="state_8cc_source.html">state.cc</a>.</p>
+<p>Definition at line <a class="el" href="state_8cc_source.html#l00194">194</a> of file <a class="el" href="state_8cc_source.html">state.cc</a>.</p>
 
-<p>References <a class="el" href="state_8h_source.html#l00131">defaults_</a>, and <a class="el" href="state_8cc_source.html#l00174">RootNodes()</a>.</p>
+<p>References <a class="el" href="state_8h_source.html#l00132">defaults_</a>, and <a class="el" href="state_8cc_source.html#l00176">RootNodes()</a>.</p>
 
 </div>
 </div>
@@ -362,9 +363,9 @@ Static Public Attributes</h2></td></tr>
 
 <p>Dump the nodes and Pools (useful for debugging). </p>
 
-<p>Definition at line <a class="el" href="state_8cc_source.html#l00203">203</a> of file <a class="el" href="state_8cc_source.html">state.cc</a>.</p>
+<p>Definition at line <a class="el" href="state_8cc_source.html#l00205">205</a> of file <a class="el" href="state_8cc_source.html">state.cc</a>.</p>
 
-<p>References <a class="el" href="graph_8h_source.html#l00076">Node::dirty()</a>, <a class="el" href="graph_8h_source.html#l00083">Node::id()</a>, <a class="el" href="graph_8h_source.html#l00073">Node::path()</a>, <a class="el" href="state_8h_source.html#l00119">paths_</a>, <a class="el" href="state_8h_source.html#l00125">pools_</a>, and <a class="el" href="graph_8h_source.html#l00069">Node::status_known()</a>.</p>
+<p>References <a class="el" href="graph_8h_source.html#l00076">Node::dirty()</a>, <a class="el" href="graph_8h_source.html#l00083">Node::id()</a>, <a class="el" href="graph_8h_source.html#l00073">Node::path()</a>, <a class="el" href="state_8h_source.html#l00120">paths_</a>, <a class="el" href="state_8h_source.html#l00126">pools_</a>, and <a class="el" href="graph_8h_source.html#l00069">Node::status_known()</a>.</p>
 
 </div>
 </div>
@@ -383,34 +384,34 @@ Static Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="state_8cc_source.html#l00112">112</a> of file <a class="el" href="state_8cc_source.html">state.cc</a>.</p>
+<p>Definition at line <a class="el" href="state_8cc_source.html#l00114">114</a> of file <a class="el" href="state_8cc_source.html">state.cc</a>.</p>
 
-<p>References <a class="el" href="string__piece_8h_source.html#l00045">StringPiece::AsString()</a>, <a class="el" href="state_8cc_source.html#l00121">LookupNode()</a>, <a class="el" href="graph_8h_source.html#l00073">Node::path()</a>, and <a class="el" href="state_8h_source.html#l00119">paths_</a>.</p>
+<p>References <a class="el" href="string__piece_8h_source.html#l00045">StringPiece::AsString()</a>, <a class="el" href="state_8cc_source.html#l00123">LookupNode()</a>, <a class="el" href="graph_8h_source.html#l00073">Node::path()</a>, and <a class="el" href="state_8h_source.html#l00120">paths_</a>.</p>
 
-<p>Referenced by <a class="el" href="state_8cc_source.html#l00146">AddIn()</a>, <a class="el" href="state_8cc_source.html#l00152">AddOut()</a>, <a class="el" href="build_8cc_source.html#l00803">Builder::ExtractDeps()</a>, <a class="el" href="test_8cc_source.html#l00086">StateTestWithBuiltinRules::GetNode()</a>, <a class="el" href="deps__log_8cc_source.html#l00164">DepsLog::Load()</a>, <a class="el" href="graph_8cc_source.html#l00341">ImplicitDepLoader::LoadDepFile()</a>, and <a class="el" href="build__test_8cc_source.html#l01776">TEST_F()</a>.</p>
+<p>Referenced by <a class="el" href="state_8cc_source.html#l00148">AddIn()</a>, <a class="el" href="state_8cc_source.html#l00154">AddOut()</a>, <a class="el" href="build_8cc_source.html#l00815">Builder::ExtractDeps()</a>, <a class="el" href="test_8cc_source.html#l00086">StateTestWithBuiltinRules::GetNode()</a>, <a class="el" href="deps__log_8cc_source.html#l00164">DepsLog::Load()</a>, <a class="el" href="graph_8cc_source.html#l00361">ImplicitDepLoader::LoadDepFile()</a>, and <a class="el" href="build__test_8cc_source.html#l01814">TEST_F()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="a76435f4f2516b38c28c731a7bac862e7"></a><!-- doxytag: member="State::LookupNode" ref="a76435f4f2516b38c28c731a7bac862e7" args="(StringPiece path)" -->
+<a class="anchor" id="a9b89c1d3065f1c2100d16a41c1602ac5"></a><!-- doxytag: member="State::LookupNode" ref="a9b89c1d3065f1c2100d16a41c1602ac5" args="(StringPiece path) const " -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structNode.html">Node</a> * <a class="el" href="structState.html#a76435f4f2516b38c28c731a7bac862e7">State::LookupNode</a> </td>
+          <td class="memname"><a class="el" href="structNode.html">Node</a> * <a class="el" href="structState.html#a9b89c1d3065f1c2100d16a41c1602ac5">State::LookupNode</a> </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structStringPiece.html">StringPiece</a>&#160;</td>
           <td class="paramname"><em>path</em></td><td>)</td>
-          <td></td>
+          <td> const</td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="state_8cc_source.html#l00121">121</a> of file <a class="el" href="state_8cc_source.html">state.cc</a>.</p>
+<p>Definition at line <a class="el" href="state_8cc_source.html#l00123">123</a> of file <a class="el" href="state_8cc_source.html">state.cc</a>.</p>
 
-<p>References <a class="el" href="metrics_8h_source.html#l00085">METRIC_RECORD</a>, and <a class="el" href="state_8h_source.html#l00119">paths_</a>.</p>
+<p>References <a class="el" href="metrics_8h_source.html#l00085">METRIC_RECORD</a>, and <a class="el" href="state_8h_source.html#l00120">paths_</a>.</p>
 
-<p>Referenced by <a class="el" href="state_8cc_source.html#l00164">AddDefault()</a>, <a class="el" href="build_8cc_source.html#l00558">Builder::AddTarget()</a>, <a class="el" href="clean_8cc_source.html#l00161">Cleaner::CleanTarget()</a>, <a class="el" href="clean_8cc_source.html#l00175">Cleaner::CleanTargets()</a>, and <a class="el" href="state_8cc_source.html#l00112">GetNode()</a>.</p>
+<p>Referenced by <a class="el" href="state_8cc_source.html#l00166">AddDefault()</a>, <a class="el" href="build_8cc_source.html#l00565">Builder::AddTarget()</a>, <a class="el" href="clean_8cc_source.html#l00161">Cleaner::CleanTarget()</a>, <a class="el" href="clean_8cc_source.html#l00175">Cleaner::CleanTargets()</a>, and <a class="el" href="state_8cc_source.html#l00114">GetNode()</a>.</p>
 
 </div>
 </div>
@@ -429,11 +430,11 @@ Static Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="state_8cc_source.html#l00096">96</a> of file <a class="el" href="state_8cc_source.html">state.cc</a>.</p>
+<p>Definition at line <a class="el" href="state_8cc_source.html#l00098">98</a> of file <a class="el" href="state_8cc_source.html">state.cc</a>.</p>
 
-<p>References <a class="el" href="state_8h_source.html#l00125">pools_</a>.</p>
+<p>References <a class="el" href="state_8h_source.html#l00126">pools_</a>.</p>
 
-<p>Referenced by <a class="el" href="state_8cc_source.html#l00091">AddPool()</a>, <a class="el" href="manifest__parser_8cc_source.html#l00228">ManifestParser::ParseEdge()</a>, and <a class="el" href="manifest__parser_8cc_source.html#l00114">ManifestParser::ParsePool()</a>.</p>
+<p>Referenced by <a class="el" href="state_8cc_source.html#l00093">AddPool()</a>, <a class="el" href="manifest__parser_8cc_source.html#l00228">ManifestParser::ParseEdge()</a>, and <a class="el" href="manifest__parser_8cc_source.html#l00114">ManifestParser::ParsePool()</a>.</p>
 
 </div>
 </div>
@@ -452,11 +453,11 @@ Static Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="state_8cc_source.html#l00084">84</a> of file <a class="el" href="state_8cc_source.html">state.cc</a>.</p>
+<p>Definition at line <a class="el" href="state_8cc_source.html#l00086">86</a> of file <a class="el" href="state_8cc_source.html">state.cc</a>.</p>
 
-<p>References <a class="el" href="state_8h_source.html#l00122">rules_</a>.</p>
+<p>References <a class="el" href="state_8h_source.html#l00123">rules_</a>.</p>
 
-<p>Referenced by <a class="el" href="state_8cc_source.html#l00079">AddRule()</a>, <a class="el" href="clean_8cc_source.html#l00219">Cleaner::CleanRule()</a>, <a class="el" href="clean_8cc_source.html#l00233">Cleaner::CleanRules()</a>, <a class="el" href="manifest__parser_8cc_source.html#l00228">ManifestParser::ParseEdge()</a>, and <a class="el" href="manifest__parser_8cc_source.html#l00151">ManifestParser::ParseRule()</a>.</p>
+<p>Referenced by <a class="el" href="state_8cc_source.html#l00081">AddRule()</a>, <a class="el" href="clean_8cc_source.html#l00219">Cleaner::CleanRule()</a>, <a class="el" href="clean_8cc_source.html#l00233">Cleaner::CleanRules()</a>, <a class="el" href="manifest__parser_8cc_source.html#l00228">ManifestParser::ParseEdge()</a>, and <a class="el" href="manifest__parser_8cc_source.html#l00151">ManifestParser::ParseRule()</a>.</p>
 
 </div>
 </div>
@@ -477,9 +478,9 @@ Static Public Attributes</h2></td></tr>
 <p>Reset state. </p>
 <p>Keeps all nodes and edges, but restores them to the state where we haven't yet examined the disk for dirty state. </p>
 
-<p>Definition at line <a class="el" href="state_8cc_source.html#l00196">196</a> of file <a class="el" href="state_8cc_source.html">state.cc</a>.</p>
+<p>Definition at line <a class="el" href="state_8cc_source.html#l00198">198</a> of file <a class="el" href="state_8cc_source.html">state.cc</a>.</p>
 
-<p>References <a class="el" href="state_8h_source.html#l00128">edges_</a>, and <a class="el" href="state_8h_source.html#l00119">paths_</a>.</p>
+<p>References <a class="el" href="state_8h_source.html#l00129">edges_</a>, and <a class="el" href="state_8h_source.html#l00120">paths_</a>.</p>
 
 </div>
 </div>
@@ -505,11 +506,11 @@ Static Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="state_8cc_source.html#l00174">174</a> of file <a class="el" href="state_8cc_source.html">state.cc</a>.</p>
+<p>Definition at line <a class="el" href="state_8cc_source.html#l00176">176</a> of file <a class="el" href="state_8cc_source.html">state.cc</a>.</p>
 
-<p>References <a class="el" href="state_8h_source.html#l00128">edges_</a>.</p>
+<p>References <a class="el" href="state_8h_source.html#l00129">edges_</a>.</p>
 
-<p>Referenced by <a class="el" href="state_8cc_source.html#l00192">DefaultNodes()</a>.</p>
+<p>Referenced by <a class="el" href="state_8cc_source.html#l00194">DefaultNodes()</a>.</p>
 
 </div>
 </div>
@@ -528,9 +529,9 @@ Static Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="state_8cc_source.html#l00129">129</a> of file <a class="el" href="state_8cc_source.html">state.cc</a>.</p>
+<p>Definition at line <a class="el" href="state_8cc_source.html#l00131">131</a> of file <a class="el" href="state_8cc_source.html">state.cc</a>.</p>
 
-<p>References <a class="el" href="edit__distance_8cc_source.html#l00019">EditDistance()</a>, and <a class="el" href="state_8h_source.html#l00119">paths_</a>.</p>
+<p>References <a class="el" href="edit__distance_8cc_source.html#l00020">EditDistance()</a>, and <a class="el" href="state_8h_source.html#l00120">paths_</a>.</p>
 
 </div>
 </div>
@@ -546,9 +547,9 @@ Static Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="state_8h_source.html#l00130">130</a> of file <a class="el" href="state_8h_source.html">state.h</a>.</p>
+<p>Definition at line <a class="el" href="state_8h_source.html#l00131">131</a> of file <a class="el" href="state_8h_source.html">state.h</a>.</p>
 
-<p>Referenced by <a class="el" href="state_8cc_source.html#l00103">AddEdge()</a>, and <a class="el" href="manifest__parser_8cc_source.html#l00027">ManifestParser::ManifestParser()</a>.</p>
+<p>Referenced by <a class="el" href="state_8cc_source.html#l00105">AddEdge()</a>, and <a class="el" href="manifest__parser_8cc_source.html#l00027">ManifestParser::ManifestParser()</a>.</p>
 
 </div>
 </div>
@@ -563,9 +564,9 @@ Static Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="state_8h_source.html#l00131">131</a> of file <a class="el" href="state_8h_source.html">state.h</a>.</p>
+<p>Definition at line <a class="el" href="state_8h_source.html#l00132">132</a> of file <a class="el" href="state_8h_source.html">state.h</a>.</p>
 
-<p>Referenced by <a class="el" href="state_8cc_source.html#l00164">AddDefault()</a>, and <a class="el" href="state_8cc_source.html#l00192">DefaultNodes()</a>.</p>
+<p>Referenced by <a class="el" href="state_8cc_source.html#l00166">AddDefault()</a>, and <a class="el" href="state_8cc_source.html#l00194">DefaultNodes()</a>.</p>
 
 </div>
 </div>
@@ -582,9 +583,26 @@ Static Public Attributes</h2></td></tr>
 
 <p>All the edges of the graph. </p>
 
-<p>Definition at line <a class="el" href="state_8h_source.html#l00128">128</a> of file <a class="el" href="state_8h_source.html">state.h</a>.</p>
+<p>Definition at line <a class="el" href="state_8h_source.html#l00129">129</a> of file <a class="el" href="state_8h_source.html">state.h</a>.</p>
 
-<p>Referenced by <a class="el" href="state_8cc_source.html#l00103">AddEdge()</a>, <a class="el" href="clean_8cc_source.html#l00108">Cleaner::CleanAll()</a>, <a class="el" href="clean_8cc_source.html#l00194">Cleaner::DoCleanRule()</a>, <a class="el" href="state_8cc_source.html#l00196">Reset()</a>, <a class="el" href="state_8cc_source.html#l00174">RootNodes()</a>, <a class="el" href="build__test_8cc_source.html#l01776">TEST_F()</a>, and <a class="el" href="build__log__perftest_8cc_source.html#l00031">WriteTestData()</a>.</p>
+<p>Referenced by <a class="el" href="state_8cc_source.html#l00105">AddEdge()</a>, <a class="el" href="clean_8cc_source.html#l00108">Cleaner::CleanAll()</a>, <a class="el" href="clean_8cc_source.html#l00194">Cleaner::DoCleanRule()</a>, <a class="el" href="manifest__parser__perftest_8cc_source.html#l00056">LoadManifests()</a>, <a class="el" href="state_8cc_source.html#l00198">Reset()</a>, <a class="el" href="state_8cc_source.html#l00176">RootNodes()</a>, <a class="el" href="build__test_8cc_source.html#l01814">TEST_F()</a>, and <a class="el" href="build__log__perftest_8cc_source.html#l00035">WriteTestData()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1bfd2a655955c711d114b89e72115e75"></a><!-- doxytag: member="State::kConsolePool" ref="a1bfd2a655955c711d114b89e72115e75" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structPool.html">Pool</a> <a class="el" href="structState.html#a1bfd2a655955c711d114b89e72115e75">State::kConsolePool</a><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="state_8h_source.html#l00085">85</a> of file <a class="el" href="state_8h_source.html">state.h</a>.</p>
+
+<p>Referenced by <a class="el" href="state_8cc_source.html#l00075">State()</a>, and <a class="el" href="graph_8cc_source.html#l00327">Edge::use_console()</a>.</p>
 
 </div>
 </div>
@@ -601,7 +619,7 @@ Static Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="state_8h_source.html#l00084">84</a> of file <a class="el" href="state_8h_source.html">state.h</a>.</p>
 
-<p>Referenced by <a class="el" href="state_8cc_source.html#l00103">AddEdge()</a>, and <a class="el" href="state_8cc_source.html#l00074">State()</a>.</p>
+<p>Referenced by <a class="el" href="state_8cc_source.html#l00105">AddEdge()</a>, and <a class="el" href="state_8cc_source.html#l00075">State()</a>.</p>
 
 </div>
 </div>
@@ -616,9 +634,9 @@ Static Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="state_8h_source.html#l00085">85</a> of file <a class="el" href="state_8h_source.html">state.h</a>.</p>
+<p>Definition at line <a class="el" href="state_8h_source.html#l00086">86</a> of file <a class="el" href="state_8h_source.html">state.h</a>.</p>
 
-<p>Referenced by <a class="el" href="graph_8cc_source.html#l00425">ImplicitDepLoader::CreatePhonyInEdge()</a>, <a class="el" href="graph_8cc_source.html#l00307">Edge::is_phony()</a>, and <a class="el" href="state_8cc_source.html#l00074">State()</a>.</p>
+<p>Referenced by <a class="el" href="graph_8cc_source.html#l00445">ImplicitDepLoader::CreatePhonyInEdge()</a>, <a class="el" href="graph_8cc_source.html#l00323">Edge::is_phony()</a>, and <a class="el" href="state_8cc_source.html#l00075">State()</a>.</p>
 
 </div>
 </div>
@@ -633,9 +651,9 @@ Static Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="state_8h_source.html#l00119">119</a> of file <a class="el" href="state_8h_source.html">state.h</a>.</p>
+<p>Definition at line <a class="el" href="state_8h_source.html#l00120">120</a> of file <a class="el" href="state_8h_source.html">state.h</a>.</p>
 
-<p>Referenced by <a class="el" href="state_8cc_source.html#l00203">Dump()</a>, <a class="el" href="state_8cc_source.html#l00112">GetNode()</a>, <a class="el" href="state_8cc_source.html#l00121">LookupNode()</a>, <a class="el" href="state_8cc_source.html#l00196">Reset()</a>, and <a class="el" href="state_8cc_source.html#l00129">SpellcheckNode()</a>.</p>
+<p>Referenced by <a class="el" href="state_8cc_source.html#l00205">Dump()</a>, <a class="el" href="state_8cc_source.html#l00114">GetNode()</a>, <a class="el" href="state_8cc_source.html#l00123">LookupNode()</a>, <a class="el" href="state_8cc_source.html#l00198">Reset()</a>, and <a class="el" href="state_8cc_source.html#l00131">SpellcheckNode()</a>.</p>
 
 </div>
 </div>
@@ -652,9 +670,9 @@ Static Public Attributes</h2></td></tr>
 
 <p>All the pools used in the graph. </p>
 
-<p>Definition at line <a class="el" href="state_8h_source.html#l00125">125</a> of file <a class="el" href="state_8h_source.html">state.h</a>.</p>
+<p>Definition at line <a class="el" href="state_8h_source.html#l00126">126</a> of file <a class="el" href="state_8h_source.html">state.h</a>.</p>
 
-<p>Referenced by <a class="el" href="state_8cc_source.html#l00091">AddPool()</a>, <a class="el" href="state_8cc_source.html#l00203">Dump()</a>, and <a class="el" href="state_8cc_source.html#l00096">LookupPool()</a>.</p>
+<p>Referenced by <a class="el" href="state_8cc_source.html#l00093">AddPool()</a>, <a class="el" href="state_8cc_source.html#l00205">Dump()</a>, and <a class="el" href="state_8cc_source.html#l00098">LookupPool()</a>.</p>
 
 </div>
 </div>
@@ -671,9 +689,9 @@ Static Public Attributes</h2></td></tr>
 
 <p>All the rules used in the graph. </p>
 
-<p>Definition at line <a class="el" href="state_8h_source.html#l00122">122</a> of file <a class="el" href="state_8h_source.html">state.h</a>.</p>
+<p>Definition at line <a class="el" href="state_8h_source.html#l00123">123</a> of file <a class="el" href="state_8h_source.html">state.h</a>.</p>
 
-<p>Referenced by <a class="el" href="state_8cc_source.html#l00079">AddRule()</a>, and <a class="el" href="state_8cc_source.html#l00084">LookupRule()</a>.</p>
+<p>Referenced by <a class="el" href="state_8cc_source.html#l00081">AddRule()</a>, and <a class="el" href="state_8cc_source.html#l00086">LookupRule()</a>.</p>
 
 </div>
 </div>
@@ -685,7 +703,7 @@ Static Public Attributes</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 12 2013 09:25:50 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 4 2014 09:13:00 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

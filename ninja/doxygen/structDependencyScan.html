@@ -94,7 +94,7 @@ Private Attributes</h2></td></tr>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="structDependencyScan.html" title="DependencyScan manages the process of scanning the files in a graph and updating the dirty/outputs_re...">DependencyScan</a> manages the process of scanning the files in a graph and updating the dirty/outputs_ready state of all the nodes and edges. </p>
 
-<p>Definition at line <a class="el" href="graph_8h_source.html#l00231">231</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
+<p>Definition at line <a class="el" href="graph_8h_source.html#l00238">238</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
 </div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a5cdb50332662d4bf3f57e33c35b8a2b5"></a><!-- doxytag: member="DependencyScan::DependencyScan" ref="a5cdb50332662d4bf3f57e33c35b8a2b5" args="(State *state, BuildLog *build_log, DepsLog *deps_log, DiskInterface *disk_interface)" -->
 <div class="memitem">
@@ -133,7 +133,7 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="graph_8h_source.html#l00232">232</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
+<p>Definition at line <a class="el" href="graph_8h_source.html#l00239">239</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
 
 </div>
 </div>
@@ -152,9 +152,9 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="graph_8h_source.html#l00248">248</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
+<p>Definition at line <a class="el" href="graph_8h_source.html#l00255">255</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00705">Builder::FinishCommand()</a>, and <a class="el" href="graph_8cc_source.html#l00145">RecomputeOutputDirty()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00715">Builder::FinishCommand()</a>, and <a class="el" href="graph_8cc_source.html#l00145">RecomputeOutputDirty()</a>.</p>
 
 </div>
 </div>
@@ -172,9 +172,9 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="graph_8h_source.html#l00255">255</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
+<p>Definition at line <a class="el" href="graph_8h_source.html#l00262">262</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00705">Builder::FinishCommand()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00715">Builder::FinishCommand()</a>.</p>
 
 </div>
 </div>
@@ -208,9 +208,9 @@ Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="graph_8cc_source.html#l00060">60</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
 
-<p>References <a class="el" href="graph_8h_source.html#l00267">dep_loader_</a>, <a class="el" href="graph_8h_source.html#l00160">Edge::deps_missing_</a>, <a class="el" href="graph_8h_source.html#l00266">disk_interface_</a>, <a class="el" href="debug__flags_8h_source.html#l00020">EXPLAIN</a>, <a class="el" href="graph_8h_source.html#l00156">Edge::inputs_</a>, <a class="el" href="graph_8h_source.html#l00181">Edge::is_order_only()</a>, <a class="el" href="graph_8cc_source.html#l00307">Edge::is_phony()</a>, <a class="el" href="graph_8cc_source.html#l00328">ImplicitDepLoader::LoadDeps()</a>, <a class="el" href="graph_8h_source.html#l00074">Node::mtime()</a>, <a class="el" href="graph_8h_source.html#l00157">Edge::outputs_</a>, <a class="el" href="graph_8h_source.html#l00159">Edge::outputs_ready_</a>, and <a class="el" href="graph_8cc_source.html#l00133">RecomputeOutputsDirty()</a>.</p>
+<p>References <a class="el" href="graph_8h_source.html#l00274">dep_loader_</a>, <a class="el" href="graph_8h_source.html#l00166">Edge::deps_missing_</a>, <a class="el" href="graph_8h_source.html#l00273">disk_interface_</a>, <a class="el" href="debug__flags_8h_source.html#l00020">EXPLAIN</a>, <a class="el" href="graph_8h_source.html#l00162">Edge::inputs_</a>, <a class="el" href="graph_8h_source.html#l00187">Edge::is_order_only()</a>, <a class="el" href="graph_8cc_source.html#l00323">Edge::is_phony()</a>, <a class="el" href="graph_8cc_source.html#l00348">ImplicitDepLoader::LoadDeps()</a>, <a class="el" href="graph_8h_source.html#l00074">Node::mtime()</a>, <a class="el" href="graph_8h_source.html#l00163">Edge::outputs_</a>, <a class="el" href="graph_8h_source.html#l00165">Edge::outputs_ready_</a>, and <a class="el" href="graph_8cc_source.html#l00133">RecomputeOutputsDirty()</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00569">Builder::AddTarget()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00576">Builder::AddTarget()</a>.</p>
 
 </div>
 </div>
@@ -256,7 +256,7 @@ Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="graph_8cc_source.html#l00145">145</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
 
-<p>References <a class="el" href="graph_8h_source.html#l00248">build_log()</a>, <a class="el" href="build__log_8h_source.html#l00049">BuildLog::LogEntry::command_hash</a>, <a class="el" href="graph_8h_source.html#l00065">Node::exists()</a>, <a class="el" href="debug__flags_8h_source.html#l00020">EXPLAIN</a>, <a class="el" href="graph_8cc_source.html#l00282">Edge::GetBindingBool()</a>, <a class="el" href="build__log_8cc_source.html#l00091">BuildLog::LogEntry::HashCommand()</a>, <a class="el" href="graph_8h_source.html#l00156">Edge::inputs_</a>, <a class="el" href="graph_8cc_source.html#l00307">Edge::is_phony()</a>, <a class="el" href="build__log_8cc_source.html#l00340">BuildLog::LookupByOutput()</a>, <a class="el" href="graph_8h_source.html#l00074">Node::mtime()</a>, <a class="el" href="graph_8h_source.html#l00073">Node::path()</a>, and <a class="el" href="build__log_8h_source.html#l00052">BuildLog::LogEntry::restat_mtime</a>.</p>
+<p>References <a class="el" href="graph_8h_source.html#l00255">build_log()</a>, <a class="el" href="build__log_8h_source.html#l00056">BuildLog::LogEntry::command_hash</a>, <a class="el" href="graph_8h_source.html#l00065">Node::exists()</a>, <a class="el" href="debug__flags_8h_source.html#l00020">EXPLAIN</a>, <a class="el" href="graph_8cc_source.html#l00288">Edge::GetBindingBool()</a>, <a class="el" href="build__log_8cc_source.html#l00091">BuildLog::LogEntry::HashCommand()</a>, <a class="el" href="graph_8h_source.html#l00162">Edge::inputs_</a>, <a class="el" href="graph_8cc_source.html#l00323">Edge::is_phony()</a>, <a class="el" href="build__log_8cc_source.html#l00341">BuildLog::LookupByOutput()</a>, <a class="el" href="graph_8h_source.html#l00074">Node::mtime()</a>, <a class="el" href="graph_8h_source.html#l00073">Node::path()</a>, and <a class="el" href="build__log_8h_source.html#l00059">BuildLog::LogEntry::restat_mtime</a>.</p>
 
 <p>Referenced by <a class="el" href="graph_8cc_source.html#l00133">RecomputeOutputsDirty()</a>.</p>
 
@@ -292,9 +292,9 @@ Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="graph_8cc_source.html#l00133">133</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
 
-<p>References <a class="el" href="graph_8h_source.html#l00266">disk_interface_</a>, <a class="el" href="graph_8cc_source.html#l00267">Edge::EvaluateCommand()</a>, <a class="el" href="graph_8h_source.html#l00157">Edge::outputs_</a>, and <a class="el" href="graph_8cc_source.html#l00145">RecomputeOutputDirty()</a>.</p>
+<p>References <a class="el" href="graph_8h_source.html#l00273">disk_interface_</a>, <a class="el" href="graph_8cc_source.html#l00273">Edge::EvaluateCommand()</a>, <a class="el" href="graph_8h_source.html#l00163">Edge::outputs_</a>, and <a class="el" href="graph_8cc_source.html#l00145">RecomputeOutputDirty()</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00402">Plan::CleanNode()</a>, and <a class="el" href="graph_8cc_source.html#l00060">RecomputeDirty()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00409">Plan::CleanNode()</a>, and <a class="el" href="graph_8cc_source.html#l00060">RecomputeDirty()</a>.</p>
 
 </div>
 </div>
@@ -313,7 +313,7 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="graph_8h_source.html#l00251">251</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
+<p>Definition at line <a class="el" href="graph_8h_source.html#l00258">258</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
 
 <p>Referenced by <a class="el" href="build_8h_source.html#l00172">Builder::SetBuildLog()</a>.</p>
 
@@ -331,7 +331,7 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="graph_8h_source.html#l00265">265</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
+<p>Definition at line <a class="el" href="graph_8h_source.html#l00272">272</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
 
 </div>
 </div>
@@ -346,7 +346,7 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="graph_8h_source.html#l00267">267</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
+<p>Definition at line <a class="el" href="graph_8h_source.html#l00274">274</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
 
 <p>Referenced by <a class="el" href="graph_8cc_source.html#l00060">RecomputeDirty()</a>.</p>
 
@@ -363,7 +363,7 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="graph_8h_source.html#l00266">266</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
+<p>Definition at line <a class="el" href="graph_8h_source.html#l00273">273</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
 
 <p>Referenced by <a class="el" href="graph_8cc_source.html#l00060">RecomputeDirty()</a>, and <a class="el" href="graph_8cc_source.html#l00133">RecomputeOutputsDirty()</a>.</p>
 
@@ -377,7 +377,7 @@ Private Attributes</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 12 2013 09:25:50 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 4 2014 09:13:00 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

@@ -74,7 +74,7 @@
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structSubprocess.html">Subprocess</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSubprocessSet.html#a0fea01f81a2ef66bcb85547cf69defac">Add</a> (const string &amp;command)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structSubprocess.html">Subprocess</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSubprocessSet.html#a5f72fd727c938652e3a175d040cc4be1">Add</a> (const string &amp;command, bool use_console=false)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSubprocessSet.html#a54f28f7e328426ce66043ca99906f39b">Clear</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSubprocessSet.html#a1b12e1139c36d480a2d4a1680f9ad465">DoWork</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structSubprocess.html">Subprocess</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structSubprocessSet.html#a2909bb928dc470bda735f88d45307a7d">NextFinished</a> ()</td></tr>
@@ -97,7 +97,7 @@ Static Public Attributes</h2></td></tr>
 <div class="textblock"><p><a class="el" href="structSubprocessSet.html" title="SubprocessSet runs a ppoll/pselect() loop around a set of Subprocesses.">SubprocessSet</a> runs a ppoll/pselect() loop around a set of Subprocesses. </p>
 <p><a class="el" href="structSubprocessSet.html#a1b12e1139c36d480a2d4a1680f9ad465">DoWork()</a> waits for any state change in subprocesses; finished_ is a queue of subprocesses as they finish. </p>
 
-<p>Definition at line <a class="el" href="subprocess_8h_source.html#l00074">74</a> of file <a class="el" href="subprocess_8h_source.html">subprocess.h</a>.</p>
+<p>Definition at line <a class="el" href="subprocess_8h_source.html#l00075">75</a> of file <a class="el" href="subprocess_8h_source.html">subprocess.h</a>.</p>
 </div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a00c1cd317ec172672fea906569f47806"></a><!-- doxytag: member="SubprocessSet::SubprocessSet" ref="a00c1cd317ec172672fea906569f47806" args="()" -->
 <div class="memitem">
@@ -113,9 +113,9 @@ Static Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="subprocess-posix_8cc_source.html#l00148">148</a> of file <a class="el" href="subprocess-posix_8cc_source.html">subprocess-posix.cc</a>.</p>
+<p>Definition at line <a class="el" href="subprocess-posix_8cc_source.html#l00154">154</a> of file <a class="el" href="subprocess-posix_8cc_source.html">subprocess-posix.cc</a>.</p>
 
-<p>References <a class="el" href="util_8cc_source.html#l00051">Fatal()</a>, <a class="el" href="subprocess_8h_source.html#l00093">old_act_</a>, <a class="el" href="subprocess_8h_source.html#l00094">old_mask_</a>, and <a class="el" href="subprocess-posix_8cc_source.html#l00143">SetInterruptedFlag()</a>.</p>
+<p>References <a class="el" href="util_8cc_source.html#l00052">Fatal()</a>, <a class="el" href="subprocess_8h_source.html#l00094">old_act_</a>, <a class="el" href="subprocess_8h_source.html#l00095">old_mask_</a>, and <a class="el" href="subprocess-posix_8cc_source.html#l00149">SetInterruptedFlag()</a>.</p>
 
 </div>
 </div>
@@ -133,33 +133,43 @@ Static Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="subprocess-posix_8cc_source.html#l00162">162</a> of file <a class="el" href="subprocess-posix_8cc_source.html">subprocess-posix.cc</a>.</p>
+<p>Definition at line <a class="el" href="subprocess-posix_8cc_source.html#l00168">168</a> of file <a class="el" href="subprocess-posix_8cc_source.html">subprocess-posix.cc</a>.</p>
 
-<p>References <a class="el" href="subprocess-posix_8cc_source.html#l00279">Clear()</a>, <a class="el" href="util_8cc_source.html#l00051">Fatal()</a>, <a class="el" href="subprocess_8h_source.html#l00093">old_act_</a>, and <a class="el" href="subprocess_8h_source.html#l00094">old_mask_</a>.</p>
+<p>References <a class="el" href="subprocess-posix_8cc_source.html#l00285">Clear()</a>, <a class="el" href="util_8cc_source.html#l00052">Fatal()</a>, <a class="el" href="subprocess_8h_source.html#l00094">old_act_</a>, and <a class="el" href="subprocess_8h_source.html#l00095">old_mask_</a>.</p>
 
 </div>
 </div>
 <hr/><h2>Member Function Documentation</h2>
-<a class="anchor" id="a0fea01f81a2ef66bcb85547cf69defac"></a><!-- doxytag: member="SubprocessSet::Add" ref="a0fea01f81a2ef66bcb85547cf69defac" args="(const string &amp;command)" -->
+<a class="anchor" id="a5f72fd727c938652e3a175d040cc4be1"></a><!-- doxytag: member="SubprocessSet::Add" ref="a5f72fd727c938652e3a175d040cc4be1" args="(const string &amp;command, bool use_console=false)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structSubprocess.html">Subprocess</a> * <a class="el" href="structSubprocessSet.html#a0fea01f81a2ef66bcb85547cf69defac">SubprocessSet::Add</a> </td>
+          <td class="memname"><a class="el" href="structSubprocess.html">Subprocess</a> * <a class="el" href="structSubprocessSet.html#a5f72fd727c938652e3a175d040cc4be1">SubprocessSet::Add</a> </td>
           <td>(</td>
           <td class="paramtype">const string &amp;&#160;</td>
-          <td class="paramname"><em>command</em></td><td>)</td>
+          <td class="paramname"><em>command</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>use_console</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="subprocess-posix_8cc_source.html#l00171">171</a> of file <a class="el" href="subprocess-posix_8cc_source.html">subprocess-posix.cc</a>.</p>
+<p>Definition at line <a class="el" href="subprocess-posix_8cc_source.html#l00177">177</a> of file <a class="el" href="subprocess-posix_8cc_source.html">subprocess-posix.cc</a>.</p>
 
-<p>References <a class="el" href="subprocess_8h_source.html#l00083">running_</a>, and <a class="el" href="subprocess-posix_8cc_source.html#l00038">Subprocess::Start()</a>.</p>
+<p>References <a class="el" href="subprocess_8h_source.html#l00084">running_</a>, and <a class="el" href="subprocess-posix_8cc_source.html#l00039">Subprocess::Start()</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00489">RealCommandRunner::StartCommand()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00496">RealCommandRunner::StartCommand()</a>.</p>
 
 </div>
 </div>
@@ -177,11 +187,11 @@ Static Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="subprocess-posix_8cc_source.html#l00279">279</a> of file <a class="el" href="subprocess-posix_8cc_source.html">subprocess-posix.cc</a>.</p>
+<p>Definition at line <a class="el" href="subprocess-posix_8cc_source.html#l00285">285</a> of file <a class="el" href="subprocess-posix_8cc_source.html">subprocess-posix.cc</a>.</p>
 
-<p>References <a class="el" href="subprocess_8h_source.html#l00083">running_</a>.</p>
+<p>References <a class="el" href="subprocess_8h_source.html#l00084">running_</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00479">RealCommandRunner::Abort()</a>, and <a class="el" href="subprocess-posix_8cc_source.html#l00162">~SubprocessSet()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00486">RealCommandRunner::Abort()</a>, and <a class="el" href="subprocess-posix_8cc_source.html#l00168">~SubprocessSet()</a>.</p>
 
 </div>
 </div>
@@ -199,11 +209,11 @@ Static Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="subprocess-posix_8cc_source.html#l00228">228</a> of file <a class="el" href="subprocess-posix_8cc_source.html">subprocess-posix.cc</a>.</p>
+<p>Definition at line <a class="el" href="subprocess-posix_8cc_source.html#l00234">234</a> of file <a class="el" href="subprocess-posix_8cc_source.html">subprocess-posix.cc</a>.</p>
 
-<p>References <a class="el" href="subprocess_8h_source.html#l00084">finished_</a>, <a class="el" href="subprocess_8h_source.html#l00091">interrupted_</a>, <a class="el" href="subprocess_8h_source.html#l00094">old_mask_</a>, and <a class="el" href="subprocess_8h_source.html#l00083">running_</a>.</p>
+<p>References <a class="el" href="subprocess_8h_source.html#l00085">finished_</a>, <a class="el" href="subprocess_8h_source.html#l00092">interrupted_</a>, <a class="el" href="subprocess_8h_source.html#l00095">old_mask_</a>, and <a class="el" href="subprocess_8h_source.html#l00084">running_</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00499">RealCommandRunner::WaitForCommand()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00506">RealCommandRunner::WaitForCommand()</a>.</p>
 
 </div>
 </div>
@@ -221,11 +231,11 @@ Static Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="subprocess-posix_8cc_source.html#l00271">271</a> of file <a class="el" href="subprocess-posix_8cc_source.html">subprocess-posix.cc</a>.</p>
+<p>Definition at line <a class="el" href="subprocess-posix_8cc_source.html#l00277">277</a> of file <a class="el" href="subprocess-posix_8cc_source.html">subprocess-posix.cc</a>.</p>
 
-<p>References <a class="el" href="subprocess_8h_source.html#l00084">finished_</a>.</p>
+<p>References <a class="el" href="subprocess_8h_source.html#l00085">finished_</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00499">RealCommandRunner::WaitForCommand()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00506">RealCommandRunner::WaitForCommand()</a>.</p>
 
 </div>
 </div>
@@ -244,11 +254,11 @@ Static Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="subprocess-posix_8cc_source.html#l00143">143</a> of file <a class="el" href="subprocess-posix_8cc_source.html">subprocess-posix.cc</a>.</p>
+<p>Definition at line <a class="el" href="subprocess-posix_8cc_source.html#l00149">149</a> of file <a class="el" href="subprocess-posix_8cc_source.html">subprocess-posix.cc</a>.</p>
 
-<p>References <a class="el" href="subprocess_8h_source.html#l00091">interrupted_</a>.</p>
+<p>References <a class="el" href="subprocess_8h_source.html#l00092">interrupted_</a>.</p>
 
-<p>Referenced by <a class="el" href="subprocess-posix_8cc_source.html#l00148">SubprocessSet()</a>.</p>
+<p>Referenced by <a class="el" href="subprocess-posix_8cc_source.html#l00154">SubprocessSet()</a>.</p>
 
 </div>
 </div>
@@ -264,9 +274,9 @@ Static Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="subprocess_8h_source.html#l00084">84</a> of file <a class="el" href="subprocess_8h_source.html">subprocess.h</a>.</p>
+<p>Definition at line <a class="el" href="subprocess_8h_source.html#l00085">85</a> of file <a class="el" href="subprocess_8h_source.html">subprocess.h</a>.</p>
 
-<p>Referenced by <a class="el" href="subprocess-posix_8cc_source.html#l00228">DoWork()</a>, and <a class="el" href="subprocess-posix_8cc_source.html#l00271">NextFinished()</a>.</p>
+<p>Referenced by <a class="el" href="subprocess-posix_8cc_source.html#l00234">DoWork()</a>, and <a class="el" href="subprocess-posix_8cc_source.html#l00277">NextFinished()</a>.</p>
 
 </div>
 </div>
@@ -281,9 +291,9 @@ Static Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="subprocess_8h_source.html#l00091">91</a> of file <a class="el" href="subprocess_8h_source.html">subprocess.h</a>.</p>
+<p>Definition at line <a class="el" href="subprocess_8h_source.html#l00092">92</a> of file <a class="el" href="subprocess_8h_source.html">subprocess.h</a>.</p>
 
-<p>Referenced by <a class="el" href="subprocess-posix_8cc_source.html#l00228">DoWork()</a>, and <a class="el" href="subprocess-posix_8cc_source.html#l00143">SetInterruptedFlag()</a>.</p>
+<p>Referenced by <a class="el" href="subprocess-posix_8cc_source.html#l00234">DoWork()</a>, and <a class="el" href="subprocess-posix_8cc_source.html#l00149">SetInterruptedFlag()</a>.</p>
 
 </div>
 </div>
@@ -298,9 +308,9 @@ Static Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="subprocess_8h_source.html#l00093">93</a> of file <a class="el" href="subprocess_8h_source.html">subprocess.h</a>.</p>
+<p>Definition at line <a class="el" href="subprocess_8h_source.html#l00094">94</a> of file <a class="el" href="subprocess_8h_source.html">subprocess.h</a>.</p>
 
-<p>Referenced by <a class="el" href="subprocess-posix_8cc_source.html#l00148">SubprocessSet()</a>, and <a class="el" href="subprocess-posix_8cc_source.html#l00162">~SubprocessSet()</a>.</p>
+<p>Referenced by <a class="el" href="subprocess-posix_8cc_source.html#l00154">SubprocessSet()</a>, and <a class="el" href="subprocess-posix_8cc_source.html#l00168">~SubprocessSet()</a>.</p>
 
 </div>
 </div>
@@ -315,9 +325,9 @@ Static Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="subprocess_8h_source.html#l00094">94</a> of file <a class="el" href="subprocess_8h_source.html">subprocess.h</a>.</p>
+<p>Definition at line <a class="el" href="subprocess_8h_source.html#l00095">95</a> of file <a class="el" href="subprocess_8h_source.html">subprocess.h</a>.</p>
 
-<p>Referenced by <a class="el" href="subprocess-posix_8cc_source.html#l00228">DoWork()</a>, <a class="el" href="subprocess-posix_8cc_source.html#l00148">SubprocessSet()</a>, and <a class="el" href="subprocess-posix_8cc_source.html#l00162">~SubprocessSet()</a>.</p>
+<p>Referenced by <a class="el" href="subprocess-posix_8cc_source.html#l00234">DoWork()</a>, <a class="el" href="subprocess-posix_8cc_source.html#l00154">SubprocessSet()</a>, and <a class="el" href="subprocess-posix_8cc_source.html#l00168">~SubprocessSet()</a>.</p>
 
 </div>
 </div>
@@ -332,9 +342,9 @@ Static Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="subprocess_8h_source.html#l00083">83</a> of file <a class="el" href="subprocess_8h_source.html">subprocess.h</a>.</p>
+<p>Definition at line <a class="el" href="subprocess_8h_source.html#l00084">84</a> of file <a class="el" href="subprocess_8h_source.html">subprocess.h</a>.</p>
 
-<p>Referenced by <a class="el" href="subprocess-posix_8cc_source.html#l00171">Add()</a>, <a class="el" href="build_8cc_source.html#l00483">RealCommandRunner::CanRunMore()</a>, <a class="el" href="subprocess-posix_8cc_source.html#l00279">Clear()</a>, and <a class="el" href="subprocess-posix_8cc_source.html#l00228">DoWork()</a>.</p>
+<p>Referenced by <a class="el" href="subprocess-posix_8cc_source.html#l00177">Add()</a>, <a class="el" href="build_8cc_source.html#l00490">RealCommandRunner::CanRunMore()</a>, <a class="el" href="subprocess-posix_8cc_source.html#l00285">Clear()</a>, and <a class="el" href="subprocess-posix_8cc_source.html#l00234">DoWork()</a>.</p>
 
 </div>
 </div>
@@ -347,7 +357,7 @@ Static Public Attributes</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 12 2013 09:25:50 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 4 2014 09:13:00 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

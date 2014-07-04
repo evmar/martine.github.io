@@ -108,7 +108,7 @@
 <a name="l00049"></a>00049 }
 <a name="l00050"></a>00050 
 <a name="l00051"></a><a class="code" href="structCleaner.html#a90549dd5f5033f36a7620dc16609a970">00051</a> <span class="keywordtype">bool</span> <a class="code" href="structCleaner.html#a90549dd5f5033f36a7620dc16609a970">Cleaner::FileExists</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path) {
-<a name="l00052"></a>00052   <span class="keywordflow">return</span> <a class="code" href="structCleaner.html#af1d5636bb9e186068d73b1923f73a92b">disk_interface_</a>-&gt;<a class="code" href="structDiskInterface.html#ac99deecbc7f235272f0a8e308e7792d7" title="stat() a file, returning the mtime, or 0 if missing and -1 on other errors.">Stat</a>(path) &gt; 0;
+<a name="l00052"></a>00052   <span class="keywordflow">return</span> <a class="code" href="structCleaner.html#af1d5636bb9e186068d73b1923f73a92b">disk_interface_</a>-&gt;<a class="code" href="structDiskInterface.html#a1095cf31175f95f005fc38b28683b0cb" title="stat() a file, returning the mtime, or 0 if missing and -1 on other errors.">Stat</a>(path) &gt; 0;
 <a name="l00053"></a>00053 }
 <a name="l00054"></a>00054 
 <a name="l00055"></a><a class="code" href="structCleaner.html#a6ef489fdbf9b34900d6d110e7bd22444">00055</a> <span class="keywordtype">void</span> <a class="code" href="structCleaner.html#a6ef489fdbf9b34900d6d110e7bd22444">Cleaner::Report</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path) {
@@ -139,11 +139,11 @@
 <a name="l00080"></a>00080 }
 <a name="l00081"></a>00081 
 <a name="l00082"></a><a class="code" href="structCleaner.html#a1b342a16b764170b4a07991fdf7c02fb">00082</a> <span class="keywordtype">void</span> <a class="code" href="structCleaner.html#a1b342a16b764170b4a07991fdf7c02fb" title="Remove the depfile and rspfile for an Edge.">Cleaner::RemoveEdgeFiles</a>(<a class="code" href="structEdge.html" title="An edge in the dependency graph; links between Nodes using Rules.">Edge</a>* edge) {
-<a name="l00083"></a>00083   <span class="keywordtype">string</span> depfile = edge-&gt;<a class="code" href="structEdge.html#a4f495554a299524a951620f7b643d111">GetBinding</a>(<span class="stringliteral">&quot;depfile&quot;</span>);
+<a name="l00083"></a>00083   <span class="keywordtype">string</span> depfile = edge-&gt;<a class="code" href="structEdge.html#a327ebbb178acb1d05c454c806ba84c46" title="Like GetBinding(&quot;depfile&quot;), but without shell escaping.">GetUnescapedDepfile</a>();
 <a name="l00084"></a>00084   <span class="keywordflow">if</span> (!depfile.empty())
 <a name="l00085"></a>00085     <a class="code" href="structCleaner.html#acd6bbb9d1e7600cec3f72d9c61a8c7cd" title="Remove the given path file only if it has not been already removed.">Remove</a>(depfile);
 <a name="l00086"></a>00086 
-<a name="l00087"></a>00087   <span class="keywordtype">string</span> rspfile = edge-&gt;<a class="code" href="structEdge.html#a4f495554a299524a951620f7b643d111">GetBinding</a>(<span class="stringliteral">&quot;rspfile&quot;</span>);
+<a name="l00087"></a>00087   <span class="keywordtype">string</span> rspfile = edge-&gt;<a class="code" href="structEdge.html#a70c8d93441468aa04296c29ff94cbcb9" title="Like GetBinding(&quot;rspfile&quot;), but without shell escaping.">GetUnescapedRspfile</a>();
 <a name="l00088"></a>00088   <span class="keywordflow">if</span> (!rspfile.empty())
 <a name="l00089"></a>00089     <a class="code" href="structCleaner.html#acd6bbb9d1e7600cec3f72d9c61a8c7cd" title="Remove the given path file only if it has not been already removed.">Remove</a>(rspfile);
 <a name="l00090"></a>00090 }
@@ -221,7 +221,7 @@
 <a name="l00162"></a>00162   assert(target);
 <a name="l00163"></a>00163 
 <a name="l00164"></a>00164   <a class="code" href="structCleaner.html#a84a7c68251cfc3839ac97a90654e30b5">Reset</a>();
-<a name="l00165"></a>00165   <a class="code" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>* node = <a class="code" href="structCleaner.html#af18bfb0e6a405d23537bce721ec46fda">state_</a>-&gt;<a class="code" href="structState.html#a76435f4f2516b38c28c731a7bac862e7">LookupNode</a>(target);
+<a name="l00165"></a>00165   <a class="code" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>* node = <a class="code" href="structCleaner.html#af18bfb0e6a405d23537bce721ec46fda">state_</a>-&gt;<a class="code" href="structState.html#a9b89c1d3065f1c2100d16a41c1602ac5">LookupNode</a>(target);
 <a name="l00166"></a>00166   <span class="keywordflow">if</span> (node) {
 <a name="l00167"></a>00167     <a class="code" href="structCleaner.html#a146f242991cf962752883da58c86d77c" title="Clean the given target and all the file built for it.">CleanTarget</a>(node);
 <a name="l00168"></a>00168   } <span class="keywordflow">else</span> {
@@ -236,7 +236,7 @@
 <a name="l00177"></a>00177   <a class="code" href="structCleaner.html#afe60abac766fe0a45ffb1553a2987068">PrintHeader</a>();
 <a name="l00178"></a>00178   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; target_count; ++i) {
 <a name="l00179"></a>00179     <span class="keyword">const</span> <span class="keywordtype">char</span>* target_name = targets[i];
-<a name="l00180"></a>00180     <a class="code" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>* target = <a class="code" href="structCleaner.html#af18bfb0e6a405d23537bce721ec46fda">state_</a>-&gt;<a class="code" href="structState.html#a76435f4f2516b38c28c731a7bac862e7">LookupNode</a>(target_name);
+<a name="l00180"></a>00180     <a class="code" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>* target = <a class="code" href="structCleaner.html#af18bfb0e6a405d23537bce721ec46fda">state_</a>-&gt;<a class="code" href="structState.html#a9b89c1d3065f1c2100d16a41c1602ac5">LookupNode</a>(target_name);
 <a name="l00181"></a>00181     <span class="keywordflow">if</span> (target) {
 <a name="l00182"></a>00182       <span class="keywordflow">if</span> (<a class="code" href="structCleaner.html#a197944f3ef71b02a07639970d45ca0f7">IsVerbose</a>())
 <a name="l00183"></a>00183         printf(<span class="stringliteral">&quot;Target %s\n&quot;</span>, target_name);
@@ -320,7 +320,7 @@
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 12 2013 09:25:49 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 4 2014 09:13:00 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

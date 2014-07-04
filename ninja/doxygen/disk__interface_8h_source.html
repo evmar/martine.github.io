@@ -74,64 +74,84 @@
 <a name="l00015"></a>00015 <span class="preprocessor">#ifndef NINJA_DISK_INTERFACE_H_</span>
 <a name="l00016"></a>00016 <span class="preprocessor"></span><span class="preprocessor">#define NINJA_DISK_INTERFACE_H_</span>
 <a name="l00017"></a>00017 <span class="preprocessor"></span>
-<a name="l00018"></a>00018 <span class="preprocessor">#include &lt;string&gt;</span>
-<a name="l00019"></a>00019 <span class="keyword">using namespace </span>std;
-<a name="l00020"></a>00020 
-<a name="l00021"></a>00021 <span class="preprocessor">#include &quot;<a class="code" href="timestamp_8h.html">timestamp.h</a>&quot;</span>
-<a name="l00022"></a>00022 <span class="comment"></span>
-<a name="l00023"></a>00023 <span class="comment">/// Interface for accessing the disk.</span>
-<a name="l00024"></a>00024 <span class="comment">///</span>
-<a name="l00025"></a>00025 <span class="comment">/// Abstract so it can be mocked out for tests.  The real implementation</span>
-<a name="l00026"></a>00026 <span class="comment">/// is RealDiskInterface.</span>
-<a name="l00027"></a><a class="code" href="structDiskInterface.html">00027</a> <span class="comment"></span><span class="keyword">struct </span><a class="code" href="structDiskInterface.html" title="Interface for accessing the disk.">DiskInterface</a> {
-<a name="l00028"></a><a class="code" href="structDiskInterface.html#a34d62e4d1ba8b716696bcfc6f2643cd3">00028</a>   <span class="keyword">virtual</span> <a class="code" href="structDiskInterface.html#a34d62e4d1ba8b716696bcfc6f2643cd3">~DiskInterface</a>() {}
-<a name="l00029"></a>00029 <span class="comment"></span>
-<a name="l00030"></a>00030 <span class="comment">  /// stat() a file, returning the mtime, or 0 if missing and -1 on</span>
-<a name="l00031"></a>00031 <span class="comment">  /// other errors.</span>
-<a name="l00032"></a>00032 <span class="comment"></span>  <span class="keyword">virtual</span> <a class="code" href="timestamp_8h.html#a364f6f32873dd70e259c971fc2e28b73">TimeStamp</a> Stat(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path) = 0;
-<a name="l00033"></a>00033 <span class="comment"></span>
-<a name="l00034"></a>00034 <span class="comment">  /// Create a directory, returning false on failure.</span>
-<a name="l00035"></a>00035 <span class="comment"></span>  <span class="keyword">virtual</span> <span class="keywordtype">bool</span> MakeDir(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path) = 0;
-<a name="l00036"></a>00036 <span class="comment"></span>
-<a name="l00037"></a>00037 <span class="comment">  /// Create a file, with the specified name and contents</span>
-<a name="l00038"></a>00038 <span class="comment">  /// Returns true on success, false on failure</span>
-<a name="l00039"></a>00039 <span class="comment"></span>  <span class="keyword">virtual</span> <span class="keywordtype">bool</span> WriteFile(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; contents) = 0;
-<a name="l00040"></a>00040 <span class="comment"></span>
-<a name="l00041"></a>00041 <span class="comment">  /// Read a file to a string.  Fill in |err| on error.</span>
-<a name="l00042"></a>00042 <span class="comment"></span>  <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="util_8cc.html#afa2642aae4af8af879417889a5e8f4f5" title="Read a file to a string (in text mode: with CRLF conversion on Windows).">ReadFile</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path, <span class="keywordtype">string</span>* err) = 0;
-<a name="l00043"></a>00043 <span class="comment"></span>
-<a name="l00044"></a>00044 <span class="comment">  /// Remove the file named @a path. It behaves like &#39;rm -f path&#39; so no errors</span>
-<a name="l00045"></a>00045 <span class="comment">  /// are reported if it does not exists.</span>
-<a name="l00046"></a>00046 <span class="comment">  /// @returns 0 if the file has been removed,</span>
-<a name="l00047"></a>00047 <span class="comment">  ///          1 if the file does not exist, and</span>
-<a name="l00048"></a>00048 <span class="comment">  ///          -1 if an error occurs.</span>
-<a name="l00049"></a>00049 <span class="comment"></span>  <span class="keyword">virtual</span> <span class="keywordtype">int</span> RemoveFile(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path) = 0;
-<a name="l00050"></a>00050 <span class="comment"></span>
-<a name="l00051"></a>00051 <span class="comment">  /// Create all the parent directories for path; like mkdir -p</span>
-<a name="l00052"></a>00052 <span class="comment">  /// `basename path`.</span>
-<a name="l00053"></a>00053 <span class="comment"></span>  <span class="keywordtype">bool</span> MakeDirs(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path);
-<a name="l00054"></a>00054 };
-<a name="l00055"></a>00055 <span class="comment"></span>
-<a name="l00056"></a>00056 <span class="comment">/// Implementation of DiskInterface that actually hits the disk.</span>
-<a name="l00057"></a><a class="code" href="structRealDiskInterface.html">00057</a> <span class="comment"></span><span class="keyword">struct </span><a class="code" href="structRealDiskInterface.html" title="Implementation of DiskInterface that actually hits the disk.">RealDiskInterface</a> : <span class="keyword">public</span> <a class="code" href="structDiskInterface.html" title="Interface for accessing the disk.">DiskInterface</a> {
-<a name="l00058"></a><a class="code" href="structRealDiskInterface.html#ac1b01e685fc9981d391c3be3d9a30894">00058</a>   <a class="code" href="structRealDiskInterface.html#ac1b01e685fc9981d391c3be3d9a30894">RealDiskInterface</a>() : quiet_(false) {}
-<a name="l00059"></a><a class="code" href="structRealDiskInterface.html#a9f702e2142f8227cc6cfdb682208bd85">00059</a>   <span class="keyword">virtual</span> <a class="code" href="structRealDiskInterface.html#a9f702e2142f8227cc6cfdb682208bd85">~RealDiskInterface</a>() {}
-<a name="l00060"></a>00060   <span class="keyword">virtual</span> <a class="code" href="timestamp_8h.html#a364f6f32873dd70e259c971fc2e28b73">TimeStamp</a> Stat(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path);
-<a name="l00061"></a>00061   <span class="keyword">virtual</span> <span class="keywordtype">bool</span> MakeDir(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path);
-<a name="l00062"></a>00062   <span class="keyword">virtual</span> <span class="keywordtype">bool</span> WriteFile(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; contents);
-<a name="l00063"></a>00063   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="util_8cc.html#afa2642aae4af8af879417889a5e8f4f5" title="Read a file to a string (in text mode: with CRLF conversion on Windows).">ReadFile</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path, <span class="keywordtype">string</span>* err);
-<a name="l00064"></a>00064   <span class="keyword">virtual</span> <span class="keywordtype">int</span> RemoveFile(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path);
-<a name="l00065"></a>00065 <span class="comment"></span>
-<a name="l00066"></a>00066 <span class="comment">  /// Whether to print on errors.  Used to make a test quieter.</span>
-<a name="l00067"></a><a class="code" href="structRealDiskInterface.html#a9b7e7955cfaed1b9591892464b77876b">00067</a> <span class="comment"></span>  <span class="keywordtype">bool</span> <a class="code" href="structRealDiskInterface.html#a9b7e7955cfaed1b9591892464b77876b" title="Whether to print on errors. Used to make a test quieter.">quiet_</a>;
-<a name="l00068"></a>00068 };
-<a name="l00069"></a>00069 
-<a name="l00070"></a>00070 <span class="preprocessor">#endif  // NINJA_DISK_INTERFACE_H_</span>
+<a name="l00018"></a>00018 <span class="preprocessor">#include &lt;map&gt;</span>
+<a name="l00019"></a>00019 <span class="preprocessor">#include &lt;string&gt;</span>
+<a name="l00020"></a>00020 <span class="keyword">using namespace </span>std;
+<a name="l00021"></a>00021 
+<a name="l00022"></a>00022 <span class="preprocessor">#include &quot;<a class="code" href="timestamp_8h.html">timestamp.h</a>&quot;</span>
+<a name="l00023"></a>00023 <span class="comment"></span>
+<a name="l00024"></a>00024 <span class="comment">/// Interface for accessing the disk.</span>
+<a name="l00025"></a>00025 <span class="comment">///</span>
+<a name="l00026"></a>00026 <span class="comment">/// Abstract so it can be mocked out for tests.  The real implementation</span>
+<a name="l00027"></a>00027 <span class="comment">/// is RealDiskInterface.</span>
+<a name="l00028"></a><a class="code" href="structDiskInterface.html">00028</a> <span class="comment"></span><span class="keyword">struct </span><a class="code" href="structDiskInterface.html" title="Interface for accessing the disk.">DiskInterface</a> {
+<a name="l00029"></a><a class="code" href="structDiskInterface.html#a34d62e4d1ba8b716696bcfc6f2643cd3">00029</a>   <span class="keyword">virtual</span> <a class="code" href="structDiskInterface.html#a34d62e4d1ba8b716696bcfc6f2643cd3">~DiskInterface</a>() {}
+<a name="l00030"></a>00030 <span class="comment"></span>
+<a name="l00031"></a>00031 <span class="comment">  /// stat() a file, returning the mtime, or 0 if missing and -1 on</span>
+<a name="l00032"></a>00032 <span class="comment">  /// other errors.</span>
+<a name="l00033"></a>00033 <span class="comment"></span>  <span class="keyword">virtual</span> <a class="code" href="timestamp_8h.html#a364f6f32873dd70e259c971fc2e28b73">TimeStamp</a> Stat(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path) <span class="keyword">const</span> = 0;
+<a name="l00034"></a>00034 <span class="comment"></span>
+<a name="l00035"></a>00035 <span class="comment">  /// Create a directory, returning false on failure.</span>
+<a name="l00036"></a>00036 <span class="comment"></span>  <span class="keyword">virtual</span> <span class="keywordtype">bool</span> MakeDir(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path) = 0;
+<a name="l00037"></a>00037 <span class="comment"></span>
+<a name="l00038"></a>00038 <span class="comment">  /// Create a file, with the specified name and contents</span>
+<a name="l00039"></a>00039 <span class="comment">  /// Returns true on success, false on failure</span>
+<a name="l00040"></a>00040 <span class="comment"></span>  <span class="keyword">virtual</span> <span class="keywordtype">bool</span> WriteFile(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; contents) = 0;
+<a name="l00041"></a>00041 <span class="comment"></span>
+<a name="l00042"></a>00042 <span class="comment">  /// Read a file to a string.  Fill in |err| on error.</span>
+<a name="l00043"></a>00043 <span class="comment"></span>  <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="util_8cc.html#afa2642aae4af8af879417889a5e8f4f5" title="Read a file to a string (in text mode: with CRLF conversion on Windows).">ReadFile</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path, <span class="keywordtype">string</span>* err) = 0;
+<a name="l00044"></a>00044 <span class="comment"></span>
+<a name="l00045"></a>00045 <span class="comment">  /// Remove the file named @a path. It behaves like &#39;rm -f path&#39; so no errors</span>
+<a name="l00046"></a>00046 <span class="comment">  /// are reported if it does not exists.</span>
+<a name="l00047"></a>00047 <span class="comment">  /// @returns 0 if the file has been removed,</span>
+<a name="l00048"></a>00048 <span class="comment">  ///          1 if the file does not exist, and</span>
+<a name="l00049"></a>00049 <span class="comment">  ///          -1 if an error occurs.</span>
+<a name="l00050"></a>00050 <span class="comment"></span>  <span class="keyword">virtual</span> <span class="keywordtype">int</span> RemoveFile(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path) = 0;
+<a name="l00051"></a>00051 <span class="comment"></span>
+<a name="l00052"></a>00052 <span class="comment">  /// Create all the parent directories for path; like mkdir -p</span>
+<a name="l00053"></a>00053 <span class="comment">  /// `basename path`.</span>
+<a name="l00054"></a>00054 <span class="comment"></span>  <span class="keywordtype">bool</span> MakeDirs(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path);
+<a name="l00055"></a>00055 };
+<a name="l00056"></a>00056 <span class="comment"></span>
+<a name="l00057"></a>00057 <span class="comment">/// Implementation of DiskInterface that actually hits the disk.</span>
+<a name="l00058"></a><a class="code" href="structRealDiskInterface.html">00058</a> <span class="comment"></span><span class="keyword">struct </span><a class="code" href="structRealDiskInterface.html" title="Implementation of DiskInterface that actually hits the disk.">RealDiskInterface</a> : <span class="keyword">public</span> <a class="code" href="structDiskInterface.html" title="Interface for accessing the disk.">DiskInterface</a> {
+<a name="l00059"></a><a class="code" href="structRealDiskInterface.html#ac1b01e685fc9981d391c3be3d9a30894">00059</a>   <a class="code" href="structRealDiskInterface.html" title="Implementation of DiskInterface that actually hits the disk.">RealDiskInterface</a>() : quiet_(false)
+<a name="l00060"></a>00060 #ifdef _WIN32
+<a name="l00061"></a>00061                       , use_cache_(false)
+<a name="l00062"></a>00062 #endif
+<a name="l00063"></a>00063                       {}
+<a name="l00064"></a><a class="code" href="structRealDiskInterface.html#a9f702e2142f8227cc6cfdb682208bd85">00064</a>   <span class="keyword">virtual</span> <a class="code" href="structRealDiskInterface.html#a9f702e2142f8227cc6cfdb682208bd85">~RealDiskInterface</a>() {}
+<a name="l00065"></a>00065   <span class="keyword">virtual</span> <a class="code" href="timestamp_8h.html#a364f6f32873dd70e259c971fc2e28b73">TimeStamp</a> Stat(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path) <span class="keyword">const</span>;
+<a name="l00066"></a>00066   <span class="keyword">virtual</span> <span class="keywordtype">bool</span> MakeDir(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path);
+<a name="l00067"></a>00067   <span class="keyword">virtual</span> <span class="keywordtype">bool</span> WriteFile(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path, <span class="keyword">const</span> <span class="keywordtype">string</span>&amp; contents);
+<a name="l00068"></a>00068   <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="util_8cc.html#afa2642aae4af8af879417889a5e8f4f5" title="Read a file to a string (in text mode: with CRLF conversion on Windows).">ReadFile</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path, <span class="keywordtype">string</span>* err);
+<a name="l00069"></a>00069   <span class="keyword">virtual</span> <span class="keywordtype">int</span> RemoveFile(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path);
+<a name="l00070"></a>00070 <span class="comment"></span>
+<a name="l00071"></a>00071 <span class="comment">  /// Whether to print on errors.  Used to make a test quieter.</span>
+<a name="l00072"></a><a class="code" href="structRealDiskInterface.html#a9b7e7955cfaed1b9591892464b77876b">00072</a> <span class="comment"></span>  <span class="keywordtype">bool</span> <a class="code" href="structRealDiskInterface.html#a9b7e7955cfaed1b9591892464b77876b" title="Whether to print on errors. Used to make a test quieter.">quiet_</a>;
+<a name="l00073"></a>00073 <span class="comment"></span>
+<a name="l00074"></a>00074 <span class="comment">  /// Whether stat information can be cached.  Only has an effect on Windows.</span>
+<a name="l00075"></a>00075 <span class="comment"></span>  <span class="keywordtype">void</span> AllowStatCache(<span class="keywordtype">bool</span> allow);
+<a name="l00076"></a>00076 
+<a name="l00077"></a>00077  <span class="keyword">private</span>:
+<a name="l00078"></a>00078 <span class="preprocessor">#ifdef _WIN32</span>
+<a name="l00079"></a>00079 <span class="preprocessor"></span><span class="comment">  /// Whether stat information can be cached.</span>
+<a name="l00080"></a>00080 <span class="comment"></span>  <span class="keywordtype">bool</span> use_cache_;
+<a name="l00081"></a>00081 
+<a name="l00082"></a>00082   <span class="keyword">typedef</span> map&lt;string, TimeStamp&gt; DirCache;
+<a name="l00083"></a>00083   <span class="comment">// TODO: Neither a map nor a hashmap seems ideal here.  If the statcache</span>
+<a name="l00084"></a>00084   <span class="comment">// works out, come up with a better data structure.</span>
+<a name="l00085"></a>00085   <span class="keyword">typedef</span> map&lt;string, DirCache&gt; Cache;
+<a name="l00086"></a>00086   <span class="keyword">mutable</span> Cache cache_;
+<a name="l00087"></a>00087 <span class="preprocessor">#endif</span>
+<a name="l00088"></a>00088 <span class="preprocessor"></span>};
+<a name="l00089"></a>00089 
+<a name="l00090"></a>00090 <span class="preprocessor">#endif  // NINJA_DISK_INTERFACE_H_</span>
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 12 2013 09:25:49 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 4 2014 09:13:00 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

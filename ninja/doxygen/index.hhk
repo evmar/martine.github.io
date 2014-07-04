@@ -21,7 +21,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structRealCommandRunner.html#ab9844565170ccee77ef0b32d50866b6b"><param name="Name" value="RealCommandRunner"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structIncludesNormalize.html#a324a92d846f08239426297eb710ab6f5"><param name="Name" value="AbsPath"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="structSubprocessSet.html#a0fea01f81a2ef66bcb85547cf69defac"><param name="Name" value="Add"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structSubprocessSet.html#a5f72fd727c938652e3a175d040cc4be1"><param name="Name" value="Add"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structBindingEnv.html#a211325035c6b322fc3df25f3b943fb66"><param name="Name" value="AddBinding"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBindingEnv.html#a211325035c6b322fc3df25f3b943fb66"><param name="Name" value="BindingEnv"></OBJECT>
@@ -55,6 +55,7 @@
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structEvalString.html#ade6ba336a1e0febe2dd8e4ebe8a94604"><param name="Name" value="AddText"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structEdge.html#aefd8796e5feb48b153903895df709e43"><param name="Name" value="AllInputsReady"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structRealDiskInterface.html#a5d65ad648f4104dc051b7968409722a1"><param name="Name" value="AllowStatCache"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuilder.html#a608d1a92e0970bf3c18f0512bb8b5c62"><param name="Name" value="AlreadyUpToDate"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="test_8cc.html#a6e882f13455aba9e51c294449387b72b"><param name="Name" value="AssertHash"></OBJECT>
   <UL>
@@ -139,6 +140,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildDryRun.html#a5c99bd787d394a683cbc696db30b47dd"><param name="Name" value="Dirty"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildDryRun.html#a9ea88eb9c32d3eb77b0df06696b2d529"><param name="Name" value="fs_"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildDryRun.html#a73a86246aefb2b8aeed71ac6979f37f3"><param name="Name" value="GetNode"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildDryRun.html#a5c3c1c08918ca44732d95f0ee92c965d"><param name="Name" value="IsPathDead"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildDryRun.html#a591bffbbff3975fb44ce22f16ae4427e"><param name="Name" value="MakeConfig"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildDryRun.html#ad27d56c5529e734f05ed58a9d2dd5e53"><param name="Name" value="RebuildTarget"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildDryRun.html#a0a0b2e96c926a18274cfb9fe61d0dcd7"><param name="Name" value="SetUp"></OBJECT>
@@ -157,7 +159,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuilder.html#ac1c747be80fc038e88f14d98280b95f9"><param name="Name" value="command_runner_"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuilder.html#a982b2b7e9d5a7fcc3bf1082b1dfa8c7a"><param name="Name" value="config_"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuilder.html#aafffa035b2c7c6c492648f136a86082c"><param name="Name" value="disk_interface_"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuilder.html#adda0c101d4aa206fb1bede2e0fb132f4"><param name="Name" value="ExtractDeps"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuilder.html#a1d1da3f88460e22b7f58aeaf1ad74b85"><param name="Name" value="ExtractDeps"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuilder.html#a2fde50693215210a556a5bd82b0231d0"><param name="Name" value="FinishCommand"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuilder.html#a9f13eddfc1bfa5622f87e7b2033c481a"><param name="Name" value="operator="></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuilder.html#a2de7a62776a4c75650e3411928d22018"><param name="Name" value="plan_"></OBJECT>
@@ -199,11 +201,15 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildLog.html#a5fd4ee55ca61796e6d9aecaac2855cba"><param name="Name" value="log_file_"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildLog.html#af01fac6ff13246e414e69b3737692f59"><param name="Name" value="LookupByOutput"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildLog.html#ab3726d9da8e8ae709671c6e6f3518773"><param name="Name" value="needs_recompaction_"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildLog.html#a08a600782d1b1c8369b8437d9d9c4264"><param name="Name" value="OpenForWrite"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildLog.html#a864e5ac4b1d5239ae808b38ab3aeeb41"><param name="Name" value="Recompact"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildLog.html#a4d345335c0495d843bd906305cc95ef9"><param name="Name" value="OpenForWrite"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildLog.html#a27cb04969d1497d5e3f66981a6b639e1"><param name="Name" value="Recompact"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildLog.html#a0f6053fff49c2044bbfb0b6293d31d9f"><param name="Name" value="RecordCommand"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildLog.html#a9ecfb3911719e31c05331d4b142014ce"><param name="Name" value="WriteEntry"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildLog.html#a2d5fc7e9bcbaf8900e2fb671e1ebea6c"><param name="Name" value="~BuildLog"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildLogUser.html"><param name="Name" value="BuildLogUser"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildLogUser.html#a4d0f24aa0363aa050c1f338e064a8cac"><param name="Name" value="IsPathDead"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildStatus.html"><param name="Name" value="BuildStatus"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildStatus_1_1RateInfo.html"><param name="Name" value="BuildStatus::RateInfo"></OBJECT>
@@ -260,6 +266,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildTest.html#a5c99bd787d394a683cbc696db30b47dd"><param name="Name" value="Dirty"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildTest.html#a9ea88eb9c32d3eb77b0df06696b2d529"><param name="Name" value="fs_"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildTest.html#a73a86246aefb2b8aeed71ac6979f37f3"><param name="Name" value="GetNode"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildTest.html#a5c3c1c08918ca44732d95f0ee92c965d"><param name="Name" value="IsPathDead"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildTest.html#a591bffbbff3975fb44ce22f16ae4427e"><param name="Name" value="MakeConfig"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildTest.html#ad27d56c5529e734f05ed58a9d2dd5e53"><param name="Name" value="RebuildTarget"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildTest.html#a0a0b2e96c926a18274cfb9fe61d0dcd7"><param name="Name" value="SetUp"></OBJECT>
@@ -277,6 +284,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildWithDepsLogTest.html#a5c99bd787d394a683cbc696db30b47dd"><param name="Name" value="Dirty"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildWithDepsLogTest.html#a9ea88eb9c32d3eb77b0df06696b2d529"><param name="Name" value="fs_"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildWithDepsLogTest.html#a73a86246aefb2b8aeed71ac6979f37f3"><param name="Name" value="GetNode"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildWithDepsLogTest.html#a5c3c1c08918ca44732d95f0ee92c965d"><param name="Name" value="IsPathDead"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildWithDepsLogTest.html#a591bffbbff3975fb44ce22f16ae4427e"><param name="Name" value="MakeConfig"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildWithDepsLogTest.html#ad27d56c5529e734f05ed58a9d2dd5e53"><param name="Name" value="RebuildTarget"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildWithDepsLogTest.html#a29da158e1452c8f75e7f98f17e7a35e9"><param name="Name" value="SetUp"></OBJECT>
@@ -296,6 +304,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildWithLogTest.html#a5c99bd787d394a683cbc696db30b47dd"><param name="Name" value="Dirty"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildWithLogTest.html#a9ea88eb9c32d3eb77b0df06696b2d529"><param name="Name" value="fs_"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildWithLogTest.html#a73a86246aefb2b8aeed71ac6979f37f3"><param name="Name" value="GetNode"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildWithLogTest.html#a5c3c1c08918ca44732d95f0ee92c965d"><param name="Name" value="IsPathDead"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildWithLogTest.html#a591bffbbff3975fb44ce22f16ae4427e"><param name="Name" value="MakeConfig"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildWithLogTest.html#ad27d56c5529e734f05ed58a9d2dd5e53"><param name="Name" value="RebuildTarget"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildWithLogTest.html#a0a0b2e96c926a18274cfb9fe61d0dcd7"><param name="Name" value="SetUp"></OBJECT>
@@ -390,10 +399,10 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structCLParser.html"><param name="Name" value="CLParser"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structCLParser.html#a9e815fc99c4c0e69149dfa2b02a0e687"><param name="Name" value="FilterInputFilename"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="structCLParser.html#a7c4f992d80a88581b25bb48c84db4364"><param name="Name" value="FilterShowIncludes"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structCLParser.html#a1367b95724c75f733778e3011dd614f2"><param name="Name" value="FilterShowIncludes"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structCLParser.html#a772a95d9eb98502582d85f968c836ea5"><param name="Name" value="includes_"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structCLParser.html#a6a36a893fc2f8e9a8b9914ccc27afd49"><param name="Name" value="IsSystemInclude"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="structCLParser.html#a00befbd4fc7b45090b1985e96ea4ba02"><param name="Name" value="Parse"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structCLParser.html#a4f374d6ed6eeba338560c98e210bdbe0"><param name="Name" value="Parse"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structCLWrapper.html"><param name="Name" value="CLWrapper"></OBJECT>
   <UL>
@@ -445,6 +454,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structCleanTest.html#a361d70919a53fecdea9123a349275f55"><param name="Name" value="CleanTest"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structRealCommandRunner.html#aeece9d778b4cd826f377f33e9c25f53f"><param name="Name" value="RealCommandRunner"></OBJECT>
   </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structLinePrinter.html#a2a63e7af653f2d4f0cbea8ffa1e88235"><param name="Name" value="console_locked_"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structVirtualFileSystem_1_1Entry.html#a13ebd3f2eca71653563308338a7107bc"><param name="Name" value="contents"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structMetric.html#a7f9387bafc99d555d79cfc7954f989cc"><param name="Name" value="count"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structVirtualFileSystem.html#a4812c8ffb94473786acfd69e83ebdc9d"><param name="Name" value="Create"></OBJECT>
@@ -455,12 +465,14 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structPool.html#afae30adbf4498e118e4c39cdc7e11dc5"><param name="Name" value="current_use_"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="debug__flags_8cc.html"><param name="Name" value="debug_flags.cc"></OBJECT>
   <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="debug__flags_8cc.html#a658844d6e894dbaf835d98051a45e62c"><param name="Name" value="g_experimental_statcache"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="debug__flags_8cc.html#aba5810fa2f3f3a9acec8c29dd5cf4dcc"><param name="Name" value="g_explaining"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="debug__flags_8cc.html#a5c5dbe2626f85f84cfc89f86f5c9e159"><param name="Name" value="g_keep_rsp"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="debug__flags_8h.html"><param name="Name" value="debug_flags.h"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="debug__flags_8h.html#a334e8f1dd8a740e85baff782ec1012c6"><param name="Name" value="EXPLAIN"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="debug__flags_8h.html#a658844d6e894dbaf835d98051a45e62c"><param name="Name" value="g_experimental_statcache"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="debug__flags_8h.html#aba5810fa2f3f3a9acec8c29dd5cf4dcc"><param name="Name" value="g_explaining"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="debug__flags_8h.html#a5c5dbe2626f85f84cfc89f86f5c9e159"><param name="Name" value="g_keep_rsp"></OBJECT>
   </UL>
@@ -484,6 +496,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structDependencyScan.html#a0b1ec300b10142efc8559a235c4f7555"><param name="Name" value="RecomputeOutputsDirty"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structDependencyScan.html#a23ecdbf0f9e1154605c34c67c6406110"><param name="Name" value="set_build_log"></OBJECT>
   </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="depfile__parser__perftest_8cc.html"><param name="Name" value="depfile_parser_perftest.cc"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="depfile__parser__test_8cc.html"><param name="Name" value="depfile_parser_test.cc"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structDepfileParser.html"><param name="Name" value="DepfileParser"></OBJECT>
   <UL>
@@ -531,6 +544,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structDepsLog.html#a5aac22285c95db2a3021f748c8aec5b1"><param name="Name" value="DepsLogTest"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structDepsLog.html#a95b019cbbc01f5869c86bc790424d834"><param name="Name" value="file_"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structDepsLog.html#a075043796f88d312004cf5ae74a53c4e"><param name="Name" value="GetDeps"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structDepsLog.html#a3d91b6caef537ba9d9b50ecbf09cd4a5"><param name="Name" value="IsDepsEntryLiveFor"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structDepsLog.html#a698004cf8030703ddf6b19f8ab7bd50e"><param name="Name" value="Load"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structDepsLog.html#adee980c7d35e5c4b32b669733b4382c4"><param name="Name" value="needs_recompaction_"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structDepsLog.html#a94bb97eecb9d8293ef1c7f19f1a65f1b"><param name="Name" value="nodes"></OBJECT>
@@ -569,7 +583,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structDiskInterface.html#a7fae01dae68b95facad54b0bc233d279"><param name="Name" value="MakeDirs"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structDiskInterface.html#aed889f19b478039bd8d315fe965440ea"><param name="Name" value="ReadFile"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structDiskInterface.html#ad7442b7e0b10e0737c56667d967e9f76"><param name="Name" value="RemoveFile"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="structDiskInterface.html#ac99deecbc7f235272f0a8e308e7792d7"><param name="Name" value="Stat"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structDiskInterface.html#a1095cf31175f95f005fc38b28683b0cb"><param name="Name" value="Stat"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structDiskInterface.html#afcfaed359bb8ba121bba9838c02c2483"><param name="Name" value="WriteFile"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structDiskInterface.html#a34d62e4d1ba8b716696bcfc6f2643cd3"><param name="Name" value="~DiskInterface"></OBJECT>
   </UL>
@@ -602,6 +616,8 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structEdge.html#ac4086e06c9982fbebdb9b1a5d52af3cd"><param name="Name" value="EvaluateCommand"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structEdge.html#a4f495554a299524a951620f7b643d111"><param name="Name" value="GetBinding"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structEdge.html#a23eef03702ce52f7fdf80a8e05e242d1"><param name="Name" value="GetBindingBool"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEdge.html#a327ebbb178acb1d05c454c806ba84c46"><param name="Name" value="GetUnescapedDepfile"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEdge.html#a70c8d93441468aa04296c29ff94cbcb9"><param name="Name" value="GetUnescapedRspfile"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structEdge.html#a4dcd12be59a0653c7beef3c37edcf4ed"><param name="Name" value="implicit_deps_"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structEdge.html#a4fd6b2daa2559765aaf2fed1de96f345"><param name="Name" value="inputs_"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structEdge.html#a90a2a3bc6234204d2285e46d80a822f9"><param name="Name" value="is_implicit"></OBJECT>
@@ -615,13 +631,17 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structEdge.html#a8d44bdcbfb086a1771d6e13f256620a8"><param name="Name" value="pool_"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structEdge.html#a3a65de0e14a559db9ebc0e60faa7d664"><param name="Name" value="rule"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structEdge.html#a6553b57e59b77a3f8a4bf9b19c25d7f8"><param name="Name" value="rule_"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEdge.html#ade0ceb00f2eb88e99c7bcae5a07d37a1"><param name="Name" value="use_console"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structEdge.html#ab08abe6de206325f0b1f472cbadaa755"><param name="Name" value="weight"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structEdgeEnv.html#a9cf14172d32813daa2e7e57e40230e60"><param name="Name" value="edge_"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structEdgeEnv.html"><param name="Name" value="EdgeEnv"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structEdgeEnv.html#a9cf14172d32813daa2e7e57e40230e60"><param name="Name" value="edge_"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEdgeEnv.html#a04299d9d3744d2106bce92ea52338feb"><param name="Name" value="EdgeEnv"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEdgeEnv.html#ad4b9ab32700e9681ee16b1ca32de5993"><param name="Name" value="EdgeEnv"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEdgeEnv.html#ade0dae63fdec76a8d9d3040b99437c3e"><param name="Name" value="escape_in_out_"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEdgeEnv.html#af5aeedc89db8f0cdbb072b104c7ba2efaa804a2af5f66c80476dadcd6d0237530"><param name="Name" value="kDoNotEscape"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structEdgeEnv.html#af5aeedc89db8f0cdbb072b104c7ba2efa735c02ecd79f01637c799a2973634f72"><param name="Name" value="kShellEscape"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structEdgeEnv.html#aa9c40e6440c932ac59bebefcd2e917bf"><param name="Name" value="LookupVariable"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structEdgeEnv.html#a3611d2dee62a757d097245cc51eb6283"><param name="Name" value="MakePathList"></OBJECT>
   </UL>
@@ -675,6 +695,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8cc.html#a8d48223b92317abcaf5984a00a97efb4"><param name="Name" value="util.cc"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8h.html#a8d48223b92317abcaf5984a00a97efb4"><param name="Name" value="util.h"></OBJECT>
   </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEdgeEnv.html#ade0dae63fdec76a8d9d3040b99437c3e"><param name="Name" value="escape_in_out_"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="msvc__helper-win32_8cc.html#a300d98ae05003710d74d83f46f8e7592"><param name="Name" value="EscapeForDepfile"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="msvc__helper-win32_8cc.html#a300d98ae05003710d74d83f46f8e7592"><param name="Name" value="msvc_helper-win32.cc"></OBJECT>
@@ -711,7 +732,7 @@
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structExternalStringHashMap.html#a7551393f72945d1df36ed914c9c6c682"><param name="Name" value="Type"></OBJECT>
   </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuilder.html#adda0c101d4aa206fb1bede2e0fb132f4"><param name="Name" value="ExtractDeps"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuilder.html#a1d1da3f88460e22b7f58aeaf1ad74b85"><param name="Name" value="ExtractDeps"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildConfig.html#a406984d40cde5afc338fe3b0cb9149c9"><param name="Name" value="failures_allowed"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structFakeCommandRunner.html"><param name="Name" value="FakeCommandRunner"></OBJECT>
   <UL>
@@ -753,7 +774,7 @@
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structVirtualFileSystem.html#aaca2f5b74c3ea10b4de0d5268726be98"><param name="Name" value="files_removed_"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structCLParser.html#a9e815fc99c4c0e69149dfa2b02a0e687"><param name="Name" value="FilterInputFilename"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="structCLParser.html#a7c4f992d80a88581b25bb48c84db4364"><param name="Name" value="FilterShowIncludes"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structCLParser.html#a1367b95724c75f733778e3011dd614f2"><param name="Name" value="FilterShowIncludes"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structPlan.html#ade35148e31da830a66fd5a852f8901e4"><param name="Name" value="FindWork"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structPlanTest.html#ae54b1b196ddacd09895b79fb8cea88bb"><param name="Name" value="FindWorkSorted"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structGraphViz.html#a2d788bf557363e0476d223cefdff38ac"><param name="Name" value="Finish"></OBJECT>
@@ -777,6 +798,11 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structGraphTest.html#a5288df1d31b827133b1a500b73d8d493"><param name="Name" value="GraphTest"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structLinePrinter.html#a99f22ad59aa1bca1165da568c97c3d58a69f1d61dcaed878855e76c5435c807e5"><param name="Name" value="FULL"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="debug__flags_8cc.html#a658844d6e894dbaf835d98051a45e62c"><param name="Name" value="g_experimental_statcache"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="debug__flags_8cc.html#a658844d6e894dbaf835d98051a45e62c"><param name="Name" value="debug_flags.cc"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="debug__flags_8h.html#a658844d6e894dbaf835d98051a45e62c"><param name="Name" value="debug_flags.h"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="debug__flags_8cc.html#aba5810fa2f3f3a9acec8c29dd5cf4dcc"><param name="Name" value="g_explaining"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="debug__flags_8cc.html#aba5810fa2f3f3a9acec8c29dd5cf4dcc"><param name="Name" value="debug_flags.cc"></OBJECT>
@@ -854,10 +880,22 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8cc.html#a03a03c74e8b71b7ab09b1af533dc253f"><param name="Name" value="util.cc"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8h.html#a03a03c74e8b71b7ab09b1af533dc253f"><param name="Name" value="util.h"></OBJECT>
   </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8cc.html#a5d89d1621913641fab23969f8665d3d5"><param name="Name" value="GetShellEscapedString"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8cc.html#a5d89d1621913641fab23969f8665d3d5"><param name="Name" value="util.cc"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8h.html#a5d89d1621913641fab23969f8665d3d5"><param name="Name" value="util.h"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="metrics_8cc.html#a139d0fe6387b9e230a9b8bb12d9b43b9"><param name="Name" value="GetTimeMillis"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="metrics_8cc.html#a139d0fe6387b9e230a9b8bb12d9b43b9"><param name="Name" value="metrics.cc"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="metrics_8h.html#a139d0fe6387b9e230a9b8bb12d9b43b9"><param name="Name" value="metrics.h"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEdge.html#a327ebbb178acb1d05c454c806ba84c46"><param name="Name" value="GetUnescapedDepfile"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEdge.html#a70c8d93441468aa04296c29ff94cbcb9"><param name="Name" value="GetUnescapedRspfile"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8cc.html#a147fcbfb98ba43b1cb5a4739bf0c7702"><param name="Name" value="GetWin32EscapedString"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8cc.html#a147fcbfb98ba43b1cb5a4739bf0c7702"><param name="Name" value="util.cc"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8h.html#a147fcbfb98ba43b1cb5a4739bf0c7702"><param name="Name" value="util.h"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="graph__test_8cc.html"><param name="Name" value="graph_test.cc"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structGraphTest.html"><param name="Name" value="GraphTest"></OBJECT>
@@ -936,14 +974,28 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structLinePrinter.html#a855c07411fbfe1a25006099a201422b0"><param name="Name" value="is_smart_terminal"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structPool.html#a04ffb36bfdf1141a5fd7dc17885d8bc2"><param name="Name" value="is_valid"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structCleaner.html#a1b9ca5874a08b927ed8ed0476ccd3769"><param name="Name" value="IsAlreadyRemoved"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structDepsLog.html#a3d91b6caef537ba9d9b50ecbf09cd4a5"><param name="Name" value="IsDepsEntryLiveFor"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8cc.html#a38e7f4f3b273c116d16ab33e6a065fa2"><param name="Name" value="IsKnownShellSafeCharacter"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8cc.html#a4316c8580a35e3bedd6e76bba3343b58"><param name="Name" value="IsKnownWin32SafeCharacter"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8cc.html#a004abead93a39ce70b226bea8fa39680"><param name="Name" value="islatinalpha"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildTest.html#a5c3c1c08918ca44732d95f0ee92c965d"><param name="Name" value="IsPathDead"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildTest.html#a5c3c1c08918ca44732d95f0ee92c965d"><param name="Name" value="BuildDryRun"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildLogUser.html#a4d0f24aa0363aa050c1f338e064a8cac"><param name="Name" value="BuildLogUser"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildTest.html#a5c3c1c08918ca44732d95f0ee92c965d"><param name="Name" value="BuildTest"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildTest.html#a5c3c1c08918ca44732d95f0ee92c965d"><param name="Name" value="BuildWithDepsLogTest"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildTest.html#a5c3c1c08918ca44732d95f0ee92c965d"><param name="Name" value="BuildWithLogTest"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structNoDeadPaths.html#a8d4da134866bd2e4393bcc2c6e35faaa"><param name="Name" value="NoDeadPaths"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structRule.html#a32ea121b2c519390ba34854f2398c4f0"><param name="Name" value="IsReservedBinding"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structCLParser.html#a6a36a893fc2f8e9a8b9914ccc27afd49"><param name="Name" value="IsSystemInclude"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structCleaner.html#a197944f3ef71b02a07639970d45ca0f7"><param name="Name" value="IsVerbose"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structLaconicPrinter.html#a6cd8589242373063a2014b08f2c91b8d"><param name="Name" value="iteration_"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structIncludesNormalize.html#a089d15ee6d0e334141ceab320374e18f"><param name="Name" value="Join"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structState.html#a1bfd2a655955c711d114b89e72115e75"><param name="Name" value="kConsolePool"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="deps__log_8cc.html#a921b019a3680c6975e949208c2b08af8"><param name="Name" value="kCurrentVersion"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structState.html#a52ef5a6c1a831f6677114321364a44d6"><param name="Name" value="kDefaultPool"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEdgeEnv.html#af5aeedc89db8f0cdbb072b104c7ba2efaa804a2af5f66c80476dadcd6d0237530"><param name="Name" value="kDoNotEscape"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="deps__log_8cc.html#af3689d396263e39675199367e0138314"><param name="Name" value="kFileSignature"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="deps__log_8cc.html#a14c5a973c5acd0659069ca9516d247a5"><param name="Name" value="kMaxRecordSize"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="version_8cc.html#a38550eefd4f7cf3cf562fdc142eb918c"><param name="Name" value="kNinjaVersion"></OBJECT>
@@ -953,6 +1005,7 @@
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="canon__perftest_8cc.html#a8938147b14fbd0ea2d2a65f28d53e2b8"><param name="Name" value="kPath"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structState.html#a9522a499bd62121a14e00a3016fa0599"><param name="Name" value="kPhonyRule"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEdgeEnv.html#af5aeedc89db8f0cdbb072b104c7ba2efa735c02ecd79f01637c799a2973634f72"><param name="Name" value="kShellEscape"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="build__log__perftest_8cc.html#a59e14193a985d28b8fe2bcba0ebb7481"><param name="Name" value="kTestFilename"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structLaconicPrinter.html"><param name="Name" value="LaconicPrinter"></OBJECT>
   <UL>
@@ -1009,18 +1062,26 @@
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structManifestParser.html#a07bee06cdcecc02029c51fc86b51a141"><param name="Name" value="lexer_"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="lexer__test_8cc.html"><param name="Name" value="lexer_test.cc"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structLinePrinter.html#a015279ac89a05545ff5ac1fc1e002b3c"><param name="Name" value="line_buffer_"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structLineReader.html#a809b226aacf2ed0d7aaeca6d0ae2bd4a"><param name="Name" value="line_end_"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structLineReader.html#a36a8e5157977201734978cef8eff14dc"><param name="Name" value="line_start_"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structLinePrinter.html#ad362b4a3f321c2dd39bc1f356fc65dd6"><param name="Name" value="line_type_"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structLinePrinter.html"><param name="Name" value="LinePrinter"></OBJECT>
   <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structLinePrinter.html#a2a63e7af653f2d4f0cbea8ffa1e88235"><param name="Name" value="console_locked_"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structLinePrinter.html#a99f22ad59aa1bca1165da568c97c3d58abf44d7c12a55615f6b9c93cb937befcb"><param name="Name" value="ELIDE"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structLinePrinter.html#a99f22ad59aa1bca1165da568c97c3d58a69f1d61dcaed878855e76c5435c807e5"><param name="Name" value="FULL"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structLinePrinter.html#a2e0a97433a4555e10e8d93c3ae2ea1d4"><param name="Name" value="have_blank_line_"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structLinePrinter.html#a855c07411fbfe1a25006099a201422b0"><param name="Name" value="is_smart_terminal"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structLinePrinter.html#a015279ac89a05545ff5ac1fc1e002b3c"><param name="Name" value="line_buffer_"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structLinePrinter.html#ad362b4a3f321c2dd39bc1f356fc65dd6"><param name="Name" value="line_type_"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structLinePrinter.html#a0424b5f6191eb3514f6365a70f8a103c"><param name="Name" value="LinePrinter"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structLinePrinter.html#acade00d205f0cabdaa35ae43eee44486"><param name="Name" value="output_buffer_"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structLinePrinter.html#aa9f64b574d547d32748d2517e21beea5"><param name="Name" value="Print"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structLinePrinter.html#a5c7e10eb69b0f8b39fe4ba92079e72f6"><param name="Name" value="PrintOnNewLine"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structLinePrinter.html#a05f503456976587d2f243521966d5dfc"><param name="Name" value="PrintOrBuffer"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structLinePrinter.html#a0992dd6ef3dbe9aab0595ea98bcd15e5"><param name="Name" value="set_smart_terminal"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structLinePrinter.html#a38acb5f22d9a84a0a86da6e0ba861a35"><param name="Name" value="SetConsoleLocked"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structLinePrinter.html#a0e2c3f54e0f44153ceef6d5d93a9d22f"><param name="Name" value="smart_terminal_"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structLineReader.html"><param name="Name" value="LineReader"></OBJECT>
@@ -1042,10 +1103,11 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structImplicitDepLoader.html#a7173ceeb9b48be3ffd3527b2245abd7a"><param name="Name" value="LoadDepFile"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structImplicitDepLoader.html#a66cdcc2cfccfd7b86c851007bf3c1b13"><param name="Name" value="LoadDeps"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structImplicitDepLoader.html#a03bcc22d47ef3dc927f93a2bff86f895"><param name="Name" value="LoadDepsFromLog"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="manifest__parser__perftest_8cc.html#a40595c8e2fbd976436296b930045b243"><param name="Name" value="LoadManifests"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildLog.html#a5fd4ee55ca61796e6d9aecaac2855cba"><param name="Name" value="log_file_"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildLog_1_1LogEntry.html#a4286cf5ee2b1db6f037bdbf84194ef96"><param name="Name" value="LogEntry"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildLog.html#af01fac6ff13246e414e69b3737692f59"><param name="Name" value="LookupByOutput"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="structState.html#a76435f4f2516b38c28c731a7bac862e7"><param name="Name" value="LookupNode"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structState.html#a9b89c1d3065f1c2100d16a41c1602ac5"><param name="Name" value="LookupNode"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structState.html#af0c244d916af2ad290131ba85c15bf3f"><param name="Name" value="LookupPool"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structState.html#abe8dfcbd700a01cb0e28f730055bf14c"><param name="Name" value="LookupRule"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structBindingEnv.html#af858f0c4dc64fee67545ffabb18ee2bb"><param name="Name" value="LookupVariable"></OBJECT>
@@ -1059,10 +1121,11 @@
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="build__log__perftest_8cc.html#ae66f6b31b5ad750f1fe042a706a4e3d4"><param name="Name" value="build_log_perftest.cc"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="canon__perftest_8cc.html#ae66f6b31b5ad750f1fe042a706a4e3d4"><param name="Name" value="canon_perftest.cc"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="depfile__parser__perftest_8cc.html#a0ddf1224851353fc92bfbff6f499fa97"><param name="Name" value="depfile_parser_perftest.cc"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="hash__collision__bench_8cc.html#ae66f6b31b5ad750f1fe042a706a4e3d4"><param name="Name" value="hash_collision_bench.cc"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="manifest__parser__perftest_8cc.html#a0ddf1224851353fc92bfbff6f499fa97"><param name="Name" value="manifest_parser_perftest.cc"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="ninja_8cc.html#a3c04138a5bfe5d72780bb7e82a18e627"><param name="Name" value="ninja.cc"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="ninja__test_8cc.html#a3c04138a5bfe5d72780bb7e82a18e627"><param name="Name" value="ninja_test.cc"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="parser__perftest_8cc.html#a0ddf1224851353fc92bfbff6f499fa97"><param name="Name" value="parser_perftest.cc"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildTest.html#a591bffbbff3975fb44ce22f16ae4427e"><param name="Name" value="MakeConfig"></OBJECT>
   <UL>
@@ -1084,6 +1147,12 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structDiskInterface.html#a7fae01dae68b95facad54b0bc233d279"><param name="Name" value="VirtualFileSystem"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structEdgeEnv.html#a3611d2dee62a757d097245cc51eb6283"><param name="Name" value="MakePathList"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="manifest__parser__perftest_8cc.html"><param name="Name" value="manifest_parser_perftest.cc"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="manifest__parser__perftest_8cc.html#a40595c8e2fbd976436296b930045b243"><param name="Name" value="LoadManifests"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="manifest__parser__perftest_8cc.html#a0ddf1224851353fc92bfbff6f499fa97"><param name="Name" value="main"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="manifest__parser__perftest_8cc.html#a37a41c3060514191cf22fe5d708f773d"><param name="Name" value="WriteFakeManifests"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="manifest__parser__test_8cc.html"><param name="Name" value="manifest_parser_test.cc"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structManifestParser.html"><param name="Name" value="ManifestParser"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structManifestParser_1_1FileReader.html"><param name="Name" value="ManifestParser::FileReader"></OBJECT>
@@ -1223,6 +1292,10 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structNode.html#a5ac94179891e330eb9ed8c32e58afe4d"><param name="Name" value="status_known"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structDepsLog_1_1Deps.html#af59c987b02350a4dfcd24a5406624fdb"><param name="Name" value="node_count"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structNoDeadPaths.html"><param name="Name" value="NoDeadPaths"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structNoDeadPaths.html#a8d4da134866bd2e4393bcc2c6e35faaa"><param name="Name" value="IsPathDead"></OBJECT>
+  </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structPlan.html#aee4e9368a64b819b3fe2563551e8ef65"><param name="Name" value="NodeFinished"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structDepsLog.html#a94bb97eecb9d8293ef1c7f19f1a65f1b"><param name="Name" value="nodes"></OBJECT>
   <UL>
@@ -1244,9 +1317,9 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structLaconicPrinter.html#abf74a48b6cc0aa194ead1970cde34bfb"><param name="Name" value="OnTestProgramEnd"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structLaconicPrinter.html#a5fb8bbbefe3328463e984caf2bfc417d"><param name="Name" value="OnTestProgramStart"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structLaconicPrinter.html#ac196bcbaf01abd5931cfc8e588dd3ad7"><param name="Name" value="OnTestStart"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildLog.html#a08a600782d1b1c8369b8437d9d9c4264"><param name="Name" value="OpenForWrite"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildLog.html#a4d345335c0495d843bd906305cc95ef9"><param name="Name" value="OpenForWrite"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildLog.html#a08a600782d1b1c8369b8437d9d9c4264"><param name="Name" value="BuildLog"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildLog.html#a4d345335c0495d843bd906305cc95ef9"><param name="Name" value="BuildLog"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structDepsLog.html#af49ad152c2917c7e86742ce335db0263"><param name="Name" value="DepsLog"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structStringPiece.html#a391dac08b833f273eed900fab8cec3ba"><param name="Name" value="operator!="></OBJECT>
@@ -1277,15 +1350,16 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildLog_1_1LogEntry.html#ab83065a7478526bcb4c5b2544b5f078a"><param name="Name" value="BuildLog::LogEntry"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structCommandRunner_1_1Result.html#aaf9cc90fe396b53c2b817f8cb4f0200a"><param name="Name" value="CommandRunner::Result"></OBJECT>
   </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structLinePrinter.html#acade00d205f0cabdaa35ae43eee44486"><param name="Name" value="output_buffer_"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structEdge.html#ac4ab5a6898d716f32683b63fafc65bb6"><param name="Name" value="outputs_"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structEdge.html#a2fe2114ba09e80a6a227eb04f8a404de"><param name="Name" value="outputs_ready"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structEdge.html#affddbfc0888b9af3c8b65449f9e54852"><param name="Name" value="outputs_ready_"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildStatus.html#a8025fa54de1dbfd17d69561f55b9365f"><param name="Name" value="overall_rate_"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildConfig.html#aedc92d7f5d96f1c94c9cdfb2014ea2f0"><param name="Name" value="parallelism"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structBindingEnv.html#a8d0a9ba09923c7160d0cbc1ff3dac6df"><param name="Name" value="parent_"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="structCLParser.html#a00befbd4fc7b45090b1985e96ea4ba02"><param name="Name" value="Parse"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structCLParser.html#a4f374d6ed6eeba338560c98e210bdbe0"><param name="Name" value="Parse"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="structCLParser.html#a00befbd4fc7b45090b1985e96ea4ba02"><param name="Name" value="CLParser"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structCLParser.html#a4f374d6ed6eeba338560c98e210bdbe0"><param name="Name" value="CLParser"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structDepfileParser.html#ab00f64bc084aa068e5d03e13cf931ad7"><param name="Name" value="DepfileParser"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structDepfileParserTest.html#a3072d1cf80fdd313e15a144ca9fe4de6"><param name="Name" value="DepfileParserTest"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structManifestParser.html#aad6b425073d209a4f4fadd009920cb0e"><param name="Name" value="ManifestParser"></OBJECT>
@@ -1297,7 +1371,6 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structManifestParser.html#a1f9dffe49fc2952d99355b22d4442c05"><param name="Name" value="ParseLet"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structManifestParser.html#a8bf152be7e6880b4e419187fed3d0d0f"><param name="Name" value="ParsePool"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structDepfileParserTest.html#a9c943af744c5afe4723535a999e3b83a"><param name="Name" value="parser_"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="parser__perftest_8cc.html"><param name="Name" value="parser_perftest.cc"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structParserTest.html"><param name="Name" value="ParserTest"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structParserTest.html#af21898f5fe97c7a919b4357f837a9cf8"><param name="Name" value="AssertParse"></OBJECT>
@@ -1354,6 +1427,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structPlanTest.html#a73a86246aefb2b8aeed71ac6979f37f3"><param name="Name" value="GetNode"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structPlanTest.html#a4c01ff074b43aa178f4af994da7f7ae7"><param name="Name" value="plan_"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structPlanTest.html#a7fc39f179dd0a7d578690ce03ed58e87"><param name="Name" value="state_"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structPlanTest.html#a4f869c9bc4ec3cf7e873df25a1e38704"><param name="Name" value="TestPoolWithDepthOne"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="minidump-win32_8cc.html#a641111f700a66af2a0596c8d7d3ffb4f"><param name="Name" value="PMINIDUMP_EXCEPTION_INFORMATION"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="minidump-win32_8cc.html#afa0f235b2691e210ff5912efe0bd6437"><param name="Name" value="PMINIDUMP_USER_STREAM_INFORMATION"></OBJECT>
@@ -1396,6 +1470,7 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structCleaner.html#a1a85c3e4741da1685692c5f6dd0ab789"><param name="Name" value="PrintFooter"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structCleaner.html#afe60abac766fe0a45ffb1553a2987068"><param name="Name" value="PrintHeader"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structLinePrinter.html#a5c7e10eb69b0f8b39fe4ba92079e72f6"><param name="Name" value="PrintOnNewLine"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structLinePrinter.html#a05f503456976587d2f243521966d5dfc"><param name="Name" value="PrintOrBuffer"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildStatus.html#a86a9921153c374661952003d57aff718"><param name="Name" value="PrintStatus"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="win32port_8h.html#ac582131d7a7c8ee57e73180d1714f9d5"><param name="Name" value="PRIu64"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="win32port_8h.html#aba38357387a474f439428dee1984fc5a"><param name="Name" value="PRIx64"></OBJECT>
@@ -1423,6 +1498,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structManifestParser_1_1FileReader.html#a2189a2031f8731473f1c4979c5b4fda5"><param name="Name" value="ManifestParser::FileReader"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structParserTest.html#a6a64ee37b845bb764e1c92e32fcc5184"><param name="Name" value="ParserTest"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structRealDiskInterface.html#aca5e97e18e89f64a56fc2388d3aad69b"><param name="Name" value="RealDiskInterface"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structRealFileReader.html#adade798308a0ebcd2ac8849d1cbf1929"><param name="Name" value="RealFileReader"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8cc.html#afa2642aae4af8af879417889a5e8f4f5"><param name="Name" value="util.cc"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8h.html#afa2642aae4af8af879417889a5e8f4f5"><param name="Name" value="util.h"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structVirtualFileSystem.html#ab47293dbafe8926db6fb02742b42e140"><param name="Name" value="VirtualFileSystem"></OBJECT>
@@ -1448,15 +1524,20 @@
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structRealDiskInterface.html"><param name="Name" value="RealDiskInterface"></OBJECT>
   <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structRealDiskInterface.html#a5d65ad648f4104dc051b7968409722a1"><param name="Name" value="AllowStatCache"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structRealDiskInterface.html#acf868fd64fcb5dff9cc9741bd2e5575e"><param name="Name" value="MakeDir"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structRealDiskInterface.html#a7fae01dae68b95facad54b0bc233d279"><param name="Name" value="MakeDirs"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structRealDiskInterface.html#a9b7e7955cfaed1b9591892464b77876b"><param name="Name" value="quiet_"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structRealDiskInterface.html#aca5e97e18e89f64a56fc2388d3aad69b"><param name="Name" value="ReadFile"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structRealDiskInterface.html#ac1b01e685fc9981d391c3be3d9a30894"><param name="Name" value="RealDiskInterface"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structRealDiskInterface.html#a95db458a6793ec41ae8727c76d11475a"><param name="Name" value="RemoveFile"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="structRealDiskInterface.html#a9c8fe8b0dc4ca004f0b2f41743c96f2a"><param name="Name" value="Stat"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structRealDiskInterface.html#af9a98eca935f55943728ecf3d4447c72"><param name="Name" value="Stat"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structRealDiskInterface.html#a0bd82c99c8838d65ae6ab1c0bbf94fe9"><param name="Name" value="WriteFile"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structRealDiskInterface.html#a9f702e2142f8227cc6cfdb682208bd85"><param name="Name" value="~RealDiskInterface"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structRealFileReader.html"><param name="Name" value="RealFileReader"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structRealFileReader.html#adade798308a0ebcd2ac8849d1cbf1929"><param name="Name" value="ReadFile"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildTest.html#ad27d56c5529e734f05ed58a9d2dd5e53"><param name="Name" value="RebuildTarget"></OBJECT>
   <UL>
@@ -1465,9 +1546,9 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildTest.html#ad27d56c5529e734f05ed58a9d2dd5e53"><param name="Name" value="BuildWithDepsLogTest"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildTest.html#ad27d56c5529e734f05ed58a9d2dd5e53"><param name="Name" value="BuildWithLogTest"></OBJECT>
   </UL>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildLog.html#a864e5ac4b1d5239ae808b38ab3aeeb41"><param name="Name" value="Recompact"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildLog.html#a27cb04969d1497d5e3f66981a6b639e1"><param name="Name" value="Recompact"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildLog.html#a864e5ac4b1d5239ae808b38ab3aeeb41"><param name="Name" value="BuildLog"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildLog.html#a27cb04969d1497d5e3f66981a6b639e1"><param name="Name" value="BuildLog"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structDepsLog.html#a09515578bf5a271a93919c7ff2036001"><param name="Name" value="DepsLog"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structDependencyScan.html#aa4c172a1d437ec83d27635262be88981"><param name="Name" value="RecomputeDirty"></OBJECT>
@@ -1573,6 +1654,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8cc.html#a946927145681d8bb8318f5a7c4dc57ae"><param name="Name" value="util.cc"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8h.html#a946927145681d8bb8318f5a7c4dc57ae"><param name="Name" value="util.h"></OBJECT>
   </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structLinePrinter.html#a38acb5f22d9a84a0a86da6e0ba861a35"><param name="Name" value="SetConsoleLocked"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structCLWrapper.html#af33715b81c86f13894321539553908fa"><param name="Name" value="SetEnvBlock"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structSubprocessSet.html#a92e3aa670c37aa51d071821cdcbc07e2"><param name="Name" value="SetInterruptedFlag"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildTest.html#a0a0b2e96c926a18274cfb9fe61d0dcd7"><param name="Name" value="SetUp"></OBJECT>
@@ -1619,12 +1701,12 @@
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structStopwatch.html#a51daa9298760261a48fc947eeb977386"><param name="Name" value="started_"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildStatus.html#a4d456bf8d06d793d99f7a927a573ffad"><param name="Name" value="started_edges_"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuilder.html#a66ff07bb0a3afc4651c8cd362a90831e"><param name="Name" value="StartEdge"></OBJECT>
-  <LI><OBJECT type="text/sitemap"><param name="Local" value="structDiskInterface.html#ac99deecbc7f235272f0a8e308e7792d7"><param name="Name" value="Stat"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structDiskInterface.html#a1095cf31175f95f005fc38b28683b0cb"><param name="Name" value="Stat"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="structDiskInterface.html#ac99deecbc7f235272f0a8e308e7792d7"><param name="Name" value="DiskInterface"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structDiskInterface.html#a1095cf31175f95f005fc38b28683b0cb"><param name="Name" value="DiskInterface"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structNode.html#a86d655a6441a755a3d13348029db3885"><param name="Name" value="Node"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="structRealDiskInterface.html#a9c8fe8b0dc4ca004f0b2f41743c96f2a"><param name="Name" value="RealDiskInterface"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="structVirtualFileSystem.html#adb7c97119619c0d060579aaaf14c7847"><param name="Name" value="VirtualFileSystem"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structRealDiskInterface.html#af9a98eca935f55943728ecf3d4447c72"><param name="Name" value="RealDiskInterface"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structVirtualFileSystem.html#a21576b9c44cb6c1649ab85381c0983fd"><param name="Name" value="VirtualFileSystem"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structState.html"><param name="Name" value="State"></OBJECT>
   <UL>
@@ -1640,9 +1722,10 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structState.html#af849053c8ba18467e230483fc9e3ae61"><param name="Name" value="Dump"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structState.html#ab0f23f5026709fcb48d83e93d4bbed97"><param name="Name" value="edges_"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structState.html#a56b8860c41946bdda3f08809ec9f7e5e"><param name="Name" value="GetNode"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structState.html#a1bfd2a655955c711d114b89e72115e75"><param name="Name" value="kConsolePool"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structState.html#a52ef5a6c1a831f6677114321364a44d6"><param name="Name" value="kDefaultPool"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structState.html#a9522a499bd62121a14e00a3016fa0599"><param name="Name" value="kPhonyRule"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="structState.html#a76435f4f2516b38c28c731a7bac862e7"><param name="Name" value="LookupNode"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structState.html#a9b89c1d3065f1c2100d16a41c1602ac5"><param name="Name" value="LookupNode"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structState.html#af0c244d916af2ad290131ba85c15bf3f"><param name="Name" value="LookupPool"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structState.html#abe8dfcbd700a01cb0e28f730055bf14c"><param name="Name" value="LookupRule"></OBJECT>
   </UL>
@@ -1706,6 +1789,8 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildStatus_1_1SlidingRateInfo.html#ac1e7ff77c3cb348375d5d44c35bab660"><param name="Name" value="BuildStatus::SlidingRateInfo"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structStringPiece.html#a0c21a59632952caa265e5898a0add91e"><param name="Name" value="str_"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8cc.html#a3ecae07db3444ba89a9c421fda0e657d"><param name="Name" value="StringNeedsShellEscaping"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8cc.html#ab86d152a35ccd032649973e01b79f606"><param name="Name" value="StringNeedsWin32Escaping"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structStringPiece.html"><param name="Name" value="StringPiece"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structStringPiece.html#ae61eaf54a5cd334bcc476670684c2fc6"><param name="Name" value="AsString"></OBJECT>
@@ -1733,14 +1818,15 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structSubprocess.html#aea96bde27cbc9118d9c9572534da8872"><param name="Name" value="OnPipeReady"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structSubprocess.html#af675690a04bd28e55685e35cd345c5b6"><param name="Name" value="pid_"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structSubprocess.html#a6813da0fc1567ee13661a37cba2e58d8"><param name="Name" value="Start"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="structSubprocess.html#a7261c6dd5c9826ea9c72f0f79dc5ad2a"><param name="Name" value="Subprocess"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structSubprocess.html#a9fe3fa3b9089c81bb62cd8f12eb4e67d"><param name="Name" value="Subprocess"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structSubprocess.html#abfdc22438d5c005a2b739a845d985005"><param name="Name" value="SubprocessSet"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structSubprocess.html#ab2eb7e77b88e8af4f5efc5e4046834f9"><param name="Name" value="use_console_"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structSubprocess.html#a02e3668310fef77df1e0c760b4e26dfc"><param name="Name" value="~Subprocess"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="subprocess__test_8cc.html"><param name="Name" value="subprocess_test.cc"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structSubprocessSet.html"><param name="Name" value="SubprocessSet"></OBJECT>
   <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="structSubprocessSet.html#a0fea01f81a2ef66bcb85547cf69defac"><param name="Name" value="Add"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structSubprocessSet.html#a5f72fd727c938652e3a175d040cc4be1"><param name="Name" value="Add"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structSubprocessSet.html#a54f28f7e328426ce66043ca99906f39b"><param name="Name" value="Clear"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structSubprocessSet.html#a1b12e1139c36d480a2d4a1680f9ad465"><param name="Name" value="DoWork"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structSubprocessSet.html#a1b3aec115bae40c9298275c126e9614b"><param name="Name" value="finished_"></OBJECT>
@@ -1789,6 +1875,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="manifest__parser__test_8cc.html#a70997cefed3bb026523aff903efc79b0"><param name="Name" value="manifest_parser_test.cc"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="subprocess__test_8cc.html#a775f99b7e07e1594fca350359ab00a1b"><param name="Name" value="subprocess_test.cc"></OBJECT>
   </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structPlanTest.html#a4f869c9bc4ec3cf7e873df25a1e38704"><param name="Name" value="TestPoolWithDepthOne"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structLaconicPrinter.html#a0b3c6a927530c907ac9727d856c72d00"><param name="Name" value="tests_started_"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structVirtualFileSystem.html#a912bc655f005b0c522fa8e954b71eeee"><param name="Name" value="Tick"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildStatus_1_1SlidingRateInfo.html#a06ea2bb9c19c66ac53a551aec9bb9b8a"><param name="Name" value="times_"></OBJECT>
@@ -1814,6 +1901,8 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildStatus_1_1RateInfo.html#a05c38ec0e852ce111f8a660e7bb14000"><param name="Name" value="BuildStatus::RateInfo"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildStatus_1_1SlidingRateInfo.html#a90f0b44f04ee69939c606855b95ec5d6"><param name="Name" value="BuildStatus::SlidingRateInfo"></OBJECT>
   </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structEdge.html#ade0ceb00f2eb88e99c7bcae5a07d37a1"><param name="Name" value="use_console"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="structSubprocess.html#ab2eb7e77b88e8af4f5efc5e4046834f9"><param name="Name" value="use_console_"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8cc.html"><param name="Name" value="util.cc"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8cc.html#abdb5937692c9c5a0fbe6cbbab7941414"><param name="Name" value="CanonicalizePath"></OBJECT>
@@ -1822,11 +1911,17 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8cc.html#ad98ec6fb76f27b3d5a805cdad742df92"><param name="Name" value="Fatal"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8cc.html#afb09694f1319f261012f1851bbbb285b"><param name="Name" value="GetLoadAverage"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8cc.html#a03a03c74e8b71b7ab09b1af533dc253f"><param name="Name" value="GetProcessorCount"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8cc.html#a5d89d1621913641fab23969f8665d3d5"><param name="Name" value="GetShellEscapedString"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8cc.html#a147fcbfb98ba43b1cb5a4739bf0c7702"><param name="Name" value="GetWin32EscapedString"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8cc.html#a38e7f4f3b273c116d16ab33e6a065fa2"><param name="Name" value="IsKnownShellSafeCharacter"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8cc.html#a4316c8580a35e3bedd6e76bba3343b58"><param name="Name" value="IsKnownWin32SafeCharacter"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8cc.html#a004abead93a39ce70b226bea8fa39680"><param name="Name" value="islatinalpha"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8cc.html#afa2642aae4af8af879417889a5e8f4f5"><param name="Name" value="ReadFile"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8cc.html#a946927145681d8bb8318f5a7c4dc57ae"><param name="Name" value="SetCloseOnExec"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8cc.html#a3e5761332ec67e6554262cb0d9cae4d0"><param name="Name" value="SpellcheckString"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8cc.html#ad214b089117a607f2d7855404befab82"><param name="Name" value="SpellcheckStringV"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8cc.html#a3ecae07db3444ba89a9c421fda0e657d"><param name="Name" value="StringNeedsShellEscaping"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8cc.html#ab86d152a35ccd032649973e01b79f606"><param name="Name" value="StringNeedsWin32Escaping"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8cc.html#ab47e6d9b7e9e9f6a9d4560f148cd3643"><param name="Name" value="StripAnsiEscapeCodes"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8cc.html#a59c00d43a10517c5124b75ef540f270a"><param name="Name" value="Truncate"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8cc.html#aa92567b4012d3191db5d247c8db8e9d9"><param name="Name" value="Warning"></OBJECT>
@@ -1839,6 +1934,8 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8h.html#ae5fb7d249da6072c1f3e5e33b16a2b56"><param name="Name" value="Fatal"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8h.html#afb09694f1319f261012f1851bbbb285b"><param name="Name" value="GetLoadAverage"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8h.html#a03a03c74e8b71b7ab09b1af533dc253f"><param name="Name" value="GetProcessorCount"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8h.html#a5d89d1621913641fab23969f8665d3d5"><param name="Name" value="GetShellEscapedString"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8h.html#a147fcbfb98ba43b1cb5a4739bf0c7702"><param name="Name" value="GetWin32EscapedString"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8h.html#aa1728270d73c5d1598de1fd691762eb1"><param name="Name" value="NORETURN"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8h.html#afa2642aae4af8af879417889a5e8f4f5"><param name="Name" value="ReadFile"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="util_8h.html#a946927145681d8bb8318f5a7c4dc57ae"><param name="Name" value="SetCloseOnExec"></OBJECT>
@@ -1884,7 +1981,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structVirtualFileSystem.html#a938852e1467e33baad75346bc79ae4f4"><param name="Name" value="now_"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structVirtualFileSystem.html#ab47293dbafe8926db6fb02742b42e140"><param name="Name" value="ReadFile"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structVirtualFileSystem.html#adec99a414371927c9d5546b97c4e1cb0"><param name="Name" value="RemoveFile"></OBJECT>
-    <LI><OBJECT type="text/sitemap"><param name="Local" value="structVirtualFileSystem.html#adb7c97119619c0d060579aaaf14c7847"><param name="Name" value="Stat"></OBJECT>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="structVirtualFileSystem.html#a21576b9c44cb6c1649ab85381c0983fd"><param name="Name" value="Stat"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structVirtualFileSystem.html#a912bc655f005b0c522fa8e954b71eeee"><param name="Name" value="Tick"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structVirtualFileSystem.html#aecd1015fa61653d78dd46f22daf72c5a"><param name="Name" value="VirtualFileSystem"></OBJECT>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structVirtualFileSystem.html#a41a187dea1125d4d136a1dc43ebbd129"><param name="Name" value="WriteFile"></OBJECT>
@@ -1916,6 +2013,7 @@
     <LI><OBJECT type="text/sitemap"><param name="Local" value="win32port_8h.html#aaa5d1cd013383c889537491c3cfd9aad"><param name="Name" value="uint64_t"></OBJECT>
   </UL>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structBuildLog.html#a9ecfb3911719e31c05331d4b142014ce"><param name="Name" value="WriteEntry"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="manifest__parser__perftest_8cc.html#a37a41c3060514191cf22fe5d708f773d"><param name="Name" value="WriteFakeManifests"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Local" value="structDiskInterface.html#afcfaed359bb8ba121bba9838c02c2483"><param name="Name" value="WriteFile"></OBJECT>
   <UL>
     <LI><OBJECT type="text/sitemap"><param name="Local" value="structDiskInterface.html#afcfaed359bb8ba121bba9838c02c2483"><param name="Name" value="DiskInterface"></OBJECT>

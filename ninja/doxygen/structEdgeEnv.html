@@ -56,6 +56,7 @@
 </div>
 <div class="header">
   <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a>  </div>
   <div class="headertitle">
@@ -75,37 +76,77 @@ Inheritance diagram for EdgeEnv:</div>
 
 <p><a href="structEdgeEnv-members.html">List of all members.</a></p>
 <table class="memberdecls">
+<tr><td colspan="2"><h2><a name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structEdgeEnv.html#af5aeedc89db8f0cdbb072b104c7ba2ef">EscapeKind</a> { <a class="el" href="structEdgeEnv.html#af5aeedc89db8f0cdbb072b104c7ba2efa735c02ecd79f01637c799a2973634f72">kShellEscape</a>, 
+<a class="el" href="structEdgeEnv.html#af5aeedc89db8f0cdbb072b104c7ba2efaa804a2af5f66c80476dadcd6d0237530">kDoNotEscape</a>
+ }</td></tr>
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structEdgeEnv.html#a04299d9d3744d2106bce92ea52338feb">EdgeEnv</a> (<a class="el" href="structEdge.html">Edge</a> *edge)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structEdgeEnv.html#ad4b9ab32700e9681ee16b1ca32de5993">EdgeEnv</a> (<a class="el" href="structEdge.html">Edge</a> *edge, <a class="el" href="structEdgeEnv.html#af5aeedc89db8f0cdbb072b104c7ba2ef">EscapeKind</a> escape)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structEdgeEnv.html#aa9c40e6440c932ac59bebefcd2e917bf">LookupVariable</a> (const string &amp;var)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structEdgeEnv.html#a3611d2dee62a757d097245cc51eb6283">MakePathList</a> (vector&lt; <a class="el" href="structNode.html">Node</a> * &gt;::iterator begin, vector&lt; <a class="el" href="structNode.html">Node</a> * &gt;::iterator end, char sep)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Given a span of Nodes, construct a list of paths suitable for a command line.  <a href="#a3611d2dee62a757d097245cc51eb6283"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structEdge.html">Edge</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structEdgeEnv.html#a9cf14172d32813daa2e7e57e40230e60">edge_</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structEdgeEnv.html#af5aeedc89db8f0cdbb072b104c7ba2ef">EscapeKind</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structEdgeEnv.html#ade0dae63fdec76a8d9d3040b99437c3e">escape_in_out_</a></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>An <a class="el" href="structEnv.html" title="An interface for a scope for variable (e.g. &quot;$foo&quot;) lookups.">Env</a> for an <a class="el" href="structEdge.html" title="An edge in the dependency graph; links between Nodes using Rules.">Edge</a>, providing $in and $out. </p>
 
 <p>Definition at line <a class="el" href="graph_8cc_source.html#l00217">217</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
-</div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" id="a04299d9d3744d2106bce92ea52338feb"></a><!-- doxytag: member="EdgeEnv::EdgeEnv" ref="a04299d9d3744d2106bce92ea52338feb" args="(Edge *edge)" -->
+</div><hr/><h2>Member Enumeration Documentation</h2>
+<a class="anchor" id="af5aeedc89db8f0cdbb072b104c7ba2ef"></a><!-- doxytag: member="EdgeEnv::EscapeKind" ref="af5aeedc89db8f0cdbb072b104c7ba2ef" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structEdgeEnv.html#a04299d9d3744d2106bce92ea52338feb">EdgeEnv::EdgeEnv</a> </td>
+          <td class="memname">enum <a class="el" href="structEdgeEnv.html#af5aeedc89db8f0cdbb072b104c7ba2ef">EdgeEnv::EscapeKind</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<dl><dt><b>Enumerator: </b></dt><dd><table border="0" cellspacing="2" cellpadding="0">
+<tr><td valign="top"><em><a class="anchor" id="af5aeedc89db8f0cdbb072b104c7ba2efa735c02ecd79f01637c799a2973634f72"></a><!-- doxytag: member="kShellEscape" ref="af5aeedc89db8f0cdbb072b104c7ba2efa735c02ecd79f01637c799a2973634f72" args="" -->kShellEscape</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" id="af5aeedc89db8f0cdbb072b104c7ba2efaa804a2af5f66c80476dadcd6d0237530"></a><!-- doxytag: member="kDoNotEscape" ref="af5aeedc89db8f0cdbb072b104c7ba2efaa804a2af5f66c80476dadcd6d0237530" args="" -->kDoNotEscape</em>&nbsp;</td><td>
+</td></tr>
+</table>
+</dd>
+</dl>
+
+<p>Definition at line <a class="el" href="graph_8cc_source.html#l00218">218</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
+
+</div>
+</div>
+<hr/><h2>Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="ad4b9ab32700e9681ee16b1ca32de5993"></a><!-- doxytag: member="EdgeEnv::EdgeEnv" ref="ad4b9ab32700e9681ee16b1ca32de5993" args="(Edge *edge, EscapeKind escape)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structEdgeEnv.html#ad4b9ab32700e9681ee16b1ca32de5993">EdgeEnv::EdgeEnv</a> </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structEdge.html">Edge</a> *&#160;</td>
-          <td class="paramname"><em>edge</em></td><td>)</td>
-          <td><code> [inline, explicit]</code></td>
+          <td class="paramname"><em>edge</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="structEdgeEnv.html#af5aeedc89db8f0cdbb072b104c7ba2ef">EscapeKind</a>&#160;</td>
+          <td class="paramname"><em>escape</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [inline, explicit]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="graph_8cc_source.html#l00218">218</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
+<p>Definition at line <a class="el" href="graph_8cc_source.html#l00220">220</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
 
 </div>
 </div>
@@ -127,11 +168,11 @@ Public Attributes</h2></td></tr>
 
 <p>Implements <a class="el" href="structEnv.html#a985781a5c04cc4a34ac6e07c57e44768">Env</a>.</p>
 
-<p>Definition at line <a class="el" href="graph_8cc_source.html#l00230">230</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
+<p>Definition at line <a class="el" href="graph_8cc_source.html#l00234">234</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
 
-<p>References <a class="el" href="graph_8cc_source.html#l00227">edge_</a>, <a class="el" href="graph_8h_source.html#l00158">Edge::env_</a>, <a class="el" href="graph_8cc_source.html#l00040">Rule::GetBinding()</a>, <a class="el" href="graph_8h_source.html#l00175">Edge::implicit_deps_</a>, <a class="el" href="graph_8h_source.html#l00156">Edge::inputs_</a>, <a class="el" href="eval__env_8cc_source.html#l00030">BindingEnv::LookupWithFallback()</a>, <a class="el" href="graph_8cc_source.html#l00248">MakePathList()</a>, <a class="el" href="graph_8h_source.html#l00176">Edge::order_only_deps_</a>, <a class="el" href="graph_8h_source.html#l00157">Edge::outputs_</a>, and <a class="el" href="graph_8h_source.html#l00154">Edge::rule_</a>.</p>
+<p>References <a class="el" href="graph_8cc_source.html#l00230">edge_</a>, <a class="el" href="graph_8h_source.html#l00164">Edge::env_</a>, <a class="el" href="graph_8cc_source.html#l00040">Rule::GetBinding()</a>, <a class="el" href="graph_8h_source.html#l00181">Edge::implicit_deps_</a>, <a class="el" href="graph_8h_source.html#l00162">Edge::inputs_</a>, <a class="el" href="eval__env_8cc_source.html#l00030">BindingEnv::LookupWithFallback()</a>, <a class="el" href="graph_8cc_source.html#l00252">MakePathList()</a>, <a class="el" href="graph_8h_source.html#l00182">Edge::order_only_deps_</a>, <a class="el" href="graph_8h_source.html#l00163">Edge::outputs_</a>, and <a class="el" href="graph_8h_source.html#l00160">Edge::rule_</a>.</p>
 
-<p>Referenced by <a class="el" href="graph_8cc_source.html#l00277">Edge::GetBinding()</a>.</p>
+<p>Referenced by <a class="el" href="graph_8cc_source.html#l00283">Edge::GetBinding()</a>, <a class="el" href="graph_8cc_source.html#l00292">Edge::GetUnescapedDepfile()</a>, and <a class="el" href="graph_8cc_source.html#l00297">Edge::GetUnescapedRspfile()</a>.</p>
 
 </div>
 </div>
@@ -168,9 +209,11 @@ Public Attributes</h2></td></tr>
 
 <p>Given a span of Nodes, construct a list of paths suitable for a command line. </p>
 
-<p>Definition at line <a class="el" href="graph_8cc_source.html#l00248">248</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
+<p>Definition at line <a class="el" href="graph_8cc_source.html#l00252">252</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
 
-<p>Referenced by <a class="el" href="graph_8cc_source.html#l00230">LookupVariable()</a>.</p>
+<p>References <a class="el" href="graph_8cc_source.html#l00231">escape_in_out_</a>, <a class="el" href="util_8cc_source.html#l00220">GetShellEscapedString()</a>, <a class="el" href="util_8cc_source.html#l00247">GetWin32EscapedString()</a>, and <a class="el" href="graph_8cc_source.html#l00218">kShellEscape</a>.</p>
+
+<p>Referenced by <a class="el" href="graph_8cc_source.html#l00234">LookupVariable()</a>.</p>
 
 </div>
 </div>
@@ -186,9 +229,26 @@ Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="graph_8cc_source.html#l00227">227</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
+<p>Definition at line <a class="el" href="graph_8cc_source.html#l00230">230</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
 
-<p>Referenced by <a class="el" href="graph_8cc_source.html#l00230">LookupVariable()</a>.</p>
+<p>Referenced by <a class="el" href="graph_8cc_source.html#l00234">LookupVariable()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ade0dae63fdec76a8d9d3040b99437c3e"></a><!-- doxytag: member="EdgeEnv::escape_in_out_" ref="ade0dae63fdec76a8d9d3040b99437c3e" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structEdgeEnv.html#af5aeedc89db8f0cdbb072b104c7ba2ef">EscapeKind</a> <a class="el" href="structEdgeEnv.html#ade0dae63fdec76a8d9d3040b99437c3e">EdgeEnv::escape_in_out_</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="graph_8cc_source.html#l00231">231</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
+
+<p>Referenced by <a class="el" href="graph_8cc_source.html#l00252">MakePathList()</a>.</p>
 
 </div>
 </div>
@@ -199,7 +259,7 @@ Public Attributes</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 12 2013 09:25:50 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 4 2014 09:13:00 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

@@ -60,6 +60,7 @@
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &quot;<a class="el" href="util_8h_source.html">util.h</a>&quot;</code><br/>
+<code>#include &lt;assert.h&gt;</code><br/>
 <code>#include &lt;errno.h&gt;</code><br/>
 <code>#include &lt;fcntl.h&gt;</code><br/>
 <code>#include &lt;stdarg.h&gt;</code><br/>
@@ -78,7 +79,7 @@ Include dependency graph for util.cc:</div>
 <div class="dyncontent">
 <div class="center"><img src="util_8cc__incl.png" border="0" usemap="#util_8cc" alt=""/></div>
 <map name="util_8cc" id="util_8cc">
-<area shape="rect" id="node3" href="util_8h.html" title="util.h" alt="" coords="110,160,161,189"/><area shape="rect" id="node32" href="edit__distance_8h.html" title="edit_distance.h" alt="" coords="1035,83,1145,112"/><area shape="rect" id="node38" href="metrics_8h.html" title="metrics.h" alt="" coords="35,83,110,112"/><area shape="rect" id="node34" href="string__piece_8h.html" title="string_piece.h" alt="" coords="1039,160,1141,189"/></map>
+<area shape="rect" id="node3" href="util_8h.html" title="util.h" alt="" coords="550,160,601,189"/><area shape="rect" id="node34" href="edit__distance_8h.html" title="edit_distance.h" alt="" coords="1094,83,1204,112"/><area shape="rect" id="node40" href="metrics_8h.html" title="metrics.h" alt="" coords="580,83,654,112"/><area shape="rect" id="node36" href="string__piece_8h.html" title="string_piece.h" alt="" coords="1098,160,1200,189"/></map>
 </div>
 </div>
 <p><a href="util_8cc_source.html">Go to the source code of this file.</a></p>
@@ -96,6 +97,11 @@ Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Log a fatal message and exit.  <a href="#ad98ec6fb76f27b3d5a805cdad742df92"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8cc.html#afb09694f1319f261012f1851bbbb285b">GetLoadAverage</a> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8cc.html#a03a03c74e8b71b7ab09b1af533dc253f">GetProcessorCount</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8cc.html#a5d89d1621913641fab23969f8665d3d5">GetShellEscapedString</a> (const string &amp;input, string *result)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Appends |input| to |*result|, escaping according to the whims of either Bash, or Win32's CommandLineToArgvW().  <a href="#a5d89d1621913641fab23969f8665d3d5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8cc.html#a147fcbfb98ba43b1cb5a4739bf0c7702">GetWin32EscapedString</a> (const string &amp;input, string *result)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8cc.html#a38e7f4f3b273c116d16ab33e6a065fa2">IsKnownShellSafeCharacter</a> (char ch)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8cc.html#a4316c8580a35e3bedd6e76bba3343b58">IsKnownWin32SafeCharacter</a> (char ch)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8cc.html#a004abead93a39ce70b226bea8fa39680">islatinalpha</a> (int c)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8cc.html#afa2642aae4af8af879417889a5e8f4f5">ReadFile</a> (const string &amp;path, string *contents, string *err)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a file to a string (in text mode: with CRLF conversion on Windows).  <a href="#afa2642aae4af8af879417889a5e8f4f5"></a><br/></td></tr>
@@ -105,6 +111,8 @@ Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Like SpellcheckStringV, but takes a NULL-terminated list.  <a href="#a3e5761332ec67e6554262cb0d9cae4d0"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8cc.html#ad214b089117a607f2d7855404befab82">SpellcheckStringV</a> (const string &amp;text, const vector&lt; const char * &gt; &amp;words)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Given a misspelled string and a list of correct spellings, returns the closest match or NULL if there is no close enough match.  <a href="#ad214b089117a607f2d7855404befab82"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8cc.html#a3ecae07db3444ba89a9c421fda0e657d">StringNeedsShellEscaping</a> (const string &amp;input)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8cc.html#ab86d152a35ccd032649973e01b79f606">StringNeedsWin32Escaping</a> (const string &amp;input)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8cc.html#ab47e6d9b7e9e9f6a9d4560f148cd3643">StripAnsiEscapeCodes</a> (const string &amp;in)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes all Ansi escape codes (<a href="http://www.termsys.demon.co.uk/vtansi.htm">http://www.termsys.demon.co.uk/vtansi.htm</a>).  <a href="#ab47e6d9b7e9e9f6a9d4560f148cd3643"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="util_8cc.html#a59c00d43a10517c5124b75ef540f270a">Truncate</a> (const string &amp;path, size_t size, string *err)</td></tr>
@@ -140,11 +148,11 @@ Functions</h2></td></tr>
 
 <p>Canonicalize a path like "foo/../bar.h" into just "bar.h". </p>
 
-<p>Definition at line <a class="el" href="util_8cc_source.html#l00087">87</a> of file <a class="el" href="util_8cc_source.html">util.cc</a>.</p>
+<p>Definition at line <a class="el" href="util_8cc_source.html#l00088">88</a> of file <a class="el" href="util_8cc_source.html">util.cc</a>.</p>
 
-<p>References <a class="el" href="util_8cc_source.html#l00087">CanonicalizePath()</a>, and <a class="el" href="metrics_8h_source.html#l00085">METRIC_RECORD</a>.</p>
+<p>References <a class="el" href="util_8cc_source.html#l00088">CanonicalizePath()</a>, and <a class="el" href="metrics_8h_source.html#l00085">METRIC_RECORD</a>.</p>
 
-<p>Referenced by <a class="el" href="util_8cc_source.html#l00087">CanonicalizePath()</a>, <a class="el" href="build_8cc_source.html#l00803">Builder::ExtractDeps()</a>, <a class="el" href="graph_8cc_source.html#l00341">ImplicitDepLoader::LoadDepFile()</a>, <a class="el" href="canon__perftest_8cc_source.html#l00025">main()</a>, <a class="el" href="includes__normalize-win32_8cc_source.html#l00094">IncludesNormalize::Normalize()</a>, <a class="el" href="manifest__parser_8cc_source.html#l00202">ManifestParser::ParseDefault()</a>, <a class="el" href="manifest__parser_8cc_source.html#l00228">ManifestParser::ParseEdge()</a>, and <a class="el" href="util__test_8cc_source.html#l00019">TEST()</a>.</p>
+<p>Referenced by <a class="el" href="util_8cc_source.html#l00088">CanonicalizePath()</a>, <a class="el" href="build_8cc_source.html#l00815">Builder::ExtractDeps()</a>, <a class="el" href="graph_8cc_source.html#l00361">ImplicitDepLoader::LoadDepFile()</a>, <a class="el" href="canon__perftest_8cc_source.html#l00025">main()</a>, <a class="el" href="includes__normalize-win32_8cc_source.html#l00094">IncludesNormalize::Normalize()</a>, <a class="el" href="manifest__parser_8cc_source.html#l00202">ManifestParser::ParseDefault()</a>, <a class="el" href="manifest__parser_8cc_source.html#l00228">ManifestParser::ParseEdge()</a>, and <a class="el" href="util__test_8cc_source.html#l00019">TEST()</a>.</p>
 
 </div>
 </div>
@@ -179,9 +187,9 @@ Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="util_8cc_source.html#l00099">99</a> of file <a class="el" href="util_8cc_source.html">util.cc</a>.</p>
+<p>Definition at line <a class="el" href="util_8cc_source.html#l00100">100</a> of file <a class="el" href="util_8cc_source.html">util.cc</a>.</p>
 
-<p>References <a class="el" href="util_8cc_source.html#l00051">Fatal()</a>, and <a class="el" href="metrics_8h_source.html#l00085">METRIC_RECORD</a>.</p>
+<p>References <a class="el" href="util_8cc_source.html#l00052">Fatal()</a>, and <a class="el" href="metrics_8h_source.html#l00085">METRIC_RECORD</a>.</p>
 
 </div>
 </div>
@@ -212,7 +220,7 @@ Functions</h2></td></tr>
 
 <p>Elide the given string <em>str</em> with '...' in the middle if the length exceeds <em>width</em>. </p>
 
-<p>Definition at line <a class="el" href="util_8cc_source.html#l00331">331</a> of file <a class="el" href="util_8cc_source.html">util.cc</a>.</p>
+<p>Definition at line <a class="el" href="util_8cc_source.html#l00435">435</a> of file <a class="el" href="util_8cc_source.html">util.cc</a>.</p>
 
 <p>Referenced by <a class="el" href="line__printer_8cc_source.html#l00045">LinePrinter::Print()</a>.</p>
 
@@ -245,9 +253,9 @@ Functions</h2></td></tr>
 
 <p>Log an error message. </p>
 
-<p>Definition at line <a class="el" href="util_8cc_source.html#l00078">78</a> of file <a class="el" href="util_8cc_source.html">util.cc</a>.</p>
+<p>Definition at line <a class="el" href="util_8cc_source.html#l00079">79</a> of file <a class="el" href="util_8cc_source.html">util.cc</a>.</p>
 
-<p>Referenced by <a class="el" href="clean_8cc_source.html#l00219">Cleaner::CleanRule()</a>, <a class="el" href="clean_8cc_source.html#l00233">Cleaner::CleanRules()</a>, <a class="el" href="clean_8cc_source.html#l00161">Cleaner::CleanTarget()</a>, <a class="el" href="clean_8cc_source.html#l00175">Cleaner::CleanTargets()</a>, <a class="el" href="minidump-win32_8cc_source.html#l00034">CreateWin32MiniDump()</a>, <a class="el" href="disk__interface_8cc_source.html#l00147">RealDiskInterface::MakeDir()</a>, <a class="el" href="disk__interface_8cc_source.html#l00165">RealDiskInterface::RemoveFile()</a>, <a class="el" href="disk__interface_8cc_source.html#l00078">RealDiskInterface::Stat()</a>, and <a class="el" href="disk__interface_8cc_source.html#l00123">RealDiskInterface::WriteFile()</a>.</p>
+<p>Referenced by <a class="el" href="clean_8cc_source.html#l00219">Cleaner::CleanRule()</a>, <a class="el" href="clean_8cc_source.html#l00233">Cleaner::CleanRules()</a>, <a class="el" href="clean_8cc_source.html#l00161">Cleaner::CleanTarget()</a>, <a class="el" href="clean_8cc_source.html#l00175">Cleaner::CleanTargets()</a>, <a class="el" href="minidump-win32_8cc_source.html#l00034">CreateWin32MiniDump()</a>, <a class="el" href="disk__interface_8cc_source.html#l00221">RealDiskInterface::MakeDir()</a>, <a class="el" href="disk__interface_8cc_source.html#l00242">RealDiskInterface::RemoveFile()</a>, <a class="el" href="disk__interface_8cc_source.html#l00153">RealDiskInterface::Stat()</a>, and <a class="el" href="disk__interface_8cc_source.html#l00197">RealDiskInterface::WriteFile()</a>.</p>
 
 </div>
 </div>
@@ -278,9 +286,9 @@ Functions</h2></td></tr>
 
 <p>Log a fatal message and exit. </p>
 
-<p>Definition at line <a class="el" href="util_8cc_source.html#l00051">51</a> of file <a class="el" href="util_8cc_source.html">util.cc</a>.</p>
+<p>Definition at line <a class="el" href="util_8cc_source.html#l00052">52</a> of file <a class="el" href="util_8cc_source.html">util.cc</a>.</p>
 
-<p>Referenced by <a class="el" href="util_8cc_source.html#l00099">CanonicalizePath()</a>, <a class="el" href="version_8cc_source.html#l00034">CheckNinjaVersion()</a>, <a class="el" href="test_8cc_source.html#l00169">ScopedTempDir::Cleanup()</a>, <a class="el" href="test_8cc_source.html#l00147">ScopedTempDir::CreateAndEnter()</a>, <a class="el" href="build_8cc_source.html#l00803">Builder::ExtractDeps()</a>, <a class="el" href="subprocess-posix_8cc_source.html#l00115">Subprocess::Finish()</a>, <a class="el" href="build_8cc_source.html#l00151">BuildStatus::FormatProgressStatus()</a>, <a class="el" href="msvc__helper__main-win32_8cc_source.html#l00078">MSVCHelperMain()</a>, <a class="el" href="subprocess-posix_8cc_source.html#l00102">Subprocess::OnPipeReady()</a>, <a class="el" href="msvc__helper-win32_8cc_source.html#l00119">CLWrapper::Run()</a>, <a class="el" href="subprocess-posix_8cc_source.html#l00038">Subprocess::Start()</a>, <a class="el" href="subprocess-posix_8cc_source.html#l00148">SubprocessSet::SubprocessSet()</a>, and <a class="el" href="subprocess-posix_8cc_source.html#l00162">SubprocessSet::~SubprocessSet()</a>.</p>
+<p>Referenced by <a class="el" href="util_8cc_source.html#l00100">CanonicalizePath()</a>, <a class="el" href="version_8cc_source.html#l00034">CheckNinjaVersion()</a>, <a class="el" href="test_8cc_source.html#l00169">ScopedTempDir::Cleanup()</a>, <a class="el" href="test_8cc_source.html#l00147">ScopedTempDir::CreateAndEnter()</a>, <a class="el" href="build_8cc_source.html#l00815">Builder::ExtractDeps()</a>, <a class="el" href="subprocess-posix_8cc_source.html#l00121">Subprocess::Finish()</a>, <a class="el" href="build_8cc_source.html#l00158">BuildStatus::FormatProgressStatus()</a>, <a class="el" href="manifest__parser__perftest_8cc_source.html#l00075">main()</a>, <a class="el" href="msvc__helper__main-win32_8cc_source.html#l00079">MSVCHelperMain()</a>, <a class="el" href="subprocess-posix_8cc_source.html#l00108">Subprocess::OnPipeReady()</a>, <a class="el" href="msvc__helper-win32_8cc_source.html#l00120">CLWrapper::Run()</a>, <a class="el" href="subprocess-posix_8cc_source.html#l00039">Subprocess::Start()</a>, <a class="el" href="subprocess-posix_8cc_source.html#l00154">SubprocessSet::SubprocessSet()</a>, and <a class="el" href="subprocess-posix_8cc_source.html#l00168">SubprocessSet::~SubprocessSet()</a>.</p>
 
 </div>
 </div>
@@ -299,9 +307,9 @@ Functions</h2></td></tr>
 <div class="memdoc">
 <dl class="return"><dt><b>Returns:</b></dt><dd>the load average of the machine. A negative value is returned on error. </dd></dl>
 
-<p>Definition at line <a class="el" href="util_8cc_source.html#l00320">320</a> of file <a class="el" href="util_8cc_source.html">util.cc</a>.</p>
+<p>Definition at line <a class="el" href="util_8cc_source.html#l00424">424</a> of file <a class="el" href="util_8cc_source.html">util.cc</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00483">RealCommandRunner::CanRunMore()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00490">RealCommandRunner::CanRunMore()</a>.</p>
 
 </div>
 </div>
@@ -322,7 +330,118 @@ Functions</h2></td></tr>
 <dd>
 0 on error. </dd></dl>
 
-<p>Definition at line <a class="el" href="util_8cc_source.html#l00303">303</a> of file <a class="el" href="util_8cc_source.html">util.cc</a>.</p>
+<p>Definition at line <a class="el" href="util_8cc_source.html#l00407">407</a> of file <a class="el" href="util_8cc_source.html">util.cc</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5d89d1621913641fab23969f8665d3d5"></a><!-- doxytag: member="util.cc::GetShellEscapedString" ref="a5d89d1621913641fab23969f8665d3d5" args="(const string &amp;input, string *result)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="util_8h.html#a5d89d1621913641fab23969f8665d3d5">GetShellEscapedString</a> </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramname"><em>input</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string *&#160;</td>
+          <td class="paramname"><em>result</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Appends |input| to |*result|, escaping according to the whims of either Bash, or Win32's CommandLineToArgvW(). </p>
+<p>Appends the string directly to |result| without modification if we can determine that it contains no problematic characters. </p>
+
+<p>Definition at line <a class="el" href="util_8cc_source.html#l00220">220</a> of file <a class="el" href="util_8cc_source.html">util.cc</a>.</p>
+
+<p>References <a class="el" href="util_8cc_source.html#l00206">StringNeedsShellEscaping()</a>.</p>
+
+<p>Referenced by <a class="el" href="graph_8cc_source.html#l00252">EdgeEnv::MakePathList()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a147fcbfb98ba43b1cb5a4739bf0c7702"></a><!-- doxytag: member="util.cc::GetWin32EscapedString" ref="a147fcbfb98ba43b1cb5a4739bf0c7702" args="(const string &amp;input, string *result)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="util_8h.html#a147fcbfb98ba43b1cb5a4739bf0c7702">GetWin32EscapedString</a> </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramname"><em>input</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">string *&#160;</td>
+          <td class="paramname"><em>result</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="util_8cc_source.html#l00247">247</a> of file <a class="el" href="util_8cc_source.html">util.cc</a>.</p>
+
+<p>References <a class="el" href="util_8cc_source.html#l00213">StringNeedsWin32Escaping()</a>.</p>
+
+<p>Referenced by <a class="el" href="graph_8cc_source.html#l00252">EdgeEnv::MakePathList()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a38e7f4f3b273c116d16ab33e6a065fa2"></a><!-- doxytag: member="util.cc::IsKnownShellSafeCharacter" ref="a38e7f4f3b273c116d16ab33e6a065fa2" args="(char ch)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool <a class="el" href="util_8cc.html#a38e7f4f3b273c116d16ab33e6a065fa2">IsKnownShellSafeCharacter</a> </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>ch</em></td><td>)</td>
+          <td><code> [inline, static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="util_8cc_source.html#l00179">179</a> of file <a class="el" href="util_8cc_source.html">util.cc</a>.</p>
+
+<p>Referenced by <a class="el" href="util_8cc_source.html#l00206">StringNeedsShellEscaping()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4316c8580a35e3bedd6e76bba3343b58"></a><!-- doxytag: member="util.cc::IsKnownWin32SafeCharacter" ref="a4316c8580a35e3bedd6e76bba3343b58" args="(char ch)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool <a class="el" href="util_8cc.html#a4316c8580a35e3bedd6e76bba3343b58">IsKnownWin32SafeCharacter</a> </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>ch</em></td><td>)</td>
+          <td><code> [inline, static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="util_8cc_source.html#l00196">196</a> of file <a class="el" href="util_8cc_source.html">util.cc</a>.</p>
+
+<p>Referenced by <a class="el" href="util_8cc_source.html#l00213">StringNeedsWin32Escaping()</a>.</p>
 
 </div>
 </div>
@@ -341,9 +460,9 @@ Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="util_8cc_source.html#l00275">275</a> of file <a class="el" href="util_8cc_source.html">util.cc</a>.</p>
+<p>Definition at line <a class="el" href="util_8cc_source.html#l00379">379</a> of file <a class="el" href="util_8cc_source.html">util.cc</a>.</p>
 
-<p>Referenced by <a class="el" href="util_8cc_source.html#l00280">StripAnsiEscapeCodes()</a>.</p>
+<p>Referenced by <a class="el" href="util_8cc_source.html#l00384">StripAnsiEscapeCodes()</a>.</p>
 
 </div>
 </div>
@@ -381,9 +500,9 @@ Functions</h2></td></tr>
 <p>Read a file to a string (in text mode: with CRLF conversion on Windows). </p>
 <p>Returns -errno and fills in <em>err</em> on error. </p>
 
-<p>Definition at line <a class="el" href="util_8cc_source.html#l00178">178</a> of file <a class="el" href="util_8cc_source.html">util.cc</a>.</p>
+<p>Definition at line <a class="el" href="util_8cc_source.html#l00282">282</a> of file <a class="el" href="util_8cc_source.html">util.cc</a>.</p>
 
-<p>Referenced by <a class="el" href="parser__perftest_8cc_source.html#l00022">main()</a>, <a class="el" href="msvc__helper__main-win32_8cc_source.html#l00078">MSVCHelperMain()</a>, and <a class="el" href="msvc__helper-win32_8cc_source.html#l00119">CLWrapper::Run()</a>.</p>
+<p>Referenced by <a class="el" href="depfile__parser__perftest_8cc_source.html#l00022">main()</a>, <a class="el" href="msvc__helper__main-win32_8cc_source.html#l00079">MSVCHelperMain()</a>, <a class="el" href="disk__interface_8cc_source.html#l00232">RealDiskInterface::ReadFile()</a>, and <a class="el" href="msvc__helper-win32_8cc_source.html#l00120">CLWrapper::Run()</a>.</p>
 
 </div>
 </div>
@@ -404,9 +523,9 @@ Functions</h2></td></tr>
 
 <p>Mark a file descriptor to not be inherited on exec()s. </p>
 
-<p>Definition at line <a class="el" href="util_8cc_source.html#l00200">200</a> of file <a class="el" href="util_8cc_source.html">util.cc</a>.</p>
+<p>Definition at line <a class="el" href="util_8cc_source.html#l00304">304</a> of file <a class="el" href="util_8cc_source.html">util.cc</a>.</p>
 
-<p>Referenced by <a class="el" href="build__log_8cc_source.html#l00111">BuildLog::OpenForWrite()</a>, <a class="el" href="deps__log_8cc_source.html#l00043">DepsLog::OpenForWrite()</a>, and <a class="el" href="subprocess-posix_8cc_source.html#l00038">Subprocess::Start()</a>.</p>
+<p>Referenced by <a class="el" href="build__log_8cc_source.html#l00111">BuildLog::OpenForWrite()</a>, <a class="el" href="deps__log_8cc_source.html#l00043">DepsLog::OpenForWrite()</a>, and <a class="el" href="subprocess-posix_8cc_source.html#l00039">Subprocess::Start()</a>.</p>
 
 </div>
 </div>
@@ -437,9 +556,9 @@ Functions</h2></td></tr>
 
 <p>Like SpellcheckStringV, but takes a NULL-terminated list. </p>
 
-<p>Definition at line <a class="el" href="util_8cc_source.html#l00237">237</a> of file <a class="el" href="util_8cc_source.html">util.cc</a>.</p>
+<p>Definition at line <a class="el" href="util_8cc_source.html#l00341">341</a> of file <a class="el" href="util_8cc_source.html">util.cc</a>.</p>
 
-<p>References <a class="el" href="util_8cc_source.html#l00218">SpellcheckStringV()</a>.</p>
+<p>References <a class="el" href="util_8cc_source.html#l00322">SpellcheckStringV()</a>.</p>
 
 </div>
 </div>
@@ -470,11 +589,57 @@ Functions</h2></td></tr>
 
 <p>Given a misspelled string and a list of correct spellings, returns the closest match or NULL if there is no close enough match. </p>
 
-<p>Definition at line <a class="el" href="util_8cc_source.html#l00218">218</a> of file <a class="el" href="util_8cc_source.html">util.cc</a>.</p>
+<p>Definition at line <a class="el" href="util_8cc_source.html#l00322">322</a> of file <a class="el" href="util_8cc_source.html">util.cc</a>.</p>
 
-<p>References <a class="el" href="edit__distance_8cc_source.html#l00019">EditDistance()</a>.</p>
+<p>References <a class="el" href="edit__distance_8cc_source.html#l00020">EditDistance()</a>.</p>
 
-<p>Referenced by <a class="el" href="util_8cc_source.html#l00237">SpellcheckString()</a>.</p>
+<p>Referenced by <a class="el" href="util_8cc_source.html#l00341">SpellcheckString()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3ecae07db3444ba89a9c421fda0e657d"></a><!-- doxytag: member="util.cc::StringNeedsShellEscaping" ref="a3ecae07db3444ba89a9c421fda0e657d" args="(const string &amp;input)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool <a class="el" href="util_8cc.html#a3ecae07db3444ba89a9c421fda0e657d">StringNeedsShellEscaping</a> </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramname"><em>input</em></td><td>)</td>
+          <td><code> [inline, static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="util_8cc_source.html#l00206">206</a> of file <a class="el" href="util_8cc_source.html">util.cc</a>.</p>
+
+<p>References <a class="el" href="util_8cc_source.html#l00179">IsKnownShellSafeCharacter()</a>.</p>
+
+<p>Referenced by <a class="el" href="util_8cc_source.html#l00220">GetShellEscapedString()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab86d152a35ccd032649973e01b79f606"></a><!-- doxytag: member="util.cc::StringNeedsWin32Escaping" ref="ab86d152a35ccd032649973e01b79f606" args="(const string &amp;input)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">static bool <a class="el" href="util_8cc.html#ab86d152a35ccd032649973e01b79f606">StringNeedsWin32Escaping</a> </td>
+          <td>(</td>
+          <td class="paramtype">const string &amp;&#160;</td>
+          <td class="paramname"><em>input</em></td><td>)</td>
+          <td><code> [inline, static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="util_8cc_source.html#l00213">213</a> of file <a class="el" href="util_8cc_source.html">util.cc</a>.</p>
+
+<p>References <a class="el" href="util_8cc_source.html#l00196">IsKnownWin32SafeCharacter()</a>.</p>
+
+<p>Referenced by <a class="el" href="util_8cc_source.html#l00247">GetWin32EscapedString()</a>.</p>
 
 </div>
 </div>
@@ -495,11 +660,11 @@ Functions</h2></td></tr>
 
 <p>Removes all Ansi escape codes (<a href="http://www.termsys.demon.co.uk/vtansi.htm">http://www.termsys.demon.co.uk/vtansi.htm</a>). </p>
 
-<p>Definition at line <a class="el" href="util_8cc_source.html#l00280">280</a> of file <a class="el" href="util_8cc_source.html">util.cc</a>.</p>
+<p>Definition at line <a class="el" href="util_8cc_source.html#l00384">384</a> of file <a class="el" href="util_8cc_source.html">util.cc</a>.</p>
 
-<p>References <a class="el" href="util_8cc_source.html#l00275">islatinalpha()</a>.</p>
+<p>References <a class="el" href="util_8cc_source.html#l00379">islatinalpha()</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00102">BuildStatus::BuildEdgeFinished()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00105">BuildStatus::BuildEdgeFinished()</a>.</p>
 
 </div>
 </div>
@@ -536,7 +701,7 @@ Functions</h2></td></tr>
 
 <p>Truncates a file to the given size. </p>
 
-<p>Definition at line <a class="el" href="util_8cc_source.html#l00343">343</a> of file <a class="el" href="util_8cc_source.html">util.cc</a>.</p>
+<p>Definition at line <a class="el" href="util_8cc_source.html#l00447">447</a> of file <a class="el" href="util_8cc_source.html">util.cc</a>.</p>
 
 <p>Referenced by <a class="el" href="deps__log_8cc_source.html#l00164">DepsLog::Load()</a>.</p>
 
@@ -569,9 +734,9 @@ Functions</h2></td></tr>
 
 <p>Log a warning message. </p>
 
-<p>Definition at line <a class="el" href="util_8cc_source.html#l00069">69</a> of file <a class="el" href="util_8cc_source.html">util.cc</a>.</p>
+<p>Definition at line <a class="el" href="util_8cc_source.html#l00070">70</a> of file <a class="el" href="util_8cc_source.html">util.cc</a>.</p>
 
-<p>Referenced by <a class="el" href="state_8cc_source.html#l00152">State::AddOut()</a>, <a class="el" href="version_8cc_source.html#l00034">CheckNinjaVersion()</a>, <a class="el" href="minidump-win32_8cc_source.html#l00034">CreateWin32MiniDump()</a>, and <a class="el" href="includes__normalize-win32_8cc_source.html#l00094">IncludesNormalize::Normalize()</a>.</p>
+<p>Referenced by <a class="el" href="state_8cc_source.html#l00154">State::AddOut()</a>, <a class="el" href="version_8cc_source.html#l00034">CheckNinjaVersion()</a>, <a class="el" href="minidump-win32_8cc_source.html#l00034">CreateWin32MiniDump()</a>, and <a class="el" href="includes__normalize-win32_8cc_source.html#l00094">IncludesNormalize::Normalize()</a>.</p>
 
 </div>
 </div>
@@ -579,7 +744,7 @@ Functions</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 12 2013 09:25:50 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 4 2014 09:13:00 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

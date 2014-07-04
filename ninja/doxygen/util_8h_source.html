@@ -104,64 +104,71 @@
 <a name="l00045"></a>00045 
 <a name="l00046"></a>00046 <span class="keywordtype">bool</span> <a class="code" href="util_8cc.html#abdb5937692c9c5a0fbe6cbbab7941414" title="Canonicalize a path like &quot;foo/../bar.h&quot; into just &quot;bar.h&quot;.">CanonicalizePath</a>(<span class="keywordtype">char</span>* path, <span class="keywordtype">size_t</span>* len, <span class="keywordtype">string</span>* err);
 <a name="l00047"></a>00047 <span class="comment"></span>
-<a name="l00048"></a>00048 <span class="comment">/// Read a file to a string (in text mode: with CRLF conversion</span>
-<a name="l00049"></a>00049 <span class="comment">/// on Windows).</span>
-<a name="l00050"></a>00050 <span class="comment">/// Returns -errno and fills in \a err on error.</span>
-<a name="l00051"></a>00051 <span class="comment"></span><span class="keywordtype">int</span> <a class="code" href="util_8cc.html#afa2642aae4af8af879417889a5e8f4f5" title="Read a file to a string (in text mode: with CRLF conversion on Windows).">ReadFile</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path, <span class="keywordtype">string</span>* contents, <span class="keywordtype">string</span>* err);
-<a name="l00052"></a>00052 <span class="comment"></span>
-<a name="l00053"></a>00053 <span class="comment">/// Mark a file descriptor to not be inherited on exec()s.</span>
-<a name="l00054"></a>00054 <span class="comment"></span><span class="keywordtype">void</span> <a class="code" href="util_8cc.html#a946927145681d8bb8318f5a7c4dc57ae" title="Mark a file descriptor to not be inherited on exec()s.">SetCloseOnExec</a>(<span class="keywordtype">int</span> fd);
-<a name="l00055"></a>00055 <span class="comment"></span>
-<a name="l00056"></a>00056 <span class="comment">/// Given a misspelled string and a list of correct spellings, returns</span>
-<a name="l00057"></a>00057 <span class="comment">/// the closest match or NULL if there is no close enough match.</span>
-<a name="l00058"></a>00058 <span class="comment"></span><span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="util_8cc.html#ad214b089117a607f2d7855404befab82" title="Given a misspelled string and a list of correct spellings, returns the closest match or NULL if there...">SpellcheckStringV</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; text,
-<a name="l00059"></a>00059                               <span class="keyword">const</span> vector&lt;const char*&gt;&amp; words);
-<a name="l00060"></a>00060 <span class="comment"></span>
-<a name="l00061"></a>00061 <span class="comment">/// Like SpellcheckStringV, but takes a NULL-terminated list.</span>
-<a name="l00062"></a>00062 <span class="comment"></span><span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="util_8cc.html#a3e5761332ec67e6554262cb0d9cae4d0" title="Like SpellcheckStringV, but takes a NULL-terminated list.">SpellcheckString</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* text, ...);
-<a name="l00063"></a>00063 <span class="comment"></span>
-<a name="l00064"></a>00064 <span class="comment">/// Removes all Ansi escape codes (http://www.termsys.demon.co.uk/vtansi.htm).</span>
-<a name="l00065"></a>00065 <span class="comment"></span><span class="keywordtype">string</span> <a class="code" href="util_8cc.html#ab47e6d9b7e9e9f6a9d4560f148cd3643" title="Removes all Ansi escape codes (http://www.termsys.demon.co.uk/vtansi.htm).">StripAnsiEscapeCodes</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; in);
-<a name="l00066"></a>00066 <span class="comment"></span>
-<a name="l00067"></a>00067 <span class="comment">/// @return the number of processors on the machine.  Useful for an initial</span>
-<a name="l00068"></a>00068 <span class="comment">/// guess for how many jobs to run in parallel.  @return 0 on error.</span>
-<a name="l00069"></a>00069 <span class="comment"></span><span class="keywordtype">int</span> <a class="code" href="util_8cc.html#a03a03c74e8b71b7ab09b1af533dc253f">GetProcessorCount</a>();
+<a name="l00048"></a>00048 <span class="comment">/// Appends |input| to |*result|, escaping according to the whims of either</span>
+<a name="l00049"></a>00049 <span class="comment">/// Bash, or Win32&#39;s CommandLineToArgvW().</span>
+<a name="l00050"></a>00050 <span class="comment">/// Appends the string directly to |result| without modification if we can</span>
+<a name="l00051"></a>00051 <span class="comment">/// determine that it contains no problematic characters.</span>
+<a name="l00052"></a>00052 <span class="comment"></span><span class="keywordtype">void</span> <a class="code" href="util_8cc.html#a5d89d1621913641fab23969f8665d3d5" title="Appends |input| to |*result|, escaping according to the whims of either Bash, or Win32&#39;s CommandLineT...">GetShellEscapedString</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; input, <span class="keywordtype">string</span>* result);
+<a name="l00053"></a>00053 <span class="keywordtype">void</span> <a class="code" href="util_8cc.html#a147fcbfb98ba43b1cb5a4739bf0c7702">GetWin32EscapedString</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; input, <span class="keywordtype">string</span>* result);
+<a name="l00054"></a>00054 <span class="comment"></span>
+<a name="l00055"></a>00055 <span class="comment">/// Read a file to a string (in text mode: with CRLF conversion</span>
+<a name="l00056"></a>00056 <span class="comment">/// on Windows).</span>
+<a name="l00057"></a>00057 <span class="comment">/// Returns -errno and fills in \a err on error.</span>
+<a name="l00058"></a>00058 <span class="comment"></span><span class="keywordtype">int</span> <a class="code" href="util_8cc.html#afa2642aae4af8af879417889a5e8f4f5" title="Read a file to a string (in text mode: with CRLF conversion on Windows).">ReadFile</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path, <span class="keywordtype">string</span>* contents, <span class="keywordtype">string</span>* err);
+<a name="l00059"></a>00059 <span class="comment"></span>
+<a name="l00060"></a>00060 <span class="comment">/// Mark a file descriptor to not be inherited on exec()s.</span>
+<a name="l00061"></a>00061 <span class="comment"></span><span class="keywordtype">void</span> <a class="code" href="util_8cc.html#a946927145681d8bb8318f5a7c4dc57ae" title="Mark a file descriptor to not be inherited on exec()s.">SetCloseOnExec</a>(<span class="keywordtype">int</span> fd);
+<a name="l00062"></a>00062 <span class="comment"></span>
+<a name="l00063"></a>00063 <span class="comment">/// Given a misspelled string and a list of correct spellings, returns</span>
+<a name="l00064"></a>00064 <span class="comment">/// the closest match or NULL if there is no close enough match.</span>
+<a name="l00065"></a>00065 <span class="comment"></span><span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="util_8cc.html#ad214b089117a607f2d7855404befab82" title="Given a misspelled string and a list of correct spellings, returns the closest match or NULL if there...">SpellcheckStringV</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; text,
+<a name="l00066"></a>00066                               <span class="keyword">const</span> vector&lt;const char*&gt;&amp; words);
+<a name="l00067"></a>00067 <span class="comment"></span>
+<a name="l00068"></a>00068 <span class="comment">/// Like SpellcheckStringV, but takes a NULL-terminated list.</span>
+<a name="l00069"></a>00069 <span class="comment"></span><span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="util_8cc.html#a3e5761332ec67e6554262cb0d9cae4d0" title="Like SpellcheckStringV, but takes a NULL-terminated list.">SpellcheckString</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* text, ...);
 <a name="l00070"></a>00070 <span class="comment"></span>
-<a name="l00071"></a>00071 <span class="comment">/// @return the load average of the machine. A negative value is returned</span>
-<a name="l00072"></a>00072 <span class="comment">/// on error.</span>
-<a name="l00073"></a>00073 <span class="comment"></span><span class="keywordtype">double</span> <a class="code" href="util_8cc.html#afb09694f1319f261012f1851bbbb285b">GetLoadAverage</a>();
-<a name="l00074"></a>00074 <span class="comment"></span>
-<a name="l00075"></a>00075 <span class="comment">/// Elide the given string @a str with &#39;...&#39; in the middle if the length</span>
-<a name="l00076"></a>00076 <span class="comment">/// exceeds @a width.</span>
-<a name="l00077"></a>00077 <span class="comment"></span><span class="keywordtype">string</span> <a class="code" href="util_8cc.html#ac8e2d9b3b582b06d8c2ecd55cf22d512" title="Elide the given string str with &#39;...&#39; in the middle if the length exceeds width.">ElideMiddle</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; str, <span class="keywordtype">size_t</span> width);
-<a name="l00078"></a>00078 <span class="comment"></span>
-<a name="l00079"></a>00079 <span class="comment">/// Truncates a file to the given size.</span>
-<a name="l00080"></a>00080 <span class="comment"></span><span class="keywordtype">bool</span> <a class="code" href="util_8cc.html#a59c00d43a10517c5124b75ef540f270a" title="Truncates a file to the given size.">Truncate</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path, <span class="keywordtype">size_t</span> size, <span class="keywordtype">string</span>* err);
-<a name="l00081"></a>00081 
-<a name="l00082"></a>00082 <span class="preprocessor">#ifdef _MSC_VER</span>
-<a name="l00083"></a>00083 <span class="preprocessor"></span><span class="preprocessor">#define snprintf _snprintf</span>
-<a name="l00084"></a>00084 <span class="preprocessor"></span><span class="preprocessor">#define fileno _fileno</span>
-<a name="l00085"></a>00085 <span class="preprocessor"></span><span class="preprocessor">#define unlink _unlink</span>
-<a name="l00086"></a>00086 <span class="preprocessor"></span><span class="preprocessor">#define chdir _chdir</span>
-<a name="l00087"></a>00087 <span class="preprocessor"></span><span class="preprocessor">#define strtoull _strtoui64</span>
-<a name="l00088"></a>00088 <span class="preprocessor"></span><span class="preprocessor">#define getcwd _getcwd</span>
-<a name="l00089"></a>00089 <span class="preprocessor"></span><span class="preprocessor">#define PATH_MAX _MAX_PATH</span>
-<a name="l00090"></a>00090 <span class="preprocessor"></span><span class="preprocessor">#endif</span>
-<a name="l00091"></a>00091 <span class="preprocessor"></span>
-<a name="l00092"></a>00092 <span class="preprocessor">#ifdef _WIN32</span>
-<a name="l00093"></a>00093 <span class="preprocessor"></span><span class="comment">/// Convert the value returned by GetLastError() into a string.</span>
-<a name="l00094"></a>00094 <span class="comment"></span><span class="keywordtype">string</span> GetLastErrorString();
-<a name="l00095"></a>00095 <span class="comment"></span>
-<a name="l00096"></a>00096 <span class="comment">/// Calls Fatal() with a function name and GetLastErrorString.</span>
-<a name="l00097"></a>00097 <span class="comment"></span><a class="code" href="util_8h.html#aa1728270d73c5d1598de1fd691762eb1">NORETURN</a> <span class="keywordtype">void</span> Win32Fatal(<span class="keyword">const</span> <span class="keywordtype">char</span>* <span class="keyword">function</span>);
-<a name="l00098"></a>00098 <span class="preprocessor">#endif</span>
-<a name="l00099"></a>00099 <span class="preprocessor"></span>
-<a name="l00100"></a>00100 <span class="preprocessor">#endif  // NINJA_UTIL_H_</span>
+<a name="l00071"></a>00071 <span class="comment">/// Removes all Ansi escape codes (http://www.termsys.demon.co.uk/vtansi.htm).</span>
+<a name="l00072"></a>00072 <span class="comment"></span><span class="keywordtype">string</span> <a class="code" href="util_8cc.html#ab47e6d9b7e9e9f6a9d4560f148cd3643" title="Removes all Ansi escape codes (http://www.termsys.demon.co.uk/vtansi.htm).">StripAnsiEscapeCodes</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; in);
+<a name="l00073"></a>00073 <span class="comment"></span>
+<a name="l00074"></a>00074 <span class="comment">/// @return the number of processors on the machine.  Useful for an initial</span>
+<a name="l00075"></a>00075 <span class="comment">/// guess for how many jobs to run in parallel.  @return 0 on error.</span>
+<a name="l00076"></a>00076 <span class="comment"></span><span class="keywordtype">int</span> <a class="code" href="util_8cc.html#a03a03c74e8b71b7ab09b1af533dc253f">GetProcessorCount</a>();
+<a name="l00077"></a>00077 <span class="comment"></span>
+<a name="l00078"></a>00078 <span class="comment">/// @return the load average of the machine. A negative value is returned</span>
+<a name="l00079"></a>00079 <span class="comment">/// on error.</span>
+<a name="l00080"></a>00080 <span class="comment"></span><span class="keywordtype">double</span> <a class="code" href="util_8cc.html#afb09694f1319f261012f1851bbbb285b">GetLoadAverage</a>();
+<a name="l00081"></a>00081 <span class="comment"></span>
+<a name="l00082"></a>00082 <span class="comment">/// Elide the given string @a str with &#39;...&#39; in the middle if the length</span>
+<a name="l00083"></a>00083 <span class="comment">/// exceeds @a width.</span>
+<a name="l00084"></a>00084 <span class="comment"></span><span class="keywordtype">string</span> <a class="code" href="util_8cc.html#ac8e2d9b3b582b06d8c2ecd55cf22d512" title="Elide the given string str with &#39;...&#39; in the middle if the length exceeds width.">ElideMiddle</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; str, <span class="keywordtype">size_t</span> width);
+<a name="l00085"></a>00085 <span class="comment"></span>
+<a name="l00086"></a>00086 <span class="comment">/// Truncates a file to the given size.</span>
+<a name="l00087"></a>00087 <span class="comment"></span><span class="keywordtype">bool</span> <a class="code" href="util_8cc.html#a59c00d43a10517c5124b75ef540f270a" title="Truncates a file to the given size.">Truncate</a>(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path, <span class="keywordtype">size_t</span> size, <span class="keywordtype">string</span>* err);
+<a name="l00088"></a>00088 
+<a name="l00089"></a>00089 <span class="preprocessor">#ifdef _MSC_VER</span>
+<a name="l00090"></a>00090 <span class="preprocessor"></span><span class="preprocessor">#define snprintf _snprintf</span>
+<a name="l00091"></a>00091 <span class="preprocessor"></span><span class="preprocessor">#define fileno _fileno</span>
+<a name="l00092"></a>00092 <span class="preprocessor"></span><span class="preprocessor">#define unlink _unlink</span>
+<a name="l00093"></a>00093 <span class="preprocessor"></span><span class="preprocessor">#define chdir _chdir</span>
+<a name="l00094"></a>00094 <span class="preprocessor"></span><span class="preprocessor">#define strtoull _strtoui64</span>
+<a name="l00095"></a>00095 <span class="preprocessor"></span><span class="preprocessor">#define getcwd _getcwd</span>
+<a name="l00096"></a>00096 <span class="preprocessor"></span><span class="preprocessor">#define PATH_MAX _MAX_PATH</span>
+<a name="l00097"></a>00097 <span class="preprocessor"></span><span class="preprocessor">#endif</span>
+<a name="l00098"></a>00098 <span class="preprocessor"></span>
+<a name="l00099"></a>00099 <span class="preprocessor">#ifdef _WIN32</span>
+<a name="l00100"></a>00100 <span class="preprocessor"></span><span class="comment">/// Convert the value returned by GetLastError() into a string.</span>
+<a name="l00101"></a>00101 <span class="comment"></span><span class="keywordtype">string</span> GetLastErrorString();
+<a name="l00102"></a>00102 <span class="comment"></span>
+<a name="l00103"></a>00103 <span class="comment">/// Calls Fatal() with a function name and GetLastErrorString.</span>
+<a name="l00104"></a>00104 <span class="comment"></span><a class="code" href="util_8h.html#aa1728270d73c5d1598de1fd691762eb1">NORETURN</a> <span class="keywordtype">void</span> Win32Fatal(<span class="keyword">const</span> <span class="keywordtype">char</span>* <span class="keyword">function</span>);
+<a name="l00105"></a>00105 <span class="preprocessor">#endif</span>
+<a name="l00106"></a>00106 <span class="preprocessor"></span>
+<a name="l00107"></a>00107 <span class="preprocessor">#endif  // NINJA_UTIL_H_</span>
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 12 2013 09:25:50 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 4 2014 09:13:00 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

@@ -141,61 +141,62 @@
 <a name="l00082"></a>00082 <span class="comment">/// Global state (file status, loaded rules) for a single run.</span>
 <a name="l00083"></a><a class="code" href="structState.html">00083</a> <span class="comment"></span><span class="keyword">struct </span><a class="code" href="structState.html" title="Global state (file status, loaded rules) for a single run.">State</a> {
 <a name="l00084"></a><a class="code" href="structState.html#a52ef5a6c1a831f6677114321364a44d6">00084</a>   <span class="keyword">static</span> <a class="code" href="structPool.html" title="A pool for delayed edges.">Pool</a> <a class="code" href="structState.html#a52ef5a6c1a831f6677114321364a44d6">kDefaultPool</a>;
-<a name="l00085"></a><a class="code" href="structState.html#a9522a499bd62121a14e00a3016fa0599">00085</a>   <span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="structRule.html" title="An invokable build command and associated metadata (description, etc.).">Rule</a> <a class="code" href="structState.html#a9522a499bd62121a14e00a3016fa0599">kPhonyRule</a>;
-<a name="l00086"></a>00086 
-<a name="l00087"></a>00087   <a class="code" href="structState.html" title="Global state (file status, loaded rules) for a single run.">State</a>();
-<a name="l00088"></a>00088 
-<a name="l00089"></a>00089   <span class="keywordtype">void</span> AddRule(<span class="keyword">const</span> <a class="code" href="structRule.html" title="An invokable build command and associated metadata (description, etc.).">Rule</a>* rule);
-<a name="l00090"></a>00090   <span class="keyword">const</span> <a class="code" href="structRule.html" title="An invokable build command and associated metadata (description, etc.).">Rule</a>* LookupRule(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; rule_name);
-<a name="l00091"></a>00091 
-<a name="l00092"></a>00092   <span class="keywordtype">void</span> AddPool(<a class="code" href="structPool.html" title="A pool for delayed edges.">Pool</a>* pool);
-<a name="l00093"></a>00093   <a class="code" href="structPool.html" title="A pool for delayed edges.">Pool</a>* LookupPool(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; pool_name);
-<a name="l00094"></a>00094 
-<a name="l00095"></a>00095   <a class="code" href="structEdge.html" title="An edge in the dependency graph; links between Nodes using Rules.">Edge</a>* AddEdge(<span class="keyword">const</span> <a class="code" href="structRule.html" title="An invokable build command and associated metadata (description, etc.).">Rule</a>* rule);
-<a name="l00096"></a>00096 
-<a name="l00097"></a>00097   <a class="code" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>* GetNode(<a class="code" href="structStringPiece.html" title="StringPiece represents a slice of a string whose memory is managed externally.">StringPiece</a> path);
-<a name="l00098"></a>00098   <a class="code" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>* LookupNode(<a class="code" href="structStringPiece.html" title="StringPiece represents a slice of a string whose memory is managed externally.">StringPiece</a> path);
-<a name="l00099"></a>00099   <a class="code" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>* SpellcheckNode(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path);
-<a name="l00100"></a>00100 
-<a name="l00101"></a>00101   <span class="keywordtype">void</span> AddIn(<a class="code" href="structEdge.html" title="An edge in the dependency graph; links between Nodes using Rules.">Edge</a>* edge, <a class="code" href="structStringPiece.html" title="StringPiece represents a slice of a string whose memory is managed externally.">StringPiece</a> path);
-<a name="l00102"></a>00102   <span class="keywordtype">void</span> AddOut(<a class="code" href="structEdge.html" title="An edge in the dependency graph; links between Nodes using Rules.">Edge</a>* edge, <a class="code" href="structStringPiece.html" title="StringPiece represents a slice of a string whose memory is managed externally.">StringPiece</a> path);
-<a name="l00103"></a>00103   <span class="keywordtype">bool</span> AddDefault(<a class="code" href="structStringPiece.html" title="StringPiece represents a slice of a string whose memory is managed externally.">StringPiece</a> path, <span class="keywordtype">string</span>* error);
-<a name="l00104"></a>00104 <span class="comment"></span>
-<a name="l00105"></a>00105 <span class="comment">  /// Reset state.  Keeps all nodes and edges, but restores them to the</span>
-<a name="l00106"></a>00106 <span class="comment">  /// state where we haven&#39;t yet examined the disk for dirty state.</span>
-<a name="l00107"></a>00107 <span class="comment"></span>  <span class="keywordtype">void</span> Reset();
-<a name="l00108"></a>00108 <span class="comment"></span>
-<a name="l00109"></a>00109 <span class="comment">  /// Dump the nodes and Pools (useful for debugging).</span>
-<a name="l00110"></a>00110 <span class="comment"></span>  <span class="keywordtype">void</span> Dump();
-<a name="l00111"></a>00111 <span class="comment"></span>
-<a name="l00112"></a>00112 <span class="comment">  /// @return the root node(s) of the graph. (Root nodes have no output edges).</span>
-<a name="l00113"></a>00113 <span class="comment">  /// @param error where to write the error message if somethings went wrong.</span>
-<a name="l00114"></a>00114 <span class="comment"></span>  vector&lt;Node*&gt; RootNodes(<span class="keywordtype">string</span>* error);
-<a name="l00115"></a>00115   vector&lt;Node*&gt; DefaultNodes(<span class="keywordtype">string</span>* error);
-<a name="l00116"></a>00116 <span class="comment"></span>
-<a name="l00117"></a>00117 <span class="comment">  /// Mapping of path -&gt; Node.</span>
-<a name="l00118"></a><a class="code" href="structState.html#afac889527e262b376fb9d9801a148646">00118</a> <span class="comment"></span>  <span class="keyword">typedef</span> <a class="code" href="structExternalStringHashMap.html" title="A template for hash_maps keyed by a StringPiece whose string is owned externally (typically by the va...">ExternalStringHashMap&lt;Node*&gt;::Type</a> <a class="code" href="structState.html#afac889527e262b376fb9d9801a148646" title="Mapping of path -&gt; Node.">Paths</a>;
-<a name="l00119"></a><a class="code" href="structState.html#a499e72dcfd901bf2886ed4f54c8cd3d2">00119</a>   <a class="code" href="structState.html#afac889527e262b376fb9d9801a148646" title="Mapping of path -&gt; Node.">Paths</a> <a class="code" href="structState.html#a499e72dcfd901bf2886ed4f54c8cd3d2">paths_</a>;
-<a name="l00120"></a>00120 <span class="comment"></span>
-<a name="l00121"></a>00121 <span class="comment">  /// All the rules used in the graph.</span>
-<a name="l00122"></a><a class="code" href="structState.html#a7853ca22a4a26bea1ea0e2b10a033e4a">00122</a> <span class="comment"></span>  map&lt;string, const Rule*&gt; <a class="code" href="structState.html#a7853ca22a4a26bea1ea0e2b10a033e4a" title="All the rules used in the graph.">rules_</a>;
-<a name="l00123"></a>00123 <span class="comment"></span>
-<a name="l00124"></a>00124 <span class="comment">  /// All the pools used in the graph.</span>
-<a name="l00125"></a><a class="code" href="structState.html#a9412f61165c45cddfabff34528be7e33">00125</a> <span class="comment"></span>  map&lt;string, Pool*&gt; <a class="code" href="structState.html#a9412f61165c45cddfabff34528be7e33" title="All the pools used in the graph.">pools_</a>;
-<a name="l00126"></a>00126 <span class="comment"></span>
-<a name="l00127"></a>00127 <span class="comment">  /// All the edges of the graph.</span>
-<a name="l00128"></a><a class="code" href="structState.html#ab0f23f5026709fcb48d83e93d4bbed97">00128</a> <span class="comment"></span>  vector&lt;Edge*&gt; <a class="code" href="structState.html#ab0f23f5026709fcb48d83e93d4bbed97" title="All the edges of the graph.">edges_</a>;
-<a name="l00129"></a>00129 
-<a name="l00130"></a><a class="code" href="structState.html#ae09e90c5524df7fd37a96751930336c9">00130</a>   <a class="code" href="structBindingEnv.html" title="An Env which contains a mapping of variables to values as well as a pointer to a parent scope...">BindingEnv</a> <a class="code" href="structState.html#ae09e90c5524df7fd37a96751930336c9">bindings_</a>;
-<a name="l00131"></a><a class="code" href="structState.html#ae2ba184ebe4f549b9e6c435083c07c33">00131</a>   vector&lt;Node*&gt; <a class="code" href="structState.html#ae2ba184ebe4f549b9e6c435083c07c33">defaults_</a>;
-<a name="l00132"></a>00132 };
-<a name="l00133"></a>00133 
-<a name="l00134"></a>00134 <span class="preprocessor">#endif  // NINJA_STATE_H_</span>
+<a name="l00085"></a><a class="code" href="structState.html#a1bfd2a655955c711d114b89e72115e75">00085</a>   <span class="keyword">static</span> <a class="code" href="structPool.html" title="A pool for delayed edges.">Pool</a> <a class="code" href="structState.html#a1bfd2a655955c711d114b89e72115e75">kConsolePool</a>;
+<a name="l00086"></a><a class="code" href="structState.html#a9522a499bd62121a14e00a3016fa0599">00086</a>   <span class="keyword">static</span> <span class="keyword">const</span> <a class="code" href="structRule.html" title="An invokable build command and associated metadata (description, etc.).">Rule</a> <a class="code" href="structState.html#a9522a499bd62121a14e00a3016fa0599">kPhonyRule</a>;
+<a name="l00087"></a>00087 
+<a name="l00088"></a>00088   <a class="code" href="structState.html" title="Global state (file status, loaded rules) for a single run.">State</a>();
+<a name="l00089"></a>00089 
+<a name="l00090"></a>00090   <span class="keywordtype">void</span> AddRule(<span class="keyword">const</span> <a class="code" href="structRule.html" title="An invokable build command and associated metadata (description, etc.).">Rule</a>* rule);
+<a name="l00091"></a>00091   <span class="keyword">const</span> <a class="code" href="structRule.html" title="An invokable build command and associated metadata (description, etc.).">Rule</a>* LookupRule(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; rule_name);
+<a name="l00092"></a>00092 
+<a name="l00093"></a>00093   <span class="keywordtype">void</span> AddPool(<a class="code" href="structPool.html" title="A pool for delayed edges.">Pool</a>* pool);
+<a name="l00094"></a>00094   <a class="code" href="structPool.html" title="A pool for delayed edges.">Pool</a>* LookupPool(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; pool_name);
+<a name="l00095"></a>00095 
+<a name="l00096"></a>00096   <a class="code" href="structEdge.html" title="An edge in the dependency graph; links between Nodes using Rules.">Edge</a>* AddEdge(<span class="keyword">const</span> <a class="code" href="structRule.html" title="An invokable build command and associated metadata (description, etc.).">Rule</a>* rule);
+<a name="l00097"></a>00097 
+<a name="l00098"></a>00098   <a class="code" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>* GetNode(<a class="code" href="structStringPiece.html" title="StringPiece represents a slice of a string whose memory is managed externally.">StringPiece</a> path);
+<a name="l00099"></a>00099   <a class="code" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>* LookupNode(<a class="code" href="structStringPiece.html" title="StringPiece represents a slice of a string whose memory is managed externally.">StringPiece</a> path) <span class="keyword">const</span>;
+<a name="l00100"></a>00100   <a class="code" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a>* SpellcheckNode(<span class="keyword">const</span> <span class="keywordtype">string</span>&amp; path);
+<a name="l00101"></a>00101 
+<a name="l00102"></a>00102   <span class="keywordtype">void</span> AddIn(<a class="code" href="structEdge.html" title="An edge in the dependency graph; links between Nodes using Rules.">Edge</a>* edge, <a class="code" href="structStringPiece.html" title="StringPiece represents a slice of a string whose memory is managed externally.">StringPiece</a> path);
+<a name="l00103"></a>00103   <span class="keywordtype">void</span> AddOut(<a class="code" href="structEdge.html" title="An edge in the dependency graph; links between Nodes using Rules.">Edge</a>* edge, <a class="code" href="structStringPiece.html" title="StringPiece represents a slice of a string whose memory is managed externally.">StringPiece</a> path);
+<a name="l00104"></a>00104   <span class="keywordtype">bool</span> AddDefault(<a class="code" href="structStringPiece.html" title="StringPiece represents a slice of a string whose memory is managed externally.">StringPiece</a> path, <span class="keywordtype">string</span>* error);
+<a name="l00105"></a>00105 <span class="comment"></span>
+<a name="l00106"></a>00106 <span class="comment">  /// Reset state.  Keeps all nodes and edges, but restores them to the</span>
+<a name="l00107"></a>00107 <span class="comment">  /// state where we haven&#39;t yet examined the disk for dirty state.</span>
+<a name="l00108"></a>00108 <span class="comment"></span>  <span class="keywordtype">void</span> Reset();
+<a name="l00109"></a>00109 <span class="comment"></span>
+<a name="l00110"></a>00110 <span class="comment">  /// Dump the nodes and Pools (useful for debugging).</span>
+<a name="l00111"></a>00111 <span class="comment"></span>  <span class="keywordtype">void</span> Dump();
+<a name="l00112"></a>00112 <span class="comment"></span>
+<a name="l00113"></a>00113 <span class="comment">  /// @return the root node(s) of the graph. (Root nodes have no output edges).</span>
+<a name="l00114"></a>00114 <span class="comment">  /// @param error where to write the error message if somethings went wrong.</span>
+<a name="l00115"></a>00115 <span class="comment"></span>  vector&lt;Node*&gt; RootNodes(<span class="keywordtype">string</span>* error);
+<a name="l00116"></a>00116   vector&lt;Node*&gt; DefaultNodes(<span class="keywordtype">string</span>* error);
+<a name="l00117"></a>00117 <span class="comment"></span>
+<a name="l00118"></a>00118 <span class="comment">  /// Mapping of path -&gt; Node.</span>
+<a name="l00119"></a><a class="code" href="structState.html#afac889527e262b376fb9d9801a148646">00119</a> <span class="comment"></span>  <span class="keyword">typedef</span> <a class="code" href="structExternalStringHashMap.html" title="A template for hash_maps keyed by a StringPiece whose string is owned externally (typically by the va...">ExternalStringHashMap&lt;Node*&gt;::Type</a> <a class="code" href="structState.html#afac889527e262b376fb9d9801a148646" title="Mapping of path -&gt; Node.">Paths</a>;
+<a name="l00120"></a><a class="code" href="structState.html#a499e72dcfd901bf2886ed4f54c8cd3d2">00120</a>   <a class="code" href="structState.html#afac889527e262b376fb9d9801a148646" title="Mapping of path -&gt; Node.">Paths</a> <a class="code" href="structState.html#a499e72dcfd901bf2886ed4f54c8cd3d2">paths_</a>;
+<a name="l00121"></a>00121 <span class="comment"></span>
+<a name="l00122"></a>00122 <span class="comment">  /// All the rules used in the graph.</span>
+<a name="l00123"></a><a class="code" href="structState.html#a7853ca22a4a26bea1ea0e2b10a033e4a">00123</a> <span class="comment"></span>  map&lt;string, const Rule*&gt; <a class="code" href="structState.html#a7853ca22a4a26bea1ea0e2b10a033e4a" title="All the rules used in the graph.">rules_</a>;
+<a name="l00124"></a>00124 <span class="comment"></span>
+<a name="l00125"></a>00125 <span class="comment">  /// All the pools used in the graph.</span>
+<a name="l00126"></a><a class="code" href="structState.html#a9412f61165c45cddfabff34528be7e33">00126</a> <span class="comment"></span>  map&lt;string, Pool*&gt; <a class="code" href="structState.html#a9412f61165c45cddfabff34528be7e33" title="All the pools used in the graph.">pools_</a>;
+<a name="l00127"></a>00127 <span class="comment"></span>
+<a name="l00128"></a>00128 <span class="comment">  /// All the edges of the graph.</span>
+<a name="l00129"></a><a class="code" href="structState.html#ab0f23f5026709fcb48d83e93d4bbed97">00129</a> <span class="comment"></span>  vector&lt;Edge*&gt; <a class="code" href="structState.html#ab0f23f5026709fcb48d83e93d4bbed97" title="All the edges of the graph.">edges_</a>;
+<a name="l00130"></a>00130 
+<a name="l00131"></a><a class="code" href="structState.html#ae09e90c5524df7fd37a96751930336c9">00131</a>   <a class="code" href="structBindingEnv.html" title="An Env which contains a mapping of variables to values as well as a pointer to a parent scope...">BindingEnv</a> <a class="code" href="structState.html#ae09e90c5524df7fd37a96751930336c9">bindings_</a>;
+<a name="l00132"></a><a class="code" href="structState.html#ae2ba184ebe4f549b9e6c435083c07c33">00132</a>   vector&lt;Node*&gt; <a class="code" href="structState.html#ae2ba184ebe4f549b9e6c435083c07c33">defaults_</a>;
+<a name="l00133"></a>00133 };
+<a name="l00134"></a>00134 
+<a name="l00135"></a>00135 <span class="preprocessor">#endif  // NINJA_STATE_H_</span>
 </pre></div></div><!-- contents -->
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 12 2013 09:25:50 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 4 2014 09:13:00 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

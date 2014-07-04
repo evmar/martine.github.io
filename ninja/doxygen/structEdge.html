@@ -79,13 +79,19 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structEdge.html#ac4086e06c9982fbebdb9b1a5d52af3cd">EvaluateCommand</a> (bool incl_rsp_file=false)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Expand all variables in a command and return it as a string.  <a href="#ac4086e06c9982fbebdb9b1a5d52af3cd"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structEdge.html#a4f495554a299524a951620f7b643d111">GetBinding</a> (const string &amp;key)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the shell-escaped value of |key|.  <a href="#a4f495554a299524a951620f7b643d111"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structEdge.html#a23eef03702ce52f7fdf80a8e05e242d1">GetBindingBool</a> (const string &amp;key)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structEdge.html#a327ebbb178acb1d05c454c806ba84c46">GetUnescapedDepfile</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Like GetBinding("depfile"), but without shell escaping.  <a href="#a327ebbb178acb1d05c454c806ba84c46"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structEdge.html#a70c8d93441468aa04296c29ff94cbcb9">GetUnescapedRspfile</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Like GetBinding("rspfile"), but without shell escaping.  <a href="#a70c8d93441468aa04296c29ff94cbcb9"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structEdge.html#a90a2a3bc6234204d2285e46d80a822f9">is_implicit</a> (size_t index)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structEdge.html#a580887ea1830429a328f35a91c1da99a">is_order_only</a> (size_t index)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structEdge.html#aaf7a366d8ba8f127da58839af826d548">is_phony</a> () const </td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structEdge.html#a2fe2114ba09e80a6a227eb04f8a404de">outputs_ready</a> () const </td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structPool.html">Pool</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structEdge.html#a1557cf70503cf69a91b20ea9351e58d1">pool</a> () const </td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structRule.html">Rule</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structEdge.html#a3a65de0e14a559db9ebc0e60faa7d664">rule</a> () const </td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structEdge.html#ade0ceb00f2eb88e99c7bcae5a07d37a1">use_console</a> () const </td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structEdge.html#ab08abe6de206325f0b1f472cbadaa755">weight</a> () const </td></tr>
 <tr><td colspan="2"><h2><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -141,9 +147,9 @@ Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="graph_8cc_source.html#l00207">207</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
 
-<p>References <a class="el" href="graph_8h_source.html#l00156">inputs_</a>.</p>
+<p>References <a class="el" href="graph_8h_source.html#l00162">inputs_</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00261">Plan::AddSubTarget()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00268">Plan::AddSubTarget()</a>.</p>
 
 </div>
 </div>
@@ -162,11 +168,11 @@ Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="graph_8cc_source.html#l00286">286</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
+<p>Definition at line <a class="el" href="graph_8cc_source.html#l00302">302</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
 
-<p>References <a class="el" href="graph_8h_source.html#l00156">inputs_</a>, <a class="el" href="state_8h_source.html#l00046">Pool::name()</a>, <a class="el" href="graph_8h_source.html#l00119">Rule::name()</a>, <a class="el" href="graph_8h_source.html#l00157">outputs_</a>, <a class="el" href="graph_8h_source.html#l00155">pool_</a>, and <a class="el" href="graph_8h_source.html#l00154">rule_</a>.</p>
+<p>References <a class="el" href="graph_8h_source.html#l00162">inputs_</a>, <a class="el" href="state_8h_source.html#l00046">Pool::name()</a>, <a class="el" href="graph_8h_source.html#l00119">Rule::name()</a>, <a class="el" href="graph_8h_source.html#l00163">outputs_</a>, <a class="el" href="graph_8h_source.html#l00161">pool_</a>, and <a class="el" href="graph_8h_source.html#l00160">rule_</a>.</p>
 
-<p>Referenced by <a class="el" href="graph_8cc_source.html#l00311">Node::Dump()</a>.</p>
+<p>Referenced by <a class="el" href="graph_8cc_source.html#l00331">Node::Dump()</a>.</p>
 
 </div>
 </div>
@@ -188,11 +194,11 @@ Public Attributes</h2></td></tr>
 <p>Expand all variables in a command and return it as a string. </p>
 <p>If incl_rsp_file is enabled, the string will also contain the full contents of a response file (if applicable) </p>
 
-<p>Definition at line <a class="el" href="graph_8cc_source.html#l00267">267</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
+<p>Definition at line <a class="el" href="graph_8cc_source.html#l00273">273</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
 
-<p>References <a class="el" href="graph_8cc_source.html#l00277">GetBinding()</a>.</p>
+<p>References <a class="el" href="graph_8cc_source.html#l00283">GetBinding()</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00102">BuildStatus::BuildEdgeFinished()</a>, <a class="el" href="graph_8cc_source.html#l00133">DependencyScan::RecomputeOutputsDirty()</a>, <a class="el" href="build__log_8cc_source.html#l00139">BuildLog::RecordCommand()</a>, <a class="el" href="build__test_8cc_source.html#l00502">FakeCommandRunner::StartCommand()</a>, <a class="el" href="build_8cc_source.html#l00489">RealCommandRunner::StartCommand()</a>, <a class="el" href="build_8cc_source.html#l00672">Builder::StartEdge()</a>, and <a class="el" href="build__test_8cc_source.html#l00760">TEST_F()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00105">BuildStatus::BuildEdgeFinished()</a>, <a class="el" href="graph_8cc_source.html#l00133">DependencyScan::RecomputeOutputsDirty()</a>, <a class="el" href="build__log_8cc_source.html#l00140">BuildLog::RecordCommand()</a>, <a class="el" href="build__test_8cc_source.html#l00519">FakeCommandRunner::StartCommand()</a>, <a class="el" href="build_8cc_source.html#l00496">RealCommandRunner::StartCommand()</a>, <a class="el" href="build_8cc_source.html#l00682">Builder::StartEdge()</a>, and <a class="el" href="build__test_8cc_source.html#l00788">TEST_F()</a>.</p>
 
 </div>
 </div>
@@ -211,11 +217,13 @@ Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="graph_8cc_source.html#l00277">277</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
+<p>Returns the shell-escaped value of |key|. </p>
 
-<p>References <a class="el" href="graph_8cc_source.html#l00230">EdgeEnv::LookupVariable()</a>.</p>
+<p>Definition at line <a class="el" href="graph_8cc_source.html#l00283">283</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
 
-<p>Referenced by <a class="el" href="graph_8cc_source.html#l00267">EvaluateCommand()</a>, <a class="el" href="build_8cc_source.html#l00803">Builder::ExtractDeps()</a>, <a class="el" href="build_8cc_source.html#l00705">Builder::FinishCommand()</a>, <a class="el" href="graph_8cc_source.html#l00282">GetBindingBool()</a>, <a class="el" href="graph_8cc_source.html#l00328">ImplicitDepLoader::LoadDeps()</a>, <a class="el" href="manifest__parser_8cc_source.html#l00228">ManifestParser::ParseEdge()</a>, <a class="el" href="build_8cc_source.html#l00234">BuildStatus::PrintStatus()</a>, <a class="el" href="clean_8cc_source.html#l00082">Cleaner::RemoveEdgeFiles()</a>, <a class="el" href="build_8cc_source.html#l00672">Builder::StartEdge()</a>, and <a class="el" href="graph__test_8cc_source.html#l00208">TEST_F()</a>.</p>
+<p>References <a class="el" href="graph_8cc_source.html#l00218">EdgeEnv::kShellEscape</a>, and <a class="el" href="graph_8cc_source.html#l00234">EdgeEnv::LookupVariable()</a>.</p>
+
+<p>Referenced by <a class="el" href="graph_8cc_source.html#l00273">EvaluateCommand()</a>, <a class="el" href="build_8cc_source.html#l00715">Builder::FinishCommand()</a>, <a class="el" href="graph_8cc_source.html#l00288">GetBindingBool()</a>, <a class="el" href="deps__log_8cc_source.html#l00357">DepsLog::IsDepsEntryLiveFor()</a>, <a class="el" href="graph_8cc_source.html#l00348">ImplicitDepLoader::LoadDeps()</a>, <a class="el" href="manifest__parser_8cc_source.html#l00228">ManifestParser::ParseEdge()</a>, <a class="el" href="build_8cc_source.html#l00241">BuildStatus::PrintStatus()</a>, <a class="el" href="build_8cc_source.html#l00682">Builder::StartEdge()</a>, and <a class="el" href="graph__test_8cc_source.html#l00213">TEST_F()</a>.</p>
 
 </div>
 </div>
@@ -234,11 +242,59 @@ Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="graph_8cc_source.html#l00282">282</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
+<p>Definition at line <a class="el" href="graph_8cc_source.html#l00288">288</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
 
-<p>References <a class="el" href="graph_8cc_source.html#l00277">GetBinding()</a>.</p>
+<p>References <a class="el" href="graph_8cc_source.html#l00283">GetBinding()</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00705">Builder::FinishCommand()</a>, and <a class="el" href="graph_8cc_source.html#l00145">DependencyScan::RecomputeOutputDirty()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00715">Builder::FinishCommand()</a>, and <a class="el" href="graph_8cc_source.html#l00145">DependencyScan::RecomputeOutputDirty()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a327ebbb178acb1d05c454c806ba84c46"></a><!-- doxytag: member="Edge::GetUnescapedDepfile" ref="a327ebbb178acb1d05c454c806ba84c46" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string <a class="el" href="structEdge.html#a327ebbb178acb1d05c454c806ba84c46">Edge::GetUnescapedDepfile</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Like GetBinding("depfile"), but without shell escaping. </p>
+
+<p>Definition at line <a class="el" href="graph_8cc_source.html#l00292">292</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
+
+<p>References <a class="el" href="graph_8cc_source.html#l00218">EdgeEnv::kDoNotEscape</a>, and <a class="el" href="graph_8cc_source.html#l00234">EdgeEnv::LookupVariable()</a>.</p>
+
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00815">Builder::ExtractDeps()</a>, <a class="el" href="build_8cc_source.html#l00715">Builder::FinishCommand()</a>, <a class="el" href="graph_8cc_source.html#l00348">ImplicitDepLoader::LoadDeps()</a>, and <a class="el" href="clean_8cc_source.html#l00082">Cleaner::RemoveEdgeFiles()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a70c8d93441468aa04296c29ff94cbcb9"></a><!-- doxytag: member="Edge::GetUnescapedRspfile" ref="a70c8d93441468aa04296c29ff94cbcb9" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string <a class="el" href="structEdge.html#a70c8d93441468aa04296c29ff94cbcb9">Edge::GetUnescapedRspfile</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Like GetBinding("rspfile"), but without shell escaping. </p>
+
+<p>Definition at line <a class="el" href="graph_8cc_source.html#l00297">297</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
+
+<p>References <a class="el" href="graph_8cc_source.html#l00218">EdgeEnv::kDoNotEscape</a>, and <a class="el" href="graph_8cc_source.html#l00234">EdgeEnv::LookupVariable()</a>.</p>
+
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00715">Builder::FinishCommand()</a>, <a class="el" href="clean_8cc_source.html#l00082">Cleaner::RemoveEdgeFiles()</a>, and <a class="el" href="build_8cc_source.html#l00682">Builder::StartEdge()</a>.</p>
 
 </div>
 </div>
@@ -257,9 +313,9 @@ Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="graph_8h_source.html#l00177">177</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
+<p>Definition at line <a class="el" href="graph_8h_source.html#l00183">183</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
 
-<p>Referenced by <a class="el" href="manifest__parser__test_8cc_source.html#l00787">TEST_F()</a>.</p>
+<p>Referenced by <a class="el" href="manifest__parser__test_8cc_source.html#l00806">TEST_F()</a>.</p>
 
 </div>
 </div>
@@ -278,9 +334,9 @@ Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="graph_8h_source.html#l00181">181</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
+<p>Definition at line <a class="el" href="graph_8h_source.html#l00187">187</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
 
-<p>Referenced by <a class="el" href="graphviz_8cc_source.html#l00021">GraphViz::AddTarget()</a>, <a class="el" href="graph_8cc_source.html#l00060">DependencyScan::RecomputeDirty()</a>, and <a class="el" href="manifest__parser__test_8cc_source.html#l00797">TEST_F()</a>.</p>
+<p>Referenced by <a class="el" href="graphviz_8cc_source.html#l00021">GraphViz::AddTarget()</a>, <a class="el" href="graph_8cc_source.html#l00060">DependencyScan::RecomputeDirty()</a>, and <a class="el" href="manifest__parser__test_8cc_source.html#l00816">TEST_F()</a>.</p>
 
 </div>
 </div>
@@ -298,11 +354,11 @@ Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="graph_8cc_source.html#l00307">307</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
+<p>Definition at line <a class="el" href="graph_8cc_source.html#l00323">323</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
 
-<p>References <a class="el" href="state_8h_source.html#l00085">State::kPhonyRule</a>, and <a class="el" href="graph_8h_source.html#l00154">rule_</a>.</p>
+<p>References <a class="el" href="state_8h_source.html#l00086">State::kPhonyRule</a>, and <a class="el" href="graph_8h_source.html#l00160">rule_</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00261">Plan::AddSubTarget()</a>, <a class="el" href="build_8cc_source.html#l00588">Builder::Build()</a>, <a class="el" href="graph_8cc_source.html#l00060">DependencyScan::RecomputeDirty()</a>, <a class="el" href="graph_8cc_source.html#l00145">DependencyScan::RecomputeOutputDirty()</a>, and <a class="el" href="build_8cc_source.html#l00672">Builder::StartEdge()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00268">Plan::AddSubTarget()</a>, <a class="el" href="build_8cc_source.html#l00595">Builder::Build()</a>, <a class="el" href="graph_8cc_source.html#l00060">DependencyScan::RecomputeDirty()</a>, <a class="el" href="graph_8cc_source.html#l00145">DependencyScan::RecomputeOutputDirty()</a>, and <a class="el" href="build_8cc_source.html#l00682">Builder::StartEdge()</a>.</p>
 
 </div>
 </div>
@@ -320,9 +376,9 @@ Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="graph_8h_source.html#l00165">165</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
+<p>Definition at line <a class="el" href="graph_8h_source.html#l00171">171</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00261">Plan::AddSubTarget()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00268">Plan::AddSubTarget()</a>.</p>
 
 </div>
 </div>
@@ -340,9 +396,9 @@ Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="graph_8h_source.html#l00163">163</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
+<p>Definition at line <a class="el" href="graph_8h_source.html#l00169">169</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00358">Plan::ResumeDelayedJobs()</a>, and <a class="el" href="build_8cc_source.html#l00341">Plan::ScheduleWork()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00365">Plan::ResumeDelayedJobs()</a>, <a class="el" href="build_8cc_source.html#l00348">Plan::ScheduleWork()</a>, and <a class="el" href="graph_8cc_source.html#l00327">use_console()</a>.</p>
 
 </div>
 </div>
@@ -360,9 +416,31 @@ Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="graph_8h_source.html#l00162">162</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
+<p>Definition at line <a class="el" href="graph_8h_source.html#l00168">168</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
 
-<p>Referenced by <a class="el" href="build__test_8cc_source.html#l00502">FakeCommandRunner::StartCommand()</a>, and <a class="el" href="build__test_8cc_source.html#l00527">FakeCommandRunner::WaitForCommand()</a>.</p>
+<p>Referenced by <a class="el" href="build__test_8cc_source.html#l00519">FakeCommandRunner::StartCommand()</a>, and <a class="el" href="build__test_8cc_source.html#l00546">FakeCommandRunner::WaitForCommand()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ade0ceb00f2eb88e99c7bcae5a07d37a1"></a><!-- doxytag: member="Edge::use_console" ref="ade0ceb00f2eb88e99c7bcae5a07d37a1" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="structEdge.html#ade0ceb00f2eb88e99c7bcae5a07d37a1">Edge::use_console</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="graph_8cc_source.html#l00327">327</a> of file <a class="el" href="graph_8cc_source.html">graph.cc</a>.</p>
+
+<p>References <a class="el" href="state_8h_source.html#l00085">State::kConsolePool</a>, and <a class="el" href="graph_8h_source.html#l00169">pool()</a>.</p>
+
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00105">BuildStatus::BuildEdgeFinished()</a>, <a class="el" href="build_8cc_source.html#l00094">BuildStatus::BuildEdgeStarted()</a>, <a class="el" href="build_8cc_source.html#l00496">RealCommandRunner::StartCommand()</a>, and <a class="el" href="build__test_8cc_source.html#l00546">FakeCommandRunner::WaitForCommand()</a>.</p>
 
 </div>
 </div>
@@ -380,7 +458,7 @@ Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="graph_8h_source.html#l00164">164</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
+<p>Definition at line <a class="el" href="graph_8h_source.html#l00170">170</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
 
 <p>Referenced by <a class="el" href="state_8cc_source.html#l00031">Pool::EdgeFinished()</a>, <a class="el" href="state_8cc_source.html#l00026">Pool::EdgeScheduled()</a>, <a class="el" href="state_8cc_source.html#l00041">Pool::RetrieveReadyEdges()</a>, and <a class="el" href="state_8cc_source.html#l00064">Pool::WeightedEdgeCmp()</a>.</p>
 
@@ -398,7 +476,7 @@ Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="graph_8h_source.html#l00160">160</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
+<p>Definition at line <a class="el" href="graph_8h_source.html#l00166">166</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
 
 <p>Referenced by <a class="el" href="graph_8cc_source.html#l00060">DependencyScan::RecomputeDirty()</a>.</p>
 
@@ -415,9 +493,9 @@ Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="graph_8h_source.html#l00158">158</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
+<p>Definition at line <a class="el" href="graph_8h_source.html#l00164">164</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
 
-<p>Referenced by <a class="el" href="state_8cc_source.html#l00103">State::AddEdge()</a>, <a class="el" href="graph_8cc_source.html#l00230">EdgeEnv::LookupVariable()</a>, and <a class="el" href="manifest__parser_8cc_source.html#l00228">ManifestParser::ParseEdge()</a>.</p>
+<p>Referenced by <a class="el" href="state_8cc_source.html#l00105">State::AddEdge()</a>, <a class="el" href="graph_8cc_source.html#l00234">EdgeEnv::LookupVariable()</a>, and <a class="el" href="manifest__parser_8cc_source.html#l00228">ManifestParser::ParseEdge()</a>.</p>
 
 </div>
 </div>
@@ -432,9 +510,9 @@ Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="graph_8h_source.html#l00175">175</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
+<p>Definition at line <a class="el" href="graph_8h_source.html#l00181">181</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
 
-<p>Referenced by <a class="el" href="graph_8cc_source.html#l00230">EdgeEnv::LookupVariable()</a>, <a class="el" href="manifest__parser_8cc_source.html#l00228">ManifestParser::ParseEdge()</a>, <a class="el" href="graph_8cc_source.html#l00417">ImplicitDepLoader::PreallocateSpace()</a>, and <a class="el" href="build__test_8cc_source.html#l00798">TEST_F()</a>.</p>
+<p>Referenced by <a class="el" href="graph_8cc_source.html#l00234">EdgeEnv::LookupVariable()</a>, <a class="el" href="manifest__parser_8cc_source.html#l00228">ManifestParser::ParseEdge()</a>, <a class="el" href="graph_8cc_source.html#l00437">ImplicitDepLoader::PreallocateSpace()</a>, and <a class="el" href="build__test_8cc_source.html#l00826">TEST_F()</a>.</p>
 
 </div>
 </div>
@@ -449,9 +527,9 @@ Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="graph_8h_source.html#l00156">156</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
+<p>Definition at line <a class="el" href="graph_8h_source.html#l00162">162</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
 
-<p>Referenced by <a class="el" href="state_8cc_source.html#l00146">State::AddIn()</a>, <a class="el" href="build_8cc_source.html#l00261">Plan::AddSubTarget()</a>, <a class="el" href="graphviz_8cc_source.html#l00021">GraphViz::AddTarget()</a>, <a class="el" href="graph_8cc_source.html#l00207">AllInputsReady()</a>, <a class="el" href="graph_8cc_source.html#l00286">Dump()</a>, <a class="el" href="build_8cc_source.html#l00705">Builder::FinishCommand()</a>, <a class="el" href="graph_8cc_source.html#l00230">EdgeEnv::LookupVariable()</a>, <a class="el" href="graph_8cc_source.html#l00417">ImplicitDepLoader::PreallocateSpace()</a>, <a class="el" href="graph_8cc_source.html#l00060">DependencyScan::RecomputeDirty()</a>, <a class="el" href="graph_8cc_source.html#l00145">DependencyScan::RecomputeOutputDirty()</a>, and <a class="el" href="build__test_8cc_source.html#l00242">TEST_F()</a>.</p>
+<p>Referenced by <a class="el" href="state_8cc_source.html#l00148">State::AddIn()</a>, <a class="el" href="build_8cc_source.html#l00268">Plan::AddSubTarget()</a>, <a class="el" href="graphviz_8cc_source.html#l00021">GraphViz::AddTarget()</a>, <a class="el" href="graph_8cc_source.html#l00207">AllInputsReady()</a>, <a class="el" href="graph_8cc_source.html#l00302">Dump()</a>, <a class="el" href="build_8cc_source.html#l00715">Builder::FinishCommand()</a>, <a class="el" href="graph_8cc_source.html#l00234">EdgeEnv::LookupVariable()</a>, <a class="el" href="graph_8cc_source.html#l00437">ImplicitDepLoader::PreallocateSpace()</a>, <a class="el" href="graph_8cc_source.html#l00060">DependencyScan::RecomputeDirty()</a>, <a class="el" href="graph_8cc_source.html#l00145">DependencyScan::RecomputeOutputDirty()</a>, and <a class="el" href="build__test_8cc_source.html#l00257">TEST_F()</a>.</p>
 
 </div>
 </div>
@@ -466,9 +544,9 @@ Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="graph_8h_source.html#l00176">176</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
+<p>Definition at line <a class="el" href="graph_8h_source.html#l00182">182</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00705">Builder::FinishCommand()</a>, <a class="el" href="graph_8cc_source.html#l00230">EdgeEnv::LookupVariable()</a>, <a class="el" href="manifest__parser_8cc_source.html#l00228">ManifestParser::ParseEdge()</a>, <a class="el" href="graph_8cc_source.html#l00417">ImplicitDepLoader::PreallocateSpace()</a>, and <a class="el" href="build__test_8cc_source.html#l00798">TEST_F()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00715">Builder::FinishCommand()</a>, <a class="el" href="graph_8cc_source.html#l00234">EdgeEnv::LookupVariable()</a>, <a class="el" href="manifest__parser_8cc_source.html#l00228">ManifestParser::ParseEdge()</a>, <a class="el" href="graph_8cc_source.html#l00437">ImplicitDepLoader::PreallocateSpace()</a>, and <a class="el" href="build__test_8cc_source.html#l00826">TEST_F()</a>.</p>
 
 </div>
 </div>
@@ -483,9 +561,9 @@ Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="graph_8h_source.html#l00157">157</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
+<p>Definition at line <a class="el" href="graph_8h_source.html#l00163">163</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
 
-<p>Referenced by <a class="el" href="state_8cc_source.html#l00152">State::AddOut()</a>, <a class="el" href="graphviz_8cc_source.html#l00021">GraphViz::AddTarget()</a>, <a class="el" href="graph_8cc_source.html#l00425">ImplicitDepLoader::CreatePhonyInEdge()</a>, <a class="el" href="graph_8cc_source.html#l00286">Dump()</a>, <a class="el" href="build_8cc_source.html#l00363">Plan::EdgeFinished()</a>, <a class="el" href="build__test_8cc_source.html#l00031">PlanTest::FindWorkSorted()</a>, <a class="el" href="build_8cc_source.html#l00705">Builder::FinishCommand()</a>, <a class="el" href="graph_8cc_source.html#l00341">ImplicitDepLoader::LoadDepFile()</a>, <a class="el" href="graph_8cc_source.html#l00390">ImplicitDepLoader::LoadDepsFromLog()</a>, <a class="el" href="graph_8cc_source.html#l00230">EdgeEnv::LookupVariable()</a>, <a class="el" href="manifest__parser_8cc_source.html#l00228">ManifestParser::ParseEdge()</a>, <a class="el" href="graph_8cc_source.html#l00060">DependencyScan::RecomputeDirty()</a>, <a class="el" href="graph_8cc_source.html#l00133">DependencyScan::RecomputeOutputsDirty()</a>, <a class="el" href="build__log_8cc_source.html#l00139">BuildLog::RecordCommand()</a>, <a class="el" href="build__test_8cc_source.html#l00502">FakeCommandRunner::StartCommand()</a>, <a class="el" href="build_8cc_source.html#l00672">Builder::StartEdge()</a>, and <a class="el" href="build__test_8cc_source.html#l00242">TEST_F()</a>.</p>
+<p>Referenced by <a class="el" href="state_8cc_source.html#l00154">State::AddOut()</a>, <a class="el" href="graphviz_8cc_source.html#l00021">GraphViz::AddTarget()</a>, <a class="el" href="graph_8cc_source.html#l00445">ImplicitDepLoader::CreatePhonyInEdge()</a>, <a class="el" href="graph_8cc_source.html#l00302">Dump()</a>, <a class="el" href="build_8cc_source.html#l00370">Plan::EdgeFinished()</a>, <a class="el" href="build__test_8cc_source.html#l00031">PlanTest::FindWorkSorted()</a>, <a class="el" href="build_8cc_source.html#l00715">Builder::FinishCommand()</a>, <a class="el" href="graph_8cc_source.html#l00361">ImplicitDepLoader::LoadDepFile()</a>, <a class="el" href="graph_8cc_source.html#l00410">ImplicitDepLoader::LoadDepsFromLog()</a>, <a class="el" href="graph_8cc_source.html#l00234">EdgeEnv::LookupVariable()</a>, <a class="el" href="manifest__parser_8cc_source.html#l00228">ManifestParser::ParseEdge()</a>, <a class="el" href="graph_8cc_source.html#l00060">DependencyScan::RecomputeDirty()</a>, <a class="el" href="graph_8cc_source.html#l00133">DependencyScan::RecomputeOutputsDirty()</a>, <a class="el" href="build__log_8cc_source.html#l00140">BuildLog::RecordCommand()</a>, <a class="el" href="build__test_8cc_source.html#l00519">FakeCommandRunner::StartCommand()</a>, <a class="el" href="build_8cc_source.html#l00682">Builder::StartEdge()</a>, and <a class="el" href="build__test_8cc_source.html#l00257">TEST_F()</a>.</p>
 
 </div>
 </div>
@@ -500,9 +578,9 @@ Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="graph_8h_source.html#l00159">159</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
+<p>Definition at line <a class="el" href="graph_8h_source.html#l00165">165</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
 
-<p>Referenced by <a class="el" href="graph_8cc_source.html#l00425">ImplicitDepLoader::CreatePhonyInEdge()</a>, <a class="el" href="build_8cc_source.html#l00363">Plan::EdgeFinished()</a>, and <a class="el" href="graph_8cc_source.html#l00060">DependencyScan::RecomputeDirty()</a>.</p>
+<p>Referenced by <a class="el" href="graph_8cc_source.html#l00445">ImplicitDepLoader::CreatePhonyInEdge()</a>, <a class="el" href="build_8cc_source.html#l00370">Plan::EdgeFinished()</a>, and <a class="el" href="graph_8cc_source.html#l00060">DependencyScan::RecomputeDirty()</a>.</p>
 
 </div>
 </div>
@@ -517,9 +595,9 @@ Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="graph_8h_source.html#l00155">155</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
+<p>Definition at line <a class="el" href="graph_8h_source.html#l00161">161</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
 
-<p>Referenced by <a class="el" href="state_8cc_source.html#l00103">State::AddEdge()</a>, <a class="el" href="graph_8cc_source.html#l00286">Dump()</a>, and <a class="el" href="manifest__parser_8cc_source.html#l00228">ManifestParser::ParseEdge()</a>.</p>
+<p>Referenced by <a class="el" href="state_8cc_source.html#l00105">State::AddEdge()</a>, <a class="el" href="graph_8cc_source.html#l00302">Dump()</a>, and <a class="el" href="manifest__parser_8cc_source.html#l00228">ManifestParser::ParseEdge()</a>.</p>
 
 </div>
 </div>
@@ -534,9 +612,9 @@ Public Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="graph_8h_source.html#l00154">154</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
+<p>Definition at line <a class="el" href="graph_8h_source.html#l00160">160</a> of file <a class="el" href="graph_8h_source.html">graph.h</a>.</p>
 
-<p>Referenced by <a class="el" href="state_8cc_source.html#l00103">State::AddEdge()</a>, <a class="el" href="graphviz_8cc_source.html#l00021">GraphViz::AddTarget()</a>, <a class="el" href="graph_8cc_source.html#l00286">Dump()</a>, <a class="el" href="graph_8cc_source.html#l00307">is_phony()</a>, and <a class="el" href="graph_8cc_source.html#l00230">EdgeEnv::LookupVariable()</a>.</p>
+<p>Referenced by <a class="el" href="state_8cc_source.html#l00105">State::AddEdge()</a>, <a class="el" href="graphviz_8cc_source.html#l00021">GraphViz::AddTarget()</a>, <a class="el" href="graph_8cc_source.html#l00302">Dump()</a>, <a class="el" href="graph_8cc_source.html#l00323">is_phony()</a>, and <a class="el" href="graph_8cc_source.html#l00234">EdgeEnv::LookupVariable()</a>.</p>
 
 </div>
 </div>
@@ -548,7 +626,7 @@ Public Attributes</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 12 2013 09:25:50 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 4 2014 09:13:00 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

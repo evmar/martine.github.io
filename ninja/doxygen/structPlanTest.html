@@ -83,6 +83,7 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Because FindWork does not return Edges in any sort of predictable order,.  <a href="#ae54b1b196ddacd09895b79fb8cea88bb"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structNode.html">Node</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structStateTestWithBuiltinRules.html#a73a86246aefb2b8aeed71ac6979f37f3">GetNode</a> (const string &amp;path)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Short way to get a <a class="el" href="structNode.html" title="Information about a node in the dependency graph: the file, whether it&#39;s dirty, mtime, etc.">Node</a> by its path from state_.  <a href="#a73a86246aefb2b8aeed71ac6979f37f3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPlanTest.html#a4f869c9bc4ec3cf7e873df25a1e38704">TestPoolWithDepthOne</a> (const char *test_case)</td></tr>
 <tr><td colspan="2"><h2><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structPlan.html">Plan</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structPlanTest.html#a4c01ff074b43aa178f4af994da7f7ae7">plan_</a></td></tr>
@@ -115,7 +116,7 @@ Public Attributes</h2></td></tr>
 
 <p>References <a class="el" href="test_8cc_source.html#l00090">AssertParse()</a>.</p>
 
-<p>Referenced by <a class="el" href="build__test_8cc_source.html#l00462">BuildTest::RebuildTarget()</a>, and <a class="el" href="test_8cc_source.html#l00076">StateTestWithBuiltinRules::StateTestWithBuiltinRules()</a>.</p>
+<p>Referenced by <a class="el" href="build__test_8cc_source.html#l00479">BuildTest::RebuildTarget()</a>, and <a class="el" href="test_8cc_source.html#l00076">StateTestWithBuiltinRules::StateTestWithBuiltinRules()</a>.</p>
 
 </div>
 </div>
@@ -148,7 +149,7 @@ Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="build__test_8cc_source.html#l00031">31</a> of file <a class="el" href="build__test_8cc_source.html">build_test.cc</a>.</p>
 
-<p>References <a class="el" href="build_8cc_source.html#l00332">Plan::FindWork()</a>, <a class="el" href="build_8h_source.html#l00054">Plan::more_to_do()</a>, <a class="el" href="graph_8h_source.html#l00157">Edge::outputs_</a>, and <a class="el" href="build__test_8cc_source.html#l00026">plan_</a>.</p>
+<p>References <a class="el" href="build_8cc_source.html#l00339">Plan::FindWork()</a>, <a class="el" href="build_8h_source.html#l00054">Plan::more_to_do()</a>, <a class="el" href="graph_8h_source.html#l00163">Edge::outputs_</a>, and <a class="el" href="build__test_8cc_source.html#l00026">plan_</a>.</p>
 
 </div>
 </div>
@@ -171,9 +172,30 @@ Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="test_8cc_source.html#l00086">86</a> of file <a class="el" href="test_8cc_source.html">test.cc</a>.</p>
 
-<p>References <a class="el" href="state_8cc_source.html#l00112">State::GetNode()</a>, and <a class="el" href="test_8h_source.html#l00040">StateTestWithBuiltinRules::state_</a>.</p>
+<p>References <a class="el" href="state_8cc_source.html#l00114">State::GetNode()</a>, and <a class="el" href="test_8h_source.html#l00040">StateTestWithBuiltinRules::state_</a>.</p>
 
-<p>Referenced by <a class="el" href="build__test_8cc_source.html#l00559">BuildTest::Dirty()</a>.</p>
+<p>Referenced by <a class="el" href="build__test_8cc_source.html#l00587">BuildTest::Dirty()</a>, and <a class="el" href="build__test_8cc_source.html#l00202">TestPoolWithDepthOne()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4f869c9bc4ec3cf7e873df25a1e38704"></a><!-- doxytag: member="PlanTest::TestPoolWithDepthOne" ref="a4f869c9bc4ec3cf7e873df25a1e38704" args="(const char *test_case)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="structPlanTest.html#a4f869c9bc4ec3cf7e873df25a1e38704">PlanTest::TestPoolWithDepthOne</a> </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>test_case</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Definition at line <a class="el" href="build__test_8cc_source.html#l00202">202</a> of file <a class="el" href="build__test_8cc_source.html">build_test.cc</a>.</p>
+
+<p>References <a class="el" href="build_8cc_source.html#l00263">Plan::AddTarget()</a>, <a class="el" href="test_8cc_source.html#l00090">AssertParse()</a>, <a class="el" href="build_8cc_source.html#l00370">Plan::EdgeFinished()</a>, <a class="el" href="build_8cc_source.html#l00339">Plan::FindWork()</a>, <a class="el" href="test_8cc_source.html#l00086">StateTestWithBuiltinRules::GetNode()</a>, <a class="el" href="graph_8h_source.html#l00078">Node::MarkDirty()</a>, <a class="el" href="build_8h_source.html#l00054">Plan::more_to_do()</a>, <a class="el" href="build__test_8cc_source.html#l00026">plan_</a>, and <a class="el" href="test_8h_source.html#l00040">StateTestWithBuiltinRules::state_</a>.</p>
 
 </div>
 </div>
@@ -191,7 +213,7 @@ Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="build__test_8cc_source.html#l00026">26</a> of file <a class="el" href="build__test_8cc_source.html">build_test.cc</a>.</p>
 
-<p>Referenced by <a class="el" href="build__test_8cc_source.html#l00031">FindWorkSorted()</a>.</p>
+<p>Referenced by <a class="el" href="build__test_8cc_source.html#l00031">FindWorkSorted()</a>, and <a class="el" href="build__test_8cc_source.html#l00202">TestPoolWithDepthOne()</a>.</p>
 
 </div>
 </div>
@@ -208,7 +230,7 @@ Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="test_8h_source.html#l00040">40</a> of file <a class="el" href="test_8h_source.html">test.h</a>.</p>
 
-<p>Referenced by <a class="el" href="test_8cc_source.html#l00086">StateTestWithBuiltinRules::GetNode()</a>, <a class="el" href="build__test_8cc_source.html#l00421">BuildTest::SetUp()</a>, and <a class="el" href="test_8cc_source.html#l00076">StateTestWithBuiltinRules::StateTestWithBuiltinRules()</a>.</p>
+<p>Referenced by <a class="el" href="test_8cc_source.html#l00086">StateTestWithBuiltinRules::GetNode()</a>, <a class="el" href="build__test_8cc_source.html#l00436">BuildTest::SetUp()</a>, <a class="el" href="test_8cc_source.html#l00076">StateTestWithBuiltinRules::StateTestWithBuiltinRules()</a>, and <a class="el" href="build__test_8cc_source.html#l00202">TestPoolWithDepthOne()</a>.</p>
 
 </div>
 </div>
@@ -219,7 +241,7 @@ Public Attributes</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 12 2013 09:25:50 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 4 2014 09:13:00 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

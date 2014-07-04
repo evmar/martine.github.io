@@ -58,6 +58,7 @@
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a>  </div>
   <div class="headertitle">
 <div class="title">LinePrinter Struct Reference</div>  </div>
@@ -85,17 +86,31 @@ Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLinePrinter.html#a5c7e10eb69b0f8b39fe4ba92079e72f6">PrintOnNewLine</a> (const string &amp;to_print)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints a string on a new line, not overprinting previous output.  <a href="#a5c7e10eb69b0f8b39fe4ba92079e72f6"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLinePrinter.html#a0992dd6ef3dbe9aab0595ea98bcd15e5">set_smart_terminal</a> (bool smart)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLinePrinter.html#a38acb5f22d9a84a0a86da6e0ba861a35">SetConsoleLocked</a> (bool locked)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Lock or unlock the console.  <a href="#a38acb5f22d9a84a0a86da6e0ba861a35"></a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLinePrinter.html#a05f503456976587d2f243521966d5dfc">PrintOrBuffer</a> (const char *data, size_t size)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Print the given data to the console, or buffer it if it is locked.  <a href="#a05f503456976587d2f243521966d5dfc"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLinePrinter.html#a2a63e7af653f2d4f0cbea8ffa1e88235">console_locked_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether console is locked.  <a href="#a2a63e7af653f2d4f0cbea8ffa1e88235"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLinePrinter.html#a2e0a97433a4555e10e8d93c3ae2ea1d4">have_blank_line_</a></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether the caret is at the beginning of a blank line.  <a href="#a2e0a97433a4555e10e8d93c3ae2ea1d4"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLinePrinter.html#a015279ac89a05545ff5ac1fc1e002b3c">line_buffer_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Buffered current line while console is locked.  <a href="#a015279ac89a05545ff5ac1fc1e002b3c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structLinePrinter.html#a99f22ad59aa1bca1165da568c97c3d58">LineType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLinePrinter.html#ad362b4a3f321c2dd39bc1f356fc65dd6">line_type_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Buffered line type while console is locked.  <a href="#ad362b4a3f321c2dd39bc1f356fc65dd6"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLinePrinter.html#acade00d205f0cabdaa35ae43eee44486">output_buffer_</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Buffered console output while console is locked.  <a href="#acade00d205f0cabdaa35ae43eee44486"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structLinePrinter.html#a0e2c3f54e0f44153ceef6d5d93a9d22f">smart_terminal_</a></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether we can do fancy terminal control codes.  <a href="#a0e2c3f54e0f44153ceef6d5d93a9d22f"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>Prints lines of text, possibly overprinting previously printed lines if the terminal supports it. </p>
 
-<p>Definition at line <a class="el" href="line__printer_8h_source.html#l00023">23</a> of file <a class="el" href="line__printer_8h_source.html">line_printer.h</a>.</p>
+<p>Definition at line <a class="el" href="line__printer_8h_source.html#l00024">24</a> of file <a class="el" href="line__printer_8h_source.html">line_printer.h</a>.</p>
 </div><hr/><h2>Member Enumeration Documentation</h2>
 <a class="anchor" id="a99f22ad59aa1bca1165da568c97c3d58"></a><!-- doxytag: member="LinePrinter::LineType" ref="a99f22ad59aa1bca1165da568c97c3d58" args="" -->
 <div class="memitem">
@@ -116,7 +131,7 @@ Private Attributes</h2></td></tr>
 </dd>
 </dl>
 
-<p>Definition at line <a class="el" href="line__printer_8h_source.html#l00029">29</a> of file <a class="el" href="line__printer_8h_source.html">line_printer.h</a>.</p>
+<p>Definition at line <a class="el" href="line__printer_8h_source.html#l00030">30</a> of file <a class="el" href="line__printer_8h_source.html">line_printer.h</a>.</p>
 
 </div>
 </div>
@@ -137,7 +152,7 @@ Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="line__printer_8cc_source.html#l00029">29</a> of file <a class="el" href="line__printer_8cc_source.html">line_printer.cc</a>.</p>
 
-<p>References <a class="el" href="line__printer_8h_source.html#l00042">smart_terminal_</a>.</p>
+<p>References <a class="el" href="line__printer_8h_source.html#l00047">smart_terminal_</a>.</p>
 
 </div>
 </div>
@@ -156,9 +171,9 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="line__printer_8h_source.html#l00026">26</a> of file <a class="el" href="line__printer_8h_source.html">line_printer.h</a>.</p>
+<p>Definition at line <a class="el" href="line__printer_8h_source.html#l00027">27</a> of file <a class="el" href="line__printer_8h_source.html">line_printer.h</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00102">BuildStatus::BuildEdgeFinished()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00105">BuildStatus::BuildEdgeFinished()</a>.</p>
 
 </div>
 </div>
@@ -192,9 +207,9 @@ Private Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="line__printer_8cc_source.html#l00045">45</a> of file <a class="el" href="line__printer_8cc_source.html">line_printer.cc</a>.</p>
 
-<p>References <a class="el" href="line__printer_8h_source.html#l00031">ELIDE</a>, <a class="el" href="util_8cc_source.html#l00331">ElideMiddle()</a>, <a class="el" href="line__printer_8h_source.html#l00045">have_blank_line_</a>, and <a class="el" href="line__printer_8h_source.html#l00042">smart_terminal_</a>.</p>
+<p>References <a class="el" href="line__printer_8h_source.html#l00053">console_locked_</a>, <a class="el" href="line__printer_8h_source.html#l00032">ELIDE</a>, <a class="el" href="util_8cc_source.html#l00435">ElideMiddle()</a>, <a class="el" href="line__printer_8h_source.html#l00050">have_blank_line_</a>, <a class="el" href="line__printer_8h_source.html#l00056">line_buffer_</a>, <a class="el" href="line__printer_8h_source.html#l00059">line_type_</a>, and <a class="el" href="line__printer_8h_source.html#l00047">smart_terminal_</a>.</p>
 
-<p>Referenced by <a class="el" href="ninja__test_8cc_source.html#l00046">LaconicPrinter::OnTestStart()</a>, and <a class="el" href="build_8cc_source.html#l00234">BuildStatus::PrintStatus()</a>.</p>
+<p>Referenced by <a class="el" href="ninja__test_8cc_source.html#l00046">LaconicPrinter::OnTestStart()</a>, <a class="el" href="build_8cc_source.html#l00241">BuildStatus::PrintStatus()</a>, and <a class="el" href="line__printer_8cc_source.html#l00135">SetConsoleLocked()</a>.</p>
 
 </div>
 </div>
@@ -215,11 +230,46 @@ Private Attributes</h2></td></tr>
 
 <p>Prints a string on a new line, not overprinting previous output. </p>
 
-<p>Definition at line <a class="el" href="line__printer_8cc_source.html#l00104">104</a> of file <a class="el" href="line__printer_8cc_source.html">line_printer.cc</a>.</p>
+<p>Definition at line <a class="el" href="line__printer_8cc_source.html#l00120">120</a> of file <a class="el" href="line__printer_8cc_source.html">line_printer.cc</a>.</p>
 
-<p>References <a class="el" href="line__printer_8h_source.html#l00045">have_blank_line_</a>.</p>
+<p>References <a class="el" href="line__printer_8h_source.html#l00053">console_locked_</a>, <a class="el" href="line__printer_8h_source.html#l00050">have_blank_line_</a>, <a class="el" href="line__printer_8h_source.html#l00056">line_buffer_</a>, <a class="el" href="line__printer_8h_source.html#l00062">output_buffer_</a>, and <a class="el" href="line__printer_8cc_source.html#l00110">PrintOrBuffer()</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00102">BuildStatus::BuildEdgeFinished()</a>, <a class="el" href="build_8cc_source.html#l00147">BuildStatus::BuildFinished()</a>, <a class="el" href="ninja__test_8cc_source.html#l00059">LaconicPrinter::OnTestPartResult()</a>, and <a class="el" href="ninja__test_8cc_source.html#l00068">LaconicPrinter::OnTestProgramEnd()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00105">BuildStatus::BuildEdgeFinished()</a>, <a class="el" href="build_8cc_source.html#l00153">BuildStatus::BuildFinished()</a>, <a class="el" href="ninja__test_8cc_source.html#l00059">LaconicPrinter::OnTestPartResult()</a>, <a class="el" href="ninja__test_8cc_source.html#l00068">LaconicPrinter::OnTestProgramEnd()</a>, and <a class="el" href="line__printer_8cc_source.html#l00135">SetConsoleLocked()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a05f503456976587d2f243521966d5dfc"></a><!-- doxytag: member="LinePrinter::PrintOrBuffer" ref="a05f503456976587d2f243521966d5dfc" args="(const char *data, size_t size)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="structLinePrinter.html#a05f503456976587d2f243521966d5dfc">LinePrinter::PrintOrBuffer</a> </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>size</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Print the given data to the console, or buffer it if it is locked. </p>
+
+<p>Definition at line <a class="el" href="line__printer_8cc_source.html#l00110">110</a> of file <a class="el" href="line__printer_8cc_source.html">line_printer.cc</a>.</p>
+
+<p>References <a class="el" href="line__printer_8h_source.html#l00053">console_locked_</a>, and <a class="el" href="line__printer_8h_source.html#l00062">output_buffer_</a>.</p>
+
+<p>Referenced by <a class="el" href="line__printer_8cc_source.html#l00120">PrintOnNewLine()</a>.</p>
 
 </div>
 </div>
@@ -238,13 +288,58 @@ Private Attributes</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="line__printer_8h_source.html#l00027">27</a> of file <a class="el" href="line__printer_8h_source.html">line_printer.h</a>.</p>
+<p>Definition at line <a class="el" href="line__printer_8h_source.html#l00028">28</a> of file <a class="el" href="line__printer_8h_source.html">line_printer.h</a>.</p>
 
 <p>Referenced by <a class="el" href="build_8cc_source.html#l00074">BuildStatus::BuildStatus()</a>.</p>
 
 </div>
 </div>
+<a class="anchor" id="a38acb5f22d9a84a0a86da6e0ba861a35"></a><!-- doxytag: member="LinePrinter::SetConsoleLocked" ref="a38acb5f22d9a84a0a86da6e0ba861a35" args="(bool locked)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="structLinePrinter.html#a38acb5f22d9a84a0a86da6e0ba861a35">LinePrinter::SetConsoleLocked</a> </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>locked</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Lock or unlock the console. </p>
+<p>Any output sent to the <a class="el" href="structLinePrinter.html" title="Prints lines of text, possibly overprinting previously printed lines if the terminal supports it...">LinePrinter</a> while the console is locked will not be printed until it is unlocked. </p>
+
+<p>Definition at line <a class="el" href="line__printer_8cc_source.html#l00135">135</a> of file <a class="el" href="line__printer_8cc_source.html">line_printer.cc</a>.</p>
+
+<p>References <a class="el" href="line__printer_8h_source.html#l00053">console_locked_</a>, <a class="el" href="line__printer_8h_source.html#l00056">line_buffer_</a>, <a class="el" href="line__printer_8h_source.html#l00059">line_type_</a>, <a class="el" href="line__printer_8h_source.html#l00062">output_buffer_</a>, <a class="el" href="line__printer_8cc_source.html#l00045">Print()</a>, and <a class="el" href="line__printer_8cc_source.html#l00120">PrintOnNewLine()</a>.</p>
+
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00105">BuildStatus::BuildEdgeFinished()</a>, <a class="el" href="build_8cc_source.html#l00094">BuildStatus::BuildEdgeStarted()</a>, and <a class="el" href="build_8cc_source.html#l00153">BuildStatus::BuildFinished()</a>.</p>
+
+</div>
+</div>
 <hr/><h2>Member Data Documentation</h2>
+<a class="anchor" id="a2a63e7af653f2d4f0cbea8ffa1e88235"></a><!-- doxytag: member="LinePrinter::console_locked_" ref="a2a63e7af653f2d4f0cbea8ffa1e88235" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="structLinePrinter.html#a2a63e7af653f2d4f0cbea8ffa1e88235">LinePrinter::console_locked_</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Whether console is locked. </p>
+
+<p>Definition at line <a class="el" href="line__printer_8h_source.html#l00053">53</a> of file <a class="el" href="line__printer_8h_source.html">line_printer.h</a>.</p>
+
+<p>Referenced by <a class="el" href="line__printer_8cc_source.html#l00045">Print()</a>, <a class="el" href="line__printer_8cc_source.html#l00120">PrintOnNewLine()</a>, <a class="el" href="line__printer_8cc_source.html#l00110">PrintOrBuffer()</a>, and <a class="el" href="line__printer_8cc_source.html#l00135">SetConsoleLocked()</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a2e0a97433a4555e10e8d93c3ae2ea1d4"></a><!-- doxytag: member="LinePrinter::have_blank_line_" ref="a2e0a97433a4555e10e8d93c3ae2ea1d4" args="" -->
 <div class="memitem">
 <div class="memproto">
@@ -258,9 +353,66 @@ Private Attributes</h2></td></tr>
 
 <p>Whether the caret is at the beginning of a blank line. </p>
 
-<p>Definition at line <a class="el" href="line__printer_8h_source.html#l00045">45</a> of file <a class="el" href="line__printer_8h_source.html">line_printer.h</a>.</p>
+<p>Definition at line <a class="el" href="line__printer_8h_source.html#l00050">50</a> of file <a class="el" href="line__printer_8h_source.html">line_printer.h</a>.</p>
 
-<p>Referenced by <a class="el" href="line__printer_8cc_source.html#l00045">Print()</a>, and <a class="el" href="line__printer_8cc_source.html#l00104">PrintOnNewLine()</a>.</p>
+<p>Referenced by <a class="el" href="line__printer_8cc_source.html#l00045">Print()</a>, and <a class="el" href="line__printer_8cc_source.html#l00120">PrintOnNewLine()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a015279ac89a05545ff5ac1fc1e002b3c"></a><!-- doxytag: member="LinePrinter::line_buffer_" ref="a015279ac89a05545ff5ac1fc1e002b3c" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string <a class="el" href="structLinePrinter.html#a015279ac89a05545ff5ac1fc1e002b3c">LinePrinter::line_buffer_</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Buffered current line while console is locked. </p>
+
+<p>Definition at line <a class="el" href="line__printer_8h_source.html#l00056">56</a> of file <a class="el" href="line__printer_8h_source.html">line_printer.h</a>.</p>
+
+<p>Referenced by <a class="el" href="line__printer_8cc_source.html#l00045">Print()</a>, <a class="el" href="line__printer_8cc_source.html#l00120">PrintOnNewLine()</a>, and <a class="el" href="line__printer_8cc_source.html#l00135">SetConsoleLocked()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad362b4a3f321c2dd39bc1f356fc65dd6"></a><!-- doxytag: member="LinePrinter::line_type_" ref="ad362b4a3f321c2dd39bc1f356fc65dd6" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structLinePrinter.html#a99f22ad59aa1bca1165da568c97c3d58">LineType</a> <a class="el" href="structLinePrinter.html#ad362b4a3f321c2dd39bc1f356fc65dd6">LinePrinter::line_type_</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Buffered line type while console is locked. </p>
+
+<p>Definition at line <a class="el" href="line__printer_8h_source.html#l00059">59</a> of file <a class="el" href="line__printer_8h_source.html">line_printer.h</a>.</p>
+
+<p>Referenced by <a class="el" href="line__printer_8cc_source.html#l00045">Print()</a>, and <a class="el" href="line__printer_8cc_source.html#l00135">SetConsoleLocked()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="acade00d205f0cabdaa35ae43eee44486"></a><!-- doxytag: member="LinePrinter::output_buffer_" ref="acade00d205f0cabdaa35ae43eee44486" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">string <a class="el" href="structLinePrinter.html#acade00d205f0cabdaa35ae43eee44486">LinePrinter::output_buffer_</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>Buffered console output while console is locked. </p>
+
+<p>Definition at line <a class="el" href="line__printer_8h_source.html#l00062">62</a> of file <a class="el" href="line__printer_8h_source.html">line_printer.h</a>.</p>
+
+<p>Referenced by <a class="el" href="line__printer_8cc_source.html#l00120">PrintOnNewLine()</a>, <a class="el" href="line__printer_8cc_source.html#l00110">PrintOrBuffer()</a>, and <a class="el" href="line__printer_8cc_source.html#l00135">SetConsoleLocked()</a>.</p>
 
 </div>
 </div>
@@ -277,7 +429,7 @@ Private Attributes</h2></td></tr>
 
 <p>Whether we can do fancy terminal control codes. </p>
 
-<p>Definition at line <a class="el" href="line__printer_8h_source.html#l00042">42</a> of file <a class="el" href="line__printer_8h_source.html">line_printer.h</a>.</p>
+<p>Definition at line <a class="el" href="line__printer_8h_source.html#l00047">47</a> of file <a class="el" href="line__printer_8h_source.html">line_printer.h</a>.</p>
 
 <p>Referenced by <a class="el" href="line__printer_8cc_source.html#l00029">LinePrinter()</a>, and <a class="el" href="line__printer_8cc_source.html#l00045">Print()</a>.</p>
 
@@ -291,7 +443,7 @@ Private Attributes</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 12 2013 09:25:50 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 4 2014 09:13:00 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

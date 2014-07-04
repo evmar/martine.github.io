@@ -86,8 +86,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a file to a string. Fill in |err| on error.  <a href="#aed889f19b478039bd8d315fe965440ea"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structDiskInterface.html#ad7442b7e0b10e0737c56667d967e9f76">RemoveFile</a> (const string &amp;path)=0</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove the file named <em>path</em>.  <a href="#ad7442b7e0b10e0737c56667d967e9f76"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="timestamp_8h.html#a364f6f32873dd70e259c971fc2e28b73">TimeStamp</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structDiskInterface.html#ac99deecbc7f235272f0a8e308e7792d7">Stat</a> (const string &amp;path)=0</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">stat() a file, returning the mtime, or 0 if missing and -1 on other errors.  <a href="#ac99deecbc7f235272f0a8e308e7792d7"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="timestamp_8h.html#a364f6f32873dd70e259c971fc2e28b73">TimeStamp</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structDiskInterface.html#a1095cf31175f95f005fc38b28683b0cb">Stat</a> (const string &amp;path) const =0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">stat() a file, returning the mtime, or 0 if missing and -1 on other errors.  <a href="#a1095cf31175f95f005fc38b28683b0cb"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structDiskInterface.html#afcfaed359bb8ba121bba9838c02c2483">WriteFile</a> (const string &amp;path, const string &amp;contents)=0</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Create a file, with the specified name and contents Returns true on success, false on failure.  <a href="#afcfaed359bb8ba121bba9838c02c2483"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structDiskInterface.html#a34d62e4d1ba8b716696bcfc6f2643cd3">~DiskInterface</a> ()</td></tr>
@@ -96,7 +96,7 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><p>Interface for accessing the disk. </p>
 <p>Abstract so it can be mocked out for tests. The real implementation is <a class="el" href="structRealDiskInterface.html" title="Implementation of DiskInterface that actually hits the disk.">RealDiskInterface</a>. </p>
 
-<p>Definition at line <a class="el" href="disk__interface_8h_source.html#l00027">27</a> of file <a class="el" href="disk__interface_8h_source.html">disk_interface.h</a>.</p>
+<p>Definition at line <a class="el" href="disk__interface_8h_source.html#l00028">28</a> of file <a class="el" href="disk__interface_8h_source.html">disk_interface.h</a>.</p>
 </div><hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a34d62e4d1ba8b716696bcfc6f2643cd3"></a><!-- doxytag: member="DiskInterface::~DiskInterface" ref="a34d62e4d1ba8b716696bcfc6f2643cd3" args="()" -->
 <div class="memitem">
@@ -112,7 +112,7 @@ Public Member Functions</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Definition at line <a class="el" href="disk__interface_8h_source.html#l00028">28</a> of file <a class="el" href="disk__interface_8h_source.html">disk_interface.h</a>.</p>
+<p>Definition at line <a class="el" href="disk__interface_8h_source.html#l00029">29</a> of file <a class="el" href="disk__interface_8h_source.html">disk_interface.h</a>.</p>
 
 </div>
 </div>
@@ -134,9 +134,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Create a directory, returning false on failure. </p>
 
-<p>Implemented in <a class="el" href="structVirtualFileSystem.html#a04b55f1ee22d424d85244759cbd200ee">VirtualFileSystem</a>, and <a class="el" href="structRealDiskInterface.html#acf868fd64fcb5dff9cc9741bd2e5575e">RealDiskInterface</a>.</p>
-
-<p>Referenced by <a class="el" href="disk__interface_8cc_source.html#l00059">MakeDirs()</a>.</p>
+<p>Implemented in <a class="el" href="structRealDiskInterface.html#acf868fd64fcb5dff9cc9741bd2e5575e">RealDiskInterface</a>, and <a class="el" href="structVirtualFileSystem.html#a04b55f1ee22d424d85244759cbd200ee">VirtualFileSystem</a>.</p>
 
 </div>
 </div>
@@ -157,11 +155,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Create all the parent directories for path; like mkdir -p `basename path`. </p>
 
-<p>Definition at line <a class="el" href="disk__interface_8cc_source.html#l00059">59</a> of file <a class="el" href="disk__interface_8cc_source.html">disk_interface.cc</a>.</p>
+<p>Definition at line <a class="el" href="disk__interface_8cc_source.html#l00134">134</a> of file <a class="el" href="disk__interface_8cc_source.html">disk_interface.cc</a>.</p>
 
-<p>References <a class="el" href="structDiskInterface.html#abf89f5cfce3c775997e7b40607107779">MakeDir()</a>, and <a class="el" href="structDiskInterface.html#ac99deecbc7f235272f0a8e308e7792d7">Stat()</a>.</p>
-
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00672">Builder::StartEdge()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00682">Builder::StartEdge()</a>.</p>
 
 </div>
 </div>
@@ -192,9 +188,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Read a file to a string. Fill in |err| on error. </p>
 
-<p>Implemented in <a class="el" href="structVirtualFileSystem.html#ab47293dbafe8926db6fb02742b42e140">VirtualFileSystem</a>, and <a class="el" href="structRealDiskInterface.html#aca5e97e18e89f64a56fc2388d3aad69b">RealDiskInterface</a>.</p>
+<p>Implemented in <a class="el" href="structRealDiskInterface.html#aca5e97e18e89f64a56fc2388d3aad69b">RealDiskInterface</a>, and <a class="el" href="structVirtualFileSystem.html#ab47293dbafe8926db6fb02742b42e140">VirtualFileSystem</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00803">Builder::ExtractDeps()</a>, and <a class="el" href="graph_8cc_source.html#l00341">ImplicitDepLoader::LoadDepFile()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00815">Builder::ExtractDeps()</a>, and <a class="el" href="graph_8cc_source.html#l00361">ImplicitDepLoader::LoadDepFile()</a>.</p>
 
 </div>
 </div>
@@ -217,22 +213,22 @@ Public Member Functions</h2></td></tr>
 <p>It behaves like 'rm -f path' so no errors are reported if it does not exists. </p>
 <dl class="return"><dt><b>Returns:</b></dt><dd>0 if the file has been removed, 1 if the file does not exist, and -1 if an error occurs. </dd></dl>
 
-<p>Implemented in <a class="el" href="structVirtualFileSystem.html#adec99a414371927c9d5546b97c4e1cb0">VirtualFileSystem</a>, and <a class="el" href="structRealDiskInterface.html#a95db458a6793ec41ae8727c76d11475a">RealDiskInterface</a>.</p>
+<p>Implemented in <a class="el" href="structRealDiskInterface.html#a95db458a6793ec41ae8727c76d11475a">RealDiskInterface</a>, and <a class="el" href="structVirtualFileSystem.html#adec99a414371927c9d5546b97c4e1cb0">VirtualFileSystem</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00530">Builder::Cleanup()</a>, <a class="el" href="build_8cc_source.html#l00803">Builder::ExtractDeps()</a>, <a class="el" href="build_8cc_source.html#l00705">Builder::FinishCommand()</a>, and <a class="el" href="clean_8cc_source.html#l00047">Cleaner::RemoveFile()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00537">Builder::Cleanup()</a>, <a class="el" href="build_8cc_source.html#l00815">Builder::ExtractDeps()</a>, <a class="el" href="build_8cc_source.html#l00715">Builder::FinishCommand()</a>, and <a class="el" href="clean_8cc_source.html#l00047">Cleaner::RemoveFile()</a>.</p>
 
 </div>
 </div>
-<a class="anchor" id="ac99deecbc7f235272f0a8e308e7792d7"></a><!-- doxytag: member="DiskInterface::Stat" ref="ac99deecbc7f235272f0a8e308e7792d7" args="(const string &amp;path)=0" -->
+<a class="anchor" id="a1095cf31175f95f005fc38b28683b0cb"></a><!-- doxytag: member="DiskInterface::Stat" ref="a1095cf31175f95f005fc38b28683b0cb" args="(const string &amp;path) const =0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual <a class="el" href="timestamp_8h.html#a364f6f32873dd70e259c971fc2e28b73">TimeStamp</a> <a class="el" href="structDiskInterface.html#ac99deecbc7f235272f0a8e308e7792d7">DiskInterface::Stat</a> </td>
+          <td class="memname">virtual <a class="el" href="timestamp_8h.html#a364f6f32873dd70e259c971fc2e28b73">TimeStamp</a> <a class="el" href="structDiskInterface.html#a1095cf31175f95f005fc38b28683b0cb">DiskInterface::Stat</a> </td>
           <td>(</td>
           <td class="paramtype">const string &amp;&#160;</td>
           <td class="paramname"><em>path</em></td><td>)</td>
-          <td><code> [pure virtual]</code></td>
+          <td> const<code> [pure virtual]</code></td>
         </tr>
       </table>
 </div>
@@ -240,9 +236,9 @@ Public Member Functions</h2></td></tr>
 
 <p>stat() a file, returning the mtime, or 0 if missing and -1 on other errors. </p>
 
-<p>Implemented in <a class="el" href="structVirtualFileSystem.html#adb7c97119619c0d060579aaaf14c7847">VirtualFileSystem</a>, and <a class="el" href="structRealDiskInterface.html#a9c8fe8b0dc4ca004f0b2f41743c96f2a">RealDiskInterface</a>.</p>
+<p>Implemented in <a class="el" href="structRealDiskInterface.html#af9a98eca935f55943728ecf3d4447c72">RealDiskInterface</a>, and <a class="el" href="structVirtualFileSystem.html#a21576b9c44cb6c1649ab85381c0983fd">VirtualFileSystem</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00530">Builder::Cleanup()</a>, <a class="el" href="clean_8cc_source.html#l00051">Cleaner::FileExists()</a>, <a class="el" href="build_8cc_source.html#l00705">Builder::FinishCommand()</a>, <a class="el" href="disk__interface_8cc_source.html#l00059">MakeDirs()</a>, and <a class="el" href="graph_8cc_source.html#l00030">Node::Stat()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00537">Builder::Cleanup()</a>, <a class="el" href="clean_8cc_source.html#l00051">Cleaner::FileExists()</a>, <a class="el" href="build_8cc_source.html#l00715">Builder::FinishCommand()</a>, and <a class="el" href="graph_8cc_source.html#l00030">Node::Stat()</a>.</p>
 
 </div>
 </div>
@@ -273,9 +269,9 @@ Public Member Functions</h2></td></tr>
 
 <p>Create a file, with the specified name and contents Returns true on success, false on failure. </p>
 
-<p>Implemented in <a class="el" href="structVirtualFileSystem.html#a41a187dea1125d4d136a1dc43ebbd129">VirtualFileSystem</a>, and <a class="el" href="structRealDiskInterface.html#a0bd82c99c8838d65ae6ab1c0bbf94fe9">RealDiskInterface</a>.</p>
+<p>Implemented in <a class="el" href="structRealDiskInterface.html#a0bd82c99c8838d65ae6ab1c0bbf94fe9">RealDiskInterface</a>, and <a class="el" href="structVirtualFileSystem.html#a41a187dea1125d4d136a1dc43ebbd129">VirtualFileSystem</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00672">Builder::StartEdge()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00682">Builder::StartEdge()</a>.</p>
 
 </div>
 </div>
@@ -287,7 +283,7 @@ Public Member Functions</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 12 2013 09:25:50 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 4 2014 09:13:00 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

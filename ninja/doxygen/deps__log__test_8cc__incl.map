@@ -1,12 +1,12 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$deps__log_8h.html" title="deps_log.h" alt="" coords="112,160,197,189"/>
-<area shape="rect" id="node13" href="$graph_8h.html" title="graph.h" alt="" coords="341,160,405,189"/>
-<area shape="rect" id="node29" href="$util_8h.html" title="util.h" alt="" coords="468,160,519,189"/>
-<area shape="rect" id="node35" href="$test_8h.html" title="test.h" alt="" coords="580,83,633,112"/>
-<area shape="rect" id="node11" href="$timestamp_8h.html" title="timestamp.h" alt="" coords="243,237,336,267"/>
-<area shape="rect" id="node17" href="$eval__env_8h.html" title="eval_env.h" alt="" coords="701,237,787,267"/>
-<area shape="rect" id="node23" href="$string__piece_8h.html" title="string_piece.h" alt="" coords="895,315,996,344"/>
-<area shape="rect" id="node39" href="$disk__interface_8h.html" title="disk_interface.h" alt="" coords="549,160,664,189"/>
-<area shape="rect" id="node43" href="$state_8h.html" title="state.h" alt="" coords="753,160,815,189"/>
-<area shape="rect" id="node51" href="$hash__map_8h.html" title="hash_map.h" alt="" coords="1009,237,1103,267"/>
+<area shape="rect" id="node3" href="$deps__log_8h.html" title="deps_log.h" alt="" coords="32,237,117,267"/>
+<area shape="rect" id="node13" href="$graph_8h.html" title="graph.h" alt="" coords="379,160,443,189"/>
+<area shape="rect" id="node29" href="$util_8h.html" title="util.h" alt="" coords="304,160,355,189"/>
+<area shape="rect" id="node35" href="$test_8h.html" title="test.h" alt="" coords="564,83,617,112"/>
+<area shape="rect" id="node11" href="$timestamp_8h.html" title="timestamp.h" alt="" coords="232,315,325,344"/>
+<area shape="rect" id="node17" href="$eval__env_8h.html" title="eval_env.h" alt="" coords="672,237,757,267"/>
+<area shape="rect" id="node23" href="$string__piece_8h.html" title="string_piece.h" alt="" coords="849,315,951,344"/>
+<area shape="rect" id="node39" href="$disk__interface_8h.html" title="disk_interface.h" alt="" coords="533,237,648,267"/>
+<area shape="rect" id="node44" href="$state_8h.html" title="state.h" alt="" coords="724,160,785,189"/>
+<area shape="rect" id="node52" href="$hash__map_8h.html" title="hash_map.h" alt="" coords="980,237,1073,267"/>
 </map>

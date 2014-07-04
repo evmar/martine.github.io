@@ -116,13 +116,13 @@ Public Attributes</h2></td></tr>
 <p>re2c:indent:top = 2; re2c:indent:string = "  ";</p>
 <p>nul = "\000"; escape = [ \#*[|];</p>
 <p>'\' escape { De-escape backslashed character. out++ = yych; continue; } '$$' { De-escape dollar character. out++ = '$'; continue; } '\' [^\000<br/>
-] { Let backslash before other characters through verbatim. out++ = '\'; out++ = yych; continue; } [a-zA-Z0-9+,/_:.~()@=-!]+ { Got a span of plain text. int len = (int)(in - start); Need to shift it over if we're overwriting backslashes. if (out &lt; start) memmove(out, start, len); out += len; continue; } nul { break; } [^] { For any other character (e.g. whitespace), swallow it here, allowing the outer logic to loop around again. break; }</p>
+] { Let backslash before other characters through verbatim. out++ = '\'; out++ = yych; continue; } [a-zA-Z0-9+,/_:.~()}{@=!-]+ { Got a span of plain text. int len = (int)(in - start); Need to shift it over if we're overwriting backslashes. if (out &lt; start) memmove(out, start, len); out += len; continue; } nul { break; } [^] { For any other character (e.g. whitespace), swallow it here, allowing the outer logic to loop around again. break; }</p>
 
 <p>Definition at line <a class="el" href="depfile__parser_8cc_source.html#l00032">32</a> of file <a class="el" href="depfile__parser_8cc_source.html">depfile_parser.cc</a>.</p>
 
 <p>References <a class="el" href="depfile__parser_8h_source.html#l00032">ins_</a>, <a class="el" href="depfile__parser_8h_source.html#l00031">out_</a>, and <a class="el" href="string__piece_8h_source.html#l00049">StringPiece::str_</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00803">Builder::ExtractDeps()</a>, <a class="el" href="graph_8cc_source.html#l00341">ImplicitDepLoader::LoadDepFile()</a>, <a class="el" href="parser__perftest_8cc_source.html#l00022">main()</a>, and <a class="el" href="depfile__parser__test_8cc_source.html#l00026">DepfileParserTest::Parse()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00815">Builder::ExtractDeps()</a>, <a class="el" href="graph_8cc_source.html#l00361">ImplicitDepLoader::LoadDepFile()</a>, <a class="el" href="depfile__parser__perftest_8cc_source.html#l00022">main()</a>, and <a class="el" href="depfile__parser__test_8cc_source.html#l00026">DepfileParserTest::Parse()</a>.</p>
 
 </div>
 </div>
@@ -140,7 +140,7 @@ Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="depfile__parser_8h_source.html#l00032">32</a> of file <a class="el" href="depfile__parser_8h_source.html">depfile_parser.h</a>.</p>
 
-<p>Referenced by <a class="el" href="build_8cc_source.html#l00803">Builder::ExtractDeps()</a>, <a class="el" href="graph_8cc_source.html#l00341">ImplicitDepLoader::LoadDepFile()</a>, and <a class="el" href="depfile__parser_8cc_source.html#l00032">Parse()</a>.</p>
+<p>Referenced by <a class="el" href="build_8cc_source.html#l00815">Builder::ExtractDeps()</a>, <a class="el" href="graph_8cc_source.html#l00361">ImplicitDepLoader::LoadDepFile()</a>, and <a class="el" href="depfile__parser_8cc_source.html#l00032">Parse()</a>.</p>
 
 </div>
 </div>
@@ -157,7 +157,7 @@ Public Attributes</h2></td></tr>
 
 <p>Definition at line <a class="el" href="depfile__parser_8h_source.html#l00031">31</a> of file <a class="el" href="depfile__parser_8h_source.html">depfile_parser.h</a>.</p>
 
-<p>Referenced by <a class="el" href="graph_8cc_source.html#l00341">ImplicitDepLoader::LoadDepFile()</a>, and <a class="el" href="depfile__parser_8cc_source.html#l00032">Parse()</a>.</p>
+<p>Referenced by <a class="el" href="graph_8cc_source.html#l00361">ImplicitDepLoader::LoadDepFile()</a>, and <a class="el" href="depfile__parser_8cc_source.html#l00032">Parse()</a>.</p>
 
 </div>
 </div>
@@ -170,7 +170,7 @@ Public Attributes</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Sep 12 2013 09:25:50 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Jul 4 2014 09:13:00 for Ninja by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>
